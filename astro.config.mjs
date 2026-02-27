@@ -2,8 +2,11 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
+import vercel from '@astrojs/vercel';
 
 export default defineConfig({
+  site: 'https://getjarvis.dev',
+  adapter: vercel(),
   integrations: [
     starlight({
       title: 'J.A.R.V.I.S.',
