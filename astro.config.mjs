@@ -68,6 +68,7 @@ export default defineConfig({
             { label: 'Config Reference', slug: 'docs/config-reference' },
             { label: 'WebSocket API', slug: 'docs/websocket-api' },
             { label: 'Troubleshooting', slug: 'docs/troubleshooting' },
+            { label: 'Disclaimer & Liability', slug: 'docs/disclaimer' },
           ],
         },
       ],

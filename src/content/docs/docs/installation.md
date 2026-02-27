@@ -3,6 +3,10 @@ title: Installation
 description: Install JARVIS on Linux, macOS, or WSL2 in under two minutes.
 ---
 
+:::danger[Security Warning]
+JARVIS runs as a persistent daemon with broad system access — browser control, desktop automation, shell execution, and external service access. Installing it grants an AI agent significant control over your machine. Only install on machines you own, review the [Authority & Safety](/docs/authority) settings before enabling autonomous operation, and read the full [Disclaimer & Liability](/docs/disclaimer).
+:::
+
 JARVIS runs on Linux, macOS, and Windows via WSL2. The recommended path is the one-liner installer, which handles every prerequisite automatically.
 
 ## Prerequisites

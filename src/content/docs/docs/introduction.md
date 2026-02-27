@@ -3,6 +3,10 @@ title: Introduction
 description: What is JARVIS, who it's for, and how it differs from ordinary AI assistants.
 ---
 
+:::caution[Read before proceeding]
+JARVIS is experimental software that can autonomously control your browser, desktop, files, and external accounts. It carries real security risks. By installing and using it, you accept full responsibility for its actions. Read the full [Disclaimer & Liability](/docs/disclaimer) page before proceeding.
+:::
+
 JARVIS is an always-on autonomous AI daemon built for power users who want an AI that acts, not one that asks permission. It runs as a persistent background service on your machine, maintaining a live model of your world and executing tasks continuously — with or without you at the keyboard.
 
 ## What Makes JARVIS Different

@@ -314,7 +314,11 @@ import Landing from '../layouts/Landing.astro';
         <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener">GitHub</a>
         <a href="/docs/introduction">Docs</a>
         <a href="https://discord.gg/jarvis-ai" target="_blank" rel="noopener">Discord</a>
+        <a href="/docs/disclaimer">Disclaimer</a>
       </div>
+    </div>
+    <div class="footer-disclaimer">
+      JARVIS is experimental software provided "as is" with no warranty. It can autonomously control your browser, desktop, and external accounts. You assume all risk. See the full <a href="/docs/disclaimer">disclaimer</a>.
     </div>
   </footer>
 
@@ -570,6 +574,13 @@ import Landing from '../layouts/Landing.astro';
     text-decoration: none; transition: color 0.15s;
   }
   .footer-links a:hover { color: #aaa; }
+  .footer-disclaimer {
+    max-width: 1120px; margin: 0.75rem auto 0; padding-top: 0.75rem;
+    border-top: 1px solid var(--border-subtle);
+    font-size: 0.6875rem; color: var(--text-muted); line-height: 1.5;
+  }
+  .footer-disclaimer a { color: var(--text-muted); text-decoration: underline; }
+  .footer-disclaimer a:hover { color: #aaa; }
 
   /* ── Responsive ──────────────────────────── */
   @media (max-width: 768px) {
