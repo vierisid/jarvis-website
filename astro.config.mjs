@@ -19,7 +19,10 @@ export default defineConfig({
       ],
       customCss: ['./src/styles/global.css'],
       head: [
-        { tag: 'meta', attrs: { name: 'theme-color', content: '#00d4ff' } },
+        { tag: 'meta', attrs: { name: 'theme-color', content: '#0a0a0a' } },
+        { tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' } },
+        { tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: true } },
+        { tag: 'link', attrs: { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap' } },
       ],
       sidebar: [
         {

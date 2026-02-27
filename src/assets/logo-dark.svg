@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
-  <circle cx="16" cy="16" r="14" fill="none" stroke="#e0f2fe" stroke-width="2"/>
-  <circle cx="16" cy="16" r="4" fill="#00d4ff"/>
-  <line x1="16" y1="2" x2="16" y2="8" stroke="#e0f2fe" stroke-width="2" stroke-linecap="round"/>
-  <line x1="16" y1="24" x2="16" y2="30" stroke="#e0f2fe" stroke-width="2" stroke-linecap="round"/>
-  <line x1="2" y1="16" x2="8" y2="16" stroke="#e0f2fe" stroke-width="2" stroke-linecap="round"/>
-  <line x1="24" y1="16" x2="30" y2="16" stroke="#e0f2fe" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="16" cy="16" r="14" fill="none" stroke="#e8e8e8" stroke-width="2"/>
+  <circle cx="16" cy="16" r="4" fill="#3ecf8e"/>
+  <line x1="16" y1="2" x2="16" y2="8" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+  <line x1="16" y1="24" x2="16" y2="30" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+  <line x1="2" y1="16" x2="8" y2="16" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
+  <line x1="24" y1="16" x2="30" y2="16" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round"/>
 </svg>
