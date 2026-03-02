@@ -46,6 +46,7 @@ export default defineConfig({
             { label: 'Multi-Agent System', slug: 'docs/multi-agent' },
             { label: 'Memory & Knowledge', slug: 'docs/memory' },
             { label: 'Continuous Awareness', slug: 'docs/awareness' },
+            { label: 'Workflow Automation', slug: 'docs/workflows' },
             { label: 'Proactive Agent', slug: 'docs/proactive-agent' },
           ],
         },

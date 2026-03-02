@@ -13,6 +13,7 @@ import Landing from '../layouts/Landing.astro';
       </div>
       <div class="nav-right">
         <a href="#capabilities" class="nav-link">Features</a>
+        <a href="#workflows" class="nav-link">Workflows</a>
         <a href="/docs/introduction" class="nav-link">Docs</a>
         <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="nav-link">GitHub</a>
         <a href="/docs/installation" class="nav-install">INSTALL</a>
@@ -34,7 +35,7 @@ import Landing from '../layouts/Landing.astro';
 
         <p class="hero-sub">
           Browser control. Desktop automation. Voice interface. Continuous screen awareness.
-          Multi-agent delegation. Runs 24/7 in the background on your machine. Self-hosted. Open source.
+          Workflow automation. Multi-agent delegation. Runs 24/7 in the background on your machine. Self-hosted. Open source.
         </p>
 
         <div class="hero-actions">
@@ -95,10 +96,15 @@ import Landing from '../layouts/Landing.astro';
             <span class="status-value"><span class="dot dot-green"></span><span class="status-green">active</span></span>
             <span class="status-meta">ocr + vision · 7s cycle</span>
           </div>
-          <div class="status-row status-row-last">
+          <div class="status-row">
             <span class="status-label">proactive</span>
             <span class="status-value"><span class="dot dot-amber"></span><span class="status-amber">3 tasks</span></span>
             <span class="status-meta">next: 14:00 · gmail watch</span>
+          </div>
+          <div class="status-row status-row-last">
+            <span class="status-label">workflows</span>
+            <span class="status-value"><span class="dot dot-green"></span><span class="status-green">4 active</span></span>
+            <span class="status-meta">2 cron · 1 webhook · 1 screen</span>
           </div>
         </div>
       </div>
@@ -249,6 +255,135 @@ import Landing from '../layouts/Landing.astro';
           </p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- WORKFLOW AUTOMATION — Featured Section -->
+  <section id="workflows" class="section section-border wf-section">
+    <div class="container">
+
+      <div class="fade-in wf-header">
+        <div class="wf-badge">NEW</div>
+        <p class="section-label">Workflow Automation Engine</p>
+        <h2 class="wf-heading">Your AI builds its own automations.</h2>
+        <p class="wf-sub">
+          Describe what you want in plain English — or drag-and-drop in a visual canvas.
+          50+ nodes. Every trigger type. Self-healing execution. Built into the daemon, not bolted on.
+        </p>
+      </div>
+
+      <!-- Three creation methods -->
+      <div class="fade-in wf-methods">
+        <div class="wf-method">
+          <div class="wf-method-icon">&#x1F4AC;</div>
+          <h4 class="wf-method-title">Chat</h4>
+          <p class="wf-method-desc">Tell JARVIS what to automate. It builds the workflow, picks the nodes, wires the graph.</p>
+        </div>
+        <div class="wf-method">
+          <div class="wf-method-icon">&#x1F5B1;</div>
+          <h4 class="wf-method-title">Visual Builder</h4>
+          <p class="wf-method-desc">ReactFlow canvas with drag-and-drop. Node palette, live config, real-time execution monitor.</p>
+        </div>
+        <div class="wf-method">
+          <div class="wf-method-icon">&#x2699;</div>
+          <h4 class="wf-method-title">API</h4>
+          <p class="wf-method-desc">Full REST API. Create, version, execute, export as YAML. Programmatic control over everything.</p>
+        </div>
+      </div>
+
+      <!-- Canvas mockup + code examples side by side -->
+      <div class="fade-in wf-showcase">
+
+        <!-- Left: Canvas ASCII mockup -->
+        <div class="wf-canvas-mock">
+          <div class="wf-canvas-header">
+            <div class="wf-canvas-dots">
+              <div class="td td-red"></div>
+              <div class="td td-yellow"></div>
+              <div class="td td-green"></div>
+            </div>
+            <span class="wf-canvas-label">Workflow Canvas</span>
+          </div>
+          <div class="wf-canvas-body">
+            <div class="wf-node wf-node-trigger" style="top: 24px; left: 20px;">
+              <div class="wf-node-dot" style="background: #3ecf8e;"></div>
+              <span>Cron · 9am daily</span>
+            </div>
+            <div class="wf-edge wf-edge-1"></div>
+            <div class="wf-node wf-node-action" style="top: 24px; left: 220px;">
+              <div class="wf-node-dot" style="background: #22d3ee;"></div>
+              <span>Agent: Summarize PRs</span>
+            </div>
+            <div class="wf-edge wf-edge-2"></div>
+            <div class="wf-node wf-node-logic" style="top: 24px; left: 440px;">
+              <div class="wf-node-dot" style="background: #e5a522;"></div>
+              <span>If urgent</span>
+            </div>
+            <div class="wf-edge wf-edge-3a"></div>
+            <div class="wf-edge wf-edge-3b"></div>
+            <div class="wf-node wf-node-action" style="top: -16px; left: 610px;">
+              <div class="wf-node-dot" style="background: #ef4444;"></div>
+              <span>Telegram alert</span>
+            </div>
+            <div class="wf-node wf-node-action" style="top: 64px; left: 610px;">
+              <div class="wf-node-dot" style="background: #22d3ee;"></div>
+              <span>Slack summary</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Code examples -->
+        <div class="wf-code-stack">
+          <div class="code-panel">
+            <div class="code-comment"># Create via chat — just tell JARVIS</div>
+            <div><span class="code-str">"Every morning at 9, check GitHub PRs.</span></div>
+            <div><span class="code-str"> If anything is urgent, Telegram me.</span></div>
+            <div><span class="code-str"> Otherwise, post a summary to Slack."</span></div>
+            <br/>
+            <div><span class="code-fn">Workflow created</span> <span class="code-str">· 5 nodes · 4 edges</span></div>
+            <div><span class="code-fn2">Triggers active</span> <span class="code-str">· cron: 0 9 * * *</span></div>
+          </div>
+          <div class="code-panel">
+            <div class="code-comment"># Self-healing execution</div>
+            <div><span class="code-fn2">step 1</span> <span class="code-fn">passed</span> <span class="code-str">trigger.cron</span></div>
+            <div><span class="code-fn2">step 2</span> <span class="code-fn">passed</span> <span class="code-str">action.agent_task</span></div>
+            <div><span class="code-fn2">step 3</span> <span class="status-amber">failed</span> <span class="code-str">action.http_request</span></div>
+            <div><span class="code-fn2">       </span> <span class="code-fn">self-heal</span> <span class="code-str">→ fixed auth header</span></div>
+            <div><span class="code-fn2">step 3</span> <span class="code-fn">passed</span> <span class="code-str">action.http_request (retry)</span></div>
+            <div><span class="code-fn2">step 4</span> <span class="code-fn">passed</span> <span class="code-str">action.notification</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Node stats -->
+      <div class="fade-in wf-stats">
+        <div class="wf-stat">
+          <span class="wf-stat-num">11</span>
+          <span class="wf-stat-label">Triggers</span>
+          <span class="wf-stat-detail">cron, webhook, file, screen, git, email, calendar, clipboard, process, poll, manual</span>
+        </div>
+        <div class="wf-stat">
+          <span class="wf-stat-num">12</span>
+          <span class="wf-stat-label">Actions</span>
+          <span class="wf-stat-detail">HTTP, agent task, shell, code, Gmail, Telegram, Discord, notification, file write, run tool</span>
+        </div>
+        <div class="wf-stat">
+          <span class="wf-stat-num">9</span>
+          <span class="wf-stat-label">Logic</span>
+          <span class="wf-stat-detail">if/else, switch, loop, delay, merge, race, variable set/get, template render</span>
+        </div>
+        <div class="wf-stat">
+          <span class="wf-stat-num">8</span>
+          <span class="wf-stat-label">Transform + Error</span>
+          <span class="wf-stat-detail">JSON, CSV, regex, aggregate, map/filter, error handler, retry, fallback</span>
+        </div>
+      </div>
+
+      <div class="fade-in wf-cta">
+        <a href="/docs/workflows" class="btn-solid">Explore Workflows</a>
+        <a href="/docs/workflows#api-reference" class="btn-border">API Reference</a>
+      </div>
+
     </div>
   </section>
 
@@ -610,6 +745,122 @@ import Landing from '../layouts/Landing.astro';
   .footer-disclaimer a { color: var(--text-muted); text-decoration: underline; }
   .footer-disclaimer a:hover { color: #aaa; }
 
+  /* ── Workflow Showcase ────────────────────── */
+  .wf-section { background: var(--bg); }
+  .wf-header { text-align: center; margin-bottom: 3.5rem; }
+  .wf-badge {
+    display: inline-block;
+    font-family: var(--mono); font-size: 0.625rem; font-weight: 700;
+    color: #0a0a0a; background: var(--accent);
+    padding: 0.2rem 0.625rem; border-radius: 3px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .wf-heading {
+    font-size: 2.5rem; font-weight: 900; color: var(--text-primary);
+    margin: 0.5rem 0 1rem; letter-spacing: -0.03em;
+  }
+  .wf-sub {
+    font-size: 1.0625rem; line-height: 1.7; color: var(--text-secondary);
+    max-width: 640px; margin: 0 auto;
+  }
+
+  /* Methods row */
+  .wf-methods {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px;
+    background: var(--border); border-radius: 8px; overflow: hidden;
+    margin-bottom: 3rem;
+  }
+  .wf-method {
+    background: var(--bg-raised); padding: 2rem 1.5rem; text-align: center;
+  }
+  .wf-method-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .wf-method-title {
+    font-family: var(--mono); font-size: 0.8125rem; font-weight: 700;
+    color: var(--text-primary); margin: 0 0 0.5rem;
+  }
+  .wf-method-desc {
+    font-size: 0.8125rem; line-height: 1.6; color: var(--text-secondary); margin: 0;
+  }
+
+  /* Showcase: canvas + code */
+  .wf-showcase {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.5rem;
+    margin-bottom: 3rem; align-items: start;
+  }
+
+  /* Canvas mockup */
+  .wf-canvas-mock {
+    background: var(--bg-raised); border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+  }
+  .wf-canvas-header {
+    display: flex; align-items: center; padding: 0.625rem 1rem;
+    border-bottom: 1px solid var(--border); background: var(--bg-surface);
+  }
+  .wf-canvas-dots { display: flex; gap: 0.375rem; }
+  .wf-canvas-label {
+    margin-left: auto; font-family: var(--mono); font-size: 0.6875rem;
+    color: var(--text-muted); font-weight: 500;
+  }
+  .wf-canvas-body {
+    position: relative; height: 200px; padding: 2rem;
+    background:
+      radial-gradient(circle, var(--border) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  .wf-node {
+    position: absolute; display: flex; align-items: center; gap: 0.5rem;
+    background: var(--bg-surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.5rem 0.75rem;
+    font-family: var(--mono); font-size: 0.6875rem; color: var(--text-primary);
+    white-space: nowrap;
+  }
+  .wf-node-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .wf-edge {
+    position: absolute; border-top: 1px dashed var(--text-muted);
+  }
+  .wf-edge-1 { top: 74px; left: 170px; width: 70px; }
+  .wf-edge-2 { top: 74px; left: 420px; width: 40px; }
+  .wf-edge-3a {
+    top: 44px; left: 560px; width: 70px;
+    transform: rotate(-20deg); transform-origin: left;
+  }
+  .wf-edge-3b {
+    top: 104px; left: 560px; width: 70px;
+    transform: rotate(20deg); transform-origin: left;
+  }
+
+  /* Code stack */
+  .wf-code-stack { display: flex; flex-direction: column; gap: 1rem; }
+
+  /* Stats grid */
+  .wf-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--border); border-radius: 8px; overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+  .wf-stat {
+    background: var(--bg-raised); padding: 1.5rem; text-align: center;
+    display: flex; flex-direction: column; gap: 0.25rem;
+  }
+  .wf-stat-num {
+    font-family: var(--mono); font-size: 2rem; font-weight: 900;
+    color: var(--accent); line-height: 1;
+  }
+  .wf-stat-label {
+    font-family: var(--mono); font-size: 0.75rem; font-weight: 600;
+    color: var(--text-primary); text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .wf-stat-detail {
+    font-size: 0.6875rem; color: var(--text-muted); line-height: 1.5;
+  }
+
+  .wf-cta { display: flex; gap: 0.75rem; justify-content: center; }
+
   /* ── Responsive ──────────────────────────── */
   @media (max-width: 768px) {
     .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -618,6 +869,11 @@ import Landing from '../layouts/Landing.astro';
     .cap-small-grid { grid-template-columns: 1fr; }
     .nav-right { gap: 1rem; }
     .channel-grid { flex-direction: column; }
+    .wf-heading { font-size: 1.75rem; }
+    .wf-methods { grid-template-columns: 1fr; }
+    .wf-showcase { grid-template-columns: 1fr; }
+    .wf-canvas-mock { display: none; }
+    .wf-stats { grid-template-columns: 1fr 1fr; }
   }
 </style>
 
