@@ -18,6 +18,7 @@ Most AI tools are reactive. You open them, type a question, read the answer, and
 | Lifecycle | Session-based | Always running |
 | Initiative | Responds when asked | Monitors, schedules, acts proactively |
 | Environment access | Sandboxed or none | Browser, desktop, files, APIs |
+| Awareness | None | Continuous screen monitoring with struggle detection |
 | Memory | Cleared each session | Persistent SQLite knowledge vault |
 | Channels | One interface | Dashboard, Telegram, Discord, Voice |
 | Execution model | Single agent | Multi-agent hierarchy with parallel tasks |
@@ -58,6 +59,10 @@ JARVIS orchestrates a hierarchy of 11 specialist sub-agents. A primary agent del
 
 Every conversation contributes to a SQLite knowledge vault. JARVIS automatically extracts facts, preferences, events, and relationships from responses and injects relevant knowledge into future conversations.
 
+### Continuous Awareness
+
+JARVIS captures your screen every 7 seconds, runs OCR, and tracks your context in real-time. It detects when you're struggling — stuck on a syntax error, failing a build command, or hunting for a tool in Photoshop — and escalates to cloud vision for app-specific help. The suggestion engine delivers targeted advice: the exact line with the bug, the corrected terminal command, or the keyboard shortcut you need.
+
 ### Proactive Behavior
 
 JARVIS does not wait to be asked. It monitors Gmail and Google Calendar, executes scheduled commitments, queues research tasks, and sends you notifications through D-Bus (Linux), Telegram, or Discord.
@@ -69,28 +74,34 @@ Interact through the web dashboard, Telegram bot, Discord bot, or voice — all 
 ## Architecture Overview
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    JARVIS Daemon                         │
-│                                                         │
-│  ┌─────────────┐  ┌──────────────┐  ┌───────────────┐  │
-│  │  Agent       │  │  Memory      │  │  Proactive    │  │
-│  │  Orchestrator│  │  Vault       │  │  Engine       │  │
-│  │  (+ sub-     │  │  (SQLite)    │  │  (observers,  │  │
-│  │   agents)    │  │              │  │   scheduler)  │  │
-│  └──────┬───────┘  └──────────────┘  └───────────────┘  │
-│         │                                                │
-│  ┌──────▼───────────────────────────────────────────┐   │
-│  │              Tool Layer                           │   │
-│  │  Browser  Desktop  Files  Search  APIs  Shell    │   │
-│  └──────────────────────────────────────────────────┘   │
-└─────────────────────────┬───────────────────────────────┘
-                          │ WebSocket + REST
-        ┌─────────────────┼─────────────────┐
-        ▼                 ▼                 ▼
-   Web Dashboard      Telegram Bot      Discord Bot
-   (localhost:3142)   (@yourbot)        (#channel)
-                          │
-                     Voice (mic/TTS)
+┌───────────────────────────────────────────────────────────────┐
+│                       JARVIS Daemon                           │
+│                                                               │
+│  ┌─────────────┐  ┌──────────────┐  ┌───────────────┐        │
+│  │  Agent       │  │  Memory      │  │  Proactive    │        │
+│  │  Orchestrator│  │  Vault       │  │  Engine       │        │
+│  │  (+ sub-     │  │  (SQLite)    │  │  (observers,  │        │
+│  │   agents)    │  │              │  │   scheduler)  │        │
+│  └──────┬───────┘  └──────────────┘  └───────────────┘        │
+│         │                                                     │
+│  ┌──────▼───────────────────────────────────────────────┐     │
+│  │              Tool Layer                               │     │
+│  │  Browser  Desktop  Files  Search  APIs  Shell        │     │
+│  └──────────────────────────────────────────────────────┘     │
+│                                                               │
+│  ┌──────────────────────────────────────────────────────┐     │
+│  │          Awareness Engine                             │     │
+│  │  Capture → OCR → Context → Struggle → Cloud Vision   │     │
+│  │  → Suggestion Engine → Multi-Channel Delivery        │     │
+│  └──────────────────────────────────────────────────────┘     │
+└────────────────────────────┬──────────────────────────────────┘
+                             │ WebSocket + REST
+        ┌────────────────────┼────────────────────┐
+        ▼                    ▼                    ▼
+   Web Dashboard         Telegram Bot         Discord Bot
+   (localhost:3142)      (@yourbot)           (#channel)
+                             │
+                        Voice (mic/TTS)
 ```
 
 The daemon exposes a WebSocket server at `localhost:3142` by default. The web dashboard connects to this endpoint for real-time streaming. Telegram and Discord adapters connect the same agent loop to external messaging platforms. All channels share a unified conversation history.

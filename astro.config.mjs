@@ -45,6 +45,7 @@ export default defineConfig({
             { label: 'Voice Interface', slug: 'docs/voice' },
             { label: 'Multi-Agent System', slug: 'docs/multi-agent' },
             { label: 'Memory & Knowledge', slug: 'docs/memory' },
+            { label: 'Continuous Awareness', slug: 'docs/awareness' },
             { label: 'Proactive Agent', slug: 'docs/proactive-agent' },
           ],
         },

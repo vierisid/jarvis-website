@@ -33,8 +33,8 @@ import Landing from '../layouts/Landing.astro';
         </h1>
 
         <p class="hero-sub">
-          Browser control. Desktop automation. Voice interface. Multi-agent delegation.
-          Runs 24/7 in the background on your machine. Self-hosted. Open source.
+          Browser control. Desktop automation. Voice interface. Continuous screen awareness.
+          Multi-agent delegation. Runs 24/7 in the background on your machine. Self-hosted. Open source.
         </p>
 
         <div class="hero-actions">
@@ -89,6 +89,11 @@ import Landing from '../layouts/Landing.astro';
             <span class="status-label">memory</span>
             <span class="status-value"><span class="dot dot-green"></span><span class="status-green">847 facts</span></span>
             <span class="status-meta">12 entities · sqlite</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">awareness</span>
+            <span class="status-value"><span class="dot dot-green"></span><span class="status-green">active</span></span>
+            <span class="status-meta">ocr + vision · 7s cycle</span>
           </div>
           <div class="status-row status-row-last">
             <span class="status-label">proactive</span>
@@ -175,6 +180,29 @@ import Landing from '../layouts/Landing.astro';
             <div><span class="code-comment">stt:</span> <span class="code-str">"check my email"</span></div>
             <div><span class="code-comment">state:</span> <span class="code-fn">listening</span> <span class="code-comment">→</span> <span class="code-fn2">processing</span></div>
             <div><span class="code-comment">tts:</span> <span class="code-str">"You have 3 new emails..."</span></div>
+          </div>
+        </div>
+
+        <!-- Awareness -->
+        <div class="fade-in cap-row">
+          <div class="code-panel">
+            <div class="code-comment"># Awareness pipeline (every 7s)</div>
+            <div><span class="code-fn2">capture</span> <span class="code-str">screenshot → OCR → context</span></div>
+            <div><span class="code-fn2">detect</span> <span class="code-str">struggle in VS Code (score: 0.72)</span></div>
+            <div><span class="code-fn">escalate</span> <span class="code-str">→ cloud vision analysis</span></div>
+            <div><span class="status-amber">suggest</span> <span class="code-str">"Missing semicolon on line 42"</span></div>
+            <div><span class="code-fn">research</span> <span class="code-str">→ bgAgent deep analysis</span></div>
+          </div>
+          <div>
+            <div class="cap-title"><span class="dot dot-green"></span><h3>Continuous Awareness</h3></div>
+            <p class="cap-desc">
+              Captures your screen every 7 seconds with OCR text extraction. Detects when you're
+              struggling — stuck on a syntax error, failing a build, or searching for a tool in Photoshop.
+              Escalates to cloud vision for app-specific help: finds the bug, suggests the command, hints at the puzzle solution.
+            </p>
+            <div class="tags">
+              <span class="tag">screen capture</span><span class="tag">OCR</span><span class="tag">struggle detection</span><span class="tag">cloud vision</span><span class="tag">proactive help</span>
+            </div>
           </div>
         </div>
 
