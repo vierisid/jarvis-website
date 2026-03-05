@@ -14,12 +14,14 @@ import Landing from '../layouts/Landing.astro';
       <div class="nav-right">
         <a href="#capabilities" class="nav-link">Features</a>
         <a href="#workflows" class="nav-link">Workflows</a>
+        <a href="#goals" class="nav-link">Goals</a>
         <a href="/docs/introduction" class="nav-link">Docs</a>
         <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="nav-link">GitHub</a>
         <a href="/docs/installation" class="nav-install">INSTALL</a>
       </div>
     </div>
   </nav>
+  <div class="scroll-progress" id="scrollProgress"></div>
 
   <!-- HERO -->
   <section class="hero">
@@ -35,7 +37,7 @@ import Landing from '../layouts/Landing.astro';
 
         <p class="hero-sub">
           Browser control. Desktop automation. Voice interface. Continuous screen awareness.
-          Workflow automation. Multi-agent delegation. Runs 24/7 in the background on your machine. Self-hosted. Open source.
+          Workflow automation. Autonomous goal pursuit. Multi-agent delegation. Runs 24/7 in the background on your machine. Self-hosted. Open source.
         </p>
 
         <div class="hero-actions">
@@ -57,7 +59,7 @@ import Landing from '../layouts/Landing.astro';
             <span class="dot dot-green dot-pulse"></span>
             <span class="status-title">System Status</span>
           </div>
-          <span class="status-time">02:14:33 UTC</span>
+          <span class="status-time" id="clock">--:--:-- UTC</span>
         </div>
 
         <div class="status-body">
@@ -97,244 +99,123 @@ import Landing from '../layouts/Landing.astro';
             <span class="status-meta">ocr + vision · 7s cycle</span>
           </div>
           <div class="status-row">
-            <span class="status-label">proactive</span>
-            <span class="status-value"><span class="dot dot-amber"></span><span class="status-amber">3 tasks</span></span>
-            <span class="status-meta">next: 14:00 · gmail watch</span>
-          </div>
-          <div class="status-row status-row-last">
             <span class="status-label">workflows</span>
             <span class="status-value"><span class="dot dot-green"></span><span class="status-green">4 active</span></span>
             <span class="status-meta">2 cron · 1 webhook · 1 screen</span>
           </div>
+          <div class="status-row status-row-last">
+            <span class="status-label">goals</span>
+            <span class="status-value"><span class="dot dot-green"></span><span class="status-green">3 active</span></span>
+            <span class="status-meta">1 objective · 2 key results</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CAPABILITIES -->
-  <section id="capabilities" class="section section-border">
-    <div class="container">
-
-      <div class="fade-in section-head">
-        <p class="section-label">Capabilities</p>
-        <h2 class="section-heading">What JARVIS controls</h2>
-      </div>
-
-      <div class="cap-stack">
-        <!-- Browser -->
-        <div class="fade-in cap-row">
-          <div>
-            <div class="cap-title"><span class="dot dot-green"></span><h3>Browser Control</h3></div>
-            <p class="cap-desc">
-              Full Chromium automation via Chrome DevTools Protocol. Navigate pages, click elements,
-              fill forms, extract data, take screenshots. Stealth mode bypasses bot detection.
-              Auto-launches with an isolated profile.
-            </p>
-            <div class="tags">
-              <span class="tag">navigate</span><span class="tag">click</span><span class="tag">type</span><span class="tag">extract</span><span class="tag">screenshot</span>
-            </div>
-          </div>
-          <div class="code-panel">
-            <div class="code-comment"># JARVIS browsing autonomously</div>
-            <div><span class="code-fn">navigate</span> <span class="code-str">"https://github.com/trending"</span></div>
-            <div><span class="code-fn">extract</span> <span class="code-str">"top 5 trending repos"</span></div>
-            <div><span class="code-fn">click</span> <span class="code-str">"[3] Star button"</span></div>
-            <div><span class="code-fn">screenshot</span> <span class="code-str">full_page=true</span></div>
-          </div>
+  <!-- CAPABILITIES STRIP — Compact, hover-expand -->
+  <section id="capabilities" class="cap-strip">
+    <div class="cap-strip-inner">
+      <p class="cap-strip-label reveal reveal-up">Core Engine</p>
+      <div class="cap-grid reveal reveal-up">
+        <div class="cap-item">
+          <div class="cap-dot-wrap"><span class="dot dot-green"></span></div>
+          <div class="cap-name">Browser</div>
+          <div class="cap-one">CDP automation</div>
+          <div class="cap-detail">Navigate, click, fill, extract, screenshot. Stealth mode bypasses bot detection. Auto-launches with isolated profile.</div>
         </div>
-
-        <!-- Desktop -->
-        <div class="fade-in cap-row">
-          <div class="code-panel">
-            <div class="code-comment"># Control any Windows app</div>
-            <div><span class="code-fn2">list_windows</span></div>
-            <div class="code-comment">  [1] Slack · [2] VS Code · [3] Excel</div>
-            <div><span class="code-fn2">focus_window</span> <span class="code-str">"Excel"</span></div>
-            <div><span class="code-fn2">click_element</span> <span class="code-str">"[14] Cell A1"</span></div>
-            <div><span class="code-fn2">type_text</span> <span class="code-str">"Q4 Revenue"</span></div>
-          </div>
-          <div>
-            <div class="cap-title"><span class="dot dot-green"></span><h3>Desktop Control</h3></div>
-            <p class="cap-desc">
-              Native Windows application automation via FlaUI sidecar. List windows, click buttons,
-              read text, type keystrokes, take screenshots. Works with any desktop app including
-              legacy software. Multi-monitor support. Auto-launches from WSL.
-            </p>
-            <div class="tags">
-              <span class="tag">FlaUI</span><span class="tag">.NET 8</span><span class="tag">TCP 9224</span><span class="tag">WSL bridge</span>
-            </div>
-          </div>
+        <div class="cap-item">
+          <div class="cap-dot-wrap"><span class="dot dot-green"></span></div>
+          <div class="cap-name">Desktop</div>
+          <div class="cap-one">FlaUI sidecar</div>
+          <div class="cap-detail">Native Windows app control via .NET 8 sidecar. Any button, any text field, any app. Multi-monitor support.</div>
         </div>
-
-        <!-- Voice -->
-        <div class="fade-in cap-row">
-          <div>
-            <div class="cap-title"><span class="dot dot-cyan"></span><h3>Voice Interface</h3></div>
-            <p class="cap-desc">
-              "Hey JARVIS" wake word detection via ONNX neural network. Speech-to-text via
-              OpenAI Whisper, Groq, or local models. Text-to-speech via Edge TTS. Binary
-              WebSocket protocol for streaming audio.
-            </p>
-            <div class="tags">
-              <span class="tag">wake word</span><span class="tag">whisper STT</span><span class="tag">edge TTS</span><span class="tag">binary WS</span>
-            </div>
-          </div>
-          <div class="code-panel">
-            <div class="code-comment"># Voice state machine</div>
-            <div><span class="code-comment">state:</span> <span class="code-fn2">idle</span> <span class="code-comment">→</span> <span class="status-amber">wake_detected</span></div>
-            <div><span class="code-comment">state:</span> <span class="status-amber">wake_detected</span> <span class="code-comment">→</span> <span class="code-fn">listening</span></div>
-            <div><span class="code-comment">stt:</span> <span class="code-str">"check my email"</span></div>
-            <div><span class="code-comment">state:</span> <span class="code-fn">listening</span> <span class="code-comment">→</span> <span class="code-fn2">processing</span></div>
-            <div><span class="code-comment">tts:</span> <span class="code-str">"You have 3 new emails..."</span></div>
-          </div>
+        <div class="cap-item">
+          <div class="cap-dot-wrap"><span class="dot dot-cyan"></span></div>
+          <div class="cap-name">Voice</div>
+          <div class="cap-one">Wake word + TTS</div>
+          <div class="cap-detail">"Hey JARVIS" ONNX detection. OpenAI Whisper STT. Edge TTS streaming. Binary WebSocket protocol.</div>
         </div>
-
-        <!-- Awareness -->
-        <div class="fade-in cap-row">
-          <div class="code-panel">
-            <div class="code-comment"># Awareness pipeline (every 7s)</div>
-            <div><span class="code-fn2">capture</span> <span class="code-str">screenshot → OCR → context</span></div>
-            <div><span class="code-fn2">detect</span> <span class="code-str">struggle in VS Code (score: 0.72)</span></div>
-            <div><span class="code-fn">escalate</span> <span class="code-str">→ cloud vision analysis</span></div>
-            <div><span class="status-amber">suggest</span> <span class="code-str">"Missing semicolon on line 42"</span></div>
-            <div><span class="code-fn">research</span> <span class="code-str">→ bgAgent deep analysis</span></div>
-          </div>
-          <div>
-            <div class="cap-title"><span class="dot dot-green"></span><h3>Continuous Awareness</h3></div>
-            <p class="cap-desc">
-              Captures your screen every 7 seconds with OCR text extraction. Detects when you're
-              struggling — stuck on a syntax error, failing a build, or searching for a tool in Photoshop.
-              Escalates to cloud vision for app-specific help: finds the bug, suggests the command, hints at the puzzle solution.
-            </p>
-            <div class="tags">
-              <span class="tag">screen capture</span><span class="tag">OCR</span><span class="tag">struggle detection</span><span class="tag">cloud vision</span><span class="tag">proactive help</span>
-            </div>
-          </div>
+        <div class="cap-item">
+          <div class="cap-dot-wrap"><span class="dot dot-green"></span></div>
+          <div class="cap-name">Awareness</div>
+          <div class="cap-one">Screen OCR 7s</div>
+          <div class="cap-detail">Captures screen with OCR every 7 seconds. Detects struggles. Escalates to cloud vision for app-specific help.</div>
         </div>
-
-        <!-- Multi-Agent -->
-        <div class="fade-in cap-row">
-          <div class="code-panel">
-            <div class="code-comment"># Parallel agent delegation</div>
-            <div><span class="status-amber">manage_agents</span> {'{'}</div>
-            <div class="code-indent"><span class="code-str">agents:</span> [</div>
-            <div class="code-indent2">{'{ role: '}<span class="code-fn">"researcher"</span>{', task: '}<span class="code-str">"..." }</span></div>
-            <div class="code-indent2">{'{ role: '}<span class="code-fn">"coder"</span>{', task: '}<span class="code-str">"..." }</span></div>
-            <div class="code-indent2">{'{ role: '}<span class="code-fn">"analyst"</span>{', task: '}<span class="code-str">"..." }</span></div>
-            <div class="code-indent">]</div>
-            <div>{'}'}</div>
-          </div>
-          <div>
-            <div class="cap-title"><span class="dot dot-amber"></span><h3>Multi-Agent System</h3></div>
-            <p class="cap-desc">
-              Delegate to 11 specialist agent roles: researcher, coder, writer, analyst,
-              sysadmin, and more. Synchronous single-agent delegation or parallel
-              multi-agent teams. Each sub-agent has its own tool loop.
-            </p>
-            <div class="tags">
-              <span class="tag">delegate_task</span><span class="tag">manage_agents</span><span class="tag">11 roles</span>
-            </div>
-          </div>
+        <div class="cap-item">
+          <div class="cap-dot-wrap"><span class="dot dot-amber"></span></div>
+          <div class="cap-name">Agents</div>
+          <div class="cap-one">11 roles</div>
+          <div class="cap-detail">Parallel multi-agent delegation. Researcher, coder, writer, analyst, sysadmin, and more. Each has its own tool loop.</div>
         </div>
-      </div>
-
-      <!-- Smaller cards -->
-      <div class="fade-in cap-small-grid">
-        <div class="cap-small">
-          <div class="cap-title"><span class="dot dot-green"></span><h3>Proactive Agent</h3></div>
-          <p class="cap-desc-sm">
-            Commitment executor, Gmail and Calendar observers, D-Bus notifications.
-            JARVIS keeps promises, monitors your inbox, and alerts you — all autonomously.
-          </p>
+        <div class="cap-item">
+          <div class="cap-dot-wrap"><span class="dot dot-green"></span></div>
+          <div class="cap-name">Memory</div>
+          <div class="cap-one">SQLite vault</div>
+          <div class="cap-detail">Persistent facts, entities, relationships. Auto-extraction after every conversation. Semantic search context injection.</div>
         </div>
-        <div class="cap-small">
-          <div class="cap-title"><span class="dot dot-green"></span><h3>Memory & Knowledge</h3></div>
-          <p class="cap-desc-sm">
-            Persistent SQLite knowledge vault. Automatic fact extraction after every conversation.
-            Semantic search injects relevant context into every message.
-          </p>
+        <div class="cap-item">
+          <div class="cap-dot-wrap"><span class="dot dot-green"></span></div>
+          <div class="cap-name">Proactive</div>
+          <div class="cap-one">Commitments</div>
+          <div class="cap-detail">Gmail and Calendar observers. D-Bus notifications. Commitment executor. JARVIS keeps promises autonomously.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- WORKFLOW AUTOMATION — Featured Section -->
-  <section id="workflows" class="section section-border wf-section">
-    <div class="container">
+  <!-- WORKFLOW SPOTLIGHT — Cinematic -->
+  <section id="workflows" class="spotlight spotlight-wf">
+    <div class="spotlight-inner">
+      <div class="spot-grid">
+        <div>
+          <div class="spot-badge reveal reveal-left">NEW</div>
+          <h2 class="spot-heading reveal reveal-left">Your AI builds its<br/>own automations.</h2>
+          <p class="spot-sub reveal reveal-left">
+            Describe what you want in plain English — or drag-and-drop in a visual canvas.
+            50+ nodes. Every trigger type. Self-healing execution. Built into the daemon, not bolted on.
+          </p>
 
-      <div class="fade-in wf-header">
-        <div class="wf-badge">NEW</div>
-        <p class="section-label">Workflow Automation Engine</p>
-        <h2 class="wf-heading">Your AI builds its own automations.</h2>
-        <p class="wf-sub">
-          Describe what you want in plain English — or drag-and-drop in a visual canvas.
-          50+ nodes. Every trigger type. Self-healing execution. Built into the daemon, not bolted on.
-        </p>
-      </div>
-
-      <!-- Three creation methods -->
-      <div class="fade-in wf-methods">
-        <div class="wf-method">
-          <div class="wf-method-icon">&#x1F4AC;</div>
-          <h4 class="wf-method-title">Chat</h4>
-          <p class="wf-method-desc">Tell JARVIS what to automate. It builds the workflow, picks the nodes, wires the graph.</p>
-        </div>
-        <div class="wf-method">
-          <div class="wf-method-icon">&#x1F5B1;</div>
-          <h4 class="wf-method-title">Visual Builder</h4>
-          <p class="wf-method-desc">ReactFlow canvas with drag-and-drop. Node palette, live config, real-time execution monitor.</p>
-        </div>
-        <div class="wf-method">
-          <div class="wf-method-icon">&#x2699;</div>
-          <h4 class="wf-method-title">API</h4>
-          <p class="wf-method-desc">Full REST API. Create, version, execute, export as YAML. Programmatic control over everything.</p>
-        </div>
-      </div>
-
-      <!-- Canvas mockup + code examples side by side -->
-      <div class="fade-in wf-showcase">
-
-        <!-- Left: Canvas ASCII mockup -->
-        <div class="wf-canvas-mock">
-          <div class="wf-canvas-header">
-            <div class="wf-canvas-dots">
-              <div class="td td-red"></div>
-              <div class="td td-yellow"></div>
-              <div class="td td-green"></div>
+          <div class="wf-canvas-mock reveal reveal-scale" id="wfCanvas">
+            <div class="wf-canvas-header">
+              <div class="wf-canvas-dots">
+                <div class="td td-red"></div>
+                <div class="td td-yellow"></div>
+                <div class="td td-green"></div>
+              </div>
+              <span class="wf-canvas-label">Workflow Canvas</span>
             </div>
-            <span class="wf-canvas-label">Workflow Canvas</span>
-          </div>
-          <div class="wf-canvas-body">
-            <div class="wf-node wf-node-trigger" style="top: 24px; left: 20px;">
-              <div class="wf-node-dot" style="background: #3ecf8e;"></div>
-              <span>Cron · 9am daily</span>
-            </div>
-            <div class="wf-edge wf-edge-1"></div>
-            <div class="wf-node wf-node-action" style="top: 24px; left: 220px;">
-              <div class="wf-node-dot" style="background: #22d3ee;"></div>
-              <span>Agent: Summarize PRs</span>
-            </div>
-            <div class="wf-edge wf-edge-2"></div>
-            <div class="wf-node wf-node-logic" style="top: 24px; left: 440px;">
-              <div class="wf-node-dot" style="background: #e5a522;"></div>
-              <span>If urgent</span>
-            </div>
-            <div class="wf-edge wf-edge-3a"></div>
-            <div class="wf-edge wf-edge-3b"></div>
-            <div class="wf-node wf-node-action" style="top: -16px; left: 610px;">
-              <div class="wf-node-dot" style="background: #ef4444;"></div>
-              <span>Telegram alert</span>
-            </div>
-            <div class="wf-node wf-node-action" style="top: 64px; left: 610px;">
-              <div class="wf-node-dot" style="background: #22d3ee;"></div>
-              <span>Slack summary</span>
+            <div class="wf-canvas-body">
+              <div class="wf-node" style="top: 24px; left: 20px;" data-delay="0">
+                <div class="wf-node-dot" style="background: #3ecf8e;"></div>
+                <span>Cron · 9am daily</span>
+              </div>
+              <div class="wf-edge wf-edge-1" data-delay="200"></div>
+              <div class="wf-node" style="top: 24px; left: 220px;" data-delay="150">
+                <div class="wf-node-dot" style="background: #22d3ee;"></div>
+                <span>Agent: Summarize PRs</span>
+              </div>
+              <div class="wf-edge wf-edge-2" data-delay="400"></div>
+              <div class="wf-node" style="top: 24px; left: 440px;" data-delay="300">
+                <div class="wf-node-dot" style="background: #e5a522;"></div>
+                <span>If urgent</span>
+              </div>
+              <div class="wf-edge wf-edge-3a" data-delay="500"></div>
+              <div class="wf-edge wf-edge-3b" data-delay="500"></div>
+              <div class="wf-node" style="top: -16px; left: 610px;" data-delay="450">
+                <div class="wf-node-dot" style="background: #ef4444;"></div>
+                <span>Telegram alert</span>
+              </div>
+              <div class="wf-node" style="top: 64px; left: 610px;" data-delay="500">
+                <div class="wf-node-dot" style="background: #22d3ee;"></div>
+                <span>Slack summary</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Right: Code examples -->
-        <div class="wf-code-stack">
-          <div class="code-panel">
+        <div>
+          <div class="code-panel reveal reveal-right">
             <div class="code-comment"># Create via chat — just tell JARVIS</div>
             <div><span class="code-str">"Every morning at 9, check GitHub PRs.</span></div>
             <div><span class="code-str"> If anything is urgent, Telegram me.</span></div>
@@ -343,92 +224,159 @@ import Landing from '../layouts/Landing.astro';
             <div><span class="code-fn">Workflow created</span> <span class="code-str">· 5 nodes · 4 edges</span></div>
             <div><span class="code-fn2">Triggers active</span> <span class="code-str">· cron: 0 9 * * *</span></div>
           </div>
-          <div class="code-panel">
+          <div class="code-panel reveal reveal-right" style="margin-top: 1rem;">
             <div class="code-comment"># Self-healing execution</div>
             <div><span class="code-fn2">step 1</span> <span class="code-fn">passed</span> <span class="code-str">trigger.cron</span></div>
             <div><span class="code-fn2">step 2</span> <span class="code-fn">passed</span> <span class="code-str">action.agent_task</span></div>
             <div><span class="code-fn2">step 3</span> <span class="status-amber">failed</span> <span class="code-str">action.http_request</span></div>
-            <div><span class="code-fn2">       </span> <span class="code-fn">self-heal</span> <span class="code-str">→ fixed auth header</span></div>
+            <div><span class="code-fn2">       </span> <span class="code-fn">self-heal</span> <span class="code-str">&rarr; fixed auth header</span></div>
             <div><span class="code-fn2">step 3</span> <span class="code-fn">passed</span> <span class="code-str">action.http_request (retry)</span></div>
             <div><span class="code-fn2">step 4</span> <span class="code-fn">passed</span> <span class="code-str">action.notification</span></div>
           </div>
         </div>
       </div>
 
-      <!-- Node stats -->
-      <div class="fade-in wf-stats">
-        <div class="wf-stat">
-          <span class="wf-stat-num">11</span>
-          <span class="wf-stat-label">Triggers</span>
-          <span class="wf-stat-detail">cron, webhook, file, screen, git, email, calendar, clipboard, process, poll, manual</span>
+      <!-- Stats -->
+      <div class="spot-stats reveal reveal-up">
+        <div class="spot-stat">
+          <span class="spot-stat-num" data-count="11">0</span>
+          <span class="spot-stat-label">Triggers</span>
+          <span class="spot-stat-detail">cron, webhook, file, screen, git, email, calendar, clipboard, process, poll, manual</span>
         </div>
-        <div class="wf-stat">
-          <span class="wf-stat-num">12</span>
-          <span class="wf-stat-label">Actions</span>
-          <span class="wf-stat-detail">HTTP, agent task, shell, code, Gmail, Telegram, Discord, notification, file write, run tool</span>
+        <div class="spot-stat">
+          <span class="spot-stat-num" data-count="12">0</span>
+          <span class="spot-stat-label">Actions</span>
+          <span class="spot-stat-detail">HTTP, agent task, shell, code, Gmail, Telegram, Discord, notification, file write, run tool</span>
         </div>
-        <div class="wf-stat">
-          <span class="wf-stat-num">9</span>
-          <span class="wf-stat-label">Logic</span>
-          <span class="wf-stat-detail">if/else, switch, loop, delay, merge, race, variable set/get, template render</span>
+        <div class="spot-stat">
+          <span class="spot-stat-num" data-count="9">0</span>
+          <span class="spot-stat-label">Logic</span>
+          <span class="spot-stat-detail">if/else, switch, loop, delay, merge, race, variable set/get, template render</span>
         </div>
-        <div class="wf-stat">
-          <span class="wf-stat-num">8</span>
-          <span class="wf-stat-label">Transform + Error</span>
-          <span class="wf-stat-detail">JSON, CSV, regex, aggregate, map/filter, error handler, retry, fallback</span>
+        <div class="spot-stat">
+          <span class="spot-stat-num" data-count="8">0</span>
+          <span class="spot-stat-label">Transform + Error</span>
+          <span class="spot-stat-detail">JSON, CSV, regex, aggregate, map/filter, error handler, retry, fallback</span>
         </div>
       </div>
 
-      <div class="fade-in wf-cta">
+      <div class="spot-cta reveal reveal-up">
         <a href="/docs/workflows" class="btn-solid">Explore Workflows</a>
         <a href="/docs/workflows#api-reference" class="btn-border">API Reference</a>
       </div>
-
     </div>
   </section>
 
-  <!-- CHANNELS -->
-  <section class="section section-border">
-    <div class="container">
-      <div class="fade-in section-head">
-        <p class="section-label">Channels</p>
-        <h2 class="section-heading">Reachable everywhere</h2>
+  <!-- GOALS SPOTLIGHT — Different layout: centered header, tree left, code right -->
+  <section id="goals" class="spotlight spotlight-gl">
+    <div class="spotlight-inner">
+      <div class="spot-header-center">
+        <div class="spot-badge spot-badge-amber reveal reveal-up">NEW</div>
+        <h2 class="spot-heading reveal reveal-up">Your AI has ambitions now.</h2>
+        <p class="spot-sub reveal reveal-up" style="max-width: 620px; margin: 0 auto;">
+          OKR-style goal hierarchy with drill-sergeant accountability. JARVIS decomposes objectives into daily actions,
+          tracks progress from your screen activity, and escalates when you fall behind. Morning planning. Evening review. No mercy.
+        </p>
       </div>
 
-      <div class="fade-in channel-grid">
-        <div class="channel-card">
-          <div class="channel-head"><span class="dot dot-green"></span><span class="channel-name">Dashboard</span></div>
-          <span class="channel-meta">localhost:3142</span>
+      <div class="spot-grid spot-grid-gl">
+        <!-- Left: Goal tree (slides in from left) -->
+        <div class="reveal reveal-left">
+          <div class="gl-tree">
+            <div class="gl-tree-node gl-tree-obj">
+              <span class="gl-tree-dot" style="background: var(--accent);"></span>
+              <span class="gl-tree-label">Get fit by summer</span>
+              <span class="gl-tree-score gl-score-good">0.45</span>
+            </div>
+            <div class="gl-tree-branch"></div>
+            <div class="gl-tree-children">
+              <div class="gl-tree-node">
+                <span class="gl-tree-dot" style="background: var(--accent-cyan);"></span>
+                <span class="gl-tree-label">Run 5K under 25min</span>
+                <span class="gl-tree-score gl-score-warn">0.30</span>
+              </div>
+              <div class="gl-tree-node">
+                <span class="gl-tree-dot" style="background: var(--accent-cyan);"></span>
+                <span class="gl-tree-label">Lose 10 lbs</span>
+                <span class="gl-tree-score gl-score-good">0.60</span>
+              </div>
+              <div class="gl-tree-branch gl-tree-branch-deep"></div>
+              <div class="gl-tree-grandchildren">
+                <div class="gl-tree-node gl-tree-daily">
+                  <span class="gl-tree-dot" style="background: var(--accent-amber);"></span>
+                  <span class="gl-tree-label">Morning run</span>
+                  <span class="gl-tree-tag">daily</span>
+                </div>
+                <div class="gl-tree-node gl-tree-daily">
+                  <span class="gl-tree-dot" style="background: var(--accent-amber);"></span>
+                  <span class="gl-tree-label">Track calories</span>
+                  <span class="gl-tree-tag">daily</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="channel-card">
-          <div class="channel-head"><span class="dot dot-green"></span><span class="channel-name">Telegram</span></div>
-          <span class="channel-meta">voice + text + images</span>
+
+        <!-- Right: Code panels (slide in from right) -->
+        <div>
+          <div class="code-panel reveal reveal-right">
+            <div class="code-comment"># Just tell JARVIS your goal</div>
+            <div><span class="code-str">"I want to get fit by summer"</span></div>
+            <br/>
+            <div><span class="code-fn">Proposed OKR breakdown:</span></div>
+            <div><span class="code-fn2">  objective</span> <span class="code-str">Get fit by summer</span></div>
+            <div><span class="code-fn2">  key_result</span> <span class="code-str">Run 5K under 25min</span></div>
+            <div><span class="code-fn2">  key_result</span> <span class="code-str">Lose 10 lbs</span></div>
+            <div><span class="code-fn2">  daily_action</span> <span class="code-str">Morning run · Track calories</span></div>
+          </div>
+          <div class="code-panel reveal reveal-right" style="margin-top: 1rem;">
+            <div class="code-comment"># Drill sergeant doesn't sugarcoat</div>
+            <div><span class="status-amber">07:00</span> <span class="code-str">Morning plan generated</span></div>
+            <div><span class="code-fn2">  focus:</span> <span class="code-str">"Run 5K" is behind pace (0.30/1.0)</span></div>
+            <div><span class="code-fn2">  action:</span> <span class="code-str">30min run scheduled at 6:30am</span></div>
+            <br/>
+            <div><span class="status-amber">21:00</span> <span class="code-str">Evening review</span></div>
+            <div><span class="code-fn">  +0.05</span> <span class="code-str">Auto-detected: ran 3.2K via Strava</span></div>
+            <div class="code-warn">  MISSED: No calorie tracking today</div>
+          </div>
         </div>
-        <div class="channel-card">
-          <div class="channel-head"><span class="dot dot-green"></span><span class="channel-name">Discord</span></div>
-          <span class="channel-meta">bot commands + DMs</span>
+      </div>
+
+      <!-- Stats -->
+      <div class="spot-stats reveal reveal-up">
+        <div class="spot-stat">
+          <span class="spot-stat-num" data-count="5">0</span>
+          <span class="spot-stat-label">Goal Levels</span>
+          <span class="spot-stat-detail">objective, key result, milestone, task, daily action</span>
         </div>
-        <div class="channel-card">
-          <div class="channel-head"><span class="dot dot-green"></span><span class="channel-name">Gmail</span></div>
-          <span class="channel-meta">observer + read</span>
+        <div class="spot-stat">
+          <span class="spot-stat-num" data-count="0.7" data-decimal="true">0</span>
+          <span class="spot-stat-label">= Good Score</span>
+          <span class="spot-stat-detail">Google OKR scoring: 0.7 is on track, 1.0 means you aimed too low</span>
         </div>
-        <div class="channel-card">
-          <div class="channel-head"><span class="dot dot-green"></span><span class="channel-name">Calendar</span></div>
-          <span class="channel-meta">alerts + scheduling</span>
+        <div class="spot-stat">
+          <span class="spot-stat-num" data-count="2">0</span>
+          <span class="spot-stat-label">Daily Rhythm</span>
+          <span class="spot-stat-detail">morning plan + evening review, automated with drill sergeant tone</span>
         </div>
+        <div class="spot-stat">
+          <span class="spot-stat-num" data-count="4">0</span>
+          <span class="spot-stat-label">Escalation Stages</span>
+          <span class="spot-stat-detail">none &rarr; pressure &rarr; root cause &rarr; suggest kill</span>
+        </div>
+      </div>
+
+      <div class="spot-cta reveal reveal-up">
+        <a href="/docs/goals" class="btn-solid">Explore Goals</a>
+        <a href="/docs/goals#api-reference" class="btn-border">API Reference</a>
       </div>
     </div>
   </section>
 
-  <!-- SETUP -->
-  <section class="section section-border">
-    <div class="container-narrow">
-      <div class="fade-in section-head">
-        <p class="section-label">Setup</p>
-        <h2 class="section-heading">Three commands. That's it.</h2>
-      </div>
-
-      <div class="fade-in terminal">
+  <!-- SETUP + CTA — Merged -->
+  <section class="setup-section">
+    <div class="setup-inner">
+      <div class="terminal reveal reveal-up">
         <div class="terminal-header">
           <div class="terminal-dots">
             <div class="td td-red"></div>
@@ -451,17 +399,25 @@ import Landing from '../layouts/Landing.astro';
           <div class="code-comment">   Dashboard: http://localhost:3142</div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- CTA -->
-  <section class="section section-border">
-    <div class="fade-in cta">
-      <h2 class="cta-heading">Deploy your own JARVIS.</h2>
-      <p class="cta-sub">Open source. Self-hosted. No subscriptions. Full ownership of your AI.</p>
-      <div class="cta-actions">
-        <a href="/docs/installation" class="btn-solid">Read the Docs</a>
-        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="btn-border">Star on GitHub</a>
+      <div class="channel-row reveal reveal-up">
+        <p class="channel-label">Reachable on</p>
+        <div class="channel-pills">
+          <span class="channel-pill"><span class="dot dot-green"></span> Dashboard <span class="channel-meta">:3142</span></span>
+          <span class="channel-pill"><span class="dot dot-green"></span> Telegram</span>
+          <span class="channel-pill"><span class="dot dot-green"></span> Discord</span>
+          <span class="channel-pill"><span class="dot dot-green"></span> Gmail</span>
+          <span class="channel-pill"><span class="dot dot-green"></span> Calendar</span>
+        </div>
+      </div>
+
+      <div class="cta reveal reveal-up">
+        <h2 class="cta-heading">Deploy your own JARVIS.</h2>
+        <p class="cta-sub">Open source. Self-hosted. No subscriptions. Full ownership of your AI.</p>
+        <div class="cta-actions">
+          <a href="/docs/installation" class="btn-solid">Read the Docs</a>
+          <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="btn-border">Star on GitHub</a>
+        </div>
       </div>
     </div>
   </section>
@@ -522,14 +478,28 @@ import Landing from '../layouts/Landing.astro';
   }
   .nav-install:hover { opacity: 0.85; }
 
+  /* Scroll progress bar */
+  .scroll-progress {
+    position: fixed; top: 56px; left: 0; height: 2px;
+    background: var(--accent); z-index: 101; width: 0%;
+    transition: width 0.1s linear;
+  }
+
   /* ── Hero ─────────────────────────────────── */
   .hero {
     min-height: 100vh; display: flex; align-items: center;
-    padding: 7rem 1.5rem 5rem;
+    padding: 7rem 1.5rem 5rem; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 700px 500px at 20% 40%, rgba(62,207,142,0.05), transparent),
+      radial-gradient(ellipse 500px 400px at 80% 60%, rgba(34,211,238,0.04), transparent);
   }
   .hero-grid {
     max-width: 1120px; margin: 0 auto; width: 100%;
     display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    position: relative; z-index: 1;
   }
   .label {
     font-family: var(--mono); font-size: 0.75rem; font-weight: 600;
@@ -612,57 +582,105 @@ import Landing from '../layouts/Landing.astro';
   .status-cyan { color: var(--accent-cyan); font-weight: 500; }
   .status-amber { color: var(--accent-amber); font-weight: 500; }
 
-  /* ── Sections ─────────────────────────────── */
-  .section { padding: 5rem 1.5rem; }
-  .section-border { border-top: 1px solid var(--border); }
-  .container { max-width: 1120px; margin: 0 auto; }
-  .container-narrow { max-width: 720px; margin: 0 auto; }
-  .section-head { margin-bottom: 3rem; }
-  .section-label {
+  /* ── Capability Strip ────────────────────── */
+  .cap-strip {
+    border-top: 1px solid var(--border);
+    padding: 3rem 1.5rem;
+  }
+  .cap-strip-inner { max-width: 1120px; margin: 0 auto; }
+  .cap-strip-label {
     font-family: var(--mono); font-size: 0.6875rem; font-weight: 600;
     color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase;
-    margin: 0 0 0.75rem;
+    margin: 0 0 1.5rem;
   }
-  .section-heading {
-    font-size: 2rem; font-weight: 800; color: var(--text-primary);
-    margin: 0; letter-spacing: -0.02em;
+  .cap-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px;
+    background: var(--border); border-radius: 8px; overflow: hidden;
+  }
+  .cap-item {
+    background: var(--bg-raised); padding: 1.25rem; text-align: center;
+    transition: background 0.3s ease, transform 0.3s ease;
+    cursor: default;
+  }
+  .cap-item:hover { background: var(--bg-surface); transform: translateY(-2px); }
+  .cap-dot-wrap { margin-bottom: 0.625rem; }
+  .cap-name {
+    font-family: var(--mono); font-size: 0.6875rem; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 0.25rem;
+  }
+  .cap-one { font-size: 0.625rem; color: var(--text-muted); line-height: 1.4; }
+  .cap-detail {
+    max-height: 0; overflow: hidden; transition: max-height 0.4s ease, margin-top 0.4s ease;
+    font-size: 0.625rem; color: var(--text-secondary); line-height: 1.5;
+    margin-top: 0;
+  }
+  .cap-item:hover .cap-detail { max-height: 100px; margin-top: 0.625rem; }
+
+  /* ── Spotlight Sections ──────────────────── */
+  .spotlight {
+    min-height: 85vh; padding: 6rem 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .spotlight-wf {
+    background: linear-gradient(180deg, var(--bg) 0%, rgba(62,207,142,0.02) 50%, var(--bg) 100%);
+  }
+  .spotlight-gl {
+    background: linear-gradient(180deg, var(--bg) 0%, rgba(229,165,34,0.02) 50%, var(--bg) 100%);
+  }
+  .spotlight-inner { max-width: 1120px; margin: 0 auto; width: 100%; }
+
+  .spot-badge {
+    display: inline-block;
+    font-family: var(--mono); font-size: 0.625rem; font-weight: 700;
+    color: #0a0a0a; background: var(--accent);
+    padding: 0.2rem 0.625rem; border-radius: 3px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .spot-badge-amber { background: var(--accent-amber); }
+  .spot-heading {
+    font-size: 2.5rem; font-weight: 900; color: var(--text-primary);
+    margin: 0 0 1rem; letter-spacing: -0.03em; line-height: 1.1;
+  }
+  .spot-sub {
+    font-size: 1.0625rem; line-height: 1.7; color: var(--text-secondary);
+    margin: 0 0 2.5rem; max-width: 480px;
+  }
+  .spot-header-center {
+    text-align: center; margin-bottom: 3rem;
   }
 
-  /* ── Capability blocks ────────────────────── */
-  .cap-stack {
-    display: flex; flex-direction: column; gap: 1px;
-    background: var(--border);
+  .spot-grid {
+    display: grid; grid-template-columns: 1.3fr 1fr; gap: 3rem;
+    align-items: start; margin-bottom: 3rem;
   }
-  .cap-row {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
-    background: var(--bg); padding: 3rem 0; align-items: start;
-  }
-  .cap-title {
-    display: flex; align-items: center; gap: 0.625rem; margin-bottom: 1rem;
-  }
-  .cap-title h3 {
-    font-family: var(--mono); font-size: 0.9375rem; font-weight: 700;
-    color: var(--text-primary); margin: 0;
-  }
-  .cap-desc {
-    font-size: 0.9375rem; line-height: 1.7; color: var(--text-secondary);
-    margin: 0 0 1.25rem;
-  }
-  .cap-desc-sm {
-    font-size: 0.875rem; line-height: 1.65; color: var(--text-secondary); margin: 0;
-  }
-  .tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .tag {
-    font-family: var(--mono); font-size: 0.6875rem; color: var(--text-muted);
-    background: var(--bg-raised); border: 1px solid var(--border);
-    padding: 0.25rem 0.5rem; border-radius: 3px;
-  }
+  .spot-grid-gl { grid-template-columns: 1fr 1.3fr; }
 
-  .cap-small-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-    background: var(--border); margin-top: 1px;
+  /* Stats grid */
+  .spot-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--border); border-radius: 8px; overflow: hidden;
+    margin-bottom: 2.5rem;
   }
-  .cap-small { background: var(--bg); padding: 2rem; }
+  .spot-stat {
+    background: var(--bg-raised); padding: 1.5rem; text-align: center;
+    display: flex; flex-direction: column; gap: 0.25rem;
+  }
+  .spot-stat-num {
+    font-family: var(--mono); font-size: 2rem; font-weight: 900;
+    color: var(--accent); line-height: 1;
+  }
+  .spot-stat-label {
+    font-family: var(--mono); font-size: 0.75rem; font-weight: 600;
+    color: var(--text-primary); text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .spot-stat-detail {
+    font-size: 0.6875rem; color: var(--text-muted); line-height: 1.5;
+  }
+  .spot-cta { display: flex; gap: 0.75rem; justify-content: center; }
 
   /* ── Code panels ──────────────────────────── */
   .code-panel {
@@ -674,40 +692,121 @@ import Landing from '../layouts/Landing.astro';
   .code-fn { color: var(--accent); }
   .code-fn2 { color: var(--accent-cyan); }
   .code-str { color: var(--text-secondary); }
-  .code-indent { padding-left: 1rem; }
-  .code-indent2 { padding-left: 2rem; }
+  .code-warn { color: var(--accent-red); }
 
-  /* ── Channel grid ─────────────────────────── */
-  .channel-grid { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-  .channel-card {
-    font-family: var(--mono); font-size: 0.8125rem;
+  /* ── Workflow Canvas Mockup ────────────── */
+  .wf-canvas-mock {
     background: var(--bg-raised); border: 1px solid var(--border);
-    border-radius: 6px; padding: 1rem 1.25rem; flex: 1; min-width: 180px;
+    border-radius: 8px; overflow: hidden;
   }
-  .channel-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.625rem; }
-  .channel-name { font-weight: 600; color: var(--text-primary); }
-  .channel-meta { color: var(--text-muted); }
+  .wf-canvas-header {
+    display: flex; align-items: center; padding: 0.625rem 1rem;
+    border-bottom: 1px solid var(--border); background: var(--bg-surface);
+  }
+  .wf-canvas-dots { display: flex; gap: 0.375rem; }
+  .td { width: 10px; height: 10px; border-radius: 50%; }
+  .td-red { background: #ff5f56; }
+  .td-yellow { background: #ffbd2e; }
+  .td-green { background: #27c93f; }
+  .wf-canvas-label {
+    margin-left: auto; font-family: var(--mono); font-size: 0.6875rem;
+    color: var(--text-muted); font-weight: 500;
+  }
+  .wf-canvas-body {
+    position: relative; height: 200px; padding: 2rem;
+    background: radial-gradient(circle, var(--border) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  .wf-node {
+    position: absolute; display: flex; align-items: center; gap: 0.5rem;
+    background: var(--bg-surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.5rem 0.75rem;
+    font-family: var(--mono); font-size: 0.6875rem; color: var(--text-primary);
+    white-space: nowrap;
+    opacity: 0; transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .wf-node.anim-visible { opacity: 1; transform: none !important; }
+  .wf-node-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .wf-edge { position: absolute; border-top: 1px dashed var(--text-muted); opacity: 0; transition: opacity 0.6s ease; }
+  .wf-edge.anim-visible { opacity: 1; }
+  .wf-edge-1 { top: 74px; left: 170px; width: 70px; }
+  .wf-edge-2 { top: 74px; left: 420px; width: 40px; }
+  .wf-edge-3a {
+    top: 44px; left: 560px; width: 70px;
+    transform: rotate(-20deg); transform-origin: left;
+  }
+  .wf-edge-3b {
+    top: 104px; left: 560px; width: 70px;
+    transform: rotate(20deg); transform-origin: left;
+  }
 
-  /* ── Terminal ─────────────────────────────── */
+  /* ── Goal Tree ────────────────────────────── */
+  .gl-tree { font-family: var(--mono); font-size: 0.75rem; }
+  .gl-tree-node {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.5rem 0.75rem; border: 1px solid var(--border);
+    border-radius: 6px; background: var(--bg-surface); margin-bottom: 0.5rem;
+  }
+  .gl-tree-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .gl-tree-label { color: var(--text-primary); flex: 1; }
+  .gl-tree-score {
+    font-weight: 700; font-size: 0.6875rem;
+    padding: 0.125rem 0.375rem; border-radius: 3px;
+  }
+  .gl-score-good { color: var(--accent); background: rgba(62, 207, 142, 0.1); }
+  .gl-score-warn { color: var(--accent-amber); background: rgba(229, 165, 34, 0.1); }
+  .gl-tree-tag {
+    font-size: 0.5625rem; color: var(--text-muted);
+    border: 1px solid var(--border); padding: 0.1rem 0.375rem;
+    border-radius: 3px; text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .gl-tree-branch {
+    width: 1px; height: 12px; background: var(--border); margin-left: 1.5rem;
+  }
+  .gl-tree-branch-deep { margin-left: 2.5rem; }
+  .gl-tree-children { padding-left: 1rem; }
+  .gl-tree-grandchildren { padding-left: 1rem; }
+
+  /* ── Setup + CTA Section ──────────────── */
+  .setup-section {
+    border-top: 1px solid var(--border);
+    padding: 5rem 1.5rem;
+  }
+  .setup-inner { max-width: 720px; margin: 0 auto; }
+
   .terminal {
     font-family: var(--mono); font-size: 0.8125rem;
     background: var(--bg-raised); border: 1px solid var(--border);
-    border-radius: 8px; overflow: hidden;
+    border-radius: 8px; overflow: hidden; margin-bottom: 2.5rem;
   }
   .terminal-header {
     display: flex; align-items: center; padding: 0.625rem 1rem;
     border-bottom: 1px solid var(--border); background: var(--bg-surface);
   }
   .terminal-dots { display: flex; gap: 0.375rem; }
-  .td { width: 10px; height: 10px; border-radius: 50%; }
-  .td-red { background: #ff5f56; }
-  .td-yellow { background: #ffbd2e; }
-  .td-green { background: #27c93f; }
   .terminal-label { margin-left: auto; font-size: 0.6875rem; color: var(--text-muted); }
   .terminal-body { padding: 1.25rem 1.25rem; line-height: 2; }
 
+  /* Channel pills */
+  .channel-row { text-align: center; margin-bottom: 3rem; }
+  .channel-label {
+    font-family: var(--mono); font-size: 0.6875rem; font-weight: 600;
+    color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase;
+    margin: 0 0 1rem;
+  }
+  .channel-pills { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
+  .channel-pill {
+    font-family: var(--mono); font-size: 0.75rem;
+    display: inline-flex; align-items: center; gap: 0.375rem;
+    background: var(--bg-raised); border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.5rem 0.875rem; color: var(--text-primary);
+    transition: background 0.2s;
+  }
+  .channel-pill:hover { background: var(--bg-surface); }
+  .channel-meta { font-size: 0.5625rem; color: var(--text-muted); margin-left: 0.25rem; }
+
   /* ── CTA ──────────────────────────────────── */
-  .cta { max-width: 560px; margin: 0 auto; text-align: center; }
+  .cta { text-align: center; }
   .cta-heading {
     font-size: 2.25rem; font-weight: 900; color: var(--text-primary);
     margin: 0 0 1rem; letter-spacing: -0.03em;
@@ -745,142 +844,76 @@ import Landing from '../layouts/Landing.astro';
   .footer-disclaimer a { color: var(--text-muted); text-decoration: underline; }
   .footer-disclaimer a:hover { color: #aaa; }
 
-  /* ── Workflow Showcase ────────────────────── */
-  .wf-section { background: var(--bg); }
-  .wf-header { text-align: center; margin-bottom: 3.5rem; }
-  .wf-badge {
-    display: inline-block;
-    font-family: var(--mono); font-size: 0.625rem; font-weight: 700;
-    color: #0a0a0a; background: var(--accent);
-    padding: 0.2rem 0.625rem; border-radius: 3px;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-  .wf-heading {
-    font-size: 2.5rem; font-weight: 900; color: var(--text-primary);
-    margin: 0.5rem 0 1rem; letter-spacing: -0.03em;
-  }
-  .wf-sub {
-    font-size: 1.0625rem; line-height: 1.7; color: var(--text-secondary);
-    max-width: 640px; margin: 0 auto;
-  }
-
-  /* Methods row */
-  .wf-methods {
-    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px;
-    background: var(--border); border-radius: 8px; overflow: hidden;
-    margin-bottom: 3rem;
-  }
-  .wf-method {
-    background: var(--bg-raised); padding: 2rem 1.5rem; text-align: center;
-  }
-  .wf-method-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
-  .wf-method-title {
-    font-family: var(--mono); font-size: 0.8125rem; font-weight: 700;
-    color: var(--text-primary); margin: 0 0 0.5rem;
-  }
-  .wf-method-desc {
-    font-size: 0.8125rem; line-height: 1.6; color: var(--text-secondary); margin: 0;
-  }
-
-  /* Showcase: canvas + code */
-  .wf-showcase {
-    display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.5rem;
-    margin-bottom: 3rem; align-items: start;
-  }
-
-  /* Canvas mockup */
-  .wf-canvas-mock {
-    background: var(--bg-raised); border: 1px solid var(--border);
-    border-radius: 8px; overflow: hidden;
-  }
-  .wf-canvas-header {
-    display: flex; align-items: center; padding: 0.625rem 1rem;
-    border-bottom: 1px solid var(--border); background: var(--bg-surface);
-  }
-  .wf-canvas-dots { display: flex; gap: 0.375rem; }
-  .wf-canvas-label {
-    margin-left: auto; font-family: var(--mono); font-size: 0.6875rem;
-    color: var(--text-muted); font-weight: 500;
-  }
-  .wf-canvas-body {
-    position: relative; height: 200px; padding: 2rem;
-    background:
-      radial-gradient(circle, var(--border) 1px, transparent 1px);
-    background-size: 20px 20px;
-  }
-  .wf-node {
-    position: absolute; display: flex; align-items: center; gap: 0.5rem;
-    background: var(--bg-surface); border: 1px solid var(--border);
-    border-radius: 6px; padding: 0.5rem 0.75rem;
-    font-family: var(--mono); font-size: 0.6875rem; color: var(--text-primary);
-    white-space: nowrap;
-  }
-  .wf-node-dot {
-    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-  }
-  .wf-edge {
-    position: absolute; border-top: 1px dashed var(--text-muted);
-  }
-  .wf-edge-1 { top: 74px; left: 170px; width: 70px; }
-  .wf-edge-2 { top: 74px; left: 420px; width: 40px; }
-  .wf-edge-3a {
-    top: 44px; left: 560px; width: 70px;
-    transform: rotate(-20deg); transform-origin: left;
-  }
-  .wf-edge-3b {
-    top: 104px; left: 560px; width: 70px;
-    transform: rotate(20deg); transform-origin: left;
-  }
-
-  /* Code stack */
-  .wf-code-stack { display: flex; flex-direction: column; gap: 1rem; }
-
-  /* Stats grid */
-  .wf-stats {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
-    background: var(--border); border-radius: 8px; overflow: hidden;
-    margin-bottom: 2.5rem;
-  }
-  .wf-stat {
-    background: var(--bg-raised); padding: 1.5rem; text-align: center;
-    display: flex; flex-direction: column; gap: 0.25rem;
-  }
-  .wf-stat-num {
-    font-family: var(--mono); font-size: 2rem; font-weight: 900;
-    color: var(--accent); line-height: 1;
-  }
-  .wf-stat-label {
-    font-family: var(--mono); font-size: 0.75rem; font-weight: 600;
-    color: var(--text-primary); text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-  .wf-stat-detail {
-    font-size: 0.6875rem; color: var(--text-muted); line-height: 1.5;
-  }
-
-  .wf-cta { display: flex; gap: 0.75rem; justify-content: center; }
-
   /* ── Responsive ──────────────────────────── */
   @media (max-width: 768px) {
     .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .hero-heading { font-size: 2.25rem; }
-    .cap-row { grid-template-columns: 1fr; gap: 1.5rem; }
-    .cap-small-grid { grid-template-columns: 1fr; }
-    .nav-right { gap: 1rem; }
-    .channel-grid { flex-direction: column; }
-    .wf-heading { font-size: 1.75rem; }
-    .wf-methods { grid-template-columns: 1fr; }
-    .wf-showcase { grid-template-columns: 1fr; }
+    .cap-grid { grid-template-columns: repeat(3, 1fr); }
+    .spot-heading { font-size: 1.75rem; }
+    .spot-grid, .spot-grid-gl { grid-template-columns: 1fr; }
     .wf-canvas-mock { display: none; }
-    .wf-stats { grid-template-columns: 1fr 1fr; }
+    .spot-stats { grid-template-columns: 1fr 1fr; }
+    .nav-right { gap: 1rem; }
   }
 </style>
 
 <script>
+  // Copy install command
   document.getElementById('copy-btn')?.addEventListener('click', function() {
     navigator.clipboard.writeText('curl -fsSL https://raw.githubusercontent.com/vierisid/jarvis/main/install.sh | bash');
     this.textContent = 'copied';
     setTimeout(() => { this.textContent = 'copy'; }, 1500);
   });
+
+  // Live clock in status panel
+  function updateClock() {
+    const el = document.getElementById('clock');
+    if (el) el.textContent = new Date().toUTCString().slice(17, 25) + ' UTC';
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // Scroll progress bar
+  window.addEventListener('scroll', () => {
+    const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    const bar = document.getElementById('scrollProgress');
+    if (bar) bar.style.width = pct + '%';
+  });
+
+  // Workflow canvas nodes animate in when canvas becomes visible
+  const canvasObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.wf-node, .wf-edge').forEach(el => {
+          const delay = parseInt(el.dataset.delay || '0');
+          setTimeout(() => el.classList.add('anim-visible'), delay);
+        });
+        canvasObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  const wfCanvas = document.getElementById('wfCanvas');
+  if (wfCanvas) canvasObs.observe(wfCanvas);
+
+  // Count-up animation for stat numbers
+  const countObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.spot-stat-num').forEach(el => {
+          const target = parseFloat(el.dataset.count);
+          if (isNaN(target)) return;
+          const isDecimal = el.dataset.decimal === 'true';
+          let current = 0;
+          const step = target / 25;
+          const interval = setInterval(() => {
+            current += step;
+            if (current >= target) { current = target; clearInterval(interval); }
+            el.textContent = isDecimal ? current.toFixed(1) : Math.round(current).toString();
+          }, 40);
+        });
+        countObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.spot-stats').forEach(el => countObs.observe(el));
 </script>

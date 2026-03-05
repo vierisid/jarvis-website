@@ -60,7 +60,22 @@ const {
         --mono: 'JetBrains Mono', ui-monospace, monospace;
       }
 
-      /* ── Scroll fade ────────────────────────── */
+      /* ── Scroll reveal animations ────────────── */
+      .reveal {
+        opacity: 0;
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: none !important;
+      }
+      .reveal-up { transform: translateY(32px); }
+      .reveal-left { transform: translateX(-48px); }
+      .reveal-right { transform: translateX(48px); }
+      .reveal-scale { transform: scale(0.94); }
+      .reveal-fade { transform: none; }
+
+      /* Legacy compat */
       .fade-in {
         opacity: 0;
         transform: translateY(12px);
@@ -106,7 +121,7 @@ const {
         },
         { threshold: 0.08, rootMargin: '0px 0px -20px 0px' }
       );
-      document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+      document.querySelectorAll('.fade-in, .reveal').forEach((el) => observer.observe(el));
     </script>
   </body>
 </html>

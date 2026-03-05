@@ -47,6 +47,7 @@ export default defineConfig({
             { label: 'Memory & Knowledge', slug: 'docs/memory' },
             { label: 'Continuous Awareness', slug: 'docs/awareness' },
             { label: 'Workflow Automation', slug: 'docs/workflows' },
+            { label: 'Autonomous Goals', slug: 'docs/goals' },
             { label: 'Proactive Agent', slug: 'docs/proactive-agent' },
           ],
         },
