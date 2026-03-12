@@ -34,7 +34,7 @@ Displays the health of all daemon services:
 
 - Daemon uptime and PID
 - Browser connection status (Chromium CDP)
-- Desktop sidecar status (FlaUI)
+- Desktop sidecar status (Go sidecar)
 - Voice interface state (listening/idle)
 - Active agents and queue depth
 - Memory vault statistics

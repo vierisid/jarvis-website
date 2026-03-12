@@ -7,7 +7,7 @@ This guide assumes you have completed [installation](/docs/installation). If you
 
 ## Step 1 — Run Onboarding
 
-If you used the one-liner installer, onboarding ran automatically. If you installed manually or want to reconfigure, run it again at any time:
+`jarvis onboard` is the interactive wizard for first-time setup and can be re-run any time to update your configuration:
 
 ```bash
 jarvis onboard
@@ -15,13 +15,16 @@ jarvis onboard
 
 The wizard walks through:
 
-1. **Anthropic API key** — paste your key from [console.anthropic.com](https://console.anthropic.com)
-2. **LLM model** — defaults to `claude-opus-4-6`, press Enter to accept
-3. **Dashboard port** — defaults to `3142`, press Enter to accept
-4. **Telegram bot token** — optional, press Enter to skip for now
-5. **Discord bot token** — optional, press Enter to skip for now
-6. **Voice** — enable TTS and STT (TTS requires no API key)
-7. **Autostart** — install a systemd user service (Linux) or launchd plist (macOS)
+1. **About you** — your name and what you want to call your assistant
+2. **LLM provider** — choose Anthropic, OpenAI, Google Gemini, or Ollama. Each offers a model selection menu (e.g. `claude-sonnet-4-6`, `gpt-5.4`, `gemini-3-flash`, `llama3`)
+3. **API key** — paste the key for your chosen provider
+4. **Fallback providers** — optional backup LLM providers
+5. **Voice** — enable TTS (Edge TTS free, or ElevenLabs premium) and STT
+6. **Channels** — Telegram and Discord bot tokens (optional)
+7. **Personality** — core traits and behavior style
+8. **Authority** — autonomy level (1-10)
+9. **Dashboard port** — defaults to `3142`
+10. **Autostart** — install a systemd user service (Linux) or launchd plist (macOS)
 
 Your config is saved to `~/.jarvis/config.yaml`.
 

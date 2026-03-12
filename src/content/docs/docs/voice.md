@@ -20,14 +20,14 @@ Audio travels over the existing WebSocket connection using a binary protocol alo
 
 JARVIS uses `edge-tts-universal` by default. This library proxies Microsoft Edge's TTS service and is completely free — no API key, no account, no rate limits for personal use.
 
-Available voices include hundreds of neural voices across dozens of languages. The default voice is `en-US-GuyNeural`.
+Available voices include hundreds of neural voices across dozens of languages. The default voice is `en-US-AriaNeural`.
 
 #### Selecting a Voice
 
 ```yaml
 tts:
   provider: edge-tts
-  voice: en-US-GuyNeural    # Male, US English
+  voice: en-US-AriaNeural    # Male, US English
   # Other popular choices:
   # en-US-JennyNeural       # Female, US English
   # en-GB-RyanNeural        # Male, British English
@@ -41,15 +41,23 @@ Browse all available voices:
 bunx edge-tts --list-voices
 ```
 
-### Alternative: OpenAI TTS
+### Alternative: ElevenLabs
+
+For higher-quality, more expressive voices, configure ElevenLabs TTS:
 
 ```yaml
 tts:
-  provider: openai
-  apiKey: "sk-..."
-  voice: onyx    # alloy | echo | fable | onyx | nova | shimmer
-  model: tts-1   # tts-1 | tts-1-hd
+  enabled: true
+  provider: elevenlabs
+  elevenlabs:
+    api_key: "sk_..."
+    voice_id: "21m00Tcm4TlvDq8ikWAM"   # Rachel (default)
+    model: eleven_flash_v2_5             # eleven_flash_v2_5 | eleven_multilingual_v2
+    stability: 0.5                       # 0.0 to 1.0
+    similarity_boost: 0.75              # 0.0 to 1.0
 ```
+
+Get an API key at [elevenlabs.io](https://elevenlabs.io). The onboarding wizard (`jarvis onboard`) can configure ElevenLabs during initial setup.
 
 ### Streaming Playback
 
@@ -185,8 +193,8 @@ The server distinguishes binary from JSON messages using the WebSocket frame typ
 ```yaml
 tts:
   enabled: true
-  provider: edge-tts       # edge-tts | openai | elevenlabs
-  voice: en-US-GuyNeural
+  provider: edge            # edge | elevenlabs
+  voice: en-US-AriaNeural
   speed: 1.0
 
 stt:

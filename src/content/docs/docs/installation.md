@@ -15,9 +15,8 @@ JARVIS runs on Linux, macOS, and Windows via WSL2. The recommended path is the o
 |---|---|---|
 | Operating system | Linux, macOS, or WSL2 | Native Windows not supported |
 | Bun | 1.0 or later | Installed automatically if missing |
-| Anthropic API key | — | Required for the default LLM provider |
+| LLM API key | — | At least one provider: Anthropic, OpenAI, Google Gemini, or Ollama (local, no key needed) |
 | Chrome or Chromium | Any recent version | Required for browser control |
-| .NET SDK 8+ | Optional | Required only for desktop control on Windows |
 
 ## One-Liner Install (Recommended)
 
@@ -29,11 +28,11 @@ This script does the following in order:
 
 1. Detects your operating system and shell
 2. Installs [Bun](https://bun.sh) if it is not already present
-3. Installs the `@jarvis-ai/daemon` package globally via `bun install -g`
+3. Installs the `@usejarvis/brain` package globally via `bun add -g`
 4. Adds the `jarvis` binary to your `PATH`
 5. Launches the interactive onboarding wizard (`jarvis onboard`)
 
-The onboard wizard prompts for your API key, preferred LLM model, and optional channel tokens (Telegram, Discord). It writes `~/.jarvis/config.yaml` and starts the daemon.
+The onboard wizard walks through LLM provider selection (Anthropic, OpenAI, Gemini, or Ollama), API key entry, voice setup, channel tokens (Telegram, Discord), personality, and authority level. It writes `~/.jarvis/config.yaml` and starts the daemon. You can re-run `jarvis onboard` at any time to update your configuration.
 
 ## Manual Install
 
@@ -44,7 +43,7 @@ If you prefer to install without running a remote script:
 curl -fsSL https://bun.sh/install | bash
 
 # Then install JARVIS globally
-bun install -g @jarvis-ai/daemon
+bun add -g @usejarvis/brain
 ```
 
 After installation, run onboarding manually:
@@ -105,7 +104,7 @@ This pulls the latest version from npm, replaces the binary, and confirms the ne
 ## Uninstalling
 
 ```bash
-bun remove -g @jarvis-ai/daemon
+bun remove -g @usejarvis/brain
 rm -rf ~/.jarvis
 ```
 
@@ -114,7 +113,7 @@ rm -rf ~/.jarvis
 JARVIS works in WSL2 with full feature support. A few WSL2-specific behaviors:
 
 - **Browser control**: Linux Chromium is preferred over Windows Chrome. JARVIS auto-detects and launches the appropriate binary. When using Linux Chromium, the `--no-sandbox` flag is applied automatically.
-- **Desktop control**: The C# FlaUI sidecar (`desktop-bridge.exe`) runs on the Windows side and is auto-launched from WSL via the WSL/Windows interop path.
+- **Desktop control**: The Go sidecar runs on the Windows side and connects to the daemon over WebSocket. Install it with `bun add -g @usejarvis/sidecar` in a Windows terminal, then enroll with `jarvis-sidecar enroll`.
 - **GUI display**: WSLg is supported — Linux GUI apps render on your Windows desktop via the `:0` display.
 - **Autostart**: Systemd user services are available in WSL2 with recent Windows builds. See [Autostart](/docs/autostart) for configuration.
 

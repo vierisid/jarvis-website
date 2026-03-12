@@ -45,7 +45,9 @@ JARVIS auto-detects and launches Chrome or Chromium, attaches via the Chrome Dev
 
 ### Native Desktop Control
 
-On Windows (including WSL), JARVIS launches a C# sidecar that uses the FlaUI/UIA automation framework to control any desktop application: find windows, click buttons, read text, type into fields, and scroll.
+JARVIS ships a Go sidecar that connects to the daemon over a JWT-authenticated WebSocket. The sidecar runs natively on each machine (Windows, macOS, Linux) and uses platform-native APIs — Win32 UI Automation on Windows, AppleScript on macOS, and X11/xdotool on Linux — to control any desktop application: find windows, click buttons, read text, type into fields, scroll, and take screenshots.
+
+You can connect multiple sidecars to a single JARVIS daemon, giving the agent control over several machines simultaneously.
 
 ### Voice Interface
 
@@ -110,14 +112,14 @@ The daemon exposes a WebSocket server at `localhost:3142` by default. The web da
 
 - **Runtime**: [Bun](https://bun.sh) — fast TypeScript runtime, SQLite built in
 - **Language**: TypeScript (ESM modules)
-- **LLM**: Anthropic Claude (primary), OpenAI GPT-4 (fallback), Ollama (local)
+- **LLM**: Anthropic Claude (primary), OpenAI GPT (fallback), Google Gemini, Ollama (local)
 - **Database**: SQLite via `bun:sqlite`
 - **Browser automation**: Chrome DevTools Protocol (CDP)
-- **Desktop automation**: C# FlaUI sidecar over TCP
-- **TTS**: edge-tts-universal (free, no API key)
+- **Desktop automation**: Go sidecar over JWT-authenticated WebSocket (platform-native APIs)
+- **TTS**: Edge TTS (free, no API key) or ElevenLabs (premium)
 - **STT**: OpenAI Whisper / Groq / local Whisper
 - **Wake word**: openwakeword-wasm-browser (ONNX models, runs in-browser)
-- **Frontend**: React
+- **Frontend**: React 19
 
 ## Next Steps
 

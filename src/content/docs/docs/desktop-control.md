@@ -1,89 +1,129 @@
 ---
 title: Desktop Control
-description: How JARVIS controls Windows desktop applications via the FlaUI C# sidecar.
+description: How JARVIS controls desktop applications via the Go sidecar with platform-native APIs.
 ---
 
-JARVIS controls native Windows desktop applications through a C# sidecar process called `desktop-bridge.exe`. The sidecar uses the [FlaUI](https://github.com/FlaUI/FlaUI) library, which wraps Microsoft's UI Automation (UIA) framework, giving JARVIS programmatic access to any application that exposes an accessibility tree — which is nearly every Windows GUI application.
+JARVIS controls native desktop applications through a Go sidecar process that connects to the daemon over a JWT-authenticated WebSocket. The sidecar runs natively on each platform — Windows, macOS, and Linux — using platform-specific APIs for window management, UI automation, screenshots, and input simulation.
 
-## How It Works
-
-On startup, JARVIS checks for a running instance of `desktop-bridge.exe`. If one is not found, it auto-launches the sidecar via WSL/Windows interop:
+## Architecture
 
 ```
-WSL: jarvis daemon
-  → launches ~/.jarvis/bin/desktop-bridge.exe (Windows side)
-  → sidecar listens on TCP 127.0.0.1:9224
-  → jarvis connects via TCP
-  → messages: newline-delimited JSON over TCP
+JARVIS Daemon (Bun, any machine)
+  ↕ WebSocket (JWT auth)
+Sidecar (Go, target machine)
+  → Platform APIs (Win32 / AppleScript / X11)
+  → Chrome DevTools Protocol (CDP)
+  → Terminal, Filesystem, Clipboard
 ```
 
-The sidecar process runs on the Windows side and has full access to the Windows desktop. JARVIS communicates with it over a simple TCP JSON protocol, sending tool commands and receiving results including screenshots.
+The sidecar is a standalone Go binary that enrolls with the daemon using a JWT token. Once connected, it receives RPC commands over WebSocket and executes them using native platform APIs. Multiple sidecars can connect to the same daemon, giving JARVIS control over several machines simultaneously.
 
-## Prerequisites
+## Installation
 
-Desktop control requires:
+Install the sidecar on each machine you want JARVIS to control:
 
-- Windows (including WSL2 running under Windows)
-- The `desktop-bridge.exe` sidecar binary installed at `~/.jarvis/bin/desktop-bridge.exe`
+```bash
+bun add -g @usejarvis/sidecar
+```
 
-The sidecar is bundled with the JARVIS installer. If you need to build it from source, see [Building the Sidecar](#building-the-sidecar).
+Or download the prebuilt binary for your platform from the [releases page](https://github.com/vierisid/jarvis/releases).
+
+## Enrollment
+
+Each sidecar must enroll with the daemon to receive a JWT token:
+
+```bash
+jarvis-sidecar enroll --brain ws://your-daemon-host:3142
+```
+
+The enrollment process:
+
+1. Sidecar contacts the daemon and requests a token
+2. Daemon generates a signed JWT with the sidecar's hostname and capabilities
+3. Token is saved to `~/.jarvis/sidecar.token`
+4. Sidecar connects and begins accepting RPC commands
+
+After enrollment, the sidecar reconnects automatically with exponential backoff if the connection drops.
+
+## Capabilities
+
+The sidecar advertises its capabilities during the preflight check. Each capability is verified at startup — only capabilities that pass the platform check are registered.
+
+| Capability | Description | Windows | macOS | Linux |
+|---|---|---|---|---|
+| `terminal` | Run shell commands | cmd.exe / PowerShell | bash/zsh | bash/zsh |
+| `filesystem` | Read/write files, list directories | Yes | Yes | Yes |
+| `clipboard` | Get/set clipboard content | PowerShell | pbcopy/pbpaste | xclip/xsel |
+| `screenshot` | Capture screen to PNG | PowerShell | screencapture | import (ImageMagick) |
+| `desktop` | Window management & UI automation | Win32 UIA | AppleScript | xdotool/wmctrl |
+| `browser` | Chrome control via CDP | Yes | Yes | Yes |
+| `system_info` | Hostname, platform, CPU info | Yes | Yes | Yes |
 
 ## Desktop Tools
 
-The agent has access to eight desktop tools.
+When the `desktop` capability is available, the agent has access to these tools:
 
 ### `list_windows`
 
 List all visible top-level windows with their titles and process names.
 
-```
-Returns: array of { title, processName, windowHandle }
-```
-
-Example response:
-
 ```json
 [
-  { "title": "Notepad", "processName": "notepad.exe", "windowHandle": "0x1A2B" },
-  { "title": "Visual Studio Code", "processName": "Code.exe", "windowHandle": "0x3C4D" }
+  { "title": "Visual Studio Code", "processName": "Code.exe", "handle": "0x1A2B" },
+  { "title": "File Explorer", "processName": "explorer.exe", "handle": "0x3C4D" }
 ]
 ```
 
-### `click`
+### `get_window_tree`
 
-Click on a UI element identified by its automation ID, name, or control type within a named window.
+Get the UI Automation element tree for a window — reveals buttons, text fields, menus, and other controls.
+
+```
+Input: window (string), depth (integer, optional)
+Returns: nested element tree with automationId, name, controlType, boundingRect
+```
+
+### `click_element`
+
+Click a UI element identified by automation ID, name, or control type.
 
 ```
 Input: window (string), selector (string), selectorType (automationId | name | controlType)
 ```
 
-### `type`
+### `type_text`
 
-Type text into a focused element. Uses clipboard paste for reliability — the text is written to the Windows clipboard and pasted with Ctrl+V, which handles Unicode, long strings, and special characters correctly.
+Type text into a focused element. Uses platform-native input methods.
 
 ```
 Input: window (string), selector (string), text (string)
 ```
 
-### `get_text`
+### `press_keys`
 
-Read the text content of a UI element.
-
-```
-Input: window (string), selector (string)
-Returns: string
-```
-
-### `screenshot`
-
-Take a screenshot of a window or the full desktop and return it to the agent as a base64-encoded PNG.
+Send a key combination to a window.
 
 ```
-Input: window (string, optional), monitor (integer, optional)
-Returns: base64 PNG image — passed to Claude Vision API
+Input: window (string), keys (string)
 ```
 
-Multi-monitor setups are supported. Specify `monitor: 0` for the primary display, `monitor: 1` for the secondary, and so on.
+Key format: `"Ctrl+C"`, `"Alt+F4"`, `"Win+D"`, `"Ctrl+Shift+Esc"`.
+
+### `launch_app`
+
+Launch an application by name or path.
+
+```
+Input: app (string), args (string[], optional)
+```
+
+### `focus_window`
+
+Bring a window to the foreground.
+
+```
+Input: window (string)
+```
 
 ### `find_element`
 
@@ -94,113 +134,145 @@ Input: window (string), query (string)
 Returns: { automationId, name, controlType, boundingRect }
 ```
 
-### `scroll`
+## Browser Tools
 
-Scroll within a window or element by a specified amount.
+When the `browser` capability is available, the sidecar launches Chrome with remote debugging and provides these tools:
 
-```
-Input: window (string), selector (string, optional), direction (up | down | left | right), amount (integer)
-```
+| Tool | Description |
+|---|---|
+| `browser_navigate` | Navigate to a URL |
+| `browser_snapshot` | Get the accessibility tree of the current page |
+| `browser_click` | Click an element by selector |
+| `browser_type` | Type into an input field |
+| `browser_screenshot` | Capture the page as PNG |
+| `browser_scroll` | Scroll the page or an element |
+| `browser_evaluate` | Execute JavaScript in the page context |
 
-### `key_press`
+## Terminal & Filesystem Tools
 
-Send a key combination to a window.
+| Tool | Description |
+|---|---|
+| `run_command` | Execute a shell command with configurable timeout and blocked-command list |
+| `read_file` | Read a file (respects blocked paths and max file size) |
+| `write_file` | Write content to a file (respects blocked paths) |
+| `list_directory` | List directory entries with types and sizes |
+| `get_clipboard` | Read clipboard content |
+| `set_clipboard` | Write to clipboard |
+| `capture_screen` | Take a full-screen screenshot |
+| `get_system_info` | Get hostname, platform, architecture, CPU count |
 
-```
-Input: window (string), keys (string)
-```
+## Platform Details
 
-Key format examples: `"Ctrl+C"`, `"Alt+F4"`, `"Win+D"`, `"Ctrl+Shift+Esc"`.
+### Windows
 
-## Window Identification
+Desktop automation uses the Win32 UI Automation (UIA) COM API via PowerShell. This gives access to the accessibility tree of any Windows application, including:
 
-Windows are identified by their title string. JARVIS uses UIA's built-in window search, which:
+- Enumerating windows (`EnumWindows`)
+- Reading element trees (`IUIAutomation`)
+- Clicking, typing, scrolling
+- Getting the foreground window (`GetForegroundWindow`)
+- Mouse and keyboard simulation (`SetCursorPos`, `mouse_event`, `SendKeys`)
 
-- Matches partial titles (case-insensitive)
-- Handles Windows Explorer's PID reuse correctly (uses UIA window handles, not PIDs)
-- Retries for up to 5 seconds if a window is still loading
+Screenshots use `System.Windows.Forms.Screen` via PowerShell.
 
-If multiple windows match a partial title, the first match by Z-order (foreground first) is used. To target a specific window, use a more precise title substring.
+### macOS
 
-## Vision Integration
+Desktop automation uses AppleScript and Accessibility APIs:
 
-All screenshot tool results are passed directly to Claude via the Vision API. The agent sees the actual pixels of the screen and can:
+- `osascript` for window listing, app launching, and UI scripting
+- `screencapture` for screenshots
+- `pbcopy`/`pbpaste` for clipboard
 
-- Read text that is not exposed via the accessibility tree
-- Interpret charts, images, and visual indicators
-- Verify that a previous action had the expected result
-- Navigate visually complex UIs
+### Linux
 
-Screenshots are capped at 5 MB before encoding. Large monitors or high-DPI displays may produce large images; JARVIS scales them down automatically to stay within the limit.
+Desktop automation uses X11 tools:
 
-## Building the Sidecar
+- `xdotool` for window management and input simulation
+- `wmctrl` for window listing and focusing
+- `xclip` or `xsel` for clipboard
+- `import` (ImageMagick) for screenshots
 
-If the prebuilt `desktop-bridge.exe` is not available or you want to modify it, build from source.
+## Multi-Machine Setup
 
-**Requirements**: .NET SDK 8 or later
+Connect multiple sidecars to a single JARVIS daemon for cross-machine orchestration:
 
 ```bash
-# Clone the JARVIS repo on Windows (or from WSL)
+# On machine A (e.g., your workstation)
+jarvis-sidecar enroll --brain ws://daemon-host:3142
+
+# On machine B (e.g., a build server)
+jarvis-sidecar enroll --brain ws://daemon-host:3142
+```
+
+The agent can then reference machines by hostname when dispatching tools. For example, it can run a build on your server while monitoring the result in your browser locally.
+
+## Sidecar Configuration
+
+The sidecar stores its config at `~/.jarvis/sidecar.yaml`:
+
+```yaml
+brain_url: "ws://localhost:3142/sidecar"
+token: "eyJ..."                    # JWT from enrollment
+capabilities:
+  - terminal
+  - filesystem
+  - clipboard
+  - screenshot
+  - desktop
+  - browser
+  - system_info
+terminal:
+  blocked_commands: ["rm -rf /", "format", "shutdown"]
+  default_shell: ""                # auto-detected
+  timeout_ms: 30000
+filesystem:
+  blocked_paths: ["/etc/shadow", "/root"]
+  max_file_size_kb: 10240
+browser:
+  cdp_port: 9222
+  profile_dir: ""                  # auto-detected
+awareness:
+  screen_interval_ms: 7000
+  window_interval_ms: 3000
+  min_change_threshold: 0.02
+  stuck_threshold_ms: 120000
+```
+
+## Building from Source
+
+Requirements: Go 1.23 or later.
+
+```bash
 git clone https://github.com/vierisid/jarvis
-cd jarvis/desktop-bridge
+cd jarvis/sidecar
 
-# Build a self-contained Windows x64 executable
-dotnet publish -c Release -r win-x64 --self-contained true \
-  -p:PublishSingleFile=true -o ./out
+# Build for your current platform
+go build -o jarvis-sidecar .
 
-# Copy to JARVIS bin directory (adjust path for WSL vs Windows)
-cp ./out/desktop-bridge.exe ~/.jarvis/bin/desktop-bridge.exe
-```
+# Cross-compile for Windows
+GOOS=windows GOARCH=amd64 go build -o jarvis-sidecar.exe .
 
-## Auto-Launch Behavior
-
-JARVIS checks TCP port `9224` on startup. If nothing is listening:
-
-1. It resolves the Windows path to `desktop-bridge.exe` (converting from WSL path if needed)
-2. Launches it via `cmd.exe /c start /b path\to\desktop-bridge.exe`
-3. Waits up to 10 seconds for the TCP port to become available
-4. Logs a warning and continues without desktop tools if the launch fails
-
-You can also launch the sidecar manually before starting JARVIS:
-
-```powershell
-# In a Windows terminal (PowerShell or CMD)
-~\.jarvis\bin\desktop-bridge.exe
-```
-
-## Configuration
-
-The TCP port for the sidecar can be changed via environment variable:
-
-```bash
-JARVIS_DESKTOP_PORT=9334 jarvis start
-```
-
-Both JARVIS and the sidecar must use the same port. If you change the port, launch the sidecar manually with the matching flag:
-
-```powershell
-desktop-bridge.exe --port 9334
+# Cross-compile for macOS
+GOOS=darwin GOARCH=arm64 go build -o jarvis-sidecar-macos .
 ```
 
 ## Troubleshooting
 
-**Sidecar connection failed**
+**Sidecar won't connect**
 
-```bash
-jarvis doctor
-```
+1. Verify the daemon is running: `jarvis status`
+2. Check the token is valid: `jarvis-sidecar enroll --brain ws://host:3142`
+3. Check firewall rules — port 3142 must be reachable from the sidecar machine
+4. Run `jarvis doctor` for a connectivity check
 
-The doctor command attempts to connect to the sidecar port and reports whether it succeeded. If it fails:
+**Desktop tools not working**
 
-1. Check that `~/.jarvis/bin/desktop-bridge.exe` exists
-2. Try launching the sidecar manually in a Windows terminal to see error output
-3. Check Windows Defender or antivirus — self-contained `.exe` files sometimes trigger alerts
-4. Verify TCP port 9224 is not blocked by a firewall
+1. Verify the `desktop` capability passed preflight: check sidecar startup logs
+2. On Linux, ensure `xdotool` and `wmctrl` are installed: `sudo apt install xdotool wmctrl`
+3. On macOS, grant Accessibility permissions in System Settings > Privacy & Security
+4. On Windows, ensure the sidecar is running with appropriate permissions
 
-**Type command enters garbled text**
+**Screenshots are blank**
 
-The type tool uses clipboard paste. If another application is intercepting clipboard events, type may fail. Close clipboard manager applications and retry.
-
-**Screenshot is blank or black**
-
-This usually occurs when the target window is minimized or off-screen. Use `list_windows` to confirm the window is visible before taking a screenshot.
+- On Linux, ensure ImageMagick is installed: `sudo apt install imagemagick`
+- On Windows, ensure the sidecar is not running in a headless/service context without desktop access
