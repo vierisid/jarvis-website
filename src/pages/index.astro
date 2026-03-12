@@ -49,7 +49,7 @@ import Landing from '../layouts/Landing.astro';
 
         <!-- Install command -->
         <div class="cmd-block">
-          <code><span class="cmd-prompt">$</span> curl -fsSL <span class="cmd-highlight">https://...install.sh</span> | bash</code>
+          <code><span class="cmd-prompt">$</span> npm install -g <span class="cmd-highlight">@usejarvis/brain</span></code>
           <button class="cmd-copy" id="copy-btn">copy</button>
         </div>
       </div>
@@ -697,7 +697,7 @@ import Landing from '../layouts/Landing.astro';
         </div>
         <div class="terminal-body">
           <div class="code-comment"># 1. Install</div>
-          <div><span class="code-comment">$</span> <span class="cmd-highlight">curl -fsSL https://raw.githubusercontent.com/vierisid/jarvis/main/install.sh | bash</span></div>
+          <div><span class="code-comment">$</span> <span class="cmd-highlight">npm install -g @usejarvis/brain</span></div>
           <br/>
           <div class="code-comment"># 2. Configure</div>
           <div><span class="code-comment">$</span> <span class="cmd-highlight">jarvis onboard</span></div>
@@ -1366,7 +1366,7 @@ import Landing from '../layouts/Landing.astro';
 <script>
   // Copy install command
   document.getElementById('copy-btn')?.addEventListener('click', function() {
-    navigator.clipboard.writeText('curl -fsSL https://raw.githubusercontent.com/vierisid/jarvis/main/install.sh | bash');
+    navigator.clipboard.writeText('npm install -g @usejarvis/brain');
     this.textContent = 'copied';
     setTimeout(() => { this.textContent = 'copy'; }, 1500);
   });
