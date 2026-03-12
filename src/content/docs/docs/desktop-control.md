@@ -23,25 +23,39 @@ The sidecar is a standalone Go binary that enrolls with the daemon using a JWT t
 Install the sidecar on each machine you want JARVIS to control:
 
 ```bash
-bun add -g @usejarvis/sidecar
+npm install -g @usejarvis/sidecar
 ```
 
 Or download the prebuilt binary for your platform from the [releases page](https://github.com/vierisid/jarvis/releases).
 
 ## Enrollment
 
-Each sidecar must enroll with the daemon to receive a JWT token:
+### 1. Install the sidecar
+
+See [Installation](#installation) above.
+
+### 2. Enroll in the dashboard
+
+1. Open the JARVIS dashboard at `http://localhost:3142`
+2. Go to **Settings** → **Sidecar**
+3. Enter a friendly name for this machine (e.g. "work laptop") and click **Enroll**
+4. Click **Copy** to copy the token command
+
+### 3. Run the sidecar
+
+Paste and run the copied command on the machine where you installed the sidecar:
 
 ```bash
-jarvis-sidecar enroll --brain ws://your-daemon-host:3142
+jarvis-sidecar --token <your-token>
 ```
 
-The enrollment process:
+The sidecar saves the token locally, so on subsequent runs you just need:
 
-1. Sidecar contacts the daemon and requests a token
-2. Daemon generates a signed JWT with the sidecar's hostname and capabilities
-3. Token is saved to `~/.jarvis/sidecar.token`
-4. Sidecar connects and begins accepting RPC commands
+```bash
+jarvis-sidecar
+```
+
+Once connected, the sidecar appears as online in the Settings page where you can configure its capabilities.
 
 After enrollment, the sidecar reconnects automatically with exponential backoff if the connection drops.
 
@@ -198,10 +212,12 @@ Connect multiple sidecars to a single JARVIS daemon for cross-machine orchestrat
 
 ```bash
 # On machine A (e.g., your workstation)
-jarvis-sidecar enroll --brain ws://daemon-host:3142
+npm install -g @usejarvis/sidecar
+jarvis-sidecar --token <token-from-dashboard>
 
 # On machine B (e.g., a build server)
-jarvis-sidecar enroll --brain ws://daemon-host:3142
+npm install -g @usejarvis/sidecar
+jarvis-sidecar --token <token-from-dashboard>
 ```
 
 The agent can then reference machines by hostname when dispatching tools. For example, it can run a build on your server while monitoring the result in your browser locally.
@@ -261,7 +277,7 @@ GOOS=darwin GOARCH=arm64 go build -o jarvis-sidecar-macos .
 **Sidecar won't connect**
 
 1. Verify the daemon is running: `jarvis status`
-2. Check the token is valid: `jarvis-sidecar enroll --brain ws://host:3142`
+2. Re-enroll from the dashboard: **Settings** → **Sidecar** → **Enroll**
 3. Check firewall rules — port 3142 must be reachable from the sidecar machine
 4. Run `jarvis doctor` for a connectivity check
 

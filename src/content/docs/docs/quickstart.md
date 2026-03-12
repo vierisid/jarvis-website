@@ -41,6 +41,12 @@ JARVIS launches in the background. On first start it:
 - Auto-detects and launches Chrome or Chromium for browser control
 - Opens the dashboard in your default browser
 
+To start on a specific port:
+
+```bash
+jarvis start --port 3142
+```
+
 To keep JARVIS in the foreground (useful for debugging):
 
 ```bash
