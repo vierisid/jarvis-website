@@ -18,7 +18,7 @@ export default defineConfig({
       },
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/vierisid/jarvis' },
-        { icon: 'discord', label: 'Discord', href: 'https://discord.gg/jarvis-ai' },
+        { icon: 'discord', label: 'Discord', href: 'https://discord.gg/nE3hcaFYZP' },
       ],
       customCss: ['./src/styles/global.css'],
       head: [
