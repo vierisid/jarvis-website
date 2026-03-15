@@ -5,6 +5,12 @@ description: Solutions for common JARVIS issues and diagnostic commands.
 
 This guide covers the most common problems you may encounter running JARVIS and how to resolve them. For issues not listed here, run `jarvis doctor` first — it checks environment, connectivity, and configuration automatically.
 
+## Installation Issues
+
+For detailed installation troubleshooting (permission errors, PATH issues, npm/Node.js setup, WSL2 problems), see the [Installation Troubleshooting](/docs/installation#installation-troubleshooting) section on the Installation page.
+
+---
+
 ## Common Issues
 
 ### Daemon Won't Start
