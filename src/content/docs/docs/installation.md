@@ -7,7 +7,7 @@ description: Install JARVIS on Windows, macOS, or Linux in under two minutes.
 JARVIS runs as a persistent daemon with broad system access — browser control, desktop automation, shell execution, and external service access. Installing it grants an AI agent significant control over your machine. Only install on machines you own, review the [Authority & Safety](/docs/authority) settings before enabling autonomous operation, and read the full [Disclaimer & Liability](/docs/disclaimer).
 :::
 
-JARVIS runs on macOS, Linux, and Windows (via WSL2). It is distributed as an npm package, so you need Node.js and npm installed first. If you are on Windows or are new to npm, read the platform setup sections below before installing.
+JARVIS runs on macOS, Linux, and Windows (via WSL2). It is distributed as a package on npm, so you need Bun installed first. If you are on Windows, read the platform setup sections below before installing.
 
 ## Prerequisites
 
@@ -112,10 +112,10 @@ npm --version    # should print 9 or later
 
 ## Install JARVIS
 
-### npm (Recommended)
+### Bun (Recommended)
 
 ```bash
-npm install -g @usejarvis/brain
+bun install -g @usejarvis/brain
 jarvis onboard
 ```
 
@@ -172,12 +172,12 @@ Nothing is installed system-wide. Everything lives under `~/.bun/` and `~/.jarvi
 jarvis update
 ```
 
-This pulls the latest version from npm, replaces the binary, and confirms the new version number. Your config and database are untouched.
+This pulls the latest version, replaces the binary, and confirms the new version number. Your config and database are untouched.
 
 ## Uninstalling
 
 ```bash
-npm uninstall -g @usejarvis/brain
+bun remove -g @usejarvis/brain
 rm -rf ~/.jarvis
 ```
 
@@ -187,24 +187,21 @@ rm -rf ~/.jarvis
 
 ### Permission Denied (EACCES) — Use `sudo`
 
-If `npm install -g` fails with `EACCES` permission errors:
+If `bun install -g` fails with `EACCES` permission errors:
 
 ```
-npm ERR! Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules'
+error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules'
 ```
 
 **Quick fix** — run the install with `sudo`:
 ```bash
-sudo npm install -g @usejarvis/brain
+sudo bun install -g @usejarvis/brain
 ```
 
-**Better long-term fix** — change npm's default global directory so you never need `sudo` for global installs:
+**Better long-term fix** — Bun installs global packages to `~/.bun/bin` by default, which should not require `sudo`. If you have a non-standard setup, ensure your user owns the global directory:
 ```bash
-mkdir -p ~/.npm-global
-npm config set prefix '~/.npm-global'
-echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-npm install -g @usejarvis/brain
+sudo chown -R $(whoami) ~/.bun
+bun install -g @usejarvis/brain
 ```
 
 ### `jarvis` Command Not Found
@@ -213,8 +210,8 @@ If the `jarvis` command is not recognized after installation, your shell cannot 
 
 **Fix:**
 ```bash
-# Add npm and Bun global bin directories to your PATH
-export PATH="$HOME/.bun/bin:$(npm prefix -g)/bin:$PATH"
+# Add Bun global bin directory to your PATH
+export PATH="$HOME/.bun/bin:$PATH"
 ```
 
 Add the line above to `~/.bashrc` or `~/.zshrc` to make it permanent, then reload:
@@ -224,23 +221,27 @@ source ~/.bashrc
 source ~/.zshrc
 ```
 
-### `npm: command not found`
+### `bun: command not found`
 
-Node.js and npm are not installed. See [Installing Node.js & npm](#installing-nodejs--npm) above.
+Bun is not installed. Install it with:
+```bash
+curl -fsSL https://bun.sh/install | bash
+source ~/.bashrc
+```
 
 ### Installation Hangs or Times Out
 
 This is usually a network issue. Try:
 ```bash
-# Check your npm registry connectivity
-npm ping
+# Check your registry connectivity
+bun pm ping
 
-# If behind a corporate proxy, configure npm to use it
-npm config set proxy http://your-proxy:port
-npm config set https-proxy http://your-proxy:port
+# If behind a corporate proxy, set the environment variables
+export HTTP_PROXY=http://your-proxy:port
+export HTTPS_PROXY=http://your-proxy:port
 
-# Alternatively, switch to a different registry mirror
-npm config set registry https://registry.npmmirror.com
+# Then retry the install
+bun install -g @usejarvis/brain
 ```
 
 ### Bun Fails to Install Automatically

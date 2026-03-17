@@ -23,7 +23,7 @@ The sidecar is a standalone Go binary that enrolls with the daemon using a JWT t
 Install the sidecar on each machine you want JARVIS to control:
 
 ```bash
-npm install -g @usejarvis/sidecar
+bun install -g @usejarvis/sidecar
 ```
 
 Or download the prebuilt binary for your platform from the [releases page](https://github.com/vierisid/jarvis/releases).
@@ -212,11 +212,11 @@ Connect multiple sidecars to a single JARVIS daemon for cross-machine orchestrat
 
 ```bash
 # On machine A (e.g., your workstation)
-npm install -g @usejarvis/sidecar
+bun install -g @usejarvis/sidecar
 jarvis-sidecar --token <token-from-dashboard>
 
 # On machine B (e.g., a build server)
-npm install -g @usejarvis/sidecar
+bun install -g @usejarvis/sidecar
 jarvis-sidecar --token <token-from-dashboard>
 ```
 

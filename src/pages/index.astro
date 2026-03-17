@@ -49,7 +49,7 @@ import Landing from '../layouts/Landing.astro';
 
         <!-- Install command -->
         <div class="cmd-block">
-          <code><span class="cmd-prompt">$</span> npm install -g <span class="cmd-highlight">@usejarvis/brain</span></code>
+          <code><span class="cmd-prompt">$</span> bun install -g <span class="cmd-highlight">@usejarvis/brain</span></code>
           <button class="cmd-copy" id="copy-btn">copy</button>
         </div>
       </div>
@@ -313,7 +313,7 @@ import Landing from '../layouts/Landing.astro';
         <div>
           <div class="code-panel reveal reveal-right">
             <div class="code-comment"># Connect any machine in 30 seconds</div>
-            <div><span class="code-comment">$</span> <span class="cmd-highlight">npm install -g @usejarvis/sidecar</span></div>
+            <div><span class="code-comment">$</span> <span class="cmd-highlight">bun install -g @usejarvis/sidecar</span></div>
             <div><span class="code-comment">$</span> <span class="cmd-highlight">jarvis-sidecar --token eyJhbG...</span></div>
             <br/>
             <div><span class="code-fn">&#10003; Connected</span> <span class="code-str">to jarvis daemon (ws://brain:3142)</span></div>
@@ -697,7 +697,7 @@ import Landing from '../layouts/Landing.astro';
         </div>
         <div class="terminal-body">
           <div class="code-comment"># 1. Install</div>
-          <div><span class="code-comment">$</span> <span class="cmd-highlight">npm install -g @usejarvis/brain</span></div>
+          <div><span class="code-comment">$</span> <span class="cmd-highlight">bun install -g @usejarvis/brain</span></div>
           <br/>
           <div class="code-comment"># 2. Configure</div>
           <div><span class="code-comment">$</span> <span class="cmd-highlight">jarvis onboard</span></div>
@@ -1366,7 +1366,7 @@ import Landing from '../layouts/Landing.astro';
 <script>
   // Copy install command
   document.getElementById('copy-btn')?.addEventListener('click', function() {
-    navigator.clipboard.writeText('npm install -g @usejarvis/brain');
+    navigator.clipboard.writeText('bun install -g @usejarvis/brain');
     this.textContent = 'copied';
     setTimeout(() => { this.textContent = 'copy'; }, 1500);
   });
