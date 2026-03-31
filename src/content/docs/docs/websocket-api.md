@@ -1,272 +1,146 @@
 ---
 title: WebSocket API
-description: Protocol reference for the JARVIS WebSocket interface.
+description: The actual message format used by the JARVIS dashboard and daemon for real-time communication.
 ---
 
-The JARVIS daemon exposes a WebSocket server for real-time communication. The dashboard, Telegram adapter, Discord adapter, and any custom clients all connect through this interface.
+JARVIS uses a WebSocket connection for the live dashboard experience.
 
-## Endpoint
+Default endpoint:
 
-```
+```text
 ws://localhost:3142/ws
 ```
 
-The port defaults to `3142` and can be changed via `daemon.port` in the config.
+If you serve the dashboard over HTTPS behind a proxy, the browser will use `wss://.../ws`.
 
-## Authentication
+## Message Shape
 
-If `auth.token` is set in the config, clients must authenticate by including the token:
-
-- **Query parameter**: `ws://localhost:3142/ws?token=your-token`
-- **Authorization header**: `Authorization: Bearer your-token`
-
-If `auth.token` is not set, the WebSocket accepts all connections (open access).
-
-## Message Format
-
-All JSON messages follow this structure:
-
-```json
-{
-  "type": "message_type",
-  "data": { ... },
-  "id": "optional-correlation-id"
-}
-```
-
-The `type` field determines how the message is processed. The `data` field carries the payload. The optional `id` field correlates requests with responses.
-
-## Client → Server Messages
-
-### `chat`
-
-Send a text message to the agent.
+The daemon's current WebSocket messages use this shape:
 
 ```json
 {
   "type": "chat",
-  "data": {
-    "content": "Go to news.ycombinator.com and summarize the top 5 stories"
-  }
+  "payload": {},
+  "id": "optional-id",
+  "priority": "normal",
+  "timestamp": 1710000000000
+}
+```
+
+Important note:
+
+- The field is `payload`, not `data`
+
+## Supported Message Types
+
+The shipped daemon defines these top-level message types:
+
+- `chat`
+- `command`
+- `status`
+- `stream`
+- `error`
+- `notification`
+- `tts_start`
+- `tts_end`
+- `voice_start`
+- `voice_end`
+- `workflow_event`
+- `goal_event`
+- `site_event`
+
+## Common Client → Server Messages
+
+### `chat`
+
+Send a normal user message:
+
+```json
+{
+  "type": "chat",
+  "payload": {
+    "text": "Summarize the top issues in this repository"
+  },
+  "id": "client-message-id",
+  "timestamp": 1710000000000
 }
 ```
 
 ### `command`
 
-Send a system command (not a chat message).
+Used for system-style requests such as health checks or ping:
 
 ```json
 {
   "type": "command",
-  "data": {
-    "action": "stop",
-    "params": {}
-  }
+  "payload": {
+    "command": "health"
+  },
+  "timestamp": 1710000000000
 }
 ```
 
-### `voice_start`
+### `voice_start` / `voice_end`
 
-Signal that the client is beginning to send voice audio.
+Used by the dashboard voice pipeline. Binary audio chunks are sent between those markers.
 
-```json
-{
-  "type": "voice_start",
-  "data": {}
-}
-```
-
-After sending this message, the client streams binary WebM audio frames over the WebSocket.
-
-### `voice_end`
-
-Signal that the client has finished sending voice audio.
-
-```json
-{
-  "type": "voice_end",
-  "data": {}
-}
-```
-
-The server sends the accumulated audio to the STT provider and processes the resulting transcript as a chat message.
-
-## Server → Client Messages
+## Common Server → Client Messages
 
 ### `stream`
 
-A streaming token from the LLM response. Sent repeatedly as the response is generated.
-
-```json
-{
-  "type": "stream",
-  "data": {
-    "token": "The top",
-    "done": false
-  }
-}
-```
-
-When the response is complete:
-
-```json
-{
-  "type": "stream",
-  "data": {
-    "token": "",
-    "done": true
-  }
-}
-```
-
-### `chat`
-
-A complete chat message (non-streaming).
-
-```json
-{
-  "type": "chat",
-  "data": {
-    "role": "assistant",
-    "content": "Here are the top 5 stories from Hacker News...",
-    "tools_used": ["browser_navigate", "browser_snapshot"]
-  }
-}
-```
-
-### `status`
-
-System status update.
-
-```json
-{
-  "type": "status",
-  "data": {
-    "daemon": "running",
-    "uptime": "2m 14s",
-    "memory_mb": 87,
-    "active_agents": 1,
-    "browser": "connected",
-    "sidecar": "connected"
-  }
-}
-```
+Streaming partial response chunks and tool/sub-agent progress.
 
 ### `notification`
 
-A notification for the user (approval request, scheduled task, etc.).
+Used for structured events such as:
 
-```json
-{
-  "type": "notification",
-  "data": {
-    "title": "Approval Required",
-    "message": "JARVIS wants to send an email to team@example.com",
-    "actions": ["approve", "deny"],
-    "id": "approval-123"
-  }
-}
-```
+- task updates
+- content updates
+- approval requests
+- awareness events
+- assistant-side follow-up notifications
 
-### `tts_start`
+### `status`
 
-Signals that TTS audio is about to be streamed.
-
-```json
-{
-  "type": "tts_start",
-  "data": {
-    "voice": "en-US-AriaNeural"
-  }
-}
-```
-
-After this message, the server sends binary MP3 audio frames.
-
-### `tts_end`
-
-Signals that TTS audio streaming is complete.
-
-```json
-{
-  "type": "tts_end",
-  "data": {}
-}
-```
+Used for operation status and command responses.
 
 ### `error`
 
-An error occurred.
+Used when the daemon needs to surface a request error over the socket.
 
-```json
-{
-  "type": "error",
-  "data": {
-    "message": "LLM provider returned 429: rate limit exceeded",
-    "code": "LLM_RATE_LIMIT"
-  }
-}
-```
+### `tts_start` / `tts_end`
 
-### `workflow_event`
+Used by the voice system to coordinate streamed speech playback.
 
-A workflow execution event.
+### `workflow_event`, `goal_event`, `site_event`
 
-```json
-{
-  "type": "workflow_event",
-  "data": {
-    "workflow_id": "wf-123",
-    "event": "node_completed",
-    "node_id": "node-456",
-    "result": { ... }
-  }
-}
-```
+Dedicated event streams for those product areas.
 
-### `goal_event`
+## Authentication
 
-A goal pursuit event (morning check-in, progress update, etc.).
+If `auth.token` is configured, the dashboard/API layer requires it.
 
-```json
-{
-  "type": "goal_event",
-  "data": {
-    "goal_id": "goal-789",
-    "event": "morning_checkin",
-    "message": "Good morning! Let's review your goals for today."
-  }
-}
-```
+In practical deployments, authentication is commonly handled via:
 
-## Binary Protocol
+- query token during first load
+- cookie set by the dashboard flow
 
-Voice audio uses WebSocket binary frames alongside the JSON text frames:
+If `auth.token` is unset, the dashboard is open access.
 
-| Direction | Format | Description |
-|---|---|---|
-| Client → Server | Binary (WebM) | Microphone audio chunks during voice input |
-| Server → Client | Binary (MP3) | TTS audio chunks, streamed sentence by sentence |
+## Reverse Proxy Requirements
 
-The server distinguishes binary from JSON messages using the WebSocket frame type bit — no additional framing header is needed.
+If you proxy the dashboard:
 
-### Audio Flow
+- forward `/ws`
+- preserve `Upgrade` and `Connection` headers
+- make sure the browser origin matches the daemon's expected public host setup
 
-1. Client sends `voice_start` (JSON)
-2. Client streams binary WebM frames
-3. Client sends `voice_end` (JSON)
-4. Server processes audio via STT
-5. Server sends `stream` tokens (JSON) as the agent responds
-6. Server sends `tts_start` (JSON)
-7. Server streams binary MP3 frames
-8. Server sends `tts_end` (JSON)
+## Who Should Use This Page
 
-## Sidecar WebSocket
+This page is for:
 
-Sidecars connect to a separate endpoint:
+- people building custom dashboard clients
+- people debugging WebSocket/proxy issues
+- people integrating around the live event stream
 
-```
-ws://localhost:3142/sidecar
-```
-
-Sidecar connections require a JWT token in the `Authorization: Bearer` header. The sidecar protocol uses JSON-RPC for tool execution — see [Desktop Control](/docs/desktop-control) for details.
+If you just want to use JARVIS normally, start with [Dashboard](/docs/dashboard) and [Troubleshooting](/docs/troubleshooting).

@@ -1,167 +1,251 @@
 ---
 title: Troubleshooting
-description: Solutions for common JARVIS issues and diagnostic commands.
+description: Common startup, networking, Docker, provider, sidecar, and dashboard issues, with concrete fixes.
 ---
 
-This guide covers the most common problems you may encounter running JARVIS and how to resolve them. For issues not listed here, run `jarvis doctor` first — it checks environment, connectivity, and configuration automatically.
+If something feels wrong, start here:
 
-## Installation Issues
-
-For detailed installation troubleshooting (permission errors, PATH issues, npm/Node.js setup, WSL2 problems), see the [Installation Troubleshooting](/docs/installation#installation-troubleshooting) section on the Installation page.
-
----
-
-## Common Issues
-
-### Daemon Won't Start
-
-**Symptoms:** `jarvis start` exits immediately, or nothing appears at `http://localhost:3142`.
-
-**Steps:**
-1. Check that port 3142 is not already in use:
-   ```bash
-   lsof -i :3142
-   ```
-   If something is using it, either stop that process or configure a different port in `~/.jarvis/config.yaml` under `daemon.port`.
-2. Validate your config file syntax:
-   ```bash
-   jarvis doctor
-   ```
-3. Check for errors in the log:
-   ```bash
-   jarvis logs -f
-   ```
-
----
-
-### Browser Tools Not Working
-
-**Symptoms:** Commands like "go to a website" fail, or JARVIS reports it cannot connect to the browser.
-
-**Steps:**
-1. Ensure Chrome or Chromium is installed and accessible in your `PATH`.
-2. JARVIS connects to Chrome via the Chrome DevTools Protocol (CDP) on port 9222. Confirm Chrome launched with remote debugging:
-   ```bash
-   google-chrome --remote-debugging-port=9222
-   ```
-3. Run `jarvis doctor` to verify the browser connection status.
-
----
-
-### Sidecar Won't Connect
-
-**Symptoms:** Desktop control commands fail, or the System Status panel shows the sidecar as disconnected.
-
-**Steps:**
-1. Verify the sidecar binary matches your platform (Windows, macOS, or Linux).
-2. Check that the sidecar can reach the daemon on port 3142 — confirm no firewall is blocking the connection.
-3. The sidecar authenticates via a JWT token sent in the `Authorization: Bearer` header. If the token is expired or misconfigured, re-enroll from the dashboard under **Settings > Sidecar**.
-4. Inspect sidecar output for WebSocket errors and run `jarvis doctor` for a connectivity check.
-
----
-
-### LLM Not Responding
-
-**Symptoms:** Chat messages hang, time out, or return authentication errors.
-
-**Steps:**
-1. Verify the API key for your primary LLM provider is correctly set. API keys are stored in the encrypted keychain, not in config.yaml.
-2. Check the provider's status page for outages:
-   - Anthropic: [status.anthropic.com](https://status.anthropic.com)
-   - OpenAI: [status.openai.com](https://status.openai.com)
-   - Google: [status.cloud.google.com](https://status.cloud.google.com)
-3. Run `jarvis doctor` to test the LLM connection.
-4. If the primary provider is down, configure a fallback in your config:
-   ```yaml
-   llm:
-     primary: anthropic
-     fallback: [openai, gemini, ollama]
-   ```
-
----
-
-### Voice Not Working
-
-**Symptoms:** The microphone button does nothing, or TTS responses are silent.
-
-**Steps:**
-1. Check that your browser has microphone permission granted for `http://localhost:3142`.
-2. Verify TTS is enabled in `~/.jarvis/config.yaml`:
-   ```yaml
-   tts:
-     enabled: true
-     provider: edge
-   ```
-3. For ElevenLabs TTS, confirm the `api_key` is set under `tts.elevenlabs`.
-4. Inspect the browser console (`F12`) for WebSocket or audio errors.
-5. Run `jarvis doctor` to check the voice subsystem.
-
----
-
-### Desktop Control Fails on WSL
-
-**Symptoms:** Window management or UI automation commands fail when running JARVIS inside WSL2.
-
-**Cause:** The Go sidecar uses Win32 APIs and must run on the Windows side — it cannot operate from inside the WSL2 environment.
-
-**Fix:** Start the sidecar from a Windows terminal (PowerShell or Command Prompt), not from within WSL:
-```powershell
-# Run this in a Windows terminal, not in WSL
-jarvis-sidecar.exe --token <your-jwt-token>
+```bash
+jarvis doctor
+jarvis status
+jarvis logs -n 200
 ```
-Keep the daemon (`jarvis start`) running in WSL as normal. The sidecar will connect to it over the network.
 
----
+Those three commands solve a large percentage of first-line debugging.
 
-### Memory / Vault Issues
+## Daemon Does Not Start
 
-**Symptoms:** JARVIS forgets context between sessions, or errors mention the database.
+Symptoms:
 
-**Steps:**
-1. Confirm the database file exists:
-   ```bash
-   ls ~/.jarvis/jarvis.db
-   ```
-2. If the file is missing or corrupted, reinitialize the database:
-   ```bash
-   jarvis db:init
-   ```
-   Note: this resets stored memories and conversation history.
-3. Check available disk space — a full disk will prevent SQLite writes.
+- `jarvis start` exits immediately
+- `jarvis status` stays stopped
+- nothing opens on port `3142`
 
----
+What to check:
 
-### Dashboard Not Loading
+1. Port already in use:
 
-**Symptoms:** Browser shows a connection refused error or blank page at `http://localhost:3142`.
+```bash
+lsof -i :3142
+```
 
-**Steps:**
-1. Confirm the daemon is running:
-   ```bash
-   jarvis status
-   ```
-2. If the daemon is not running, start it:
-   ```bash
-   jarvis start
-   ```
-3. Verify you are using the correct port. If you changed `daemon.port` in your config, update the URL accordingly.
-4. Open the browser developer console (`F12 > Console`) and check for JavaScript errors or failed network requests.
+2. Broken config or missing provider credentials:
 
----
+```bash
+jarvis doctor
+```
 
-## Diagnostic Commands
+3. Read logs:
 
-| Command | Description |
-|---|---|
-| `jarvis doctor` | Full environment check — config, LLM, browser, sidecar, database |
-| `jarvis status` | Show daemon process, PID, uptime, and memory usage |
-| `jarvis logs -f` | Stream live log output to watch for errors in real time |
+```bash
+jarvis logs -f
+```
 
-Run `jarvis doctor` as your first step for any problem. It covers the majority of common configuration and connectivity issues automatically.
+## Dashboard Shows Disconnected
 
-## Getting Help
+Symptoms:
 
-If you cannot resolve an issue with the steps above:
+- The UI loads but the sidebar says disconnected
+- chat does not stream
 
-- **GitHub Issues**: [github.com/vierisid/jarvis/issues](https://github.com/vierisid/jarvis/issues) — search existing issues or open a new one with your `jarvis doctor` output attached.
-- **Discord**: [Join the community server](https://discord.gg/nE3hcaFYZP) for real-time help from other users and contributors.
+Likely causes:
+
+- The daemon is not actually running
+- You opened the wrong host or port
+- A reverse proxy is not forwarding WebSocket upgrades
+- Auth token/cookie handling is wrong
+
+If you use Nginx or another proxy, make sure `/ws` is upgraded correctly.
+
+## Browser Tools Do Not Work
+
+Symptoms:
+
+- JARVIS says it cannot use the browser
+- navigation tasks fail
+
+Check:
+
+- Chrome or Chromium is installed
+- The daemon can launch the browser on the host where it is running
+- You are not assuming the VPS can control a browser on your laptop without a sidecar
+
+## Sidecar Does Not Connect
+
+Symptoms:
+
+- desktop or filesystem actions fail
+- the Sidecar settings area never shows the machine online
+
+Check:
+
+- The sidecar token is correct
+- The sidecar can reach the daemon over the network
+- Firewalls are not blocking the connection
+- The daemon host/port is reachable from the sidecar machine
+
+## The "Can Your Computer Reach This URL?" Error
+
+This is one of the most common remote-hosting mistakes and it affects Ollama, local Whisper endpoints, and any other service URL you configure.
+
+### Why It Happens
+
+People often host JARVIS on one machine but leave provider endpoints set to `localhost`, for example:
+
+```yaml
+llm:
+  ollama:
+    base_url: "http://localhost:11434"
+
+stt:
+  provider: "local"
+  local:
+    endpoint: "http://localhost:8000"
+```
+
+That only works if:
+
+- JARVIS is running on the same machine as Ollama or Whisper
+
+If JARVIS runs on a VPS and Ollama runs on your desktop, then `localhost` means:
+
+- the VPS itself
+
+not:
+
+- your desktop
+- your browser
+- your laptop
+
+So the daemon tries to connect to a service that does not exist on the VPS and you get reachability failures.
+
+### How to Fix It
+
+Use a URL the daemon can actually reach:
+
+- a LAN IP like `http://192.168.1.50:11434`
+- a Tailscale address
+- a reverse-proxied hostname
+- a public/private server IP if your network model allows it
+
+Example:
+
+```yaml
+llm:
+  ollama:
+    base_url: "http://192.168.1.50:11434"
+```
+
+or:
+
+```yaml
+stt:
+  provider: "local"
+  local:
+    endpoint: "https://whisper.example.com"
+    server_type: "openai_compatible"
+```
+
+### Reverse Proxy Option
+
+If the service should stay on another machine, put a reverse proxy in front of it and point JARVIS at that stable hostname instead of `localhost`.
+
+Example pattern:
+
+- Ollama host runs locally on `127.0.0.1:11434`
+- Nginx or Caddy exposes it at `https://ollama.example.com`
+- JARVIS config uses `https://ollama.example.com`
+
+This works because the daemon can resolve and reach that hostname over the network.
+
+### Security Warning
+
+Do not expose Ollama or a local Whisper server publicly without authentication and network controls. If you reverse proxy them, secure the endpoint deliberately.
+
+## Docker-Specific Problems
+
+### "It Works on the Host but Not in Docker"
+
+Inside Docker, `localhost` means the container, not the host machine.
+
+That affects:
+
+- Ollama
+- local Whisper
+- any side service the daemon is trying to call
+
+### Fix Options
+
+Option 1: run the dependency in another reachable container/network and use its container name or service hostname.
+
+Option 2: point the daemon at the host machine's reachable IP instead of `localhost`.
+
+Option 3: expose the dependency through a reverse proxy hostname and use that URL.
+
+### Desktop/Browser Limitation in Docker
+
+The containerized daemon does not magically gain full control of your host desktop/browser environment. Use sidecars on the target machines for real desktop/browser reach.
+
+## Ollama-Specific Problems
+
+### JARVIS Cannot Reach Ollama
+
+Check:
+
+- Ollama is actually running
+- the configured `base_url` is reachable from the daemon machine
+- the model exists locally
+
+Useful checks:
+
+```bash
+curl http://localhost:11434/api/tags
+ollama list
+```
+
+Replace `localhost` with the actual address JARVIS should use.
+
+## Local Whisper / STT Problems
+
+### Local STT Endpoint Fails
+
+Check:
+
+- endpoint is reachable from the daemon machine
+- `server_type` matches the server you are using
+- the endpoint path is correct for that server implementation
+
+If the daemon is remote and Whisper is local to your laptop, do not leave the endpoint as `localhost` unless the daemon is running on that same laptop.
+
+## Reverse Proxy Checklist
+
+If you host the dashboard or related services behind a proxy:
+
+- forward the daemon port correctly
+- forward WebSocket upgrades for `/ws`
+- verify the host the browser sees matches the host your deployment expects
+- preserve cookies/auth headers where needed
+
+## If You Still Cannot Fix It
+
+Collect these before asking for help:
+
+```bash
+jarvis status
+jarvis doctor
+jarvis logs -n 200
+```
+
+And include:
+
+- where the daemon runs
+- where Ollama/Whisper runs
+- whether Docker is involved
+- whether a reverse proxy is involved
+- the exact configured URL
+
+## Community
+
+If you want another set of eyes, use the Discord server:
+
+- https://discord.gg/C8fUM33mc

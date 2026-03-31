@@ -1,138 +1,114 @@
 ---
 title: Quick Start
-description: Get JARVIS running and send your first message in under five minutes.
+description: Get JARVIS configured, running, and reachable in a few minutes.
 ---
 
-This guide assumes you have completed [installation](/docs/installation). If you haven't, start there.
+This guide assumes you have already completed [Installation](/docs/installation).
 
-## Step 1 — Run Onboarding
+## Step 1: Run Onboarding
 
-`jarvis onboard` is the interactive wizard for first-time setup and can be re-run any time to update your configuration:
+JARVIS ships with an interactive setup wizard:
 
 ```bash
 jarvis onboard
 ```
 
-The wizard walks through:
+The current onboarding flow walks through:
 
-1. **About you** — your name and what you want to call your assistant
-2. **LLM provider** — choose Anthropic, OpenAI, Google Gemini, or Ollama. Each offers a model selection menu (e.g. `claude-sonnet-4-6`, `gpt-5.4`, `gemini-3-flash`, `llama3`)
-3. **API key** — paste the key for your chosen provider
-4. **Fallback providers** — optional backup LLM providers
-5. **Voice** — enable TTS (Edge TTS free, or ElevenLabs premium) and STT
-6. **Channels** — Telegram and Discord bot tokens (optional)
-7. **Personality** — core traits and behavior style
-8. **Authority** — autonomy level (1-10)
-9. **Dashboard port** — defaults to `3142`
-10. **Autostart** — install a systemd user service (Linux) or launchd plist (macOS)
+1. About you
+2. Primary LLM provider and model
+3. API key setup
+4. Optional fallback providers
+5. Voice configuration
+6. Telegram and Discord channel setup
+7. Personality and assistant name
+8. Authority defaults
+9. Dashboard port
 
-Your config is saved to `~/.jarvis/config.yaml`.
+Your config is written to:
 
-## Step 2 — Start the Daemon
+```text
+~/.jarvis/config.yaml
+```
+
+## Step 2: Start the Daemon
+
+Start JARVIS normally:
 
 ```bash
 jarvis start
 ```
 
-JARVIS launches in the background. On first start it:
-
-- Opens the SQLite knowledge vault at `~/.jarvis/jarvis.db`
-- Starts the WebSocket server on your configured port (default 3142)
-- Auto-detects and launches Chrome or Chromium for browser control
-- Opens the dashboard in your default browser
-
-To start on a specific port:
+You can also run it detached:
 
 ```bash
-jarvis start --port 3142
+jarvis start -d
 ```
 
-To keep JARVIS in the foreground (useful for debugging):
+Or on a custom port:
 
 ```bash
-jarvis start --foreground
+jarvis start --port 8080
 ```
 
-## Step 3 — Open the Dashboard
+## Step 3: Open the Dashboard
 
-The dashboard opens automatically after `jarvis start`. If it does not, navigate to:
+By default, the dashboard lives at:
 
-```
+```text
 http://localhost:3142
 ```
 
-You should see the JARVIS dashboard with a chat interface ready to receive messages.
+If you changed the port during onboarding, use that value instead.
 
-## Step 4 — Send Your First Message
+The dashboard is the main control plane for:
 
-In the chat input, try a command that exercises real capabilities:
+- Chat
+- Tasks
+- Memory
+- Authority
+- Awareness
+- Workflows
+- Goals
+- Settings
 
-```
-Go to news.ycombinator.com and tell me the top 5 stories right now
-```
+## Step 4: Send a First Real Task
 
-JARVIS will:
+Good first prompts are tasks that exercise the system, not toy questions. For example:
 
-1. Navigate Chrome to Hacker News
-2. Extract the page content
-3. Summarize the top 5 stories
-4. Stream the response back to you in real time
+- "Summarize what this project actually does."
+- "Open the docs and tell me what is missing."
+- "Create a workflow that posts a Telegram summary every morning."
+- "Plan my day from my current goals."
 
-Try another that uses memory:
+## Step 5: Add More Reach With Sidecars
 
-```
-My name is Alex and I prefer concise answers. Remember this.
-```
+If the daemon is not running on the same machine you want to control, install a sidecar on the target machine. Sidecars let JARVIS access:
 
-From this point on, JARVIS knows your name and preference. Ask it to confirm:
+- Desktop automation
+- Browser automation
+- Terminal
+- Filesystem
+- Clipboard
+- Screenshots
 
-```
-What do you know about me?
-```
+See [Desktop Control](/docs/desktop-control) for the full setup.
 
-## Step 5 — Check the Status
+## Common First Tasks After Setup
 
-In another terminal, confirm the daemon is healthy:
+Most people should do these next:
 
-```bash
-jarvis status
-```
+1. Set `auth.token` before exposing the dashboard publicly
+2. Connect at least one sidecar if you want real desktop/browser control on another machine
+3. Review [Authority & Safety](/docs/authority) before raising autonomy
 
-Expected output:
+## Quick Verification Checklist
 
-```
-JARVIS daemon is running
-  PID: 12345
-  Port: 3142
-  Uptime: 2m 14s
-  Memory: 87 MB
-  Active agents: 1
-  Messages today: 3
-```
+You are in a good state if all of these are true:
 
-## Key CLI Commands
+- `jarvis status` shows the daemon as running
+- The dashboard connects successfully
+- Chat messages stream normally
+- Your selected LLM provider responds
 
-| Command | Description |
-|---|---|
-| `jarvis start` | Start the daemon in the background |
-| `jarvis stop` | Stop the daemon gracefully |
-| `jarvis restart` | Restart the daemon |
-| `jarvis status` | Show daemon status and health |
-| `jarvis logs -f` | Stream live logs |
-| `jarvis onboard` | Re-run the configuration wizard |
-| `jarvis doctor` | Diagnose common configuration problems |
-| `jarvis update` | Update to the latest version |
-| `jarvis version` | Show version information |
-
-See the full [CLI reference](/docs/cli) for all flags and options.
-
-## What to Explore Next
-
-Now that JARVIS is running, explore its core features:
-
-- **[Browser Control](/docs/browser-control)** — have JARVIS browse the web autonomously
-- **[Voice Interface](/docs/voice)** — talk to JARVIS hands-free
-- **[Multi-Agent System](/docs/multi-agent)** — delegate complex tasks to specialist sub-agents
-- **[Memory and Knowledge](/docs/memory)** — understand how JARVIS learns about you
-- **[Proactive Agent](/docs/proactive-agent)** — set up Gmail/Calendar monitoring and scheduled tasks
-- **[Telegram](/docs/telegram)** and **[Discord](/docs/discord)** — connect JARVIS to messaging platforms
+If any of that fails, go to [Troubleshooting](/docs/troubleshooting).

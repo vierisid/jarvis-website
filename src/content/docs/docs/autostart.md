@@ -1,149 +1,121 @@
 ---
 title: Autostart
-description: Configure JARVIS to start automatically when your system boots.
+description: Run JARVIS as a background service with systemd or launchd so it starts automatically.
 ---
 
-JARVIS supports autostart on Linux (systemd), macOS (launchd), and Windows/WSL2. Choose the section for your platform below.
+JARVIS supports autostart/background-service installation on:
 
-The onboarding wizard (`jarvis onboard`) can install the autostart configuration for you automatically. The steps below are for manual setup or customization.
+- Linux via `systemd --user`
+- macOS via `launchd`
 
-## Linux — systemd
+The onboarding wizard can help with startup-related setup, but this page is the manual reference.
 
-Create a user service unit file at `~/.config/systemd/user/jarvis.service`:
+## Why Use Autostart
+
+Autostart is useful when:
+
+- You run JARVIS on your daily machine and want it available after reboot
+- You host it on a home server and want it to come back automatically
+- You do not want to manually open a shell and run `jarvis start` every time
+
+## Linux: `systemd --user`
+
+Create this file:
+
+```text
+~/.config/systemd/user/jarvis.service
+```
+
+Example unit:
 
 ```ini
 [Unit]
-Description=JARVIS Daemon
+Description=J.A.R.V.I.S. Daemon
 After=network.target
 
 [Service]
 Type=simple
-ExecStart=%h/.bun/bin/jarvis start
+ExecStart=%h/.bun/bin/jarvis start --foreground
 Restart=on-failure
 RestartSec=5
+Environment=HOME=%h
 
 [Install]
 WantedBy=default.target
 ```
 
-Enable and start the service:
+Then enable it:
 
 ```bash
 systemctl --user daemon-reload
-systemctl --user enable jarvis
-systemctl --user start jarvis
+systemctl --user enable jarvis.service
+systemctl --user start jarvis.service
 ```
 
-Confirm it is running:
+Useful commands:
 
 ```bash
-systemctl --user status jarvis
+systemctl --user status jarvis.service
+journalctl --user -u jarvis.service -f
 ```
 
-To view logs via journald:
+### Boot Before Login
+
+If you want user services to continue even when you are not logged in:
 
 ```bash
-journalctl --user -u jarvis -f
+loginctl enable-linger "$USER"
 ```
 
-**Lingering** — by default, user services only run while you are logged in. To have JARVIS start at boot even before login, enable lingering for your user:
+## macOS: `launchd`
 
-```bash
-loginctl enable-linger $USER
+Create:
+
+```text
+~/Library/LaunchAgents/ai.jarvis.daemon.plist
 ```
 
----
-
-## macOS — launchd
-
-Create a plist file at `~/Library/LaunchAgents/com.jarvis.daemon.plist`:
+Example plist:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.jarvis.daemon</string>
+  <string>ai.jarvis.daemon</string>
   <key>ProgramArguments</key>
   <array>
-    <string>/Users/you/.bun/bin/jarvis</string>
+    <string>/Users/your-user/.bun/bin/bun</string>
+    <string>/path/to/jarvis/bin/jarvis.ts</string>
     <string>start</string>
+    <string>--foreground</string>
   </array>
   <key>RunAtLoad</key>
   <true/>
   <key>KeepAlive</key>
   <true/>
-  <key>StandardOutPath</key>
-  <string>/Users/you/.jarvis/logs/jarvis.log</string>
-  <key>StandardErrorPath</key>
-  <string>/Users/you/.jarvis/logs/jarvis.error.log</string>
 </dict>
 </plist>
 ```
 
-Replace `/Users/you` with your actual home directory path.
-
-Load the service:
+Then load it:
 
 ```bash
-launchctl load ~/Library/LaunchAgents/com.jarvis.daemon.plist
+launchctl load ~/Library/LaunchAgents/ai.jarvis.daemon.plist
+launchctl start ai.jarvis.daemon
 ```
 
-To unload (stop autostart):
+## Operational Advice
 
-```bash
-launchctl unload ~/Library/LaunchAgents/com.jarvis.daemon.plist
-```
+If you use autostart:
 
----
+- Make sure your config is valid before enabling it
+- Verify the dashboard is reachable after reboot
+- Check logs first if the service appears to start but the dashboard is unavailable
 
-## Windows / WSL2
+## Video Tutorial Placeholder
 
-### Starting JARVIS (daemon) on WSL boot
+> Video tutorial placeholder: setting up JARVIS as a background service on Linux and macOS.
 
-Add a boot command to `/etc/wsl.conf` inside your WSL distro:
-
-```ini
-# /etc/wsl.conf
-[boot]
-command = su - your_username -c "jarvis start -d"
-```
-
-Replace `your_username` with your WSL username.
-
-Alternatively, use **Windows Task Scheduler** to trigger a WSL command at login:
-
-1. Open Task Scheduler and create a new task.
-2. Set the trigger to **At log on**.
-3. Set the action to run `wsl.exe` with the argument `-e bash -c "jarvis start -d"`.
-
-### Starting the Sidecar (Windows-side)
-
-The Go sidecar must run on the Windows side (not inside WSL) because it uses Win32 APIs for desktop control. Autostart options:
-
-**Startup folder shortcut:**
-1. Press `Win+R` and type `shell:startup` to open the Startup folder.
-2. Create a shortcut to `jarvis-sidecar.exe` in that folder.
-
-**Windows service (recommended for reliability):**
-Use a tool such as [NSSM](https://nssm.cc/) to register the sidecar as a Windows service:
-
-```powershell
-nssm install JarvisSidecar "C:\path\to\jarvis-sidecar.exe"
-nssm start JarvisSidecar
-```
-
----
-
-## Logging
-
-All JARVIS logs are written to `~/.jarvis/logs/`.
-
-| Command | Purpose |
-|---|---|
-| `jarvis logs -f` | Stream live log output |
-| `journalctl --user -u jarvis -f` | Stream logs via systemd (Linux) |
-
-The log directory is created automatically on first start. If you need to rotate logs, configure logrotate or use the systemd journal's built-in retention policies.
+Add your future video link here.

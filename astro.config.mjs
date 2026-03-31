@@ -18,7 +18,7 @@ export default defineConfig({
       },
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/vierisid/jarvis' },
-        { icon: 'discord', label: 'Discord', href: 'https://discord.gg/nE3hcaFYZP' },
+        { icon: 'discord', label: 'Discord', href: 'https://discord.gg/C8fUM33mc' },
       ],
       customCss: ['./src/styles/global.css'],
       head: [
@@ -42,6 +42,7 @@ export default defineConfig({
           items: [
             { label: 'Browser Control', slug: 'docs/browser-control' },
             { label: 'Desktop Control', slug: 'docs/desktop-control' },
+            { label: 'Sites Workspace', slug: 'docs/sites' },
             { label: 'Voice Interface', slug: 'docs/voice' },
             { label: 'Multi-Agent System', slug: 'docs/multi-agent' },
             { label: 'Memory & Knowledge', slug: 'docs/memory' },
