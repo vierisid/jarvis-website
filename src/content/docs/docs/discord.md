@@ -123,3 +123,9 @@ Messages from users not in the list are ignored.
 - **Message length**: Discord limits messages to 2000 characters. Long responses are split across multiple messages.
 - **Images**: JARVIS can send screenshots and images as Discord attachments.
 - **Rate limits**: Discord enforces rate limits on bot messages. JARVIS respects these automatically.
+
+## Video Tutorial Placeholder
+
+> Video tutorial placeholder: setting up Discord and using it as a remote JARVIS channel.
+
+Add your future video link here.

@@ -217,3 +217,9 @@ authority:
 ```
 
 See [Configuration](/docs/configuration) for the full config file structure.
+
+## Video Tutorial Placeholder
+
+> Video tutorial placeholder: authority levels, approval flow, and emergency controls.
+
+Add your future video link here.

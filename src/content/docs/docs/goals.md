@@ -317,3 +317,9 @@ goals:
   # Let JARVIS create/move calendar events for goals
   calendar_ownership: false
 ```
+
+## Video Tutorial Placeholder
+
+> Video tutorial placeholder: goal planning, accountability, and dashboard views.
+
+Add your future video link here.

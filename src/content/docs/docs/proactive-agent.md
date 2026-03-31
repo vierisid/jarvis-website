@@ -82,3 +82,9 @@ Proactive notifications are delivered through all available channels:
 4. **Telegram/Discord** — if dashboard is disconnected, falls back to messaging channels
 
 The system checks for active WebSocket clients first. If no dashboard is connected, it routes through Telegram, Discord, or email to ensure you never miss a critical alert.
+
+## Video Tutorial Placeholder
+
+> Video tutorial placeholder: proactive notifications, heartbeat behavior, and observer-driven actions.
+
+Add your future video link here.

@@ -223,3 +223,9 @@ curl -X POST http://localhost:3142/api/awareness/toggle -d '{"enabled": true}'
 - Cloud vision escalation sends screenshots to your configured LLM provider (Anthropic/OpenAI) only when triggered by errors, struggles, or significant changes
 - Captures are automatically cleaned up: standard captures after 1 hour, key moments after 24 hours
 - You can disable cloud vision entirely with `cloud_vision_enabled: false`
+
+## Video Tutorial Placeholder
+
+> Video tutorial placeholder: awareness timeline, suggestions, and live context.
+
+Add your future video link here.

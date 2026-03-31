@@ -35,6 +35,7 @@ export default defineConfig({
             { label: 'Installation', slug: 'docs/installation' },
             { label: 'Quick Start', slug: 'docs/quickstart' },
             { label: 'Configuration', slug: 'docs/configuration' },
+            { label: 'Contributing', slug: 'docs/contributing' },
           ],
         },
         {

@@ -107,3 +107,9 @@ Messages from users not in the list are silently ignored.
 - **Message length**: Telegram limits messages to 4096 characters. Long responses are split across multiple messages.
 - **Images**: JARVIS can send screenshots and images as Telegram photos.
 - **No group chat**: The bot only responds in direct messages, not in group chats.
+
+## Video Tutorial Placeholder
+
+> Video tutorial placeholder: setting up Telegram and using it as a remote JARVIS channel.
+
+Add your future video link here.

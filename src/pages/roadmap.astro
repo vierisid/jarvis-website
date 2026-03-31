@@ -1,0 +1,96 @@
+---
+import Landing from '../layouts/Landing.astro';
+---
+
+<Landing title="J.A.R.V.I.S. Roadmap" description="Current JARVIS roadmap items and the rough direction of upcoming work.">
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="/" class="nav-logo">J.A.R.V.I.S.</a>
+        <span class="nav-version">roadmap</span>
+      </div>
+      <div class="nav-right">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/docs/introduction" class="nav-link">Docs</a>
+        <a href="/docs/contributing" class="nav-link">Contribute</a>
+        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero" style="padding-bottom: 48px;">
+    <div class="hero-grid" style="grid-template-columns: 1fr;">
+      <div>
+        <p class="label">Current roadmap</p>
+        <h1 class="hero-heading">What we are working on next.</h1>
+        <p class="hero-sub" style="max-width: 920px;">
+          This is the current rough roadmap. It is directional, not a strict execution order. If you want to suggest features,
+          implementation approaches, or priorities, use the Discord server or GitHub issues.
+        </p>
+        <div class="hero-actions">
+          <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener" class="btn-solid">Join Discord</a>
+          <a href="https://github.com/vierisid/jarvis/issues" target="_blank" rel="noopener" class="btn-border">Suggest a Feature</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cap-strip" style="padding-top: 0;">
+    <div class="cap-strip-inner">
+      <div style="display: grid; gap: 16px;">
+        <div style="border: 1px solid var(--border); background: var(--bg-raised); border-radius: 22px; padding: 22px;">
+          <div style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Roadmap Item 1</div>
+          <h2 style="margin: 0 0 8px; color: var(--text-primary); font-size: 24px;">Web App Templates</h2>
+          <p style="margin: 0; color: var(--text-secondary); line-height: 1.7;">Give JARVIS pre-installed templates on how to use the most common web apps like WhatsApp, Gmail, and similar tools so the system has faster, more reliable interaction patterns out of the box.</p>
+        </div>
+        <div style="border: 1px solid var(--border); background: var(--bg-raised); border-radius: 22px; padding: 22px;">
+          <div style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Roadmap Item 2</div>
+          <h2 style="margin: 0 0 8px; color: var(--text-primary); font-size: 24px;">Logs Spam</h2>
+          <p style="margin: 0; color: var(--text-secondary); line-height: 1.7;">Reduce noisy log spam such as repeated <code>[WebSocketServer] Broadcast to 1/1 clients</code> lines when sidecars or clients are connected.</p>
+        </div>
+        <div style="border: 1px solid var(--border); background: var(--bg-raised); border-radius: 22px; padding: 22px;">
+          <div style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Roadmap Item 3</div>
+          <h2 style="margin: 0 0 8px; color: var(--text-primary); font-size: 24px;">Enhance Windows Sidecar</h2>
+          <p style="margin: 0; color: var(--text-secondary); line-height: 1.7;">Build a better enrollment UI for inserting the JARVIS token, plus a tray icon with a contextual menu showing status, version, and update availability.</p>
+        </div>
+        <div style="border: 1px solid var(--border); background: var(--bg-raised); border-radius: 22px; padding: 22px;">
+          <div style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Roadmap Item 4</div>
+          <h2 style="margin: 0 0 8px; color: var(--text-primary); font-size: 24px;">Jarvis Swarm</h2>
+          <p style="margin: 0; color: var(--text-secondary); line-height: 1.7;">Make separate JARVIS instances able to communicate with each other directly.</p>
+        </div>
+        <div style="border: 1px solid var(--border); background: var(--bg-raised); border-radius: 22px; padding: 22px;">
+          <div style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Roadmap Item 5</div>
+          <h2 style="margin: 0 0 8px; color: var(--text-primary); font-size: 24px;">Move OCR into the Sidecar</h2>
+          <p style="margin: 0; color: var(--text-secondary); line-height: 1.7;">Offload OCR from the brain to the sidecar to reduce brain load and support more concurrent sidecars. The tradeoff is a heavier sidecar and the need to bridge the current TypeScript OCR approach into the Go executable flow.</p>
+        </div>
+        <div style="border: 1px solid var(--border); background: var(--bg-raised); border-radius: 22px; padding: 22px;">
+          <div style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Roadmap Item 6</div>
+          <h2 style="margin: 0 0 8px; color: var(--text-primary); font-size: 24px;">Mobile Sidecar</h2>
+          <p style="margin: 0; color: var(--text-secondary); line-height: 1.7;">Make the sidecar available on mobile platforms as well.</p>
+        </div>
+        <div style="border: 1px solid var(--border); background: var(--bg-raised); border-radius: 22px; padding: 22px;">
+          <div style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Roadmap Item 7</div>
+          <h2 style="margin: 0 0 8px; color: var(--text-primary); font-size: 24px;">DB Backup Handling</h2>
+          <p style="margin: 0; color: var(--text-secondary); line-height: 1.7;">Add backup coordination for SQLite so user-defined backups can happen without risking corruption during writes by temporarily pausing write activity around the backup window.</p>
+        </div>
+        <div style="border: 1px solid var(--border); background: var(--bg-raised); border-radius: 22px; padding: 22px;">
+          <div style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Roadmap Item 8</div>
+          <h2 style="margin: 0 0 8px; color: var(--text-primary); font-size: 24px;">New Workflow System</h2>
+          <p style="margin: 0; color: var(--text-secondary); line-height: 1.7;">Replace the in-house workflow system with Activepieces: <a href="https://github.com/activepieces/activepieces" target="_blank" rel="noopener">https://github.com/activepieces/activepieces</a>.</p>
+        </div>
+        <div style="border: 1px solid var(--border); background: var(--bg-raised); border-radius: 22px; padding: 22px;">
+          <div style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Roadmap Item 9</div>
+          <h2 style="margin: 0 0 8px; color: var(--text-primary); font-size: 24px;">SQLite DB Import</h2>
+          <p style="margin: 0; color: var(--text-secondary); line-height: 1.7;">Add a settings section where a user can provide an existing SQLite database to import, which is especially useful for moving former self-hosted users into OpenCove-hosted setups.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px; border: 1px solid var(--border); background: var(--bg-raised); border-radius: 22px; padding: 22px;">
+        <div style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Important Note</div>
+        <p style="margin: 0; color: var(--text-secondary); line-height: 1.7;">
+          This is not guaranteed to be the exact execution order. It is meant to give a rough idea of the next things likely to come.
+        </p>
+      </div>
+    </div>
+  </section>
+</Landing>

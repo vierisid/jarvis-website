@@ -134,3 +134,9 @@ The number of knowledge records injected per turn is capped to keep prompt sizes
 ## Extraction Quality
 
 Extraction quality depends on the LLM used. Claude models (especially Opus) tend to extract fine-grained and contextually appropriate knowledge. Smaller local models (via Ollama) may extract less accurately. If extraction quality is important to you, use the Anthropic provider for the primary LLM.
+
+## Video Tutorial Placeholder
+
+> Video tutorial placeholder: how memory extraction and retrieval actually behave in JARVIS.
+
+Add your future video link here.
