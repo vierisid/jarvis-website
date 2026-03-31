@@ -39,8 +39,8 @@ Flags:
 
 Notes:
 
-- Foreground start acquires the daemon lock directly
-- Detached start spawns a background child and writes logs to the daemon log file
+- By default, `jarvis start` runs in the foreground and acquires the daemon lock directly
+- `jarvis start -d` or `jarvis start --detach` spawns a background child and writes logs to the daemon log file
 
 ## `jarvis stop`
 

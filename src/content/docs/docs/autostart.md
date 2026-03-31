@@ -35,7 +35,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=%h/.bun/bin/jarvis start --foreground
+ExecStart=%h/.bun/bin/jarvis start
 Restart=on-failure
 RestartSec=5
 Environment=HOME=%h
@@ -90,7 +90,6 @@ Example plist:
   <array>
     <string>/Users/your-user/.bun/bin/jarvis</string>
     <string>start</string>
-    <string>--foreground</string>
   </array>
   <key>RunAtLoad</key>
   <true/>
@@ -113,12 +112,11 @@ If you installed JARVIS from a source checkout instead of the global package, th
 
 ```xml
 <key>ProgramArguments</key>
-<array>
-  <string>/Users/your-user/.bun/bin/bun</string>
-  <string>/path/to/jarvis/bin/jarvis.ts</string>
-  <string>start</string>
-  <string>--foreground</string>
-</array>
+  <array>
+    <string>/Users/your-user/.bun/bin/bun</string>
+    <string>/path/to/jarvis/bin/jarvis.ts</string>
+    <string>start</string>
+  </array>
 ```
 
 Use this variant only if you followed the manual repository install path from [Installation](/docs/installation).

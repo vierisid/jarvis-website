@@ -257,10 +257,11 @@ Goal events are broadcast via WebSocket (same connection as other JARVIS events)
 ```json
 {
   "type": "goal_event",
+  "timestamp": 1709654400000,
   "payload": {
     "type": "goal_scored",
     "goalId": "abc123",
-    "payload": { "score": 0.45, "reason": "Completed 3 of 5 subtasks", "source": "user" },
+    "data": { "score": 0.45, "reason": "Completed 3 of 5 subtasks", "source": "user" },
     "timestamp": 1709654400000
   }
 }

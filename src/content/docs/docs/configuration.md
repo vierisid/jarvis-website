@@ -22,6 +22,14 @@ The config falls into a few major areas:
 - How much autonomy it has
 - Which background systems are active
 
+Third-party integrations do not all live in the same place:
+
+- some credentials are stored directly in `config.yaml`
+- some integrations are connected through onboarding or dashboard flows
+- Google OAuth is a hybrid case: client credentials can live in config, while the actual account authorization/token exchange happens through the setup flow
+
+This page focuses on the high-level structure of `config.yaml`, not every provider-specific setup walkthrough.
+
 ## Minimal Example
 
 This is the smallest realistic config for a cloud-hosted setup using Anthropic:

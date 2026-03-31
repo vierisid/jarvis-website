@@ -67,9 +67,13 @@ jarvis onboard
 Use this if you want the repository installed under `~/.jarvis/daemon` automatically:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/vierisid/jarvis/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/vierisid/jarvis/main/install.sh -o /tmp/jarvis-install.sh
+less /tmp/jarvis-install.sh
+bash /tmp/jarvis-install.sh
 jarvis onboard
 ```
+
+If you want a more reproducible install, pin that URL to a specific release tag or commit instead of `main`.
 
 ### Option 3: Manual Repository Install
 
@@ -102,8 +106,10 @@ Docker is useful when you want to host the daemon in a containerized environment
 docker run -d --name jarvis \
   -p 3142:3142 \
   -v jarvis-data:/data \
-  ghcr.io/vierisid/jarvis:latest
+  ghcr.io/vierisid/jarvis:0.2.1
 ```
+
+Replace `0.2.1` with the release you want to run. Use `:latest` only if you explicitly want floating upgrades.
 
 Important limitation:
 

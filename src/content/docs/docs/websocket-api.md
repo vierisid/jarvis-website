@@ -116,6 +116,8 @@ Used by the voice system to coordinate streamed speech playback.
 
 Dedicated event streams for those product areas.
 
+The outer WebSocket envelope still uses the same top-level `type`, `payload`, and `timestamp` fields. The event-specific details live inside `payload`.
+
 ## Authentication
 
 If `auth.token` is configured, the dashboard/API layer requires it.
@@ -148,6 +150,12 @@ If you are building your own client, use one of these patterns:
    send `Authorization: Bearer ...` on API requests and `Cookie: token=...` on the WebSocket handshake
 2. Browser client:
    first load the dashboard or your bootstrap route with `?token=...`, let the daemon set the `token` cookie, then open `/ws`
+
+Important detail:
+
+- the daemon's WebSocket upgrade path checks the `token` cookie, not an `Authorization` header on the WebSocket request itself
+- the cookie name is literally `token`
+- the daemon sets it as `HttpOnly; Path=/; SameSite=Lax`
 
 If you rely on cookies in a browser-based custom client, make sure your proxy preserves `Set-Cookie` and that the browser origin matches the daemon's configured public URL/origin handling.
 
