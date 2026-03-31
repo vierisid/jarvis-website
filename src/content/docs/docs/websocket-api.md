@@ -120,10 +120,36 @@ Dedicated event streams for those product areas.
 
 If `auth.token` is configured, the dashboard/API layer requires it.
 
-In practical deployments, authentication is commonly handled via:
+Custom clients should send that token using the same mechanisms the daemon actually accepts:
 
-- query token during first load
-- cookie set by the dashboard flow
+- HTTP API requests:
+
+```text
+Authorization: Bearer your-auth-token
+```
+
+- Browser/dashboard bootstrap:
+
+```text
+http://localhost:3142/?token=your-auth-token
+```
+
+When that `?token=` query value is valid on an HTTP page request, the daemon responds by setting this cookie:
+
+```text
+token=<auth.token>; Path=/; SameSite=Lax; HttpOnly
+```
+
+That `token` cookie is what browser WebSocket upgrades use afterward.
+
+If you are building your own client, use one of these patterns:
+
+1. Non-browser client:
+   send `Authorization: Bearer ...` on API requests and `Cookie: token=...` on the WebSocket handshake
+2. Browser client:
+   first load the dashboard or your bootstrap route with `?token=...`, let the daemon set the `token` cookie, then open `/ws`
+
+If you rely on cookies in a browser-based custom client, make sure your proxy preserves `Set-Cookie` and that the browser origin matches the daemon's configured public URL/origin handling.
 
 If `auth.token` is unset, the dashboard is open access.
 

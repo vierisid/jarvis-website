@@ -69,6 +69,8 @@ loginctl enable-linger "$USER"
 
 ## macOS: `launchd`
 
+If you installed JARVIS with the recommended global package command, prefer launching the global `jarvis` executable directly.
+
 Create:
 
 ```text
@@ -86,8 +88,7 @@ Example plist:
   <string>ai.jarvis.daemon</string>
   <key>ProgramArguments</key>
   <array>
-    <string>/Users/your-user/.bun/bin/bun</string>
-    <string>/path/to/jarvis/bin/jarvis.ts</string>
+    <string>/Users/your-user/.bun/bin/jarvis</string>
     <string>start</string>
     <string>--foreground</string>
   </array>
@@ -105,6 +106,22 @@ Then load it:
 launchctl load ~/Library/LaunchAgents/ai.jarvis.daemon.plist
 launchctl start ai.jarvis.daemon
 ```
+
+### Source Checkout Variant
+
+If you installed JARVIS from a source checkout instead of the global package, the launchd command should point at your checked-out CLI entrypoint instead:
+
+```xml
+<key>ProgramArguments</key>
+<array>
+  <string>/Users/your-user/.bun/bin/bun</string>
+  <string>/path/to/jarvis/bin/jarvis.ts</string>
+  <string>start</string>
+  <string>--foreground</string>
+</array>
+```
+
+Use this variant only if you followed the manual repository install path from [Installation](/docs/installation).
 
 ## Operational Advice
 

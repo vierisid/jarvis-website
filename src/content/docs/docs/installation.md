@@ -10,6 +10,15 @@ JARVIS can run:
 - On a VPS
 - In Docker
 
+## Security First
+
+JARVIS can control files, terminals, browsers, remote channels, and connected machines. Treat installation as a security decision, not just a package install.
+
+Before exposing the dashboard outside localhost or giving JARVIS access to real accounts, read:
+
+- [Disclaimer & Liability](/docs/disclaimer)
+- [Authority & Safety](/docs/authority)
+
 The daemon is the brain. It does not need to live on the same machine that you want to control. If you want JARVIS to stay online 24/7, a server or always-on machine is the best fit. If you want JARVIS to control another machine's desktop, browser, or filesystem, install a sidecar there after the daemon is up.
 
 ## Recommended Install
@@ -152,7 +161,7 @@ Best when:
 Tradeoffs:
 
 - JARVIS only stays online while that machine is on
-- Closing your shell is fine if you enable [Keepalive Mode](/docs/autostart)
+- If you want it to start automatically after reboot, configure [Autostart](/docs/autostart)
 
 ### VPS or Home Server
 
@@ -172,7 +181,7 @@ Tradeoffs:
 The next steps are:
 
 1. Run [Quick Start](/docs/quickstart)
-2. Enable [Keepalive Mode](/docs/autostart) if you want JARVIS to survive terminal closure
+2. Configure [Autostart](/docs/autostart) if you want it managed as a background service
 3. Install sidecars on any machines you want JARVIS to control directly
 
 ## Sidecar Reminder

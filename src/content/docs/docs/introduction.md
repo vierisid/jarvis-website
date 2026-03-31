@@ -7,6 +7,15 @@ JARVIS is an always-on AI daemon, not a tab-bound chatbot.
 
 It is designed to keep running in the background, maintain memory over time, watch what is happening across your setup, and act through real tools and connected machines. You can run the daemon locally or on a VPS, keep it alive 24/7, and connect sidecars on other machines so one JARVIS instance can reach your laptop, desktop, and server at the same time.
 
+## Read This Before You Deploy It
+
+JARVIS is not a toy chatbot. It can be given access to files, terminals, browsers, messaging channels, and remote machines.
+
+Before you expose it over the network, connect real accounts, or raise its autonomy level, review:
+
+- [Disclaimer & Liability](/docs/disclaimer)
+- [Authority & Safety](/docs/authority)
+
 ## What Makes It Different
 
 Most AI products are request/response systems. You open a UI, ask something, and the model disappears until the next prompt.
@@ -94,6 +103,7 @@ If you are new to JARVIS, read these next:
 2. [Quick Start](/docs/quickstart)
 3. [Configuration](/docs/configuration)
 4. [Authority & Safety](/docs/authority)
+5. [Disclaimer & Liability](/docs/disclaimer)
 
 If you already have it running, the best orientation pages are:
 
