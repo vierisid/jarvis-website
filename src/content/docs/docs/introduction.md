@@ -1,128 +1,120 @@
 ---
 title: Introduction
-description: What is JARVIS, who it's for, and how it differs from ordinary AI assistants.
+description: What JARVIS is, how it is structured, and why it feels different from a typical AI assistant.
 ---
 
-:::caution[Read before proceeding]
-JARVIS is experimental software that can autonomously control your browser, desktop, files, and external accounts. It carries real security risks. By installing and using it, you accept full responsibility for its actions. Read the full [Disclaimer & Liability](/docs/disclaimer) page before proceeding.
-:::
+JARVIS is an always-on AI daemon, not a tab-bound chatbot.
 
-JARVIS is an always-on autonomous AI daemon built for power users who want an AI that acts, not one that asks permission. It runs as a persistent background service on your machine, maintaining a live model of your world and executing tasks continuously — with or without you at the keyboard.
+It is designed to keep running in the background, maintain memory over time, watch what is happening across your setup, and act through real tools and connected machines. You can run the daemon locally or on a VPS, keep it alive 24/7, and connect sidecars on other machines so one JARVIS instance can reach your laptop, desktop, and server at the same time.
 
-## What Makes JARVIS Different
+> **Warning:** JARVIS can control your desktop, filesystem, applications, browsers, and online accounts. Treat it like giving a trusted human remote access to your machines.
+>
+> Read these first:
+>
+> - [Disclaimer & Liability](/docs/disclaimer)
+> - [Authority & Safety](/docs/authority)
 
-Most AI tools are reactive. You open them, type a question, read the answer, and close them. JARVIS is something else entirely.
+## Read This Before You Deploy It
 
-| Trait | Chatbot | JARVIS |
-|---|---|---|
-| Lifecycle | Session-based | Always running |
-| Initiative | Responds when asked | Monitors, schedules, acts proactively |
-| Environment access | Sandboxed or none | Browser, desktop, files, APIs |
-| Awareness | None | Continuous screen monitoring with struggle detection |
-| Memory | Cleared each session | Persistent SQLite knowledge vault |
-| Channels | One interface | Dashboard, Telegram, Discord, Voice |
-| Execution model | Single agent | Multi-agent hierarchy with parallel tasks |
+JARVIS is not a toy chatbot. It can be given access to files, terminals, browsers, messaging channels, and remote machines.
 
-JARVIS is not a chatbot with tools bolted on. It is an autonomous daemon designed to be dangerously capable by default.
+Before you expose it over the network, connect real accounts, or raise its autonomy level, review:
 
-## Who JARVIS Is For
+- [Disclaimer & Liability](/docs/disclaimer)
+- [Authority & Safety](/docs/authority)
 
-JARVIS targets power users who:
+## What Makes It Different
 
-- Want an AI that works in the background while they focus on other things
-- Need automation across browser, desktop, files, and external services
-- Communicate through multiple channels (web, Telegram, Discord, voice)
-- Want persistent memory that grows smarter over time
-- Are comfortable granting an AI meaningful autonomy over their machine
+Most AI products are request/response systems. You open a UI, ask something, and the model disappears until the next prompt.
 
-If you want an AI that requires constant hand-holding and confirmation dialogs, JARVIS is not the right tool. If you want one that finishes the job, it is.
+JARVIS is built around a different operating model:
 
-## Key Capabilities
+- A persistent daemon that keeps state and stays online
+- A web dashboard served directly by the daemon
+- A memory vault backed by SQLite
+- Tool use, browser control, workflow execution, and delegated sub-agents
+- Authority rules that gate risky actions at runtime
+- Optional sidecars that give JARVIS desktop, browser, terminal, filesystem, and screenshot access on additional machines
 
-### Autonomous Browser Control
+## High-Level Architecture
 
-JARVIS auto-detects and launches Chrome or Chromium, attaches via the Chrome DevTools Protocol, and can navigate, click, type, extract content, and take screenshots — all without you touching the browser.
+At a high level, JARVIS has three layers:
 
-### Native Desktop Control
+1. The daemon
+2. The dashboard
+3. Optional sidecars
 
-JARVIS ships a Go sidecar that connects to the daemon over a JWT-authenticated WebSocket. The sidecar runs natively on each machine (Windows, macOS, Linux) and uses platform-native APIs — Win32 UI Automation on Windows, AppleScript on macOS, and X11/xdotool on Linux — to control any desktop application: find windows, click buttons, read text, type into fields, scroll, and take screenshots.
+### The Daemon
 
-You can connect multiple sidecars to a single JARVIS daemon, giving the agent control over several machines simultaneously.
+The daemon is the brain. It owns:
 
-### Voice Interface
+- LLM routing and fallback providers
+- Conversation history and persistent memory
+- The tool execution loop
+- Multi-agent delegation
+- The authority engine and approval system
+- Workflows, goals, awareness, and background services
+- The HTTP and WebSocket server that powers the dashboard
 
-Speak to JARVIS using a wake word ("Hey JARVIS"), microphone button, or push-to-talk. Responses are streamed back as speech using edge-tts-universal — no API key required for TTS. Speech-to-text supports OpenAI Whisper, Groq, or a local model.
+### The Dashboard
 
-### Multi-Agent System
+The dashboard is the control surface. It exposes the main product areas:
 
-JARVIS orchestrates a hierarchy of 11 specialist sub-agents. A primary agent delegates tasks to specialists (researcher, coder, writer, analyst, and others) either synchronously for single tasks or asynchronously in parallel for complex workflows.
+- Dashboard
+- Chat
+- Goals
+- Workflows
+- Sites
+- Agents
+- Tasks
+- Authority
+- Memory
+- Pipeline
+- Calendar
+- Knowledge
+- Command
+- Awareness
+- Settings
 
-### Persistent Memory
+### Sidecars
 
-Every conversation contributes to a SQLite knowledge vault. JARVIS automatically extracts facts, preferences, events, and relationships from responses and injects relevant knowledge into future conversations.
+Sidecars are how JARVIS reaches other machines. Each sidecar connects back to the daemon and exposes capabilities from that host, such as:
 
-### Continuous Awareness
+- Desktop automation
+- Browser automation
+- Terminal access
+- Filesystem access
+- Clipboard
+- Screenshots and awareness capture
 
-JARVIS captures your screen every 7 seconds, runs OCR, and tracks your context in real-time. It detects when you're struggling — stuck on a syntax error, failing a build command, or hunting for a tool in Photoshop — and escalates to cloud vision for app-specific help. The suggestion engine delivers targeted advice: the exact line with the bug, the corrected terminal command, or the keyboard shortcut you need.
+This lets you keep JARVIS running on an always-on server while still giving it hands and eyes on the machines you actually use.
 
-### Proactive Behavior
+## Core Product Areas
 
-JARVIS does not wait to be asked. It monitors Gmail and Google Calendar, executes scheduled commitments, queues research tasks, and sends you notifications through D-Bus (Linux), Telegram, or Discord.
+The current product centers around these capability groups:
 
-### Communication Channels
+- Conversational agent with streaming responses and tool use
+- Persistent memory and knowledge extraction
+- Browser and desktop control
+- Voice input and streaming TTS
+- Multi-agent delegation
+- Continuous awareness and proactive suggestions
+- Workflow automation
+- Goal tracking and accountability
 
-Interact through the web dashboard, Telegram bot, Discord bot, or voice — all unified in a single conversation history.
+## Before You Start
 
-## Architecture Overview
+If you are new to JARVIS, read these next:
 
-```
-┌───────────────────────────────────────────────────────────────┐
-│                       JARVIS Daemon                           │
-│                                                               │
-│  ┌─────────────┐  ┌──────────────┐  ┌───────────────┐        │
-│  │  Agent       │  │  Memory      │  │  Proactive    │        │
-│  │  Orchestrator│  │  Vault       │  │  Engine       │        │
-│  │  (+ sub-     │  │  (SQLite)    │  │  (observers,  │        │
-│  │   agents)    │  │              │  │   scheduler)  │        │
-│  └──────┬───────┘  └──────────────┘  └───────────────┘        │
-│         │                                                     │
-│  ┌──────▼───────────────────────────────────────────────┐     │
-│  │              Tool Layer                               │     │
-│  │  Browser  Desktop  Files  Search  APIs  Shell        │     │
-│  └──────────────────────────────────────────────────────┘     │
-│                                                               │
-│  ┌──────────────────────────────────────────────────────┐     │
-│  │          Awareness Engine                             │     │
-│  │  Capture → OCR → Context → Struggle → Cloud Vision   │     │
-│  │  → Suggestion Engine → Multi-Channel Delivery        │     │
-│  └──────────────────────────────────────────────────────┘     │
-└────────────────────────────┬──────────────────────────────────┘
-                             │ WebSocket + REST
-        ┌────────────────────┼────────────────────┐
-        ▼                    ▼                    ▼
-   Web Dashboard         Telegram Bot         Discord Bot
-   (localhost:3142)      (@yourbot)           (#channel)
-                             │
-                        Voice (mic/TTS)
-```
+1. [Installation](/docs/installation)
+2. [Quick Start](/docs/quickstart)
+3. [Configuration](/docs/configuration)
+4. [Authority & Safety](/docs/authority)
+5. [Disclaimer & Liability](/docs/disclaimer)
 
-The daemon exposes a WebSocket server at `localhost:3142` by default. The web dashboard connects to this endpoint for real-time streaming. Telegram and Discord adapters connect the same agent loop to external messaging platforms. All channels share a unified conversation history.
+If you already have it running, the best orientation pages are:
 
-## Technology Stack
-
-- **Runtime**: [Bun](https://bun.sh) — fast TypeScript runtime, SQLite built in
-- **Language**: TypeScript (ESM modules)
-- **LLM**: Anthropic Claude (primary), OpenAI GPT (fallback), Google Gemini, Ollama (local)
-- **Database**: SQLite via `bun:sqlite`
-- **Browser automation**: Chrome DevTools Protocol (CDP)
-- **Desktop automation**: Go sidecar over JWT-authenticated WebSocket (platform-native APIs)
-- **TTS**: Edge TTS (free, no API key) or ElevenLabs (premium)
-- **STT**: OpenAI Whisper / Groq / local Whisper
-- **Wake word**: openwakeword-wasm-browser (ONNX models, runs in-browser)
-- **Frontend**: React 19
-
-## Next Steps
-
-- [Installation](/docs/installation) — install JARVIS in under two minutes
-- [Quick Start](/docs/quickstart) — run your first command
-- [Configuration](/docs/configuration) — understand `~/.jarvis/config.yaml`
+- [Dashboard](/docs/dashboard)
+- [CLI Commands](/docs/cli)
+- [Authority & Safety](/docs/authority)
+- [Troubleshooting](/docs/troubleshooting)

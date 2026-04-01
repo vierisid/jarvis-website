@@ -155,3 +155,9 @@ Total wall-clock time: approximately the time of the longest parallel agent, not
 ## Configuration
 
 The multi-agent system is always enabled. There are no configuration keys to turn it on or off. The specialist role definitions live in the daemon source (`src/agents/roles/`) and can be customized by editing the role YAML files — changes take effect immediately on the next daemon restart without recompilation.
+
+## Video Tutorial Placeholder
+
+> Video tutorial placeholder: how delegation works and when JARVIS uses specialist agents.
+
+Add your future video link here.

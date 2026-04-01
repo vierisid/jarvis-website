@@ -1,0 +1,629 @@
+---
+import Landing from '../layouts/Landing.astro';
+
+const roadmapItems = [
+  {
+    number: '01',
+    title: 'Web App Templates',
+    summary: 'Pre-installed patterns for common web apps like WhatsApp and Gmail to make automation faster and more reliable.',
+    theme: 'Experience',
+  },
+  {
+    number: '02',
+    title: 'Log Spam',
+    summary: 'Reduce repetitive runtime log noise such as repeated WebSocket broadcast lines when clients are connected.',
+    theme: 'Stability',
+  },
+  {
+    number: '03',
+    title: 'Enhance Windows Sidecar',
+    summary: 'Add a better enrollment flow, token UI, tray icon, status indicators, version info, and update visibility.',
+    theme: 'Platform',
+  },
+  {
+    number: '04',
+    title: 'Jarvis Swarm',
+    summary: 'Let separate JARVIS instances communicate with each other directly.',
+    theme: 'Architecture',
+  },
+  {
+    number: '05',
+    title: 'Move OCR into the Sidecar',
+    summary: 'Shift OCR away from the brain to reduce central load and support more concurrent sidecars, while managing the heavier sidecar tradeoff.',
+    theme: 'Performance',
+  },
+  {
+    number: '06',
+    title: 'Mobile Sidecar',
+    summary: 'Bring the sidecar model to mobile platforms.',
+    theme: 'Platform',
+  },
+  {
+    number: '07',
+    title: 'DB Backup Handling',
+    summary: 'Coordinate SQLite backups so user-defined backup jobs can run without corrupting the database during writes.',
+    theme: 'Reliability',
+  },
+  {
+    number: '08',
+    title: 'New Workflow System',
+    summary: 'Replace the current in-house workflow layer with Activepieces.',
+    theme: 'Automation',
+    href: 'https://github.com/activepieces/activepieces',
+  },
+  {
+    number: '09',
+    title: 'SQLite DB Import',
+    summary: 'Add a settings flow for importing an existing SQLite database, especially for users moving from older self-hosted setups.',
+    theme: 'Migration',
+  },
+];
+---
+
+<Landing title="J.A.R.V.I.S. Roadmap" description="Current JARVIS roadmap items and the rough direction of upcoming work.">
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="/" class="nav-logo">J.A.R.V.I.S.</a>
+        <span class="nav-version">roadmap</span>
+      </div>
+      <div class="nav-right">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/docs/introduction" class="nav-link">Docs</a>
+        <a href="/docs/contributing" class="nav-link">Contribute</a>
+        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+        <a href="/docs/installation" class="nav-install">INSTALL</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-copy reveal reveal-up">
+        <p class="label">Current roadmap</p>
+        <h1 class="hero-heading">What JARVIS is likely to build next.</h1>
+        <p class="hero-sub">
+          This page is a directional view of upcoming work, not a promise of exact order. It is here to show where the
+          project is headed, what problem areas are being prioritized, and where contributors can help.
+        </p>
+        <div class="hero-actions">
+          <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener" class="btn-solid">Join Discord</a>
+          <a href="https://github.com/vierisid/jarvis/issues" target="_blank" rel="noopener" class="btn-border">Suggest a Feature</a>
+          <a href="/docs/contributing" class="btn-border">How to Contribute</a>
+        </div>
+      </div>
+
+      <div class="status-panel reveal reveal-scale">
+        <div class="status-header">
+          <div class="status-header-left">
+            <span class="dot dot-amber dot-pulse"></span>
+            <span class="status-title">Roadmap Status</span>
+          </div>
+          <span class="status-time">directional</span>
+        </div>
+        <div class="status-body">
+          <div class="status-group-header">
+            <span class="status-group-label">Scope</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">items</span>
+            <span class="status-value"><span class="dot dot-green"></span><span class="status-green">9 tracked</span></span>
+            <span class="status-meta">current public list</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">order</span>
+            <span class="status-value"><span class="dot dot-cyan"></span><span class="status-cyan">flexible</span></span>
+            <span class="status-meta">not guaranteed</span>
+          </div>
+          <div class="status-group-header">
+            <span class="status-group-label">How To Use It</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">feedback</span>
+            <span class="status-value"><span class="dot dot-green"></span><span class="status-green">open</span></span>
+            <span class="status-meta">discord + issues</span>
+          </div>
+          <div class="status-row status-row-last">
+            <span class="status-label">intent</span>
+            <span class="status-value"><span class="dot dot-amber"></span><span class="status-amber">rough plan</span></span>
+            <span class="status-meta">not release notes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cap-strip roadmap-intro">
+    <div class="cap-strip-inner">
+      <p class="cap-strip-label reveal reveal-up">How To Read This</p>
+      <div class="overview-grid">
+        <div class="overview-card reveal reveal-up">
+          <div class="overview-kicker">Roadmap</div>
+          <h2>Focus areas, not promises.</h2>
+          <p>The list below is meant to show the rough shape of upcoming work. Priorities can move based on bugs, user feedback, and implementation complexity.</p>
+        </div>
+        <div class="overview-card reveal reveal-up">
+          <div class="overview-kicker">Contribution</div>
+          <h2>Community input is expected.</h2>
+          <p>If a roadmap item matters to you, the best way to influence it is to open a clear issue, propose an implementation direction, or contribute directly.</p>
+        </div>
+        <div class="overview-card reveal reveal-up">
+          <div class="overview-kicker">Execution</div>
+          <h2>Some items unblock others.</h2>
+          <p>Platform work, reliability fixes, workflow changes, and sidecar improvements may land before feature requests if they unblock more of the system.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cap-strip roadmap-board">
+    <div class="cap-strip-inner">
+      <div class="section-head reveal reveal-up">
+        <p class="cap-strip-label">Planned Work</p>
+        <h2 class="section-title">Current public roadmap items.</h2>
+        <p class="section-sub">Each card is one of the active directions currently under consideration or development.</p>
+      </div>
+
+      <div class="roadmap-grid">
+        {roadmapItems.map((item) => (
+          <article class="roadmap-card reveal reveal-up">
+            <div class="roadmap-card-top">
+              <span class="roadmap-number">{item.number}</span>
+              <span class="roadmap-theme">{item.theme}</span>
+            </div>
+            <h3>{item.title}</h3>
+            <p>{item.summary}</p>
+            {item.href ? (
+              <a href={item.href} target="_blank" rel="noopener" class="roadmap-link">View referenced project</a>
+            ) : (
+              <span class="roadmap-link roadmap-link-muted">Internal JARVIS roadmap item</span>
+            )}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cap-strip">
+    <div class="cap-strip-inner">
+      <div class="signal-grid">
+        <div class="signal-card reveal reveal-up">
+          <p class="cap-strip-label">Contribute</p>
+          <h2>Want to help move one of these forward?</h2>
+          <p>
+            Contributors are welcome. Documentation, bug fixes, sidecar work, workflow improvements, and focused implementation proposals are all useful.
+          </p>
+          <div class="signal-actions">
+            <a href="/docs/contributing" class="btn-solid">Contribution Guide</a>
+            <a href="https://github.com/vierisid/jarvis/issues" target="_blank" rel="noopener" class="btn-border">Open Issues</a>
+          </div>
+        </div>
+
+        <div class="signal-card reveal reveal-up">
+          <p class="cap-strip-label">Discussion</p>
+          <h2>Have a feature suggestion or priority opinion?</h2>
+          <p>
+            The roadmap is intentionally open-ended. If you think something should move up, split into smaller milestones, or be reconsidered, bring it to the community.
+          </p>
+          <div class="signal-actions">
+            <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener" class="btn-solid">Discuss on Discord</a>
+            <a href="/docs/introduction" class="btn-border">Back to Docs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+    }
+    .nav-version {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .nav-link:hover {
+      color: var(--text-primary);
+    }
+    .nav-install {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--bg);
+      background: var(--text-primary);
+      padding: 0.375rem 0.875rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .nav-install:hover {
+      opacity: 0.85;
+    }
+
+    .hero {
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      padding: 7rem 1.5rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 760px 520px at 18% 30%, rgba(62, 207, 142, 0.06), transparent),
+        radial-gradient(ellipse 620px 420px at 82% 58%, rgba(229, 165, 34, 0.05), transparent),
+        radial-gradient(ellipse 460px 320px at 64% 18%, rgba(34, 211, 238, 0.04), transparent);
+    }
+    .hero-grid {
+      max-width: 1120px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, 420px);
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-copy {
+      max-width: 720px;
+    }
+    .label,
+    .cap-strip-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 0 0 1.25rem;
+    }
+    .hero-heading {
+      font-size: 3.4rem;
+      font-weight: 900;
+      line-height: 1.02;
+      color: var(--text-primary);
+      margin: 0 0 1.25rem;
+      letter-spacing: -0.04em;
+      max-width: 760px;
+    }
+    .hero-sub,
+    .section-sub,
+    .overview-card p,
+    .roadmap-card p,
+    .signal-card p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+    .hero-actions,
+    .signal-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .btn-solid {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--bg);
+      background: var(--text-primary);
+      padding: 0.625rem 1.5rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .btn-solid:hover {
+      opacity: 0.85;
+    }
+    .btn-border {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      padding: 0.625rem 1.5rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .btn-border:hover {
+      border-color: #333;
+      color: var(--text-primary);
+    }
+
+    .status-panel {
+      font-family: var(--mono);
+      font-size: 0.8125rem;
+      background: linear-gradient(180deg, rgba(17, 17, 17, 0.96), rgba(10, 10, 10, 0.96));
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+    }
+    .status-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(22, 22, 22, 0.8);
+    }
+    .status-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .status-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .status-time {
+      color: var(--text-muted);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+    }
+    .status-group-header {
+      padding: 0.6rem 1rem 0.2rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .status-group-label {
+      font-size: 0.5625rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .status-row {
+      display: grid;
+      grid-template-columns: 84px 104px 1fr;
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .status-row-last {
+      border-bottom: none;
+    }
+    .status-label {
+      color: var(--text-muted);
+    }
+    .status-value {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+    }
+    .status-meta {
+      color: var(--text-muted);
+      text-align: right;
+    }
+    .status-green {
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .status-cyan {
+      color: var(--accent-cyan);
+      font-weight: 500;
+    }
+    .status-amber {
+      color: var(--accent-amber);
+      font-weight: 500;
+    }
+
+    .cap-strip {
+      border-top: 1px solid var(--border);
+      padding: 3.5rem 1.5rem;
+    }
+    .cap-strip-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .roadmap-intro {
+      background: linear-gradient(180deg, rgba(62, 207, 142, 0.012), rgba(10, 10, 10, 0));
+    }
+    .overview-grid,
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .signal-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .overview-card,
+    .signal-card,
+    .roadmap-card {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(17, 17, 17, 0.96), rgba(12, 12, 12, 0.96));
+      border-radius: 18px;
+      padding: 1.4rem;
+    }
+    .overview-card h2,
+    .signal-card h2,
+    .section-title {
+      margin: 0 0 0.75rem;
+      color: var(--text-primary);
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+    }
+    .overview-card h2,
+    .signal-card h2 {
+      font-size: 1.35rem;
+    }
+    .overview-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .section-head {
+      margin-bottom: 1.75rem;
+      max-width: 720px;
+    }
+    .section-title {
+      font-size: 2.4rem;
+    }
+    .section-sub {
+      margin-top: 0;
+    }
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .roadmap-card {
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .roadmap-card:hover {
+      transform: translateY(-3px);
+      border-color: #2a2a2a;
+      background: linear-gradient(180deg, rgba(20, 20, 20, 0.98), rgba(12, 12, 12, 0.98));
+    }
+    .roadmap-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .roadmap-number,
+    .roadmap-theme {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .roadmap-number {
+      color: var(--accent);
+    }
+    .roadmap-theme {
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.3rem 0.6rem;
+      background: rgba(255, 255, 255, 0.01);
+    }
+    .roadmap-card h3 {
+      margin: 0;
+      color: var(--text-primary);
+      font-size: 1.35rem;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .roadmap-link {
+      font-size: 0.8125rem;
+      color: var(--accent-cyan);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .roadmap-link:hover {
+      color: var(--text-primary);
+    }
+    .roadmap-link-muted {
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 1100px) {
+      .hero-grid,
+      .roadmap-grid,
+      .overview-grid,
+      .signal-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero {
+        min-height: auto;
+      }
+      .hero-heading {
+        font-size: 2.8rem;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .nav-right {
+        gap: 1rem;
+      }
+      .nav-link:nth-child(2),
+      .nav-link:nth-child(3) {
+        display: none;
+      }
+      .hero {
+        padding: 6rem 1rem 3rem;
+      }
+      .cap-strip {
+        padding: 2.5rem 1rem;
+      }
+      .nav-inner {
+        padding: 0 1rem;
+      }
+      .hero-heading,
+      .section-title {
+        font-size: 2.15rem;
+      }
+      .status-row {
+        grid-template-columns: 68px 92px 1fr;
+      }
+      .status-meta {
+        font-size: 0.6875rem;
+      }
+    }
+  </style>
+</Landing>

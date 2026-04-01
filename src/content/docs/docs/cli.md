@@ -1,191 +1,166 @@
 ---
 title: CLI Commands
-description: Complete reference for every jarvis command-line command.
+description: Complete command-line reference for starting, stopping, debugging, and updating JARVIS.
 ---
 
-The `jarvis` CLI is the primary interface for managing the JARVIS daemon. All commands are available after installation.
+The `jarvis` CLI is the operational entry point for the daemon.
 
-## Commands
+## Command Summary
 
-### `jarvis start`
+The current shipped commands are:
 
-Start the JARVIS daemon.
+- `jarvis start`
+- `jarvis stop`
+- `jarvis restart`
+- `jarvis status`
+- `jarvis logs`
+- `jarvis update`
+- `jarvis onboard`
+- `jarvis doctor`
+- `jarvis version`
+- `jarvis help`
+
+## `jarvis start`
+
+Starts the daemon.
 
 ```bash
-jarvis start              # Start in background, open dashboard
-jarvis start -d           # Start in background (detached, no browser)
-jarvis start --foreground # Run in foreground (useful for debugging)
-jarvis start --port 8080  # Override the configured port
-jarvis start --no-open    # Start without opening the dashboard in your browser
+jarvis start
+jarvis start -d
+jarvis start --port 8080
+jarvis start --no-open
 ```
 
-| Flag | Description |
-|---|---|
-| `-d` | Detached mode — start in background without opening the browser |
-| `--foreground` | Run in the foreground, logs to stdout |
-| `--port <number>` | Override the port from config |
-| `--no-open` | Do not auto-open the dashboard |
-| `--no-local-tools` | Disable local tool execution (sidecar-only mode) |
+Flags:
 
-On first start, the daemon creates the SQLite database, starts the WebSocket server, and auto-detects Chrome for browser control.
+- `-d`, `--detach`: run as a background daemon
+- `--port <N>`: override the daemon port
+- `--no-open`: do not open the dashboard automatically
 
----
+Notes:
 
-### `jarvis stop`
+- By default, `jarvis start` runs in the foreground and acquires the daemon lock directly
+- `jarvis start -d` or `jarvis start --detach` spawns a background child and writes logs to the daemon log file
 
-Stop the running daemon gracefully.
+## `jarvis stop`
+
+Stops the running daemon gracefully.
 
 ```bash
 jarvis stop
 ```
 
-Sends a shutdown signal and waits for in-progress tasks to complete.
+If the process does not exit cleanly, the CLI escalates to a hard kill after a short wait.
 
----
+## `jarvis restart`
 
-### `jarvis restart`
-
-Stop and restart the daemon. Reads the config fresh on startup.
+Stops the daemon if it is running, then starts it again.
 
 ```bash
 jarvis restart
+jarvis restart --port 8080
 ```
 
----
+## `jarvis status`
 
-### `jarvis status`
-
-Show the daemon's current status.
+Shows whether the daemon is currently running.
 
 ```bash
 jarvis status
 ```
 
-Example output:
+When running, it also prints the dashboard URL.
 
-```
-JARVIS daemon is running
-  PID: 12345
-  Port: 3142
-  Uptime: 2m 14s
-  Memory: 87 MB
-  Active agents: 1
-  Messages today: 3
-```
+## `jarvis logs`
 
----
-
-### `jarvis logs`
-
-View daemon logs.
+Shows the daemon log file.
 
 ```bash
-jarvis logs           # Show recent logs
-jarvis logs -f        # Stream live logs (like tail -f)
-jarvis logs -n 50     # Show last 50 lines
+jarvis logs
+jarvis logs -f
+jarvis logs -n 200
 ```
 
-| Flag | Description |
-|---|---|
-| `-f` | Follow — stream new log entries as they arrive |
-| `-n <number>` | Number of recent lines to display |
+Flags:
 
----
+- `-f`, `--follow`: follow log output live
+- `-n`, `--lines <N>`: number of lines to show
 
-### `jarvis onboard`
+## `jarvis onboard`
 
-Run the interactive configuration wizard. Creates or updates `~/.jarvis/config.yaml`.
+Runs the interactive setup wizard.
 
 ```bash
 jarvis onboard
 ```
 
-The wizard walks through 10 steps:
+Use this for first-time setup or whenever you want to reconfigure the basics interactively.
 
-1. **About you** — your name and assistant name
-2. **LLM provider** — Anthropic, OpenAI, Google Gemini, or Ollama
-3. **Model selection** — choose from available models for your provider
-4. **API key** — paste the key for your chosen provider
-5. **Fallback providers** — optional backup LLM providers
-6. **Voice** — enable TTS (Edge TTS free, or ElevenLabs premium) and STT
-7. **Channels** — Telegram and Discord bot tokens (optional)
-8. **Personality** — core traits and behavior style
-9. **Authority** — autonomy level (1-10)
-10. **Dashboard port** — defaults to 3142
+## `jarvis doctor`
 
-Can be re-run at any time to update configuration.
-
----
-
-### `jarvis doctor`
-
-Run a full environment diagnostic.
+Runs environment and connectivity checks.
 
 ```bash
 jarvis doctor
 ```
 
-Checks:
-- Config file exists and is valid YAML
-- API keys are present and working
-- LLM provider connectivity
-- Browser (Chrome/Chromium) availability
-- Sidecar connection status
-- Database integrity
-- Port availability
-- Voice subsystem (TTS/STT)
+Use this when:
 
----
+- The daemon will not start
+- A provider is misbehaving
+- The dashboard cannot connect
+- You are not sure whether your environment is configured correctly
 
-### `jarvis update`
+## `jarvis update`
 
-Update to the latest version.
+Updates JARVIS to the latest version.
 
 ```bash
 jarvis update
 ```
 
-Pulls the latest version, replaces the binary, and confirms the new version. Config and database are untouched.
+## `jarvis version`
 
----
-
-### `jarvis version`
-
-Show version information.
+Prints the installed version.
 
 ```bash
 jarvis version
 ```
 
-Example output:
+## `jarvis help`
 
-```
-JARVIS v0.1.0-alpha.1
-Runtime: Bun 1.x.x
-Config: ~/.jarvis/config.yaml
-```
-
----
-
-### `jarvis db:init`
-
-Reinitialize the SQLite database. Use this if the database is corrupted.
-
-```bash
-jarvis db:init
-```
-
-:::caution
-This resets stored memories and conversation history. Back up `~/.jarvis/jarvis.db` first if you want to preserve data.
-:::
-
----
-
-### `jarvis help`
-
-Show help and list all available commands.
+Shows built-in help text.
 
 ```bash
 jarvis help
-jarvis help <command>   # Show help for a specific command
 ```
+
+## Common CLI Flows
+
+### First-time setup
+
+```bash
+jarvis onboard
+jarvis start
+```
+
+### Start in background and watch logs
+
+```bash
+jarvis start -d
+jarvis logs -f
+```
+
+### Diagnose a broken setup
+
+```bash
+jarvis doctor
+jarvis status
+jarvis logs -n 200
+```
+
+## Video Tutorial Placeholder
+
+> Video tutorial placeholder: installing JARVIS and using the CLI end to end.
+
+Add your future video link here.

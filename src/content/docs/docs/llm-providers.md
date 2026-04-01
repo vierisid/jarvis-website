@@ -1,193 +1,140 @@
 ---
 title: LLM Providers
-description: Configure Anthropic, OpenAI, Google Gemini, or Ollama as your LLM provider.
+description: Choose a primary model, configure fallbacks, and understand the tradeoffs between Anthropic, OpenAI, Groq, Gemini, Ollama, and OpenRouter.
 ---
 
-JARVIS supports four LLM providers. You can set a primary provider and one or more fallbacks — if the primary fails or is unavailable, JARVIS automatically tries the next provider in the list.
+JARVIS supports multiple LLM providers and can fall back between them automatically.
 
-All providers use native REST API calls (no SDKs). API keys are stored in `~/.jarvis/config.yaml`.
+The provider system is configured under `llm` in `~/.jarvis/config.yaml`.
 
-## Provider Overview
+## Supported Providers
 
-| Provider | Models | API Key Required | Local |
-|---|---|---|---|
-| Anthropic | Claude Opus 4.6, Sonnet 4.6, Haiku 4.5 | Yes | No |
-| OpenAI | GPT-5.4, GPT-5.4-mini | Yes | No |
-| Google Gemini | Gemini 3.1 Pro, Gemini 3 Flash | Yes | No |
-| Ollama | Llama 3, Mistral, any GGUF model | No | Yes |
+The merged product currently exposes these provider blocks:
 
-## Configuration
+- Anthropic
+- OpenAI
+- Groq
+- Gemini
+- Ollama
+- OpenRouter
+
+## Recommended Starting Point
+
+For most users:
+
+- Primary: `anthropic`
+- Fallback: `["openai", "ollama"]`
+
+That gives you a strong default cloud model plus a cloud fallback and an optional local fallback.
+
+## Example Configuration
 
 ```yaml
 llm:
-  primary: anthropic                  # Which provider to use first
-  fallback: [openai, gemini, ollama]  # Fallback order
+  primary: "anthropic"
+  fallback: ["openai", "ollama"]
 
   anthropic:
     api_key: "sk-ant-..."
-    model: claude-sonnet-4-6
+    model: "claude-sonnet-4-6"
 
   openai:
     api_key: "sk-..."
-    model: gpt-5.4
-
-  gemini:
-    api_key: "AIza..."
-    model: gemini-3-flash-preview
+    model: "gpt-5.4"
 
   ollama:
-    base_url: http://localhost:11434
-    model: llama3
+    base_url: "http://localhost:11434"
+    model: "llama3"
 ```
 
-Set `primary` to the provider name (`anthropic`, `openai`, `gemini`, or `ollama`). The `fallback` array defines the order JARVIS tries if the primary is unavailable.
+## Provider Notes
 
-## Anthropic
+### Anthropic
 
-The default and recommended provider. Anthropic's Claude models offer strong tool use, reasoning, and instruction following.
+Best default for many users.
 
-### Available Models
+Strengths:
 
-| Model | ID | Best For |
-|---|---|---|
-| Claude Opus 4.6 | `claude-opus-4-6` | Complex reasoning, long tasks |
-| Claude Sonnet 4.6 | `claude-sonnet-4-6` | General use (default) |
-| Claude Haiku 4.5 | `claude-haiku-4-5` | Fast, lightweight tasks |
+- Strong instruction following
+- Strong tool use
+- Good balance for complex autonomous tasks
 
-### Configuration
+### OpenAI
+
+A strong alternative or fallback.
+
+Strengths:
+
+- Broad model family
+- Good tool use
+- Good fallback for cloud-hosted setups
+
+### Groq
+
+Useful when you care about latency and compatible API access.
+
+### Gemini
+
+A strong additional provider if you want another cloud fallback option.
+
+### Ollama
+
+Best when you want local inference or reduced cloud dependence.
+
+Strengths:
+
+- No per-token cloud billing
+- Local model hosting
+- Useful as a fallback when cloud providers are unavailable
+
+Important operational note:
+
+- `ollama.base_url` is resolved from the daemon's network point of view, not your browser's.
+- If the daemon runs on a VPS and Ollama runs on your laptop, `http://localhost:11434` will not work unless the daemon and Ollama are on the same host.
+
+This is one of the most common setup mistakes. See [Troubleshooting](/docs/troubleshooting).
+
+### OpenRouter
+
+Useful if you want access to many models through one provider API key.
+
+## Fallback Strategy
+
+JARVIS tries:
+
+1. The `primary` provider
+2. Each provider in `fallback`, in order
+
+That means provider order matters. Keep the list short and intentional.
+
+## Good Provider Setups
+
+### Cloud-first
 
 ```yaml
 llm:
-  primary: anthropic
-  anthropic:
-    api_key: "sk-ant-api03-..."
-    model: claude-sonnet-4-6
+  primary: "anthropic"
+  fallback: ["openai", "gemini"]
 ```
 
-### Getting an API Key
-
-1. Go to [console.anthropic.com](https://console.anthropic.com)
-2. Create an account and navigate to API Keys
-3. Generate a new key
-
-## OpenAI
-
-OpenAI's GPT models are supported as a primary or fallback provider.
-
-### Available Models
-
-| Model | ID | Best For |
-|---|---|---|
-| GPT-5.4 | `gpt-5.4` | General use |
-| GPT-5.4 Mini | `gpt-5.4-mini` | Fast, cost-effective |
-
-### Configuration
+### Hybrid cloud + local
 
 ```yaml
 llm:
-  primary: openai
-  openai:
-    api_key: "sk-..."
-    model: gpt-5.4
+  primary: "anthropic"
+  fallback: ["openai", "ollama"]
 ```
 
-### Getting an API Key
-
-1. Go to [platform.openai.com](https://platform.openai.com)
-2. Navigate to API Keys
-3. Create a new secret key
-
-## Google Gemini
-
-Gemini is accessed via Google's native REST API (not Vertex AI). No SDK required.
-
-### Available Models
-
-| Model | ID | Best For |
-|---|---|---|
-| Gemini 3.1 Pro | `gemini-3.1-pro` | Complex reasoning |
-| Gemini 3 Flash | `gemini-3-flash-preview` | Fast, general use (default) |
-
-### Configuration
+### Local-first
 
 ```yaml
 llm:
-  primary: gemini
-  gemini:
-    api_key: "AIza..."
-    model: gemini-3-flash-preview
+  primary: "ollama"
+  fallback: []
 ```
 
-### Getting an API Key
+## Video Tutorial Placeholder
 
-1. Go to [aistudio.google.com](https://aistudio.google.com)
-2. Click "Get API key"
-3. Create a key for your project
+> Video tutorial placeholder: choosing providers, API keys, and fallback order.
 
-## Ollama (Local)
-
-Run models locally with [Ollama](https://ollama.com). No API key needed — models run on your hardware.
-
-### Available Models
-
-Any model supported by Ollama works. Popular choices:
-
-| Model | Command | Size |
-|---|---|---|
-| Llama 3 (8B) | `ollama pull llama3` | ~4.7 GB |
-| Mistral (7B) | `ollama pull mistral` | ~4.1 GB |
-| CodeLlama (13B) | `ollama pull codellama:13b` | ~7.4 GB |
-
-### Configuration
-
-```yaml
-llm:
-  primary: ollama
-  ollama:
-    base_url: http://localhost:11434   # Default Ollama address
-    model: llama3
-```
-
-### Setup
-
-1. Install Ollama: `curl -fsSL https://ollama.com/install.sh | sh`
-2. Pull a model: `ollama pull llama3`
-3. Ollama runs automatically on port 11434
-
-## Fallback Behavior
-
-When the primary provider fails (network error, rate limit, auth error), JARVIS tries each fallback in order:
-
-```yaml
-llm:
-  primary: anthropic
-  fallback: [openai, gemini, ollama]
-```
-
-In this configuration:
-1. Try Anthropic first
-2. If Anthropic fails, try OpenAI
-3. If OpenAI fails, try Gemini
-4. If Gemini fails, try Ollama (local, always available)
-
-Fallback is automatic — no user intervention needed. The agent logs which provider was used.
-
-## Environment Variables
-
-Override API keys without editing the config file:
-
-| Variable | Config Equivalent |
-|---|---|
-| `JARVIS_API_KEY` | `llm.anthropic.api_key` (when primary is anthropic) |
-| `JARVIS_OPENAI_API_KEY` | `llm.openai.api_key` |
-| `JARVIS_GEMINI_API_KEY` | `llm.gemini.api_key` |
-
-## Hot Reload
-
-Changing the LLM configuration in `config.yaml` takes effect on the next daemon restart:
-
-```bash
-jarvis restart
-```
-
-The onboarding wizard (`jarvis onboard`) can reconfigure your LLM provider at any time.
+Add your future video link here.

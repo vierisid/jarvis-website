@@ -292,3 +292,9 @@ GOOS=darwin GOARCH=arm64 go build -o jarvis-sidecar-macos .
 
 - On Linux, ensure ImageMagick is installed: `sudo apt install imagemagick`
 - On Windows, ensure the sidecar is not running in a headless/service context without desktop access
+
+## Video Tutorial Placeholder
+
+> Video tutorial placeholder: enrolling a sidecar and testing desktop control.
+
+Add your future video link here.

@@ -1,291 +1,200 @@
 ---
 title: Installation
-description: Install JARVIS on Windows, macOS, or Linux in under two minutes.
+description: Install the JARVIS daemon, understand the main deployment options, and choose where the brain should run.
 ---
 
-:::danger[Security Warning]
-JARVIS runs as a persistent daemon with broad system access — browser control, desktop automation, shell execution, and external service access. Installing it grants an AI agent significant control over your machine. Only install on machines you own, review the [Authority & Safety](/docs/authority) settings before enabling autonomous operation, and read the full [Disclaimer & Liability](/docs/disclaimer).
-:::
+JARVIS can run:
 
-JARVIS runs on macOS, Linux, and Windows (via WSL2). It is distributed as a package on npm, so you need Bun installed first. If you are on Windows, read the platform setup sections below before installing.
+- On your local machine
+- On a home server
+- On a VPS
+- In Docker
 
-## Prerequisites
+## Security First
 
-| Requirement | Version | Notes |
-|---|---|---|
-| Operating system | macOS, Linux, or Windows via WSL2 | Windows users **must** use WSL2 — see [Windows setup](#windows-wsl2-setup) below |
-| Node.js & npm | Node.js 18 or later | See [Installing Node.js & npm](#installing-nodejs--npm) below |
-| Bun | 1.0 or later | Installed automatically if missing |
-| LLM API key | — | At least one provider: Anthropic, OpenAI, Google Gemini, or Ollama (local, no key needed) |
-| Chrome or Chromium | Any recent version | Required for browser control |
+JARVIS can control files, terminals, browsers, remote channels, and connected machines. Treat installation as a security decision, not just a package install.
 
----
+Before exposing the dashboard outside localhost or giving JARVIS access to real accounts, read:
 
-## Windows (WSL2) Setup
+- [Disclaimer & Liability](/docs/disclaimer)
+- [Authority & Safety](/docs/authority)
 
-:::caution[Windows Requirement]
-JARVIS is **not supported natively on Windows**. You must install and run it inside WSL2 (Windows Subsystem for Linux).
-:::
+The daemon is the brain. It does not need to live on the same machine that you want to control. If you want JARVIS to stay online 24/7, a server or always-on machine is the best fit. If you want JARVIS to control another machine's desktop, browser, or filesystem, install a sidecar there after the daemon is up.
 
-### What is WSL2?
+## Recommended Install
 
-WSL2 (Windows Subsystem for Linux 2) is a feature built into Windows 10 and 11 that lets you run a full Linux environment directly on your Windows machine — no virtual machine setup or dual boot required. It runs a real Linux kernel, so Linux command-line tools, package managers, and applications work natively. JARVIS requires a Linux environment for its daemon, which is why WSL2 is required on Windows.
-
-### Installing WSL2
-
-1. **Open PowerShell as Administrator** — right-click the Start menu, select "Terminal (Admin)" or "PowerShell (Admin)".
-
-2. **Install WSL** with a single command:
-   ```powershell
-   wsl --install
-   ```
-   This installs WSL2 with Ubuntu as the default Linux distribution. If you already have WSL1 installed, this will upgrade it to WSL2.
-
-3. **Restart your computer** when prompted.
-
-4. **Set up your Linux user** — after reboot, the Ubuntu terminal will open automatically and ask you to create a username and password. This is your Linux account inside WSL2.
-
-5. **Verify the installation:**
-   ```powershell
-   wsl --version
-   ```
-   Confirm the output shows WSL version 2.
-
-:::tip
-If `wsl --install` does not work (e.g., on older Windows 10 builds), follow the [manual installation steps from Microsoft](https://learn.microsoft.com/en-us/windows/wsl/install-manual).
-:::
-
-### Using JARVIS in WSL2
-
-Once WSL2 is set up, open the Ubuntu terminal (or your chosen distribution) and follow the standard installation steps below. All `jarvis` commands should be run inside the WSL2 terminal, not in PowerShell or Command Prompt.
-
-For desktop control on Windows, the sidecar binary must run on the Windows side — see [Desktop Control Fails on WSL](/docs/troubleshooting#desktop-control-fails-on-wsl) in the Troubleshooting guide.
-
----
-
-## Installing Node.js & npm
-
-### What is npm?
-
-npm (Node Package Manager) is the default package manager for Node.js. It lets you install, update, and manage JavaScript packages from the command line. JARVIS is published as an npm package (`@usejarvis/brain`), so you need npm to install it. npm is bundled with Node.js — installing Node.js automatically gives you npm.
-
-### Installing Node.js (includes npm)
-
-#### macOS
-
-**Option 1 — Homebrew (recommended):**
-```bash
-brew install node
-```
-
-**Option 2 — Official installer:**
-Download the macOS installer from [nodejs.org](https://nodejs.org/) and run it.
-
-#### Linux / WSL2
-
-**Option 1 — NodeSource (recommended for latest LTS):**
-```bash
-curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-sudo apt-get install -y nodejs
-```
-
-**Option 2 — System package manager (Ubuntu/Debian):**
-```bash
-sudo apt update
-sudo apt install nodejs npm
-```
-
-**Option 3 — nvm (Node Version Manager):**
-```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-source ~/.bashrc
-nvm install --lts
-```
-
-**Verify the installation:**
-```bash
-node --version   # should print v18 or later
-npm --version    # should print 9 or later
-```
-
----
-
-## Install JARVIS
-
-### Bun (Recommended)
+The simplest path is the Bun package:
 
 ```bash
 bun install -g @usejarvis/brain
 jarvis onboard
 ```
 
-The onboard wizard walks through LLM provider selection (Anthropic, OpenAI, Gemini, or Ollama), API key entry, voice setup, channel tokens (Telegram, Discord), personality, and authority level. It writes `~/.jarvis/config.yaml` and starts the daemon. You can re-run `jarvis onboard` at any time to update your configuration.
+Then start it:
 
-### Manual Install
+```bash
+jarvis start
+```
 
-If you prefer to build from source:
+## Requirements
+
+Before installing, make sure you have:
+
+- Bun
+- A supported OS: Linux, macOS, or Windows/WSL2
+- At least one LLM provider configured
+
+Optional but common:
+
+- Ollama if you want local models
+- Google OAuth credentials for Gmail or Calendar features
+- Telegram or Discord bot credentials for remote messaging
+- ElevenLabs credentials if you want premium TTS
+
+## Installation Options
+
+### Option 1: Bun Package
+
+Use this if you want the fastest local install:
+
+```bash
+bun install -g @usejarvis/brain
+jarvis onboard
+```
+
+### Option 2: One-Liner Installer
+
+Use this if you want the repository installed under `~/.jarvis/daemon` automatically:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/vierisid/jarvis/main/install.sh -o /tmp/jarvis-install.sh
+less /tmp/jarvis-install.sh
+bash /tmp/jarvis-install.sh
+jarvis onboard
+```
+
+If you want a more reproducible install, pin that URL to a specific release tag or commit instead of `main`.
+
+### Option 3: Manual Repository Install
+
+Use this if you want the full source checkout:
 
 ```bash
 git clone https://github.com/vierisid/jarvis.git ~/.jarvis/daemon
 cd ~/.jarvis/daemon
 bun install
 bun run build:ui
+```
+
+Then run:
+
+```bash
+bin/jarvis.ts onboard
+```
+
+Or, if the CLI is already linked globally:
+
+```bash
 jarvis onboard
 ```
 
----
+### Option 4: Docker
 
-## Verify the Installation
-
-```bash
-jarvis version
-```
-
-Expected output:
-
-```
-JARVIS v1.0.0
-Runtime: Bun 1.x.x
-Config: ~/.jarvis/config.yaml
-```
-
----
-
-## What Gets Installed
-
-The installer places these files on your system:
-
-| Path | Description |
-|---|---|
-| `~/.bun/bin/jarvis` | Main CLI binary |
-| `~/.jarvis/config.yaml` | Configuration file (created by onboard) |
-| `~/.jarvis/jarvis.db` | SQLite knowledge vault (created on first run) |
-| `~/.jarvis/logs/` | Log files directory |
-
-Nothing is installed system-wide. Everything lives under `~/.bun/` and `~/.jarvis/`.
-
----
-
-## Updating
+Docker is useful when you want to host the daemon in a containerized environment:
 
 ```bash
-jarvis update
+docker run -d --name jarvis \
+  -p 3142:3142 \
+  -v jarvis-data:/data \
+  ghcr.io/vierisid/jarvis:0.2.1
 ```
 
-This pulls the latest version, replaces the binary, and confirms the new version number. Your config and database are untouched.
+Replace `0.2.1` with the release you want to run. Use `:latest` only if you explicitly want floating upgrades.
 
-## Uninstalling
+Important limitation:
+
+- The daemon inside Docker does not automatically gain access to your host desktop, browser, clipboard, or native apps.
+- If you want real desktop/browser automation on another machine, install a sidecar on that machine.
+
+### Docker: Mounting a Real Config File
+
+If you want repeatable config management, mount your own `config.yaml` into the container instead of relying only on environment variables.
+
+Example pattern:
 
 ```bash
-bun remove -g @usejarvis/brain
-rm -rf ~/.jarvis
+mkdir -p ~/.jarvis-docker
+cp ~/.jarvis/config.yaml ~/.jarvis-docker/config.yaml
 ```
 
----
+Then run:
 
-## Installation Troubleshooting
-
-### Permission Denied (EACCES) — Use `sudo`
-
-If `bun install -g` fails with `EACCES` permission errors:
-
-```
-error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules'
-```
-
-**Quick fix** — run the install with `sudo`:
 ```bash
-sudo bun install -g @usejarvis/brain
+docker run -d --name jarvis \
+  -p 3142:3142 \
+  -v ~/.jarvis-docker/config.yaml:/data/config.yaml \
+  -v jarvis-data:/data \
+  ghcr.io/vierisid/jarvis:latest
 ```
 
-**Better long-term fix** — Bun installs global packages to `~/.bun/bin` by default, which should not require `sudo`. If you have a non-standard setup, ensure your user owns the global directory:
-```bash
-sudo chown -R $(whoami) ~/.bun
-bun install -g @usejarvis/brain
-```
+### Docker: Networking Advice
 
-### `jarvis` Command Not Found
+When JARVIS runs in Docker, `localhost` inside the container is the container itself.
 
-If the `jarvis` command is not recognized after installation, your shell cannot find the binary. This usually means the global npm/Bun bin directory is not in your PATH.
+That means:
 
-**Fix:**
-```bash
-# Add Bun global bin directory to your PATH
-export PATH="$HOME/.bun/bin:$PATH"
-```
+- `ollama.base_url: http://localhost:11434` only works if Ollama is inside the same network context the daemon can actually reach
+- the same warning applies to local Whisper endpoints and similar local services
 
-Add the line above to `~/.bashrc` or `~/.zshrc` to make it permanent, then reload:
-```bash
-source ~/.bashrc
-# or
-source ~/.zshrc
-```
+If those services live somewhere else, point JARVIS at:
 
-### `bun: command not found`
+- a reachable host IP
+- a service/container hostname
+- a reverse-proxied hostname
 
-Bun is not installed. Install it with:
-```bash
-curl -fsSL https://bun.sh/install | bash
-source ~/.bashrc
-```
+See [Troubleshooting](/docs/troubleshooting) for the detailed explanation.
 
-### Installation Hangs or Times Out
+## Choosing Where to Run the Daemon
 
-This is usually a network issue. Try:
-```bash
-# Check your registry connectivity
-bun pm ping
+### Local Machine
 
-# If behind a corporate proxy, set the environment variables
-export HTTP_PROXY=http://your-proxy:port
-export HTTPS_PROXY=http://your-proxy:port
+Best when:
 
-# Then retry the install
-bun install -g @usejarvis/brain
-```
+- You are just getting started
+- You want the simplest setup
+- You mainly use one machine
 
-### Bun Fails to Install Automatically
+Tradeoffs:
 
-If the automatic Bun installation step fails:
-```bash
-# Install Bun manually
-curl -fsSL https://bun.sh/install | bash
-source ~/.bashrc
+- JARVIS only stays online while that machine is on
+- If you want it to start automatically after reboot, configure [Autostart](/docs/autostart)
 
-# Then retry
-jarvis onboard
-```
+### VPS or Home Server
 
-### WSL2-Specific Issues
+Best when:
 
-**Cannot access localhost from Windows browser:**
-WSL2 and Windows share `localhost` by default on recent builds. If `http://localhost:3142` does not load in your Windows browser:
-```bash
-# Find your WSL2 IP address
-hostname -I
-```
-Then use that IP instead: `http://<wsl-ip>:3142`.
+- You want JARVIS available 24/7
+- You want one daemon to coordinate multiple machines
+- You care about uptime more than local-only simplicity
 
-**Chrome not found inside WSL2:**
-If you use Chrome installed on the Windows side, point JARVIS to the Windows Chrome executable:
-```yaml
-# ~/.jarvis/config.yaml
-browser:
-  executablePath: /mnt/c/Program Files/Google/Chrome/Application/chrome.exe
-```
+Tradeoffs:
 
-**File permission issues in WSL2:**
-If you encounter permission errors accessing files in `/mnt/c/` (your Windows drives):
-```bash
-# Remount with proper permissions
-sudo umount /mnt/c
-sudo mount -t drvfs C: /mnt/c -o metadata,uid=1000,gid=1000
-```
+- You need to think about public URL, auth token, and remote access
+- Desktop/browser control still happens through sidecars on the target machines
 
----
+## After Installation
 
-## Next Steps
+The next steps are:
 
-- [Quick Start](/docs/quickstart) — send your first message
-- [Configuration](/docs/configuration) — customize `~/.jarvis/config.yaml`
-- [Troubleshooting](/docs/troubleshooting) — if something went wrong
+1. Run [Quick Start](/docs/quickstart)
+2. Configure [Autostart](/docs/autostart) if you want it managed as a background service
+3. Install sidecars on any machines you want JARVIS to control directly
+
+## Sidecar Reminder
+
+The daemon and the sidecar are different things:
+
+- The daemon is the brain
+- The sidecar is the machine-level actuator
+
+If you run JARVIS on a VPS and want it to see and control your laptop, install a sidecar on the laptop. See [Desktop Control](/docs/desktop-control).

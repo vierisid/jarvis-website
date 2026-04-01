@@ -257,7 +257,8 @@ Goal events are broadcast via WebSocket (same connection as other JARVIS events)
 ```json
 {
   "type": "goal_event",
-  "data": {
+  "timestamp": 1709654400000,
+  "payload": {
     "type": "goal_scored",
     "goalId": "abc123",
     "data": { "score": 0.45, "reason": "Completed 3 of 5 subtasks", "source": "user" },
@@ -317,3 +318,9 @@ goals:
   # Let JARVIS create/move calendar events for goals
   calendar_ownership: false
 ```
+
+## Video Tutorial Placeholder
+
+> Video tutorial placeholder: goal planning, accountability, and dashboard views.
+
+Add your future video link here.

@@ -240,3 +240,9 @@ them and send me a Telegram message with the digest."
 "When I have VS Code open and the terminal shows a build
 error, automatically research the error and suggest a fix."
 ```
+
+## Video Tutorial Placeholder
+
+> Video tutorial placeholder: creating workflows from chat and from the visual builder.
+
+Add your future video link here.

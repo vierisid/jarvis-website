@@ -235,3 +235,9 @@ Adjust `voice.wakeWord.sensitivity`. Start at `0.5` and move toward `0.7` if it 
 **High STT latency**
 
 Switch to Groq (`stt.provider: groq`) — it is significantly faster than OpenAI's Whisper endpoint for most inputs.
+
+## Video Tutorial Placeholder
+
+> Video tutorial placeholder: wake word, microphone flow, STT, and streaming TTS.
+
+Add your future video link here.

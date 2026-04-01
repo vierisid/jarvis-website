@@ -1,290 +1,201 @@
 ---
 title: Configuration
-description: Understanding and customizing ~/.jarvis/config.yaml.
+description: How JARVIS is configured, where the config lives, and how to reason about the main sections.
 ---
 
-JARVIS is configured through a single YAML file at `~/.jarvis/config.yaml`. The onboarding wizard (`jarvis onboard`) creates this file with sensible defaults. You can edit it directly at any time — changes take effect on the next daemon restart.
+JARVIS stores its runtime configuration in a single YAML file:
 
-## File Location
-
-```
+```text
 ~/.jarvis/config.yaml
 ```
 
-## Minimal Configuration
+You can create it through `jarvis onboard` or edit it directly by hand.
 
-The smallest valid configuration that launches JARVIS with an Anthropic API key:
+## How to Think About the Config
+
+The config falls into a few major areas:
+
+- Where the daemon runs
+- Which LLMs it can use
+- How it speaks and listens
+- Which channels and integrations are enabled
+- How much autonomy it has
+- Which background systems are active
+
+Third-party integrations do not all live in the same place:
+
+- some credentials are stored directly in `config.yaml`
+- some integrations are connected through onboarding or dashboard flows
+- Google OAuth is a hybrid case: client credentials can live in config, while the actual account authorization/token exchange happens through the setup flow
+
+This page focuses on the high-level structure of `config.yaml`, not every provider-specific setup walkthrough.
+
+## Minimal Example
+
+This is the smallest realistic config for a cloud-hosted setup using Anthropic:
 
 ```yaml
-llm:
-  primary: anthropic
-  anthropic:
-    api_key: "sk-ant-..."
-    model: claude-sonnet-4-6
-```
-
-All other values fall back to their defaults.
-
-## Full Configuration Structure
-
-```yaml
-# ─── User ────────────────────────────────────────────────
-user:
-  name: ""                  # Your name
-
-# ─── Daemon ──────────────────────────────────────────────
 daemon:
-  port: 3142                # WebSocket + HTTP port for the dashboard
-  data_dir: ~/.jarvis       # Root data directory
-  db_path: ~/.jarvis/jarvis.db  # SQLite knowledge vault path
-  brain_domain: ""          # External domain (for sidecar JWT tokens)
+  port: 3142
+  data_dir: "~/.jarvis"
+  db_path: "~/.jarvis/jarvis.db"
 
-# ─── Auth ────────────────────────────────────────────────
-auth:
-  token: ""                 # Shared secret token. Env: JARVIS_AUTH_TOKEN
-
-# ─── LLM Providers ──────────────────────────────────────
 llm:
-  primary: anthropic        # anthropic | openai | gemini | ollama
-  fallback: [openai, ollama]
-
+  primary: "anthropic"
+  fallback: ["openai", "ollama"]
   anthropic:
     api_key: "sk-ant-..."
-    model: claude-sonnet-4-6
+    model: "claude-sonnet-4-6"
 
-  openai:
-    api_key: "sk-..."
-    model: gpt-5.4
-
-  gemini:
-    api_key: "AIza..."
-    model: gemini-3-flash-preview
-
-  ollama:
-    base_url: http://localhost:11434
-    model: llama3
-
-# ─── Text-to-Speech ─────────────────────────────────────
-tts:
-  enabled: false
-  provider: edge            # edge (free) | elevenlabs (premium)
-  voice: en-US-AriaNeural   # Edge TTS voice name
-  rate: "+0%"               # Speech rate adjustment
-  volume: "+0%"             # Volume adjustment
-  elevenlabs:               # Only if provider is elevenlabs
-    api_key: "sk_..."
-    voice_id: "21m00Tcm4TlvDq8ikWAM"
-    model: eleven_flash_v2_5
-    stability: 0.5
-    similarity_boost: 0.75
-
-# ─── Speech-to-Text ─────────────────────────────────────
-stt:
-  provider: openai          # openai | groq | local
-  openai:
-    api_key: "sk-..."
-    model: whisper-1
-  groq:
-    api_key: "gsk_..."
-    model: whisper-large-v3
-  local:
-    endpoint: ""
-    model: base.en
-
-# ─── Communication Channels ─────────────────────────────
-channels:
-  telegram:
-    enabled: false
-    bot_token: ""
-    allowed_users: []       # List of Telegram user IDs (integers)
-  discord:
-    enabled: false
-    bot_token: ""
-    allowed_users: []       # List of Discord user IDs (strings)
-    guild_id: ""            # Restrict to single guild (optional)
-
-# ─── Personality ─────────────────────────────────────────
 personality:
-  assistant_name: Jarvis
   core_traits:
-    - loyal
-    - efficient
-    - proactive
-    - respectful
-    - adaptive
+    - "loyal"
+    - "efficient"
+    - "proactive"
+  assistant_name: "Jarvis"
 
-# ─── Authority & Safety ─────────────────────────────────
 authority:
-  default_level: 3          # 1 (read-only) to 10 (full autonomy)
-  governed_categories:
-    - send_email
-    - send_message
-    - make_payment
+  default_level: 3
+  governed_categories: ["send_email", "send_message", "make_payment"]
   overrides: []
   context_rules: []
   learning:
     enabled: true
     suggest_threshold: 5
-  emergency_state: normal   # normal | paused | killed
+  emergency_state: "normal"
 
-# ─── Desktop Control ────────────────────────────────────
-desktop:
-  enabled: true
-  sidecar_port: 9224
-  auto_launch: true
-  tree_depth: 5
-  snapshot_max_elements: 60
-
-# ─── Awareness ───────────────────────────────────────────
-awareness:
-  enabled: true
-  capture_interval_ms: 7000
-  min_change_threshold: 0.02
-  cloud_vision_enabled: true
-  cloud_vision_cooldown_ms: 30000
-  stuck_threshold_ms: 120000
-  struggle_grace_ms: 45000
-  struggle_cooldown_ms: 90000
-  suggestion_rate_limit_ms: 60000
-  overlay_autolaunch: true
-  retention:
-    full_hours: 1
-    key_moment_hours: 24
-  capture_dir: ~/.jarvis/captures
-
-# ─── Google Integration ─────────────────────────────────
-google:
-  client_id: ""
-  client_secret: ""
-
-# ─── Heartbeat ───────────────────────────────────────────
 heartbeat:
   interval_minutes: 15
   active_hours:
     start: 8
-    end: 23
-  aggressiveness: aggressive  # passive | moderate | aggressive
+    end: 22
+  aggressiveness: "moderate"
 
-# ─── Active Role ─────────────────────────────────────────
-active_role: personal-assistant  # Role file from roles/ directory
+active_role: "personal-assistant"
 ```
 
-## Section Reference
-
-### `user`
-
-| Key | Type | Default | Description |
-|---|---|---|---|
-| `name` | string | `""` | Your name, used in personalization |
+## Main Sections
 
 ### `daemon`
 
-Controls the daemon process itself.
+Controls where the daemon listens and where it stores data.
 
-| Key | Type | Default | Description |
-|---|---|---|---|
-| `port` | integer | `3142` | Port for the WebSocket server and dashboard |
-| `data_dir` | string | `~/.jarvis` | Root data directory |
-| `db_path` | string | `~/.jarvis/jarvis.db` | SQLite database path |
-| `brain_domain` | string | — | External domain for sidecar JWT tokens |
+Important keys:
+
+- `port`
+- `data_dir`
+- `db_path`
+- `brain_domain`
+
+### `auth`
+
+Controls dashboard/API authentication.
+
+If `auth.token` is unset, the dashboard is open access.
+
+If you expose JARVIS outside a trusted local network, set this.
 
 ### `llm`
 
-Configures the LLM providers. Four providers available: Anthropic, OpenAI, Google Gemini, and Ollama. See [LLM Providers](/docs/llm-providers) for full details.
+Controls provider selection, primary/fallback order, and provider-specific credentials.
 
-### `tts`
+Current provider blocks include:
 
-Controls text-to-speech output. Two providers: Edge TTS (free, default) and ElevenLabs (premium). See [Voice Interface](/docs/voice) for full details.
+- `anthropic`
+- `openai`
+- `groq`
+- `gemini`
+- `ollama`
+- `openrouter`
 
-### `stt`
+### `tts` and `stt`
 
-Controls speech-to-text transcription. Three providers: OpenAI Whisper, Groq, and local. See [Voice Interface](/docs/voice) for full details.
+These control speaking and listening.
+
+- `tts` handles voice output
+- `stt` handles voice input transcription
 
 ### `channels`
 
-Configures external communication adapters. See [Telegram](/docs/telegram) and [Discord](/docs/discord) for setup instructions.
+Remote chat channels currently include:
 
-### `personality`
-
-| Key | Type | Default | Description |
-|---|---|---|---|
-| `assistant_name` | string | `Jarvis` | Name used in responses and notifications |
-| `core_traits` | string[] | `[loyal, efficient, ...]` | Personality traits injected into the system prompt |
-
-### `authority`
-
-Controls the autonomy level of the daemon. See [Authority and Safety](/docs/authority) for full details.
+- Telegram
+- Discord
 
 ### `desktop`
 
-Controls the sidecar connection for desktop automation. See [Desktop Control](/docs/desktop-control) for full details.
+Controls local desktop/sidecar-related behavior and defaults.
 
 ### `awareness`
 
-Controls the continuous screen monitoring system. See the dashboard's Awareness section for real-time data.
+Controls the awareness system:
 
-### `google`
+- capture frequency
+- change thresholds
+- cloud vision escalation
+- suggestion rate limits
+- retention
 
-OAuth2 credentials for Gmail and Calendar integration. See [Proactive Agent](/docs/proactive-agent) for setup instructions.
+### `sites`
+
+Controls the built-in Sites workspace:
+
+- whether it is enabled
+- where project files live
+- dev server port range
+- auto-commit behavior
+
+### `authority`
+
+Controls autonomy, governed categories, override rules, and emergency state.
 
 ### `heartbeat`
 
-Controls periodic check-in behavior during active hours.
+Controls the proactive cycle that drives periodic check-ins and background activity.
 
-## Environment Variable Overrides
+### `active_role`
 
-Any configuration value can be overridden via environment variables without modifying the YAML file:
+Sets the active top-level role/persona file JARVIS runs with.
 
-| Variable | Config equivalent |
-|---|---|
-| `JARVIS_PORT` | `daemon.port` |
-| `JARVIS_BRAIN_DOMAIN` | `daemon.brain_domain` |
-| `JARVIS_AUTH_TOKEN` | `auth.token` |
-| `JARVIS_API_KEY` | `llm.primary` provider's `api_key` |
-| `JARVIS_MODEL` | `llm.primary` provider's `model` |
-| `JARVIS_TELEGRAM_TOKEN` | `channels.telegram.bot_token` |
-| `JARVIS_DISCORD_TOKEN` | `channels.discord.bot_token` |
-| `JARVIS_AUTHORITY_LEVEL` | `authority.default_level` |
+## Editing by Hand vs Onboarding
 
-Environment variables take precedence over `config.yaml` values.
+Use onboarding when:
 
-### Example
+- You are getting started
+- You want guided prompts
+- You are changing major settings like providers or channels
 
-```bash
-# Start JARVIS on a non-default port without editing the config
-JARVIS_PORT=8080 jarvis start
+Edit YAML directly when:
 
-# Use a different API key for a test run
-JARVIS_API_KEY="sk-ant-test..." jarvis start --foreground
-```
+- You know exactly which key you want to change
+- You are adjusting thresholds or fine-grained behavior
+- You are managing a hosted instance and want reproducible config
 
-## Editing the Config
+## Recommended First Config Tweaks
 
-Stop the daemon before editing if you want changes to apply cleanly:
+After the first successful start, most users should review:
 
-```bash
-jarvis stop
-# edit ~/.jarvis/config.yaml
-jarvis start
-```
+- `auth.token`
+- `llm.primary` and `llm.fallback`
+- `tts.enabled`
+- `stt.provider`
+- `authority.default_level`
+- `awareness.enabled`
+- `sites.enabled`
 
-Alternatively, use `jarvis restart` after editing — it reads the config fresh on startup.
+## Docker Note
 
-## Validating the Config
+If you run JARVIS in Docker, remember that the daemon config still belongs to the daemon, not to your browser session.
 
-The `doctor` command checks your config for common mistakes:
+This matters especially for addresses like:
 
-```bash
-jarvis doctor
-```
+- `ollama.base_url`
+- `stt.local.endpoint`
 
-This verifies that:
-- The config file exists and is valid YAML
-- API keys are present and non-empty
-- The specified port is available
-- Referenced file paths exist
-- At least one LLM provider is configured
+If those are set to `http://localhost:...`, that means localhost from the daemon's point of view, not from your laptop or browser. See [Troubleshooting](/docs/troubleshooting) for the common remote-host networking failure mode.
 
-## Full Reference
+## Video Tutorial Placeholder
 
-For a complete key-by-key reference of every configuration option, see [Config Reference](/docs/config-reference).
+> Video tutorial placeholder: editing `config.yaml` and understanding the main sections.
+
+Add your future video link here.

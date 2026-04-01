@@ -179,3 +179,9 @@ JARVIS_CDP_PORT=9333 jarvis start
 **Pages load but interactions fail**
 
 This usually means the page has anti-automation measures that override the stealth patches. Try setting a longer interaction delay or filing a bug report with the site URL.
+
+## Video Tutorial Placeholder
+
+> Video tutorial placeholder: browser control walkthrough and debugging failed page interactions.
+
+Add your future video link here.
