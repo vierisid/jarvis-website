@@ -9,7 +9,7 @@ import Landing from '../layouts/Landing.astro';
     <div class="nav-inner">
       <div class="nav-left">
         <a href="/" class="nav-logo">J.A.R.V.I.S.</a>
-        <span class="nav-version">v0.2.1</span>
+        <span class="nav-version">v0.3.1</span>
       </div>
       <div class="nav-right">
         <a href="#architecture" class="nav-link">Architecture</a>
@@ -142,88 +142,6 @@ import Landing from '../layouts/Landing.astro';
             <span class="status-value"><span class="dot dot-green"></span><span class="status-green">3 active</span></span>
             <span class="status-meta">1 objective · 2 key results</span>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cap-strip" style="padding-top: 0;">
-    <div class="cap-strip-inner">
-      <p class="cap-strip-label reveal reveal-up">Open Source Proof</p>
-      <div class="reveal reveal-up" style="display: grid; gap: 18px;">
-        <div style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
-          <a
-            href="https://github.com/vierisid/jarvis/stargazers"
-            target="_blank"
-            rel="noopener"
-            style="border: 1px solid var(--border); background: var(--bg-raised); border-radius: 18px; padding: 16px; text-decoration: none; color: inherit; display: grid; gap: 6px;"
-          >
-            <div style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">GitHub</div>
-            <div style="font-size: 22px; font-weight: 600; color: var(--text-primary);">Stars</div>
-            <div style="font-size: 14px; color: var(--text-secondary);">Track community adoption directly on GitHub.</div>
-          </a>
-          <a
-            href="https://github.com/vierisid/jarvis/network/members"
-            target="_blank"
-            rel="noopener"
-            style="border: 1px solid var(--border); background: var(--bg-raised); border-radius: 18px; padding: 16px; text-decoration: none; color: inherit; display: grid; gap: 6px;"
-          >
-            <div style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">Repository</div>
-            <div style="font-size: 22px; font-weight: 600; color: var(--text-primary);">Forks</div>
-            <div style="font-size: 14px; color: var(--text-secondary);">See how many people are building on or adapting JARVIS.</div>
-          </a>
-          <a
-            href="https://github.com/vierisid/jarvis/issues"
-            target="_blank"
-            rel="noopener"
-            style="border: 1px solid var(--border); background: var(--bg-raised); border-radius: 18px; padding: 16px; text-decoration: none; color: inherit; display: grid; gap: 6px;"
-          >
-            <div style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">Project</div>
-            <div style="font-size: 22px; font-weight: 600; color: var(--text-primary);">Issues</div>
-            <div style="font-size: 14px; color: var(--text-secondary);">Follow active bugs, proposals, and roadmap discussion in the open.</div>
-          </a>
-          <a
-            href="https://github.com/vierisid/jarvis/graphs/contributors"
-            target="_blank"
-            rel="noopener"
-            style="border: 1px solid var(--border); background: var(--bg-raised); border-radius: 18px; padding: 16px; text-decoration: none; color: inherit; display: grid; gap: 6px;"
-          >
-            <div style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">Community</div>
-            <div style="font-size: 22px; font-weight: 600; color: var(--text-primary);">Contributors</div>
-            <div style="font-size: 14px; color: var(--text-secondary);">Browse the full contributor graph without loading third-party trackers on this page.</div>
-          </a>
-        </div>
-
-        <div style="border: 1px solid var(--border); background: var(--bg-raised); border-radius: 20px; padding: 18px; display: grid; gap: 12px;">
-          <div style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">
-            Contribution Surface
-          </div>
-          <p style="margin: 0; color: var(--text-secondary); font-size: 15px; line-height: 1.7;">
-            JARVIS keeps its development history, contributor graph, issue tracker, and pull request activity public on GitHub. If you want exact live counts, open the repository directly instead of loading third-party badge or image services from the homepage.
-          </p>
-          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="btn-border">Open Repository</a>
-            <a href="https://github.com/vierisid/jarvis/pulls" target="_blank" rel="noopener" class="btn-border">Open Pull Requests</a>
-            <a href="https://github.com/vierisid/jarvis/graphs/contributors" target="_blank" rel="noopener" class="btn-border">Open Contributors</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cap-strip">
-    <div class="cap-strip-inner">
-      <p class="cap-strip-label reveal reveal-up">Contribute</p>
-      <div class="reveal reveal-up" style="display: grid; gap: 14px; max-width: 860px;">
-        <h2 style="font-size: 34px; line-height: 1.05; color: var(--text-primary); margin: 0;">JARVIS is open to contributors.</h2>
-        <p style="margin: 0; color: var(--text-secondary); font-size: 16px; line-height: 1.7;">
-          If you want to improve docs, fix bugs, expand workflows, refine sidecars, or propose new product directions, contributions are welcome.
-          The best starting points are documentation fixes, reproducible bug reports, and focused pull requests against one area of the product.
-        </p>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-          <a href="/docs/contributing" class="btn-solid">How to Contribute</a>
-          <a href="https://github.com/vierisid/jarvis/issues" target="_blank" rel="noopener" class="btn-border">Open Issues</a>
-          <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener" class="btn-border">Discuss in Discord</a>
         </div>
       </div>
     </div>
@@ -817,6 +735,24 @@ import Landing from '../layouts/Landing.astro';
         <div class="cta-actions">
           <a href="/docs/installation" class="btn-solid">Read the Docs</a>
           <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="btn-border">Star on GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cap-strip">
+    <div class="cap-strip-inner">
+      <p class="cap-strip-label reveal reveal-up">Contribute</p>
+      <div class="reveal reveal-up" style="display: grid; gap: 14px; max-width: 860px;">
+        <h2 style="font-size: 34px; line-height: 1.05; color: var(--text-primary); margin: 0;">JARVIS is open to contributors.</h2>
+        <p style="margin: 0; color: var(--text-secondary); font-size: 16px; line-height: 1.7;">
+          If you want to improve docs, fix bugs, expand workflows, refine sidecars, or propose new product directions, contributions are welcome.
+          The best starting points are documentation fixes, reproducible bug reports, and focused pull requests against one area of the product.
+        </p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="/docs/contributing" class="btn-solid">How to Contribute</a>
+          <a href="https://github.com/vierisid/jarvis/issues" target="_blank" rel="noopener" class="btn-border">Open Issues</a>
+          <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener" class="btn-border">Discuss in Discord</a>
         </div>
       </div>
     </div>
