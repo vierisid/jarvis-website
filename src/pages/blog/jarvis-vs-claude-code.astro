@@ -9,171 +9,214 @@ import BlogPost from '../../layouts/BlogPost.astro';
   readTime="7 min"
 >
 
-<p>You're browsing AI tools and come across two names: <strong>J.A.R.V.I.S.</strong> and <strong>Claude Code</strong> (or GitHub Copilot, Cursor, etc.). Both involve AI. Both help you get things done. So... which one do you need?</p>
+<p>A common question we get: "How is J.A.R.V.I.S. different from Claude, ChatGPT, or other AI assistants?" The short answer: <strong>they're solving different problems</strong>.</p>
 
-<p>Short answer: <strong>Both. They solve different problems.</strong></p>
+<p>Claude, ChatGPT, and Gemini are brilliant <strong>conversational AI models</strong>. J.A.R.V.I.S. is an <strong>autonomous agent runtime</strong>. One is a brain. The other is a body with a brain inside it.</p>
 
-<p>Let's break it down.</p>
+<p>Let's break down the differences.</p>
 
-<h2>Claude Code: Your AI Pair Programmer</h2>
+<h2>The Core Architectural Divide</h2>
 
-<p>Claude Code (and tools like it) are <strong>AI coding assistants</strong>. They sit inside your editor (VS Code, Cursor, etc.) and help you <em>write code faster</em>.</p>
+<h3>Conversational AI: Stateless, Reactive, Text-Focused</h3>
 
-<h3>What Claude Code Does Well</h3>
-
-<ul>
-  <li><strong>Code completion:</strong> Start typing a function, and it suggests the rest. It's autocomplete on steroids.</li>
-  <li><strong>Refactoring:</strong> "Convert this class to use hooks." Claude Code rewrites it for you.</li>
-  <li><strong>Bug fixing:</strong> Highlight broken code, ask "what's wrong here?" and get explanations + fixes.</li>
-  <li><strong>Documentation:</strong> "Write JSDoc comments for this function." Done instantly.</li>
-  <li><strong>Learning:</strong> Ask questions about APIs, libraries, or patterns while you code. It's Stack Overflow, inline.</li>
-</ul>
-
-<h3>What Claude Code Doesn't Do</h3>
+<p>When you use ChatGPT or Claude (via their web interfaces, APIs, or coding assistants like Cursor), you're interacting with:</p>
 
 <ul>
-  <li><strong>Doesn't work outside your editor:</strong> It's scoped to the file you're editing. Can't browse the web, manage files, or interact with other apps.</li>
-  <li><strong>Doesn't remember context across sessions:</strong> Close the editor, and it forgets your conversation. No long-term memory.</li>
-  <li><strong>Doesn't act autonomously:</strong> You drive the workflow. It responds to prompts but doesn't take initiative.</li>
-  <li><strong>Doesn't integrate with your life:</strong> Can't schedule tasks, monitor APIs, manage your calendar, or coordinate across machines.</li>
+  <li><strong>A stateless model:</strong> Every conversation is isolated. The model doesn't remember you across sessions (unless features like "memory" are explicitly enabled and stored separately).</li>
+  <li><strong>A reactive system:</strong> It responds when you prompt it. It doesn't take initiative, monitor your environment, or execute tasks autonomously.</li>
+  <li><strong>A text interface:</strong> Input is text (or images). Output is text (or structured data). It can't <em>see</em> your screen, <em>control</em> your apps, or <em>act</em> on your file system.</li>
+  <li><strong>Narrow tool use:</strong> Some models support function calling or code execution, but it's confined to the conversation. Once the chat ends, so does the context and any ongoing work.</li>
 </ul>
 
-<p><strong>Claude Code is a tool <em>you</em> use to code faster. It's reactive, scoped, and editor-bound.</strong></p>
+<p>These systems are <strong>incredibly powerful</strong> for:</p>
+<ul>
+  <li>Answering questions</li>
+  <li>Writing code, essays, emails</li>
+  <li>Reasoning through complex problems</li>
+  <li>Pair-programming (especially tools like GitHub Copilot or Cursor)</li>
+</ul>
 
-<h2>J.A.R.V.I.S.: Your Autonomous Agent Runtime</h2>
+<p>But they're <strong>not designed</strong> to:</p>
+<ul>
+  <li>Remember you across conversations without manual prompting</li>
+  <li>Observe your activity and offer proactive help</li>
+  <li>Orchestrate multi-step workflows across devices</li>
+  <li>Operate autonomously when you're offline or busy</li>
+</ul>
 
-<p>J.A.R.V.I.S. is an <strong>operating layer for AI agents</strong>. It's not tied to your editor — it runs <em>continuously</em>, across all your devices, and handles tasks far beyond code.</p>
+<h3>J.A.R.V.I.S.: Stateful, Autonomous, Action-Oriented</h3>
 
-<h3>What J.A.R.V.I.S. Does Well</h3>
+<p>J.A.R.V.I.S. is built from the ground up to be a <strong>persistent, context-aware agent</strong>:</p>
 
 <ul>
-  <li><strong>Persistent memory:</strong> Remembers everything you've told it — people, projects, preferences — across all conversations, forever.</li>
-  <li><strong>Screen awareness:</strong> Sees what you're doing (with permission), detects struggles, and offers proactive help.</li>
-  <li><strong>Multi-machine control:</strong> Acts across your laptop, desktop, and servers as one unified environment.</li>
-  <li><strong>Browser automation:</strong> Navigates websites, fills forms, scrapes data, monitors pages.</li>
-  <li><strong>Desktop control:</strong> Interacts with native apps (Spotify, Excel, Slack) on Windows, macOS, or Linux.</li>
-  <li><strong>Delegation:</strong> Spawns specialist agents (researchers, writers, analysts) to handle complex tasks in parallel.</li>
-  <li><strong>Goal-driven execution:</strong> Set an OKR, and J.A.R.V.I.S. breaks it into tasks, tracks progress, and autonomously executes.</li>
-  <li><strong>Always-on operation:</strong> Runs 24/7, handling scheduled tasks, monitoring alerts, and responding to events.</li>
+  <li><strong>Stateful memory:</strong> A SQLite-backed knowledge graph stores everything you've told it — people, facts, preferences, commitments. This persists across restarts, devices, and conversations.</li>
+  <li><strong>Proactive awareness:</strong> It monitors your screen (with your permission), understands your context, and can offer help <em>before</em> you ask.</li>
+  <li><strong>Multi-machine execution:</strong> Through sidecars (lightweight agents on your devices), J.A.R.V.I.S. can browse the web, control desktop apps, manage files, run terminal commands — all across multiple machines.</li>
+  <li><strong>Autonomous operation:</strong> You can set goals (OKRs), assign tasks, and delegate complex workflows. J.A.R.V.I.S. works on them independently, checking in with results.</li>
+  <li><strong>Orchestration layer:</strong> It can spawn specialist sub-agents (research analysts, software engineers, content writers) and coordinate their work.</li>
 </ul>
 
-<h3>What J.A.R.V.I.S. Doesn't Do (Out of the Box)</h3>
+<p>J.A.R.V.I.S. is designed to be your <strong>operating layer for AI</strong> — the system that turns brilliant LLMs (like Claude or GPT-4) into agents that <em>do things</em> on your behalf.</p>
 
-<ul>
-  <li><strong>Inline code completion:</strong> It can <em>write</em> code (by spawning a Software Engineer agent), but it's not optimized for real-time, keystroke-level autocomplete.</li>
-  <li><strong>Editor integration:</strong> It doesn't live inside VS Code. (You could build a plugin, but that's on you.)</li>
-</ul>
+<h2>Head-to-Head: Key Differences</h2>
 
-<p><strong>J.A.R.V.I.S. is an agent <em>that runs your life</em>. It's proactive, persistent, and environment-aware.</strong></p>
-
-<h2>Head-to-Head Comparison</h2>
-
-<table style="width: 100%; border-collapse: collapse; margin: 32px 0;">
+<table class="comparison-table">
   <thead>
-    <tr style="border-bottom: 2px solid var(--border);">
-      <th style="text-align: left; padding: 12px; color: var(--text-primary);">Capability</th>
-      <th style="text-align: center; padding: 12px; color: var(--text-primary);">Claude Code</th>
-      <th style="text-align: center; padding: 12px; color: var(--text-primary);">J.A.R.V.I.S.</th>
+    <tr>
+      <th>Capability</th>
+      <th>ChatGPT / Claude</th>
+      <th>J.A.R.V.I.S.</th>
     </tr>
   </thead>
   <tbody>
-    <tr style="border-bottom: 1px solid var(--border-subtle);">
-      <td style="padding: 12px;">Code completion</td>
-      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ Best-in-class</td>
-      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗ Not optimized</td>
-    </tr>
-    <tr style="border-bottom: 1px solid var(--border-subtle);">
-      <td style="padding: 12px;">Editor integration</td>
-      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ Native</td>
-      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗ Separate tool</td>
-    </tr>
-    <tr style="border-bottom: 1px solid var(--border-subtle);">
-      <td style="padding: 12px;">Long-term memory</td>
-      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗ Session-only</td>
-      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ Knowledge graph</td>
-    </tr>
-    <tr style="border-bottom: 1px solid var(--border-subtle);">
-      <td style="padding: 12px;">Screen awareness</td>
-      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗ Editor-only</td>
-      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ Full desktop</td>
-    </tr>
-    <tr style="border-bottom: 1px solid var(--border-subtle);">
-      <td style="padding: 12px;">Browser control</td>
-      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗</td>
-      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ Full automation</td>
-    </tr>
-    <tr style="border-bottom: 1px solid var(--border-subtle);">
-      <td style="padding: 12px;">Multi-machine</td>
-      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗ Single device</td>
-      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ Sidecars</td>
-    </tr>
-    <tr style="border-bottom: 1px solid var(--border-subtle);">
-      <td style="padding: 12px;">Agent delegation</td>
-      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗</td>
-      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ 11 specialists</td>
-    </tr>
-    <tr style="border-bottom: 1px solid var(--border-subtle);">
-      <td style="padding: 12px;">Goal tracking</td>
-      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗</td>
-      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ OKR system</td>
-    </tr>
-    <tr style="border-bottom: 1px solid var(--border-subtle);">
-      <td style="padding: 12px;">Always-on operation</td>
-      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗ Editor must be open</td>
-      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ 24/7 daemon</td>
+    <tr>
+      <td><strong>Memory</strong></td>
+      <td>Session-based (or limited "memory" features)</td>
+      <td>Persistent knowledge graph, survives restarts</td>
     </tr>
     <tr>
-      <td style="padding: 12px;">Voice interface</td>
-      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗</td>
-      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ Wake-word + TTS</td>
+      <td><strong>Awareness</strong></td>
+      <td>Knows only what you tell it in chat</td>
+      <td>Sees your screen, tracks activity, understands context</td>
+    </tr>
+    <tr>
+      <td><strong>Action</strong></td>
+      <td>Text output only (or limited code execution)</td>
+      <td>Controls browser, desktop apps, files, terminal across devices</td>
+    </tr>
+    <tr>
+      <td><strong>Autonomy</strong></td>
+      <td>Reactive — waits for your input</td>
+      <td>Proactive — monitors, suggests, executes on schedule</td>
+    </tr>
+    <tr>
+      <td><strong>Persistence</strong></td>
+      <td>Conversation ends when you close the tab</td>
+      <td>Runs 24/7, works while you're offline</td>
+    </tr>
+    <tr>
+      <td><strong>Multi-Machine</strong></td>
+      <td>Separate sessions per device</td>
+      <td>Unified agent across all your machines</td>
+    </tr>
+    <tr>
+      <td><strong>Orchestration</strong></td>
+      <td>Single-threaded conversation</td>
+      <td>Delegates to specialist agents, parallel execution</td>
+    </tr>
+    <tr>
+      <td><strong>Goal Tracking</strong></td>
+      <td>No built-in goal system</td>
+      <td>OKR-style goals with scoring and automated task breakdown</td>
     </tr>
   </tbody>
 </table>
 
-<h2>When to Use Which</h2>
+<h2>When to Use Each</h2>
 
-<h3>Use Claude Code When...</h3>
+<h3>Use ChatGPT / Claude When...</h3>
+
 <ul>
-  <li>You're actively writing code and want autocomplete, refactoring, and inline help</li>
-  <li>You need instant feedback on syntax, patterns, or library usage</li>
-  <li>You're learning a new language or framework and want a tutor in your editor</li>
+  <li>You need a <strong>quick answer</strong> to a question</li>
+  <li>You're <strong>drafting content</strong> (emails, essays, code) in a single session</li>
+  <li>You want <strong>conversational brainstorming</strong> or reasoning</li>
+  <li>You're using AI-powered coding tools like <strong>Cursor or GitHub Copilot</strong> (which embed these models)</li>
+  <li>You don't need the AI to <strong>remember you</strong> or <strong>act autonomously</strong></li>
 </ul>
+
+<p><strong>Example:</strong> "Explain this error message," "Write a Python script to parse this CSV," "Help me draft a resignation letter."</p>
 
 <h3>Use J.A.R.V.I.S. When...</h3>
+
 <ul>
-  <li>You need an agent that works <em>for</em> you, not just <em>with</em> you</li>
-  <li>You want automation across browsers, desktops, and servers</li>
-  <li>You need long-term memory and context that survives across sessions</li>
-  <li>You're managing complex workflows (research, content creation, monitoring)</li>
-  <li>You want proactive help based on what you're actually doing</li>
+  <li>You need an AI that <strong>remembers you</strong> and your context across sessions</li>
+  <li>You want <strong>proactive assistance</strong> based on what you're working on</li>
+  <li>You need to <strong>automate multi-step workflows</strong> across devices</li>
+  <li>You want to <strong>delegate complex tasks</strong> and check back later for results</li>
+  <li>You're managing <strong>long-term goals</strong> and need an agent to track progress</li>
+  <li>You need the AI to <strong>control your environment</strong> (browser, desktop apps, files)</li>
 </ul>
 
-<h3>Use Both When...</h3>
-<ul>
-  <li><strong>You're a developer building projects:</strong> Claude Code helps you write the code. J.A.R.V.I.S. manages deployment, monitors uptime, and handles non-coding tasks.</li>
-  <li><strong>You're a content creator:</strong> Claude Code drafts scripts in your editor. J.A.R.V.I.S. schedules posts, monitors analytics, and researches trending topics.</li>
-  <li><strong>You're running a startup:</strong> Claude Code accelerates development. J.A.R.V.I.S. manages competitor monitoring, customer outreach, and operational workflows.</li>
-</ul>
-
-<h2>The Mental Model</h2>
-
-<p><strong>Claude Code is a tool in your toolbox.</strong> You pick it up when you need it, use it for a specific job, and put it down when you're done.</p>
-
-<p><strong>J.A.R.V.I.S. is your Chief of Staff.</strong> It's always on, always aware, and handles everything you delegate — whether you're at your desk or asleep.</p>
-
-<div class="highlight-box">
-<p><strong>Think of it this way:</strong></p>
-<p>Claude Code makes you a <em>faster</em> coder.<br/>J.A.R.V.I.S. makes you a <em>more capable</em> human.</p>
-</div>
+<p><strong>Example:</strong> "Monitor my competitors and Slack me weekly summaries," "Organize my desktop files by project," "Research the best CRM for startups and draft a comparison doc," "Remind me to follow up with Sarah if I haven't emailed her by Friday."</p>
 
 <h2>Why Not Both?</h2>
 
-<p>Here's the thing: <strong>they're complementary</strong>. Use Claude Code inside your editor for real-time coding assistance. Use J.A.R.V.I.S. for everything else — research, automation, monitoring, delegation, memory, and orchestration.</p>
+<p>Here's the best part: <strong>J.A.R.V.I.S. can use ChatGPT or Claude as its brain</strong>. Under the hood, J.A.R.V.I.S. is LLM-agnostic. You can plug in:</p>
 
-<p>You wouldn't use a hammer to cut wood, and you wouldn't use a saw to drive nails. Same principle here.</p>
+<ul>
+  <li>OpenAI's GPT-4 or GPT-4 Turbo</li>
+  <li>Anthropic's Claude 3.5 Sonnet or Opus</li>
+  <li>Google's Gemini</li>
+  <li>Local models via Ollama (Llama, Mistral, etc.)</li>
+</ul>
 
-<p>Want to see J.A.R.V.I.S. in action? <a href="/docs/installation">Install it</a> and experience autonomous AI for yourself. Want coding help? Keep using Claude Code — it's great at what it does.</p>
+<p>J.A.R.V.I.S. is the <strong>runtime</strong> — the persistence layer, the action layer, the orchestration layer. The LLM is the <strong>reasoning engine</strong>. You get the best of both worlds.</p>
 
-<p>The future isn't picking one AI tool. It's orchestrating many. J.A.R.V.I.S. is how you do that.</p>
+<div class="highlight-box">
+<h3>Think of it this way:</h3>
+<p><strong>ChatGPT/Claude:</strong> A brilliant consultant you talk to in a meeting room.</p>
+<p><strong>J.A.R.V.I.S.:</strong> Your Chief of Staff who remembers every conversation, manages your calendar, coordinates your team, and executes on your behalf — <em>using</em> that brilliant consultant's brain when needed.</p>
+</div>
+
+<h2>The Real Question: What Do You Need?</h2>
+
+<p>If you're happy with conversational AI and don't need memory, autonomy, or multi-device action, <strong>stick with ChatGPT or Claude</strong>. They're phenomenal at what they do.</p>
+
+<p>But if you've ever thought:</p>
+<ul>
+  <li>"I wish this AI remembered what I told it last week"</li>
+  <li>"I wish it could actually <em>do</em> this instead of just telling me how"</li>
+  <li>"I need someone to handle this while I'm busy"</li>
+  <li>"I want one AI that works across all my devices"</li>
+</ul>
+
+<p>...then you need an <strong>agent runtime</strong>, not just a conversational model. You need J.A.R.V.I.S.</p>
+
+<h2>Try It Yourself</h2>
+
+<p>The best way to understand the difference is to experience it. <a href="/docs/installation">Install J.A.R.V.I.S.</a>, set it up with your preferred LLM, and see what autonomous AI actually feels like.</p>
+
+<p>You'll still use ChatGPT or Claude for quick chats. But when you need something <em>done</em>, you'll have J.A.R.V.I.S.</p>
+
+<style>
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 32px 0;
+    font-size: 15px;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comparison-table th {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .comparison-table tbody tr:hover {
+    background: var(--bg-surface);
+  }
+
+  .comparison-table td:first-child {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .comparison-table {
+      font-size: 13px;
+    }
+    .comparison-table th,
+    .comparison-table td {
+      padding: 8px 12px;
+    }
+  }
+</style>
 
 </BlogPost>
