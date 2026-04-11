@@ -1,0 +1,151 @@
+---
+import BlogPost from '../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="AI Agent Trends in 2026: What's Actually Happening"
+  description="The gap between hype and reality in AI agents is widening. Here's what's actually working, and why J.A.R.V.I.S. took a different path."
+  date="April 11, 2026"
+  readTime="7 min"
+>
+
+<p>The AI agent space in 2026 is experiencing a fascinating divergence. On one hand, we have <strong>frontier models getting smarter</strong> — GPT-5.2, Opus 4.6, Gemma 4 all competing at the top of benchmarks. On the other, we have a growing realization that <strong>intelligence alone doesn't make a useful agent</strong>.</p>
+
+<p>After monitoring r/LocalLLaMA, Hacker News, and conversations in the AI dev community, here are the trends that actually matter for people building with agents.</p>
+
+<h2>1. The Capability Gap Is Widening</h2>
+
+<p>Andrej Karpathy recently <a href="https://twitter.com/karpathy/status/2042334451611693415" target="_blank">pointed out</a> something critical: there's a massive gap in perceived AI capability depending on which interface you use.</p>
+
+<blockquote>
+<p>"It really is simultaneously the case that OpenAI's free 'Advanced Voice Mode' will fumble the dumbest questions in your Instagram reels and at the same time, OpenAI's highest-tier Codex model will go off for 1 hour to coherently restructure an entire code base."</p>
+</blockquote>
+
+<p>This isn't just a model quality issue — it's an <strong>architecture problem</strong>. Voice mode uses GPT-4o-era models (April 2024 knowledge cutoff) while the coding agents run on much more advanced systems with:</p>
+
+<ul>
+  <li><strong>Explicit reward functions</strong> (unit tests pass/fail, not subjective quality)</li>
+  <li><strong>Reinforcement learning</strong> that actually works in verifiable domains</li>
+  <li><strong>Tool integration</strong> that makes execution possible, not just planning</li>
+</ul>
+
+<p>The lesson? <strong>The model matters less than the runtime</strong>. A mediocre LLM with good tools and context beats a frontier model in a chat window.</p>
+
+<h2>2. Context Windows Are Exploding (And It Matters)</h2>
+
+<p>Gemma 4 26B just shipped with <strong>262k token context</strong>, and early testers are reporting it stays coherent even at 94% capacity (245k tokens used). One user on r/LocalLLaMA fed it:</p>
+
+<ul>
+  <li>Dozens of Reddit posts</li>
+  <li>Random documentation files</li>
+  <li>The entire llama.cpp repo source</li>
+</ul>
+
+<p>...and it <em>still</em> debugged a real-time NVIDIA SMI script that Gemini 3.1 failed on.</p>
+
+<p>This is a <strong>game-changer for agents</strong>. Why? Because the bottleneck in most agentic systems isn't reasoning — it's <strong>context management</strong>. When your agent can hold an entire codebase, all your documentation, and the full conversation history in memory, you eliminate the complexity of chunking, summarization, and retrieval.</p>
+
+<div class="highlight-box">
+<h3>Why J.A.R.V.I.S. Uses Knowledge Graphs Instead</h3>
+<p>While massive context windows solve the short-term memory problem, J.A.R.V.I.S. takes a different approach: <strong>structured long-term memory</strong>. Instead of stuffing everything into context, we extract entities, facts, and relationships into a SQLite knowledge graph.</p>
+<p>Result: You can reference something from a conversation <em>three months ago</em> without burning tokens on retrieval. "What was that restaurant Sarah recommended?" works even if Sarah mentioned it in Week 1 and you're asking in Week 12.</p>
+</div>
+
+<h2>3. Coding Agents Are the Killer App</h2>
+
+<p>Simon Willison's blog now has <strong>190 posts tagged "coding-agents"</strong> — up from near-zero two years ago. Why? Because code is the domain where:</p>
+
+<ul>
+  <li><strong>Success is verifiable</strong> (tests pass or they don't)</li>
+  <li><strong>The feedback loop is tight</strong> (run code, see error, fix, repeat)</li>
+  <li><strong>Economic value is clear</strong> (developer time costs $100-300/hour)</li>
+</ul>
+
+<p>OpenAI's Codex can now restructure entire codebases. Anthropic's Claude can find and exploit vulnerabilities. GitHub Copilot Workspace generates entire PRs from issue descriptions.</p>
+
+<p>But here's what's <em>not</em> being talked about enough: <strong>these aren't just better autocomplete</strong>. They're <strong>autonomous agents with execution environments</strong>.</p>
+
+<p>J.A.R.V.I.S. approaches this differently: instead of specializing in code, it treats code as <em>one of many domains</em> where action is required. Need to refactor a codebase? Spawn a Software Engineer agent. Need to research API docs first? Spawn a Research Analyst. Need to test across multiple machines? Use sidecars.</p>
+
+<h2>4. The "Model Zoo" Problem</h2>
+
+<p>Meta's Muse Spark. Google's Gemma 4. Anthropic's Opus 4.6. OpenAI's GPT-5.2. Qwen, DeepSeek, Llama, Mistral...</p>
+
+<p>We now have <strong>too many models</strong>, and choosing the right one for each task is becoming a specialization. Developers are maintaining routing layers that send different queries to different models based on cost, speed, and capability.</p>
+
+<p>Some queries go to cheap local models (Gemma 4 on your laptop). Others route to expensive cloud models (GPT-5.2 for hard reasoning). Some need vision (GPT-4V). Others need tool use (Claude with computer use).</p>
+
+<p><strong>The agent runtime matters more than the model</strong>. J.A.R.V.I.S. is model-agnostic by design — you can plug in any LLM that supports tool calling. OpenAI, Anthropic, local models via Ollama, fine-tuned domain models — swap them in and out without rewriting your agent logic.</p>
+
+<h2>5. The Hype Cycle Is Compressing</h2>
+
+<p>In March 2026, there were dozens of "AI agent startup" launches. By April, half of them had pivoted or shut down. Why?</p>
+
+<p>Because <strong>agents without clear value props are just chatbots with extra steps</strong>. Users don't want "an AI agent" — they want:</p>
+
+<ul>
+  <li><strong>Automated workflows</strong> they used to do manually</li>
+  <li><strong>Persistent assistants</strong> that remember context across sessions</li>
+  <li><strong>Action-takers</strong> that actually execute, not just plan</li>
+</ul>
+
+<p>The survivors are the ones solving <strong>specific, measurable problems</strong>:</p>
+<ul>
+  <li>Customer support bots that actually close tickets</li>
+  <li>Code review agents that catch bugs before PR merge</li>
+  <li>Research agents that deliver competitive intelligence daily</li>
+  <li>Sales agents that qualify leads and book meetings</li>
+</ul>
+
+<p>What doesn't work: "general purpose AI assistants" that are just wrappers around ChatGPT with no memory, no tools, and no execution capability.</p>
+
+<h2>What J.A.R.V.I.S. Gets Right (And Wrong)</h2>
+
+<p><strong>Right:</strong></p>
+<ul>
+  <li><strong>Model-agnostic architecture</strong> — swap LLMs without rewriting agent logic</li>
+  <li><strong>Persistent memory</strong> — knowledge graph stores facts across conversations</li>
+  <li><strong>Real execution</strong> — browser control, file ops, terminal access, desktop automation</li>
+  <li><strong>Multi-machine coordination</strong> — sidecars let one agent control many devices</li>
+  <li><strong>Delegation model</strong> — spawn specialist sub-agents for complex tasks</li>
+</ul>
+
+<p><strong>Wrong (or at least, work-in-progress):</strong></p>
+<ul>
+  <li><strong>Complex setup</strong> — self-hosting isn't for everyone (though OpenCove is fixing this)</li>
+  <li><strong>Cognitive load</strong> — users need to learn what J.A.R.V.I.S. <em>can</em> do to use it well</li>
+  <li><strong>Execution limits</strong> — some tools still hit rate limits or reliability issues</li>
+</ul>
+
+<h2>The Real Trend: Agents Become Infrastructure</h2>
+
+<p>The most important shift in 2026 isn't about which model is smartest. It's that <strong>agents are becoming infrastructure</strong>.</p>
+
+<p>Just like you don't build your own database or web server anymore, you won't build your own agent runtime. You'll use platforms like J.A.R.V.I.S., AutoGPT, LangChain, or vendor-specific solutions (OpenAI Assistants, Anthropic Claude Workspaces).</p>
+
+<p>The question isn't "should I use an agent?" — it's <strong>"which agent platform fits my needs?"</strong></p>
+
+<div class="highlight-box">
+<p><strong>If you need:</strong></p>
+<ul>
+  <li><strong>A coding assistant:</strong> GitHub Copilot Workspace or Cursor</li>
+  <li><strong>Customer support automation:</strong> Intercom AI or Ada</li>
+  <li><strong>Research & data gathering:</strong> Perplexity Pro or Elicit</li>
+  <li><strong>A personal chief of staff that controls your devices:</strong> J.A.R.V.I.S.</li>
+</ul>
+</div>
+
+<h2>What to Watch in Q2 2026</h2>
+
+<ol>
+  <li><strong>Local models catching up:</strong> Gemma 4 is already competitive with GPT-5.2 on some tasks. Expect more.</li>
+  <li><strong>Tool use standardization:</strong> Will we get a standard protocol for LLM tool calling? (Currently every vendor has their own format.)</li>
+  <li><strong>Agent-to-agent communication:</strong> Right now agents are siloed. What happens when they can delegate to each other?</li>
+  <li><strong>Regulation:</strong> As agents start executing real actions (financial transactions, emails, code deploys), expect compliance discussions.</li>
+</ol>
+
+<p>The agent era isn't coming — it's here. The question is whether you're building on infrastructure that will scale, or chasing the hype cycle.</p>
+
+<p>Want an agent runtime that's built for the long term? <a href="/docs/installation">Try J.A.R.V.I.S.</a></p>
+
+</BlogPost>
