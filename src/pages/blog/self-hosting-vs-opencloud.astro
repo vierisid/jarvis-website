@@ -1,0 +1,111 @@
+---
+import BlogPost from '../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="Self-Hosting vs. OpenCloud: Choosing Your J.A.R.V.I.S. Deployment"
+  description="Understanding the tradeoffs between running J.A.R.V.I.S. on your own infrastructure versus using our managed cloud."
+  date="April 11, 2026"
+  readTime="6 min"
+>
+
+<p>J.A.R.V.I.S. is built on a core principle: <strong>you should own your data</strong>. But ownership comes with responsibility. Should you self-host your agent runtime, or use our managed OpenCloud offering?</p>
+
+<p>Here's how to decide.</p>
+
+<h2>Self-Hosting: Maximum Control, Maximum Responsibility</h2>
+
+<h3>What You Get</h3>
+
+<ul>
+  <li><strong>Full data ownership:</strong> Your knowledge graph, conversation logs, screen captures, and activity data stay on <em>your</em> hardware. No third-party ever sees them.</li>
+  <li><strong>Complete transparency:</strong> The entire codebase is open source. You can audit every line, modify behavior, and contribute improvements.</li>
+  <li><strong>No cloud dependency:</strong> J.A.R.V.I.S. runs locally. No internet? No problem (as long as your LLM provider is reachable, or you're running a local model).</li>
+  <li><strong>Unlimited customization:</strong> Want to integrate with proprietary tools? Add custom workflows? Modify the agent's personality? You have full access to the source.</li>
+  <li><strong>Zero recurring fees:</strong> You pay for compute (your hardware or your cloud VMs), but there's no subscription to J.A.R.V.I.S. itself.</li>
+</ul>
+
+<h3>What You Manage</h3>
+
+<ul>
+  <li><strong>Installation & updates:</strong> You're responsible for keeping J.A.R.V.I.S. and its dependencies up to date.</li>
+  <li><strong>Infrastructure:</strong> Provisioning servers, managing uptime, securing access — all on you.</li>
+  <li><strong>Backups:</strong> Your knowledge graph is valuable. You need to back it up (we provide tools, but you run them).</li>
+  <li><strong>Debugging:</strong> When something breaks, you're the first line of support (though our community is active on Discord).</li>
+  <li><strong>LLM costs:</strong> You bring your own LLM API keys (OpenAI, Anthropic, etc.) or run local models. Those costs are yours to manage.</li>
+</ul>
+
+<h3>Who Should Self-Host?</h3>
+
+<ul>
+  <li><strong>Privacy-first users:</strong> If you're handling sensitive data (legal docs, health records, proprietary research), self-hosting is non-negotiable.</li>
+  <li><strong>Developers & tinkerers:</strong> You want to modify behavior, integrate with internal tools, or contribute to the project.</li>
+  <li><strong>Enterprise teams:</strong> You need on-prem deployment, custom compliance workflows, or integration with existing infrastructure.</li>
+  <li><strong>AI enthusiasts:</strong> You're comfortable with command-line tools, Docker, and troubleshooting.</li>
+</ul>
+
+<div class="highlight-box">
+<h3>Quick Start: Self-Hosted</h3>
+<pre><code>bun install -g @usejarvis/brain
+jarvis init
+jarvis start</code></pre>
+<p>Full guide: <a href="/docs/installation">Installation Docs</a></p>
+</div>
+
+<h2>OpenCloud: Managed, Hassle-Free, Always On</h2>
+
+<h3>What You Get</h3>
+
+<ul>
+  <li><strong>Zero setup:</strong> Sign up, connect your devices, and you're running. No servers to provision, no dependencies to install.</li>
+  <li><strong>Automatic updates:</strong> New features, bug fixes, and performance improvements roll out seamlessly.</li>
+  <li><strong>Guaranteed uptime:</strong> Your agent runs 24/7 on our infrastructure, with monitoring, failover, and backups built in.</li>
+  <li><strong>Managed LLM access:</strong> We handle provider relationships, rate limits, and failover. You get a single bill, predictable pricing.</li>
+  <li><strong>Support:</strong> Dedicated support team for troubleshooting, onboarding, and optimization.</li>
+</ul>
+
+<h3>What You Trade</h3>
+
+<ul>
+  <li><strong>Data lives in the cloud:</strong> Your knowledge graph and activity logs are stored on our servers (encrypted at rest, isolated per user, but still <em>ours</em> to secure).</li>
+  <li><strong>Less customization:</strong> You can't modify core behavior or integrate with arbitrary tools (though we expose APIs and webhooks for extensibility).</li>
+  <li><strong>Subscription cost:</strong> You pay a monthly fee for hosting, compute, and LLM access. (Self-hosting LLM costs can exceed this, depending on usage.)</li>
+  <li><strong>Trust dependency:</strong> You trust us to handle your data responsibly, keep the service online, and not misuse access.</li>
+</ul>
+
+<h3>Who Should Use OpenCloud?</h3>
+
+<ul>
+  <li><strong>Non-technical users:</strong> You want the benefits of an autonomous agent without the ops overhead.</li>
+  <li><strong>Small teams:</strong> You need a shared agent runtime but don't have infrastructure resources.</li>
+  <li><strong>Mobile-first users:</strong> Your primary devices are tablets/phones, where self-hosting is impractical.</li>
+  <li><strong>Anyone who values convenience:</strong> You'd rather pay for peace of mind than manage servers.</li>
+</ul>
+
+<h2>The Hybrid Option: Self-Host Brain, OpenCloud Sidecars</h2>
+
+<p>You can run the J.A.R.V.I.S. <strong>brain</strong> (the core agent runtime) on your own hardware while using OpenCloud for <strong>sidecar management</strong>. This gives you data ownership while offloading device coordination and uptime concerns.</p>
+
+<p>Perfect for users who want control but don't want to manage a 24/7 server.</p>
+
+<h2>Our Recommendation</h2>
+
+<p><strong>Start with OpenCloud</strong> if you're new to J.A.R.V.I.S. or prioritize convenience. Get familiar with how the system works, what workflows matter to you, and whether it fits your needs.</p>
+
+<p><strong>Move to self-hosting</strong> when:</p>
+<ul>
+  <li>Privacy becomes a hard requirement</li>
+  <li>You want to customize or extend behavior</li>
+  <li>Your usage scales to where self-hosting is cheaper</li>
+  <li>You're comfortable managing infrastructure</li>
+</ul>
+
+<p>The beauty of J.A.R.V.I.S. is that <strong>you're not locked in</strong>. Your knowledge graph is portable. Export from OpenCloud, import to your self-hosted instance, and you're running — no data loss, no downtime.</p>
+
+<div class="highlight-box">
+<p><strong>Bottom line:</strong> OpenCloud for convenience, self-hosting for control. Either way, you own your data story.</p>
+</div>
+
+<p>Ready to get started? <a href="/docs/installation">Install J.A.R.V.I.S.</a> or <a href="https://cloud.usejarvis.ai">try OpenCloud</a>.</p>
+
+</BlogPost>

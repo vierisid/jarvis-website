@@ -1,0 +1,220 @@
+---
+import Landing from '../../layouts/Landing.astro';
+
+const posts = [
+  {
+    slug: 'what-jarvis-can-do',
+    title: 'What J.A.R.V.I.S. Can Do: Beyond the Chat Interface',
+    description: 'An autonomous AI agent that sees your screen, controls your apps, and pursues goals on your behalf.',
+    date: 'April 11, 2026',
+    readTime: '5 min'
+  },
+  {
+    slug: 'self-hosting-vs-opencloud',
+    title: 'Self-Hosting vs. OpenCloud: Choosing Your J.A.R.V.I.S. Deployment',
+    description: 'Understanding the tradeoffs between running J.A.R.V.I.S. on your own infrastructure versus using our managed cloud.',
+    date: 'April 11, 2026',
+    readTime: '6 min'
+  },
+  {
+    slug: 'jarvis-vs-claude-code',
+    title: 'J.A.R.V.I.S. vs. Claude Code: Different Tools for Different Jobs',
+    description: 'Why an autonomous agent runtime and an AI coding assistant solve fundamentally different problems.',
+    date: 'April 11, 2026',
+    readTime: '7 min'
+  }
+];
+---
+
+<Landing title="Blog — J.A.R.V.I.S." description="Insights, updates, and deep dives into the J.A.R.V.I.S. autonomous agent platform.">
+  
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="/" class="nav-logo">J.A.R.V.I.S.</a>
+        <span class="nav-version">v0.4.2</span>
+      </div>
+      <div class="nav-right">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/blog" class="nav-link">Blog</a>
+        <a href="/roadmap" class="nav-link">Roadmap</a>
+        <a href="/docs/introduction" class="nav-link">Docs</a>
+        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="blog-index">
+    <div class="blog-index-header">
+      <h1>Blog</h1>
+      <p>Insights, updates, and deep dives into autonomous AI agents.</p>
+    </div>
+
+    <div class="posts-grid">
+      {posts.map(post => (
+        <a href={`/blog/${post.slug}`} class="post-card">
+          <div class="post-meta">
+            <span>{post.date}</span>
+            <span>•</span>
+            <span>{post.readTime} read</span>
+          </div>
+          <h2>{post.title}</h2>
+          <p>{post.description}</p>
+          <div class="post-arrow">→</div>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <style>
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+    .nav-version {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      background: var(--bg-surface);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .nav-right {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    .nav-link {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover {
+      color: var(--text-primary);
+    }
+
+    .blog-index {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 80px 24px 120px;
+    }
+
+    .blog-index-header {
+      margin-bottom: 64px;
+    }
+
+    .blog-index-header h1 {
+      font-size: 64px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 0 0 16px 0;
+      line-height: 1.1;
+    }
+
+    .blog-index-header p {
+      font-size: 20px;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .posts-grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .post-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      text-decoration: none;
+      display: block;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .post-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .post-card:hover .post-arrow {
+      transform: translateX(4px);
+    }
+
+    .post-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-family: var(--mono);
+      margin-bottom: 16px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .post-card h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 12px 0;
+      line-height: 1.3;
+    }
+
+    .post-card p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .post-arrow {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      font-size: 24px;
+      color: var(--accent);
+      transition: transform 0.2s;
+    }
+
+    @media (max-width: 768px) {
+      .blog-index-header h1 {
+        font-size: 48px;
+      }
+      .post-card {
+        padding: 24px;
+      }
+      .post-arrow {
+        top: 24px;
+        right: 24px;
+      }
+    }
+  </style>
+
+</Landing>

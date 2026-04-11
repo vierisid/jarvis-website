@@ -1,0 +1,86 @@
+---
+import BlogPost from '../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="What J.A.R.V.I.S. Can Do: Beyond the Chat Interface"
+  description="An autonomous AI agent that sees your screen, controls your apps, and pursues goals on your behalf."
+  date="April 11, 2026"
+  readTime="5 min"
+>
+
+<p>Most AI assistants are reactive. You ask, they answer. You request, they respond. J.A.R.V.I.S. is different. It's an <strong>autonomous agent runtime</strong> — an operating layer that turns any LLM into a persistent, context-aware agent that actually <em>does things</em> on your behalf.</p>
+
+<p>Here's what that means in practice.</p>
+
+<h2>Four Core Capabilities</h2>
+
+<h3>1. Memory That Persists</h3>
+
+<p>J.A.R.V.I.S. maintains a <strong>knowledge graph</strong> stored in SQLite. Every conversation, every fact you share, every relationship between entities gets extracted and stored. When you mention someone's name, a project, or a preference, J.A.R.V.I.S. remembers it — not just for the current chat, but <em>forever</em>.</p>
+
+<p>This isn't RAG over chat logs. It's a structured, queryable database of everything you've told it. Ask "What was that restaurant Sarah recommended?" three weeks later, and J.A.R.V.I.S. will know.</p>
+
+<div class="highlight-box">
+<h3>Example: Context You Don't Have to Repeat</h3>
+<p><strong>Week 1:</strong> "My cofounder Lapo is based in Milan."</p>
+<p><strong>Week 3:</strong> "Send Lapo a message about the pitch deck."</p>
+<p>J.A.R.V.I.S. already knows who Lapo is, what your relationship is, and can act accordingly — no re-explaining required.</p>
+</div>
+
+<h3>2. Awareness of Your Screen</h3>
+
+<p>J.A.R.V.I.S. can <strong>see what you're doing</strong>. It captures your screen (with your permission, on your schedule), runs OCR + vision models, and builds a real-time understanding of your activity. It knows what apps you're using, what you're stuck on, and when you might need help.</p>
+
+<p>This powers proactive assistance. If J.A.R.V.I.S. notices you've had the same error message open for 10 minutes, it can offer to research it. If you're deep into a coding session, it won't interrupt with non-urgent reminders.</p>
+
+<h3>3. Action Across Your Machines</h3>
+
+<p>J.A.R.V.I.S. doesn't just <em>read</em> — it <strong>acts</strong>. Through sidecars (lightweight agents running on your devices), it can:</p>
+
+<ul>
+  <li><strong>Control your browser:</strong> Navigate pages, fill forms, extract data, automate workflows</li>
+  <li><strong>Manage files:</strong> Read, write, organize files across all your machines</li>
+  <li><strong>Run commands:</strong> Execute shell scripts, install packages, manage processes</li>
+  <li><strong>Control desktop apps:</strong> Interact with native applications (Windows, macOS, Linux)</li>
+  <li><strong>Voice interface:</strong> Wake-word activation, text-to-speech responses</li>
+</ul>
+
+<p>All of this works <strong>across multiple machines</strong>. Your laptop, your desktop, your home server — J.A.R.V.I.S. treats them as one unified environment.</p>
+
+<h3>4. Orchestration & Delegation</h3>
+
+<p>J.A.R.V.I.S. can spawn <strong>specialist sub-agents</strong> for complex tasks:</p>
+
+<ul>
+  <li>A <strong>Research Analyst</strong> to deep-dive into competitive intelligence</li>
+  <li>A <strong>Software Engineer</strong> to write, test, and debug code</li>
+  <li>A <strong>Content Writer</strong> to draft blog posts or marketing copy</li>
+  <li>A <strong>Data Analyst</strong> to crunch numbers and build visualizations</li>
+</ul>
+
+<p>These agents run <strong>in parallel</strong>, report back with results, and can collaborate on multi-step workflows. Think of it as delegating to a team, not just prompting a single model.</p>
+
+<h2>Real-World Use Cases</h2>
+
+<p><strong>Automated Research:</strong> "Monitor my competitors and alert me to product launches." J.A.R.V.I.S. sets up a workflow, scrapes websites daily, and Slacks you a summary.</p>
+
+<p><strong>Multi-Machine Workflows:</strong> "Pull the latest code on my desktop, run tests, and if they pass, deploy to my server." One command, three machines, fully automated.</p>
+
+<p><strong>Proactive Assistance:</strong> J.A.R.V.I.S. notices you've been debugging the same error for 20 minutes. It researches the error, finds a StackOverflow thread, and suggests a fix — without you asking.</p>
+
+<p><strong>Goal-Driven Execution:</strong> Set an OKR like "Increase blog traffic by 30%." J.A.R.V.I.S. breaks it into tasks, tracks progress, and autonomously executes on actionable items (e.g., scheduling social posts, analyzing metrics).</p>
+
+<h2>The Difference</h2>
+
+<p>ChatGPT, Claude, Gemini — they're brilliant at conversation. But they're <strong>stateless, reactive, and locked in a chat window</strong>. They don't remember you, they don't see your environment, and they can't take action beyond generating text.</p>
+
+<p>J.A.R.V.I.S. is the <strong>operating layer</strong> that makes LLMs <em>useful</em>. It's the difference between asking for advice and having someone who actually gets things done.</p>
+
+<div class="highlight-box">
+<p><strong>Think of it this way:</strong> ChatGPT is a consultant. J.A.R.V.I.S. is your Chief of Staff.</p>
+</div>
+
+<p>Want to see it in action? <a href="/docs/installation">Install J.A.R.V.I.S.</a> and experience autonomous AI for yourself.</p>
+
+</BlogPost>

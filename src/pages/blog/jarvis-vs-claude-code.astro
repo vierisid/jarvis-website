@@ -1,0 +1,179 @@
+---
+import BlogPost from '../../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="J.A.R.V.I.S. vs. Claude Code: Different Tools for Different Jobs"
+  description="Why an autonomous agent runtime and an AI coding assistant solve fundamentally different problems."
+  date="April 11, 2026"
+  readTime="7 min"
+>
+
+<p>You're browsing AI tools and come across two names: <strong>J.A.R.V.I.S.</strong> and <strong>Claude Code</strong> (or GitHub Copilot, Cursor, etc.). Both involve AI. Both help you get things done. So... which one do you need?</p>
+
+<p>Short answer: <strong>Both. They solve different problems.</strong></p>
+
+<p>Let's break it down.</p>
+
+<h2>Claude Code: Your AI Pair Programmer</h2>
+
+<p>Claude Code (and tools like it) are <strong>AI coding assistants</strong>. They sit inside your editor (VS Code, Cursor, etc.) and help you <em>write code faster</em>.</p>
+
+<h3>What Claude Code Does Well</h3>
+
+<ul>
+  <li><strong>Code completion:</strong> Start typing a function, and it suggests the rest. It's autocomplete on steroids.</li>
+  <li><strong>Refactoring:</strong> "Convert this class to use hooks." Claude Code rewrites it for you.</li>
+  <li><strong>Bug fixing:</strong> Highlight broken code, ask "what's wrong here?" and get explanations + fixes.</li>
+  <li><strong>Documentation:</strong> "Write JSDoc comments for this function." Done instantly.</li>
+  <li><strong>Learning:</strong> Ask questions about APIs, libraries, or patterns while you code. It's Stack Overflow, inline.</li>
+</ul>
+
+<h3>What Claude Code Doesn't Do</h3>
+
+<ul>
+  <li><strong>Doesn't work outside your editor:</strong> It's scoped to the file you're editing. Can't browse the web, manage files, or interact with other apps.</li>
+  <li><strong>Doesn't remember context across sessions:</strong> Close the editor, and it forgets your conversation. No long-term memory.</li>
+  <li><strong>Doesn't act autonomously:</strong> You drive the workflow. It responds to prompts but doesn't take initiative.</li>
+  <li><strong>Doesn't integrate with your life:</strong> Can't schedule tasks, monitor APIs, manage your calendar, or coordinate across machines.</li>
+</ul>
+
+<p><strong>Claude Code is a tool <em>you</em> use to code faster. It's reactive, scoped, and editor-bound.</strong></p>
+
+<h2>J.A.R.V.I.S.: Your Autonomous Agent Runtime</h2>
+
+<p>J.A.R.V.I.S. is an <strong>operating layer for AI agents</strong>. It's not tied to your editor — it runs <em>continuously</em>, across all your devices, and handles tasks far beyond code.</p>
+
+<h3>What J.A.R.V.I.S. Does Well</h3>
+
+<ul>
+  <li><strong>Persistent memory:</strong> Remembers everything you've told it — people, projects, preferences — across all conversations, forever.</li>
+  <li><strong>Screen awareness:</strong> Sees what you're doing (with permission), detects struggles, and offers proactive help.</li>
+  <li><strong>Multi-machine control:</strong> Acts across your laptop, desktop, and servers as one unified environment.</li>
+  <li><strong>Browser automation:</strong> Navigates websites, fills forms, scrapes data, monitors pages.</li>
+  <li><strong>Desktop control:</strong> Interacts with native apps (Spotify, Excel, Slack) on Windows, macOS, or Linux.</li>
+  <li><strong>Delegation:</strong> Spawns specialist agents (researchers, writers, analysts) to handle complex tasks in parallel.</li>
+  <li><strong>Goal-driven execution:</strong> Set an OKR, and J.A.R.V.I.S. breaks it into tasks, tracks progress, and autonomously executes.</li>
+  <li><strong>Always-on operation:</strong> Runs 24/7, handling scheduled tasks, monitoring alerts, and responding to events.</li>
+</ul>
+
+<h3>What J.A.R.V.I.S. Doesn't Do (Out of the Box)</h3>
+
+<ul>
+  <li><strong>Inline code completion:</strong> It can <em>write</em> code (by spawning a Software Engineer agent), but it's not optimized for real-time, keystroke-level autocomplete.</li>
+  <li><strong>Editor integration:</strong> It doesn't live inside VS Code. (You could build a plugin, but that's on you.)</li>
+</ul>
+
+<p><strong>J.A.R.V.I.S. is an agent <em>that runs your life</em>. It's proactive, persistent, and environment-aware.</strong></p>
+
+<h2>Head-to-Head Comparison</h2>
+
+<table style="width: 100%; border-collapse: collapse; margin: 32px 0;">
+  <thead>
+    <tr style="border-bottom: 2px solid var(--border);">
+      <th style="text-align: left; padding: 12px; color: var(--text-primary);">Capability</th>
+      <th style="text-align: center; padding: 12px; color: var(--text-primary);">Claude Code</th>
+      <th style="text-align: center; padding: 12px; color: var(--text-primary);">J.A.R.V.I.S.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="border-bottom: 1px solid var(--border-subtle);">
+      <td style="padding: 12px;">Code completion</td>
+      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ Best-in-class</td>
+      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗ Not optimized</td>
+    </tr>
+    <tr style="border-bottom: 1px solid var(--border-subtle);">
+      <td style="padding: 12px;">Editor integration</td>
+      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ Native</td>
+      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗ Separate tool</td>
+    </tr>
+    <tr style="border-bottom: 1px solid var(--border-subtle);">
+      <td style="padding: 12px;">Long-term memory</td>
+      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗ Session-only</td>
+      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ Knowledge graph</td>
+    </tr>
+    <tr style="border-bottom: 1px solid var(--border-subtle);">
+      <td style="padding: 12px;">Screen awareness</td>
+      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗ Editor-only</td>
+      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ Full desktop</td>
+    </tr>
+    <tr style="border-bottom: 1px solid var(--border-subtle);">
+      <td style="padding: 12px;">Browser control</td>
+      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗</td>
+      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ Full automation</td>
+    </tr>
+    <tr style="border-bottom: 1px solid var(--border-subtle);">
+      <td style="padding: 12px;">Multi-machine</td>
+      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗ Single device</td>
+      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ Sidecars</td>
+    </tr>
+    <tr style="border-bottom: 1px solid var(--border-subtle);">
+      <td style="padding: 12px;">Agent delegation</td>
+      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗</td>
+      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ 11 specialists</td>
+    </tr>
+    <tr style="border-bottom: 1px solid var(--border-subtle);">
+      <td style="padding: 12px;">Goal tracking</td>
+      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗</td>
+      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ OKR system</td>
+    </tr>
+    <tr style="border-bottom: 1px solid var(--border-subtle);">
+      <td style="padding: 12px;">Always-on operation</td>
+      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗ Editor must be open</td>
+      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ 24/7 daemon</td>
+    </tr>
+    <tr>
+      <td style="padding: 12px;">Voice interface</td>
+      <td style="text-align: center; padding: 12px; color: var(--text-muted);">✗</td>
+      <td style="text-align: center; padding: 12px; color: var(--accent);">✓ Wake-word + TTS</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>When to Use Which</h2>
+
+<h3>Use Claude Code When...</h3>
+<ul>
+  <li>You're actively writing code and want autocomplete, refactoring, and inline help</li>
+  <li>You need instant feedback on syntax, patterns, or library usage</li>
+  <li>You're learning a new language or framework and want a tutor in your editor</li>
+</ul>
+
+<h3>Use J.A.R.V.I.S. When...</h3>
+<ul>
+  <li>You need an agent that works <em>for</em> you, not just <em>with</em> you</li>
+  <li>You want automation across browsers, desktops, and servers</li>
+  <li>You need long-term memory and context that survives across sessions</li>
+  <li>You're managing complex workflows (research, content creation, monitoring)</li>
+  <li>You want proactive help based on what you're actually doing</li>
+</ul>
+
+<h3>Use Both When...</h3>
+<ul>
+  <li><strong>You're a developer building projects:</strong> Claude Code helps you write the code. J.A.R.V.I.S. manages deployment, monitors uptime, and handles non-coding tasks.</li>
+  <li><strong>You're a content creator:</strong> Claude Code drafts scripts in your editor. J.A.R.V.I.S. schedules posts, monitors analytics, and researches trending topics.</li>
+  <li><strong>You're running a startup:</strong> Claude Code accelerates development. J.A.R.V.I.S. manages competitor monitoring, customer outreach, and operational workflows.</li>
+</ul>
+
+<h2>The Mental Model</h2>
+
+<p><strong>Claude Code is a tool in your toolbox.</strong> You pick it up when you need it, use it for a specific job, and put it down when you're done.</p>
+
+<p><strong>J.A.R.V.I.S. is your Chief of Staff.</strong> It's always on, always aware, and handles everything you delegate — whether you're at your desk or asleep.</p>
+
+<div class="highlight-box">
+<p><strong>Think of it this way:</strong></p>
+<p>Claude Code makes you a <em>faster</em> coder.<br/>J.A.R.V.I.S. makes you a <em>more capable</em> human.</p>
+</div>
+
+<h2>Why Not Both?</h2>
+
+<p>Here's the thing: <strong>they're complementary</strong>. Use Claude Code inside your editor for real-time coding assistance. Use J.A.R.V.I.S. for everything else — research, automation, monitoring, delegation, memory, and orchestration.</p>
+
+<p>You wouldn't use a hammer to cut wood, and you wouldn't use a saw to drive nails. Same principle here.</p>
+
+<p>Want to see J.A.R.V.I.S. in action? <a href="/docs/installation">Install it</a> and experience autonomous AI for yourself. Want coding help? Keep using Claude Code — it's great at what it does.</p>
+
+<p>The future isn't picking one AI tool. It's orchestrating many. J.A.R.V.I.S. is how you do that.</p>
+
+</BlogPost>
