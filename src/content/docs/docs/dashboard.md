@@ -58,10 +58,13 @@ The current dashboard navigation is organized into three groups plus settings.
 Settings currently includes these sections:
 
 - General
+- Profile
 - LLM
 - Channels
 - Integrations
 - Sidecar
+
+Use [Settings Reference](/docs/settings-reference) for the full walkthrough of each section, including when settings require a restart or interact with deployment topology.
 
 ## Page-by-Page Overview
 
@@ -147,6 +150,8 @@ If you serve the dashboard behind Nginx, Caddy, Cloudflare, or another reverse p
 - Forward `/ws` with WebSocket upgrade headers intact
 - Use a stable external hostname for the dashboard
 - If auth is enabled, make sure cookies and headers are preserved properly
+
+If remote sidecars will enroll through that public hostname, keep it aligned with `daemon.brain_domain` or `JARVIS_BRAIN_DOMAIN`. See [Sidecar Enrollment](/docs/sidecar-enrollment) and [Deployment Guide](/docs/deployment-guide).
 
 ## Video Tutorial Placeholder
 

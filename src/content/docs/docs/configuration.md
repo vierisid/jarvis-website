@@ -11,6 +11,8 @@ JARVIS stores its runtime configuration in a single YAML file:
 
 You can create it through `jarvis onboard` or edit it directly by hand.
 
+For the dashboard's live settings UI, see [Settings Reference](/docs/settings-reference). For every supported key and env override, see [Config Reference](/docs/config-reference).
+
 ## How to Think About the Config
 
 The config falls into a few major areas:
@@ -78,6 +80,8 @@ Important keys:
 - `data_dir`
 - `db_path`
 - `brain_domain`
+
+`brain_domain` is especially important when sidecars connect from other machines. It tells JARVIS which external origin should be stamped into enrollment JWTs. If you host the daemon on a VPS, behind Docker, or through a reverse proxy, read [Sidecar Enrollment](/docs/sidecar-enrollment) before enrolling machines.
 
 ### `auth`
 
@@ -163,6 +167,23 @@ Edit YAML directly when:
 - You are adjusting thresholds or fine-grained behavior
 - You are managing a hosted instance and want reproducible config
 
+## Config vs Dashboard vs Environment Variables
+
+Use each layer for what it does best:
+
+- **Dashboard:** fast operational changes, sidecar enrollment, provider and channel management
+- **YAML:** stable, reviewable runtime configuration
+- **Environment variables:** deployment-specific overrides for servers, containers, and secrets
+
+If a supported environment variable is set, it overrides the YAML value at runtime. Common examples include:
+
+- `JARVIS_PORT`
+- `JARVIS_AUTH_TOKEN`
+- `JARVIS_BRAIN_DOMAIN`
+- provider API key variables
+
+See [Config Reference](/docs/config-reference) for the full list.
+
 ## Recommended First Config Tweaks
 
 After the first successful start, most users should review:
@@ -184,7 +205,17 @@ This matters especially for addresses like:
 - `ollama.base_url`
 - `stt.local.endpoint`
 
+The same rule applies to the sidecar enrollment origin. If a remote sidecar is going to connect, the URL in its JWT must be reachable from that remote machine, not just from inside the container.
+
 If those are set to `http://localhost:...`, that means localhost from the daemon's point of view, not from your laptop or browser. See [Troubleshooting](/docs/troubleshooting) for the common remote-host networking failure mode.
+
+## Recommended Docs by Task
+
+- First-time install: [Installation](/docs/installation) and [Quick Start](/docs/quickstart)
+- Dashboard settings: [Settings Reference](/docs/settings-reference)
+- Sidecar rollout: [Sidecar Enrollment](/docs/sidecar-enrollment)
+- Hosted deployment: [Deployment Guide](/docs/deployment-guide)
+- Deeper behavior tuning: [Customization Guide](/docs/customization-guide)
 
 ## Video Tutorial Placeholder
 

@@ -1,6 +1,6 @@
 ---
 title: LLM Providers
-description: Choose a primary model, configure fallbacks, and understand the tradeoffs between Anthropic, OpenAI, Groq, Gemini, Ollama, and OpenRouter.
+description: Choose a primary model, configure fallbacks, and understand the tradeoffs between the provider blocks JARVIS can expose in settings and config.
 ---
 
 JARVIS supports multiple LLM providers and can fall back between them automatically.
@@ -9,14 +9,21 @@ The provider system is configured under `llm` in `~/.jarvis/config.yaml`.
 
 ## Supported Providers
 
-The merged product currently exposes these provider blocks:
+Current JARVIS builds can expose provider blocks for:
 
 - Anthropic
 - OpenAI
+- xAI
+- DeepSeek
+- Cerebras
+- LiteLLM
 - Groq
 - Gemini
 - Ollama
 - OpenRouter
+- NVIDIA NIM
+
+The exact set you use depends on your runtime and configuration surface. See [Settings Reference](/docs/settings-reference) for the current dashboard view and [Config Reference](/docs/config-reference) for supported env overrides.
 
 ## Recommended Starting Point
 
@@ -107,6 +114,8 @@ JARVIS tries:
 
 That means provider order matters. Keep the list short and intentional.
 
+If your daemon runs remotely, remember that any provider URL is resolved from the daemon host, not your browser. This is especially important for Ollama, LiteLLM, and local speech services.
+
 ## Good Provider Setups
 
 ### Cloud-first
@@ -132,6 +141,15 @@ llm:
   primary: "ollama"
   fallback: []
 ```
+
+## Deployment Reminder
+
+Hosted setups usually need two checks:
+
+1. the provider endpoint is reachable from the daemon machine
+2. the saved value is not being overridden by an environment variable
+
+If you are debugging a hosted install, read [Deployment Guide](/docs/deployment-guide) and [Troubleshooting](/docs/troubleshooting).
 
 ## Video Tutorial Placeholder
 

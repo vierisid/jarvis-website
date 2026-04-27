@@ -72,6 +72,8 @@ The dashboard is the main control plane for:
 - Goals
 - Settings
 
+For a section-by-section settings tour, see [Settings Reference](/docs/settings-reference).
+
 ## Step 4: Send a First Real Task
 
 Good first prompts are tasks that exercise the system, not toy questions. For example:
@@ -92,7 +94,7 @@ If the daemon is not running on the same machine you want to control, install a 
 - Clipboard
 - Screenshots
 
-See [Desktop Control](/docs/desktop-control) for the full setup.
+See [Sidecar Enrollment](/docs/sidecar-enrollment) for the full enrollment flow and [Desktop Control](/docs/desktop-control) for capability details.
 
 ## Common First Tasks After Setup
 
@@ -101,6 +103,7 @@ Most people should do these next:
 1. Set `auth.token` before exposing the dashboard publicly
 2. Connect at least one sidecar if you want real desktop/browser control on another machine
 3. Review [Authority & Safety](/docs/authority) before raising autonomy
+4. Read [Deployment Guide](/docs/deployment-guide) if the daemon will live on a VPS, home server, or Docker host
 
 ## Quick Verification Checklist
 
@@ -110,5 +113,6 @@ You are in a good state if all of these are true:
 - The dashboard connects successfully
 - Chat messages stream normally
 - Your selected LLM provider responds
+- Any remote sidecar you enrolled shows online
 
 If any of that fails, go to [Troubleshooting](/docs/troubleshooting).

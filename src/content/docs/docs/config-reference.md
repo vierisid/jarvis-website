@@ -3,7 +3,7 @@ title: Config Reference
 description: Key-by-key reference for the main JARVIS configuration surface.
 ---
 
-This page is the practical reference for the config keys users change most often. For a conceptual walkthrough, start with [Configuration](/docs/configuration).
+This page is the practical reference for the config keys users change most often. For a conceptual walkthrough, start with [Configuration](/docs/configuration). For the dashboard UI surface, use [Settings Reference](/docs/settings-reference).
 
 ## `user`
 
@@ -47,6 +47,35 @@ This page is the practical reference for the config keys users change most often
 | `api_key` | string | `""` |
 | `model` | string | `gpt-5.4` |
 
+### `llm.xai`
+
+| Key | Type | Default |
+|---|---|---|
+| `api_key` | string | `""` |
+| `model` | string | `grok-4-0709` |
+
+### `llm.deepseek`
+
+| Key | Type | Default |
+|---|---|---|
+| `api_key` | string | `""` |
+| `model` | string | `deepseek-chat` |
+
+### `llm.cerebras`
+
+| Key | Type | Default |
+|---|---|---|
+| `api_key` | string | `""` |
+| `model` | string | `gpt-oss-120b` |
+
+### `llm.litellm`
+
+| Key | Type | Default |
+|---|---|---|
+| `api_key` | string | unset |
+| `base_url` | string | `http://localhost:4000/v1` |
+| `model` | string | `openai/gpt-4o-mini` |
+
 ### `llm.groq`
 
 | Key | Type | Default |
@@ -74,6 +103,13 @@ This page is the practical reference for the config keys users change most often
 |---|---|---|
 | `api_key` | string | `""` |
 | `model` | string | `anthropic/claude-sonnet-4` |
+
+### `llm.nvidia`
+
+| Key | Type | Default |
+|---|---|---|
+| `api_key` | string | `""` |
+| `model` | string | `mistral-nemo-minitron-8b-base` |
 
 ## `channels`
 
@@ -248,3 +284,156 @@ This page is the practical reference for the config keys users change most often
 | Key | Type | Default |
 |---|---|---|
 | `active_role` | string | `personal-assistant` or project default |
+
+## Runtime Precedence
+
+JARVIS runtime values come from three layers:
+
+1. built-in defaults
+2. `~/.jarvis/config.yaml`
+3. supported environment variable overrides
+
+If a supported environment variable is set, it wins over the saved YAML value.
+
+## Sidecar Brain URL Notes
+
+`daemon.brain_domain` is one of the most important deployment keys because it controls the external origin stamped into sidecar enrollment JWTs.
+
+Use it when:
+
+- the daemon runs on a VPS
+- the dashboard is behind a reverse proxy
+- sidecars connect from other machines
+- Docker or tunnels change what `localhost` means
+
+Preferred operator-wide controls:
+
+- `daemon.brain_domain`
+- `JARVIS_BRAIN_DOMAIN`
+
+The dashboard can also set a per-enrollment `brain_url` override for one sidecar. See [Sidecar Enrollment](/docs/sidecar-enrollment).
+
+## Environment Variable Overrides
+
+These environment variables are currently loaded as runtime overrides:
+
+| Variable | Overrides | Notes |
+|---|---|---|
+| `JARVIS_PORT` | `daemon.port` | Change the daemon port without editing YAML |
+| `JARVIS_HOME` | `daemon.data_dir`, `daemon.db_path` | Moves the main data directory and database together |
+| `JARVIS_AUTH_TOKEN` | `auth.token` | Recommended for hosted deployments |
+| `JARVIS_BRAIN_DOMAIN` | `daemon.brain_domain` | Preferred env control for sidecar enrollment origin |
+| `JARVIS_API_KEY` | `llm.anthropic.api_key` | Anthropic API key |
+| `JARVIS_OPENAI_KEY` | `llm.openai.api_key` | OpenAI API key |
+| `JARVIS_XAI_KEY` | `llm.xai.api_key` | xAI API key |
+| `JARVIS_DEEPSEEK_KEY` | `llm.deepseek.api_key` | DeepSeek API key |
+| `JARVIS_CEREBRAS_KEY` | `llm.cerebras.api_key` | Cerebras API key |
+| `JARVIS_LITELLM_KEY` | `llm.litellm.api_key` | LiteLLM API key |
+| `JARVIS_LITELLM_URL` | `llm.litellm.base_url` | LiteLLM base URL |
+| `JARVIS_GROQ_KEY` | `llm.groq.api_key` | Groq API key |
+| `JARVIS_GEMINI_KEY` | `llm.gemini.api_key` | Gemini API key |
+| `JARVIS_OLLAMA_URL` | `llm.ollama.base_url` | Ollama endpoint reachable from the daemon |
+| `JARVIS_OPENROUTER_KEY` | `llm.openrouter.api_key` | OpenRouter API key |
+| `JARVIS_NVIDIA_KEY` | `llm.nvidia.api_key` | NVIDIA NIM API key |
+
+### Example: Hosted Daemon with Env Overrides
+
+```bash
+JARVIS_PORT=3142 \
+JARVIS_AUTH_TOKEN=change-me \
+JARVIS_BRAIN_DOMAIN=https://jarvis.example.com \
+JARVIS_API_KEY=sk-ant-... \
+jarvis start
+```
+
+### Example: Relocating JARVIS Home
+
+```bash
+JARVIS_HOME=/srv/jarvis jarvis start
+```
+
+That changes both:
+
+- `daemon.data_dir`
+- `daemon.db_path`
+
+## Example Configurations
+
+### Local Single-Machine Setup
+
+```yaml
+daemon:
+  port: 3142
+
+llm:
+  primary: "anthropic"
+  fallback: ["openai"]
+  anthropic:
+    api_key: "sk-ant-..."
+    model: "claude-sonnet-4-6"
+
+auth:
+  token: ""
+```
+
+### Hosted Brain with Remote Sidecars
+
+```yaml
+daemon:
+  port: 3142
+  brain_domain: "https://jarvis.example.com"
+
+auth:
+  token: "replace-this"
+
+llm:
+  primary: "anthropic"
+  fallback: ["openai", "ollama"]
+```
+
+### Docker-Friendly Pattern
+
+```yaml
+daemon:
+  port: 3142
+
+llm:
+  primary: "openai"
+  fallback: ["ollama"]
+  openai:
+    model: "gpt-5.4"
+  ollama:
+    base_url: "http://ollama:11434"
+```
+
+Then inject deployment-specific values through the container environment:
+
+```bash
+JARVIS_AUTH_TOKEN=change-me
+JARVIS_BRAIN_DOMAIN=https://jarvis.example.com
+```
+
+### Hybrid Cloud + Local Model Setup
+
+```yaml
+llm:
+  primary: "anthropic"
+  fallback: ["openai", "ollama"]
+  anthropic:
+    api_key: "sk-ant-..."
+  openai:
+    api_key: "sk-..."
+  ollama:
+    base_url: "http://192.168.1.50:11434"
+    model: "llama3.1"
+```
+
+Use a daemon-reachable host for Ollama. If the daemon is remote, `localhost` usually means the wrong machine.
+
+## Related Docs
+
+- [Configuration](/docs/configuration)
+- [Settings Reference](/docs/settings-reference)
+- [Sidecar Enrollment](/docs/sidecar-enrollment)
+- [Deployment Guide](/docs/deployment-guide)
+- [FAQ](/docs/faq)

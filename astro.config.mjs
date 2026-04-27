@@ -35,6 +35,7 @@ export default defineConfig({
             { label: 'Installation', slug: 'docs/installation' },
             { label: 'Quick Start', slug: 'docs/quickstart' },
             { label: 'Configuration', slug: 'docs/configuration' },
+            { label: 'Dashboard', slug: 'docs/dashboard' },
             { label: 'Contributing', slug: 'docs/contributing' },
           ],
         },
@@ -43,6 +44,7 @@ export default defineConfig({
           items: [
             { label: 'Browser Control', slug: 'docs/browser-control' },
             { label: 'Desktop Control', slug: 'docs/desktop-control' },
+            { label: 'Sidecar Enrollment', slug: 'docs/sidecar-enrollment' },
             { label: 'Sites Workspace', slug: 'docs/sites' },
             { label: 'Voice Interface', slug: 'docs/voice' },
             { label: 'Multi-Agent System', slug: 'docs/multi-agent' },
@@ -54,19 +56,28 @@ export default defineConfig({
           ],
         },
         {
-          label: 'Channels',
+          label: 'Settings & Customization',
           items: [
-            { label: 'Dashboard', slug: 'docs/dashboard' },
+            { label: 'Settings Reference', slug: 'docs/settings-reference' },
+            { label: 'LLM Providers', slug: 'docs/llm-providers' },
+            { label: 'Customization Guide', slug: 'docs/customization-guide' },
+            { label: 'Authority & Safety', slug: 'docs/authority' },
+          ],
+        },
+        {
+          label: 'Channels & Integrations',
+          items: [
+            { label: 'Integrations Guide', slug: 'docs/integrations-guide' },
             { label: 'Telegram', slug: 'docs/telegram' },
             { label: 'Discord', slug: 'docs/discord' },
           ],
         },
         {
-          label: 'Configuration',
+          label: 'Operations',
           items: [
-            { label: 'LLM Providers', slug: 'docs/llm-providers' },
-            { label: 'Authority & Safety', slug: 'docs/authority' },
+            { label: 'Deployment Guide', slug: 'docs/deployment-guide' },
             { label: 'Autostart', slug: 'docs/autostart' },
+            { label: 'Troubleshooting', slug: 'docs/troubleshooting' },
           ],
         },
         {
@@ -74,8 +85,8 @@ export default defineConfig({
           items: [
             { label: 'CLI Commands', slug: 'docs/cli' },
             { label: 'Config Reference', slug: 'docs/config-reference' },
+            { label: 'FAQ', slug: 'docs/faq' },
             { label: 'WebSocket API', slug: 'docs/websocket-api' },
-            { label: 'Troubleshooting', slug: 'docs/troubleshooting' },
             { label: 'Disclaimer & Liability', slug: 'docs/disclaimer' },
           ],
         },

@@ -30,18 +30,34 @@ Or download the prebuilt binary for your platform from the [releases page](https
 
 ## Enrollment
 
+Use [Sidecar Enrollment](/docs/sidecar-enrollment) as your primary setup guide. That page explains the trust boundary around `daemon.brain_domain`, `JARVIS_BRAIN_DOMAIN`, and the optional per-enrollment `brain_url` override.
+
+Condensed flow:
+
 ### 1. Install the sidecar
 
 See [Installation](#installation) above.
 
-### 2. Enroll in the dashboard
+### 2. Choose the correct brain URL
 
-1. Open the JARVIS dashboard at `http://localhost:3142`
+Before you enroll, make sure the daemon is advertising a URL the sidecar machine can actually reach.
+
+- Local-only setup: `http://localhost:3142` may be fine
+- Hosted setup: set `daemon.brain_domain` or `JARVIS_BRAIN_DOMAIN`
+- One-off exception: use the dashboard `brain_url` field for that enrollment only
+
+If the wrong origin is stamped into the JWT, the sidecar can fail JWKS verification or never connect to the daemon.
+
+### 3. Enroll in the dashboard
+
+1. Open the JARVIS dashboard
 2. Go to **Settings** → **Sidecar**
-3. Enter a friendly name for this machine (e.g. "work laptop") and click **Enroll**
-4. Click **Copy** to copy the token command
+3. Enter a friendly name for this machine (for example, `work-laptop`)
+4. Optionally set `brain_url` only if this one sidecar needs a different route
+5. Click **Enroll**
+6. Click **Copy** to copy the token command
 
-### 3. Run the sidecar
+### 4. Run the sidecar
 
 Paste and run the copied command on the machine where you installed the sidecar:
 
@@ -224,10 +240,9 @@ The agent can then reference machines by hostname when dispatching tools. For ex
 
 ## Sidecar Configuration
 
-The sidecar stores its config at `~/.jarvis/sidecar.yaml`:
+The sidecar stores its config at `~/.jarvis-sidecar/config.yaml`:
 
 ```yaml
-brain_url: "ws://localhost:3142/sidecar"
 token: "eyJ..."                    # JWT from enrollment
 capabilities:
   - terminal
@@ -243,13 +258,13 @@ terminal:
   timeout_ms: 30000
 filesystem:
   blocked_paths: ["/etc/shadow", "/root"]
-  max_file_size_kb: 10240
+  max_file_size_kb: 100
 browser:
   cdp_port: 9222
   profile_dir: ""                  # auto-detected
 awareness:
   screen_interval_ms: 7000
-  window_interval_ms: 3000
+  window_interval_ms: 2000
   min_change_threshold: 0.02
   stuck_threshold_ms: 120000
 ```
@@ -278,8 +293,11 @@ GOOS=darwin GOARCH=arm64 go build -o jarvis-sidecar-macos .
 
 1. Verify the daemon is running: `jarvis status`
 2. Re-enroll from the dashboard: **Settings** → **Sidecar** → **Enroll**
-3. Check firewall rules — port 3142 must be reachable from the sidecar machine
-4. Run `jarvis doctor` for a connectivity check
+3. Verify the enrollment token used a reachable brain URL
+4. Check firewall rules — port 3142 or your public reverse-proxy port must be reachable from the sidecar machine
+5. Run `jarvis doctor` for a connectivity check
+
+If the daemon is hosted remotely, read [Sidecar Enrollment](/docs/sidecar-enrollment) before retrying.
 
 **Desktop tools not working**
 
