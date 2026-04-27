@@ -16,6 +16,7 @@ The current shipped commands are:
 - `jarvis logs`
 - `jarvis update`
 - `jarvis onboard`
+- `jarvis uninstall`
 - `jarvis doctor`
 - `jarvis version`
 - `jarvis help`
@@ -29,6 +30,8 @@ jarvis start
 jarvis start -d
 jarvis start --port 8080
 jarvis start --no-open
+jarvis start --data-dir /srv/jarvis
+jarvis start --no-local-tools
 ```
 
 Flags:
@@ -36,6 +39,8 @@ Flags:
 - `-d`, `--detach`: run as a background daemon
 - `--port <N>`: override the daemon port
 - `--no-open`: do not open the dashboard automatically
+- `--data-dir <path>`: override the main data directory
+- `--no-local-tools`: disable local tool execution and rely on sidecars only
 
 Notes:
 
@@ -119,6 +124,18 @@ Updates JARVIS to the latest version.
 jarvis update
 ```
 
+Behavior depends on how JARVIS was installed. For example, Docker and developer checkouts are handled differently than a Bun global install.
+
+## `jarvis uninstall`
+
+Removes JARVIS from the current machine.
+
+```bash
+jarvis uninstall
+```
+
+Use this when you want to remove the local daemon install and clean up local data.
+
 ## `jarvis version`
 
 Prints the installed version.
@@ -158,6 +175,14 @@ jarvis doctor
 jarvis status
 jarvis logs -n 200
 ```
+
+### Run in sidecar-only / hosted mode
+
+```bash
+jarvis start --no-local-tools
+```
+
+This is useful when the daemon is hosted remotely and machine-level actions should go through enrolled sidecars instead of the daemon host.
 
 ## Video Tutorial Placeholder
 

@@ -1,6 +1,6 @@
 ---
 title: Workflow Automation
-description: Build event-driven automations with JARVIS — visual node graph, natural language creation, 50+ nodes, cron/webhook/observer triggers, self-healing execution.
+description: Build event-driven automations with JARVIS — visual node graph, natural language creation, 40 built-in nodes, cron/webhook/observer triggers, and self-healing execution.
 ---
 
 JARVIS includes a full workflow automation engine — think n8n or Zapier, but built into your AI daemon with natural language creation, agent delegation, and self-healing execution.
@@ -41,7 +41,17 @@ Click a workflow to open the **canvas editor**:
 
 Both side panels collapse to thin strips for maximum canvas space.
 
-## Node Library (50+ nodes)
+## Node Library (40 built-in nodes)
+
+The current built-in catalog is:
+
+- 11 trigger nodes
+- 12 action nodes
+- 9 logic nodes
+- 5 transform nodes
+- 3 error-handling nodes
+
+For the live authoritative catalog in a running daemon, use `GET /api/workflows/nodes`.
 
 ### Triggers (11)
 | Node | Description |
@@ -201,6 +211,8 @@ curl -X POST http://localhost:3142/api/workflows/import \
 | POST | `/api/workflows/nl-chat` | NL builder chat |
 | GET | `/api/workflows/suggest` | Auto-suggestions |
 | POST/GET | `/api/webhooks/:id` | Inbound webhooks |
+
+If you are documenting or integrating against workflows programmatically, prefer `/api/workflows/nodes` over hard-coding the node list from docs prose.
 
 ## Auto-Suggestions
 

@@ -1,24 +1,50 @@
 ---
 title: Voice Interface
-description: Speak to JARVIS with wake word detection, mic button, and streaming TTS responses.
+description: Speak to JARVIS with browser-based voice capture, streaming TTS playback, and source-backed STT/TTS configuration.
 ---
 
-JARVIS includes a full voice interface: speak your requests using a wake word, microphone button, or push-to-talk, and hear responses streamed back as speech in real time. Text-to-speech requires no API key. Speech-to-text supports cloud and local providers.
+JARVIS includes a full voice interface: speak your requests using the mic button or browser wake detection, and hear responses streamed back as speech in real time.
+
+The important split is:
+
+- **browser/UI behavior** handles microphone capture, wake detection, and playback
+- **daemon config** controls which STT and TTS providers are used at runtime
+
+This page focuses on the current implementation rather than an idealized future config surface.
 
 ## Overview
 
 ```
-You speak  →  WebM audio  →  STT (Whisper/Groq/Local)  →  text  →  Agent
-Agent response  →  sentence split  →  TTS (edge-tts)  →  MP3  →  speaker
+You speak  →  browser capture  →  WAV over WebSocket  →  STT provider  →  text  →  agent
+Agent response  →  sentence split  →  TTS provider  →  MP3 over WebSocket  →  browser playback
 ```
 
-Audio travels over the existing WebSocket connection using a binary protocol alongside the normal JSON message stream. The dashboard handles microphone capture, audio playback, and voice state management in the browser.
+Audio travels over the existing WebSocket connection using binary frames alongside the normal JSON message stream. The dashboard manages microphone capture, wake-state transitions, and browser playback.
+
+## What Is Actually Configurable Today
+
+The current daemon config schema exposes:
+
+- `tts.enabled`
+- `tts.provider`
+- `tts.voice`
+- `tts.rate`
+- `tts.volume`
+- `tts.elevenlabs.*`
+- `stt.provider`
+- `stt.openai.*`
+- `stt.groq.*`
+- `stt.local.endpoint`
+- `stt.local.model`
+- `stt.local.server_type`
+
+The browser wake behavior is primarily a UI/runtime concern, not a rich YAML surface today. If you are editing `~/.jarvis/config.yaml`, focus on STT/TTS provider settings first.
 
 ## Text-to-Speech
 
 ### Default Provider: edge-tts-universal
 
-JARVIS uses `edge-tts-universal` by default. This library proxies Microsoft Edge's TTS service and is completely free — no API key, no account, no rate limits for personal use.
+JARVIS uses `edge-tts-universal` by default. This is the easiest TTS path because it does not require a separate API key.
 
 Available voices include hundreds of neural voices across dozens of languages. The default voice is `en-US-AriaNeural`.
 
@@ -26,13 +52,15 @@ Available voices include hundreds of neural voices across dozens of languages. T
 
 ```yaml
 tts:
-  provider: edge-tts
-  voice: en-US-AriaNeural    # Male, US English
+  enabled: true
+  provider: edge
+  voice: en-US-AriaNeural
+  rate: "+0%"
+  volume: "+0%"
   # Other popular choices:
-  # en-US-JennyNeural       # Female, US English
-  # en-GB-RyanNeural        # Male, British English
-  # en-AU-NatashaNeural     # Female, Australian English
-  speed: 1.0                # 0.5 to 2.0
+  # en-US-JennyNeural
+  # en-GB-RyanNeural
+  # en-AU-NatashaNeural
 ```
 
 Browse all available voices:
@@ -57,11 +85,11 @@ tts:
     similarity_boost: 0.75              # 0.0 to 1.0
 ```
 
-Get an API key at [elevenlabs.io](https://elevenlabs.io). The onboarding wizard (`jarvis onboard`) can configure ElevenLabs during initial setup.
+Get an API key at [elevenlabs.io](https://elevenlabs.io). This is the higher-quality option when you want more expressive speech and do not mind relying on an external provider.
 
 ### Streaming Playback
 
-JARVIS does not wait for the full response to be synthesized before playing audio. Responses are split into sentences, and each sentence is synthesized and streamed to the browser as it is produced. This minimizes the perceived latency between the end of your speech and the start of JARVIS's reply.
+JARVIS synthesizes audio sentence-by-sentence and streams those MP3 chunks back to the browser. That keeps perceived latency low without requiring the entire reply to be synthesized first.
 
 ## Speech-to-Text
 
@@ -72,85 +100,76 @@ Three STT providers are supported. All produce the same output: a transcript str
 ```yaml
 stt:
   provider: openai
-  apiKey: "sk-..."
-  model: whisper-1
-  language: en    # Optional — auto-detected if omitted
+  openai:
+    api_key: "sk-..."
+    model: whisper-1
 ```
 
-Cost: approximately $0.006 per minute of audio.
+This is the current default STT provider in the config defaults.
 
-### Groq (faster, cheaper)
+### Groq
 
-Groq runs Whisper on dedicated inference hardware and is typically 5–10x faster than OpenAI's Whisper endpoint.
+Groq is a good low-latency alternative if you want fast transcription without running your own local endpoint.
 
 ```yaml
 stt:
   provider: groq
-  apiKey: "gsk_..."
-  model: whisper-large-v3
+  groq:
+    api_key: "gsk_..."
+    model: whisper-large-v3-turbo
 ```
 
 Get a free API key at [console.groq.com](https://console.groq.com).
 
 ### Local Whisper
 
-Run Whisper entirely on your machine — no API key, no data leaving your network.
+Run transcription against a local HTTP endpoint that the daemon can reach.
 
 ```yaml
 stt:
   provider: local
-  model: base.en    # tiny | base | small | medium | large
-  device: cpu       # cpu | cuda
+  local:
+    endpoint: "http://localhost:8080"
+    model: "base"
+    server_type: whisper_cpp  # whisper_cpp | openai_compatible
 ```
 
-Requirements: Python 3.9+, `openai-whisper` package, and enough RAM for the chosen model (base.en is approximately 150 MB, large is approximately 3 GB).
+Two important details from the current implementation:
 
-```bash
-pip install openai-whisper
-```
+1. For `whisper_cpp`, JARVIS appends `/inference` automatically if you give it a bare host.
+2. For `openai_compatible`, JARVIS uses the endpoint as-is.
 
-## Wake Word Detection
+If the daemon runs remotely, `localhost` means the daemon host, not your laptop or browser.
 
-JARVIS listens for "Hey JARVIS" using [openwakeword](https://github.com/dscripka/openWakeWord) compiled to WebAssembly. Detection runs entirely in the browser — no audio is sent to any server until the wake word triggers.
+## Wake Detection
+
+The current UI uses a browser-first wake strategy:
+
+1. try the browser `SpeechRecognition` API for `"Jarvis"` / `"Hey Jarvis"`
+2. fall back to [openwakeword](https://github.com/dscripka/openWakeWord) in the browser if speech recognition is unavailable
+
+That means wake behavior depends partly on browser capabilities, not only on YAML config.
 
 ### How It Works
 
-1. The browser loads ONNX wake word models from `/openwakeword/models/`
-2. The microphone stream is analyzed continuously in a Web Worker
-3. When confidence exceeds the threshold, the voice state machine transitions to `listening`
-4. Audio is captured and sent to the STT provider
-5. The transcript is forwarded to the agent
+1. The dashboard stays in an idle voice state
+2. It tries to detect `"Jarvis"` / `"Hey Jarvis"` in-browser
+3. On detection, the UI switches through `wake_detected` into recording
+4. Audio is captured and sent to the daemon
+5. The daemon transcribes it with the configured STT provider
 
-### Wake Word Sensitivity
+### Important limitation
 
-```yaml
-voice:
-  wakeWord:
-    enabled: true
-    sensitivity: 0.5    # 0.0 (never trigger) to 1.0 (always trigger)
-```
-
-Lower sensitivity means fewer false positives but may require clearer pronunciation.
-
-### Disabling Wake Word
-
-If you prefer to use only the mic button or push-to-talk:
-
-```yaml
-voice:
-  wakeWord:
-    enabled: false
-```
+The current config schema does **not** expose a large documented `voice:` block like some older docs implied. If you are looking for stable operator controls, use the STT/TTS config blocks shown above and treat wake detection as browser/runtime behavior.
 
 ## Voice Input Methods
 
-Three ways to trigger voice input:
+Two current ways to trigger voice input:
 
 | Method | How |
 |---|---|
-| Wake word | Say "Hey JARVIS" — microphone is always listening (locally) |
+| Wake detection | Say "Jarvis" or "Hey Jarvis" when browser support is available |
 | Mic button | Click the microphone icon in the dashboard header |
-| Push-to-talk | Hold the Space bar while the dashboard is focused |
 
 ## Voice State Machine
 
@@ -158,18 +177,19 @@ The dashboard manages voice state with a formal state machine:
 
 ```
 idle
-  ├─ wake word detected ──→ listening
-  ├─ mic button pressed ──→ listening
-  └─ PTT held ────────────→ listening
+  ├─ wake detected ───────→ wake_detected
+  ├─ mic button pressed ──→ recording
 
-listening
-  ├─ silence detected ────→ processing
-  └─ PTT released ────────→ processing
+wake_detected
+  └─ short delay ─────────→ recording
+
+recording
+  ├─ silence / release ───→ processing
 
 processing
-  └─ transcript ready ────→ responding
+  └─ server reply begins ─→ speaking
 
-responding
+speaking
   └─ TTS complete ────────→ idle
 ```
 
@@ -177,41 +197,45 @@ Visual indicators in the dashboard reflect the current state: the mic icon pulse
 
 ## Binary WebSocket Protocol
 
-Voice audio travels over the same WebSocket connection as JSON chat messages, using the browser's binary message framing to distinguish them.
+Voice audio travels over the same WebSocket connection as JSON chat messages.
 
 | Direction | Format | Description |
 |---|---|---|
-| Client to Server | Binary (WebM) | Mic audio chunks during listening state |
+| Client to Server | Binary (WAV payload) | Recorded mic audio sent after `voice_start` |
 | Server to Client | Binary (MP3) | TTS audio chunks, streamed sentence by sentence |
 | Client to Server | JSON | Text messages, commands, configuration |
 | Server to Client | JSON | Agent responses, streaming tokens, tool results |
 
-The server distinguishes binary from JSON messages using the WebSocket frame type bit — no additional header is needed.
+The client also sends JSON control messages like `voice_start` and `voice_end` around the audio payload.
 
-## Configuration Reference
+## Current Config Reference
 
 ```yaml
 tts:
   enabled: true
   provider: edge            # edge | elevenlabs
   voice: en-US-AriaNeural
-  speed: 1.0
+  rate: "+0%"
+  volume: "+0%"
+  elevenlabs:
+    api_key: "sk_..."
+    voice_id: "21m00Tcm4TlvDq8ikWAM"
+    model: "eleven_flash_v2_5"
+    stability: 0.5
+    similarity_boost: 0.75
 
 stt:
-  enabled: true
   provider: openai         # openai | groq | local
-  apiKey: ""
-  model: whisper-1
-  language: en
-
-voice:
-  wakeWord:
-    enabled: true
-    sensitivity: 0.5
-  pushToTalk:
-    enabled: true
-    key: Space
-  silenceThreshold: 1500   # ms of silence before auto-submit
+  openai:
+    api_key: "sk-..."
+    model: "whisper-1"
+  groq:
+    api_key: "gsk_..."
+    model: "whisper-large-v3-turbo"
+  local:
+    endpoint: "http://localhost:8080"
+    model: "base"
+    server_type: whisper_cpp
 ```
 
 ## Troubleshooting
@@ -228,9 +252,11 @@ voice:
 - Check that your OS has not blocked the browser from accessing the microphone
 - Run `jarvis doctor` to check for STT configuration issues
 
-**Wake word triggers too often or not enough**
+**Wake detection does not trigger reliably**
 
-Adjust `voice.wakeWord.sensitivity`. Start at `0.5` and move toward `0.7` if it does not trigger, or `0.3` if it triggers on unrelated speech.
+- Browser wake support depends on the browser's speech APIs
+- If speech wake is unavailable, the UI falls back to openwakeword
+- If you need a guaranteed path, use the mic button instead of assuming wake detection is configurable via YAML
 
 **High STT latency**
 

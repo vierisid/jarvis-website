@@ -187,8 +187,9 @@ Tradeoffs:
 The next steps are:
 
 1. Run [Quick Start](/docs/quickstart)
-2. Configure [Autostart](/docs/autostart) if you want it managed as a background service
-3. Install sidecars on any machines you want JARVIS to control directly
+2. Review [Settings Reference](/docs/settings-reference) and [Config Reference](/docs/config-reference)
+3. Configure [Autostart](/docs/autostart) if you want it managed as a background service
+4. Install sidecars on any machines you want JARVIS to control directly
 
 ## Sidecar Reminder
 
@@ -198,3 +199,8 @@ The daemon and the sidecar are different things:
 - The sidecar is the machine-level actuator
 
 If you run JARVIS on a VPS and want it to see and control your laptop, install a sidecar on the laptop. See [Desktop Control](/docs/desktop-control).
+
+If you are hosting JARVIS anywhere other than your own workstation, also read:
+
+- [Sidecar Enrollment](/docs/sidecar-enrollment)
+- [Deployment Guide](/docs/deployment-guide)

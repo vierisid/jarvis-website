@@ -102,6 +102,31 @@ The current product centers around these capability groups:
 - Workflow automation
 - Goal tracking and accountability
 
+## What JARVIS Actually Does Today
+
+Use this table as the fastest map of the current product surface:
+
+| Area | What it does | Best doc |
+|---|---|---|
+| Install and run | Bun, Docker, one-liner, manual install, background daemon lifecycle | [Installation](/docs/installation), [Quick Start](/docs/quickstart), [CLI Commands](/docs/cli) |
+| Configure runtime | `config.yaml`, env overrides, auth, providers, awareness, sites, authority | [Configuration](/docs/configuration), [Config Reference](/docs/config-reference) |
+| Use the UI | Dashboard pages, settings sections, approvals, operators’ control surface | [Dashboard](/docs/dashboard), [Settings Reference](/docs/settings-reference) |
+| Connect machines | Remote sidecars, enrollment JWTs, `brain_domain`, hosted routing | [Sidecar Enrollment](/docs/sidecar-enrollment), [Desktop Control](/docs/desktop-control), [Deployment Guide](/docs/deployment-guide) |
+| Talk and listen | STT, TTS, browser voice capture, wake behavior, playback | [Voice Interface](/docs/voice), [Integrations Guide](/docs/integrations-guide) |
+| Automate work | Visual workflows, triggers, variables, self-heal, suggestions | [Workflow Automation](/docs/workflows) |
+| Delegate tasks | Specialist agents and multi-agent orchestration | [Multi-Agent System](/docs/multi-agent), [Customization Guide](/docs/customization-guide) |
+| Stay aware | Screen capture, OCR, struggle detection, proactive help | [Continuous Awareness](/docs/awareness) |
+| Track long-term work | Goals, accountability, daily rhythm, escalation | [Autonomous Goals](/docs/goals) |
+| Integrate external services | Google, Telegram, Discord, hosted provider setup | [Integrations Guide](/docs/integrations-guide) |
+
+## How To Use These Docs
+
+There are three common paths:
+
+1. **New operator**: start with Installation → Quick Start → Configuration → Dashboard.
+2. **Hosted / multi-machine setup**: read Deployment Guide → Sidecar Enrollment → Settings Reference.
+3. **Power user**: jump to Config Reference, Workflow Automation, Customization Guide, and CLI Commands.
+
 ## Before You Start
 
 If you are new to JARVIS, read these next:
