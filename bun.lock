@@ -5,15 +5,20 @@
     "": {
       "name": "jarvis-website",
       "dependencies": {
-        "@astrojs/starlight": "^0.37.6",
-        "@astrojs/vercel": "^9.0.4",
+        "@astrojs/starlight": "0.37.6",
+        "@astrojs/vercel": "9.0.4",
         "@tailwindcss/vite": "^4.2.1",
         "@vercel/blob": "^2.3.0",
-        "astro": "^5.6.1",
+        "astro": "5.18.0",
         "sharp": "^0.34.2",
         "tailwindcss": "^4.2.1",
       },
     },
+  },
+  "overrides": {
+    "@astrojs/sitemap": "3.7.0",
+    "zod": "3.25.76",
+    "zod-to-json-schema": "3.25.1",
   },
   "packages": {
     "@astrojs/compiler": ["@astrojs/compiler@2.13.1", "", {}, "sha512-f3FN83d2G/v32ipNClRKgYv30onQlMZX1vCeZMjPsMMPl1mDpmbl0+N5BYo4S/ofzqJyS5hvwacEo0CCVDn/Qg=="],
