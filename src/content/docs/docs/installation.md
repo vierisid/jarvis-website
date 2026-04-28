@@ -10,6 +10,8 @@ JARVIS can run:
 - On a VPS
 - In Docker
 
+If you want the exhaustive version of this page, read the [Complete Setup Handbook](/docs/complete-setup-handbook). It walks through host selection, install-method choice, provider setup, sidecars, channels, service management, validation, and operational checklists in much more detail.
+
 ## Security First
 
 JARVIS can control files, terminals, browsers, remote channels, and connected machines. Treat installation as a security decision, not just a package install.
