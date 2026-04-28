@@ -33,6 +33,7 @@ export default defineConfig({
           items: [
             { label: 'Introduction', slug: 'docs/introduction' },
             { label: 'Installation', slug: 'docs/installation' },
+            { label: 'Complete Setup Handbook', slug: 'docs/complete-setup-handbook' },
             { label: 'Quick Start', slug: 'docs/quickstart' },
             { label: 'Configuration', slug: 'docs/configuration' },
             { label: 'Contributing', slug: 'docs/contributing' },
@@ -76,6 +77,7 @@ export default defineConfig({
             { label: 'Config Reference', slug: 'docs/config-reference' },
             { label: 'WebSocket API', slug: 'docs/websocket-api' },
             { label: 'Troubleshooting', slug: 'docs/troubleshooting' },
+            { label: 'Error Atlas', slug: 'docs/error-atlas' },
             { label: 'Disclaimer & Liability', slug: 'docs/disclaimer' },
           ],
         },

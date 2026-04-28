@@ -13,6 +13,8 @@ jarvis logs -n 200
 
 Those three commands solve a large percentage of first-line debugging.
 
+If you need the long-form reference instead of the short incident guide, use the [Error Atlas](/docs/error-atlas) together with the [Complete Setup Handbook](/docs/complete-setup-handbook).
+
 ## Daemon Does Not Start
 
 Symptoms:
