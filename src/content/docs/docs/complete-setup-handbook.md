@@ -568,115 +568,60 @@ Use it in order for first-time setup, or jump directly to the section that match
 
 ## Environment-by-environment setup runbooks
 
-### Runbook 1: Local laptop install
+Use the same core runbook everywhere, then apply only the environment-specific delta for your topology.
+
+### Universal runbook
 
 - Goal: establish one stable JARVIS brain for this environment before adding optional features.
-- Prepare: note the hostname, the intended data directory, the intended dashboard URL, and the first LLM provider.
-- Install: use exactly one install path and capture the resulting wrapper or repository location.
+- Prepare: note the hostname, intended data directory, intended dashboard URL, and first LLM provider.
+- Install: use exactly one install path and capture the resulting wrapper, container, or repository location.
 - Onboard: complete identity, primary provider, and basic dashboard access before adding channels or voice.
-- Validate: confirm `jarvis status`, dashboard load, chat round trip, and `jarvis logs -n 200` all look healthy.
-- Harden: decide whether the dashboard is local-only or remotely exposed, then configure auth and proxying accordingly.
+- Validate: confirm `jarvis status`, dashboard load, a chat round trip, and `jarvis logs -n 200` all look healthy.
+- Harden: decide whether the dashboard is local-only or remotely exposed, then configure auth, TLS, and proxying accordingly.
 - Extend: add sidecars, channels, voice, Google integrations, and workflows one at a time.
 - Document: record the exact install method, version, host, URL, and rollback plan.
 
-### Runbook 2: Homelab server install
+### Environment-specific deltas
 
-- Goal: establish one stable JARVIS brain for this environment before adding optional features.
-- Prepare: note the hostname, the intended data directory, the intended dashboard URL, and the first LLM provider.
-- Install: use exactly one install path and capture the resulting wrapper or repository location.
-- Onboard: complete identity, primary provider, and basic dashboard access before adding channels or voice.
-- Validate: confirm `jarvis status`, dashboard load, chat round trip, and `jarvis logs -n 200` all look healthy.
-- Harden: decide whether the dashboard is local-only or remotely exposed, then configure auth and proxying accordingly.
-- Extend: add sidecars, channels, voice, Google integrations, and workflows one at a time.
-- Document: record the exact install method, version, host, URL, and rollback plan.
+#### Local laptop install
 
-### Runbook 3: VPS install
+- Prefer the simplest possible path: one local daemon, no reverse proxy, and local-only access until the base setup is stable.
 
-- Goal: establish one stable JARVIS brain for this environment before adding optional features.
-- Prepare: note the hostname, the intended data directory, the intended dashboard URL, and the first LLM provider.
-- Install: use exactly one install path and capture the resulting wrapper or repository location.
-- Onboard: complete identity, primary provider, and basic dashboard access before adding channels or voice.
-- Validate: confirm `jarvis status`, dashboard load, chat round trip, and `jarvis logs -n 200` all look healthy.
-- Harden: decide whether the dashboard is local-only or remotely exposed, then configure auth and proxying accordingly.
-- Extend: add sidecars, channels, voice, Google integrations, and workflows one at a time.
-- Document: record the exact install method, version, host, URL, and rollback plan.
+#### Homelab server install
 
-### Runbook 4: Docker on a single host
+- Decide early whether sidecars will connect across VLANs, VPNs, or Tailscale and set `daemon.brain_domain` to the routable hostname before enrollment.
 
-- Goal: establish one stable JARVIS brain for this environment before adding optional features.
-- Prepare: note the hostname, the intended data directory, the intended dashboard URL, and the first LLM provider.
-- Install: use exactly one install path and capture the resulting wrapper or repository location.
-- Onboard: complete identity, primary provider, and basic dashboard access before adding channels or voice.
-- Validate: confirm `jarvis status`, dashboard load, chat round trip, and `jarvis logs -n 200` all look healthy.
-- Harden: decide whether the dashboard is local-only or remotely exposed, then configure auth and proxying accordingly.
-- Extend: add sidecars, channels, voice, Google integrations, and workflows one at a time.
-- Document: record the exact install method, version, host, URL, and rollback plan.
+#### VPS install
 
-### Runbook 5: Docker behind reverse proxy
+- Treat DNS, TLS, firewall rules, and auth as part of the initial install instead of a later hardening pass.
 
-- Goal: establish one stable JARVIS brain for this environment before adding optional features.
-- Prepare: note the hostname, the intended data directory, the intended dashboard URL, and the first LLM provider.
-- Install: use exactly one install path and capture the resulting wrapper or repository location.
-- Onboard: complete identity, primary provider, and basic dashboard access before adding channels or voice.
-- Validate: confirm `jarvis status`, dashboard load, chat round trip, and `jarvis logs -n 200` all look healthy.
-- Harden: decide whether the dashboard is local-only or remotely exposed, then configure auth and proxying accordingly.
-- Extend: add sidecars, channels, voice, Google integrations, and workflows one at a time.
-- Document: record the exact install method, version, host, URL, and rollback plan.
+#### Docker on a single host
 
-### Runbook 6: WSL2 install
+- Validate mounted volumes, published ports, and the exact image tag before onboarding.
 
-- Goal: establish one stable JARVIS brain for this environment before adding optional features.
-- Prepare: note the hostname, the intended data directory, the intended dashboard URL, and the first LLM provider.
-- Install: use exactly one install path and capture the resulting wrapper or repository location.
-- Onboard: complete identity, primary provider, and basic dashboard access before adding channels or voice.
-- Validate: confirm `jarvis status`, dashboard load, chat round trip, and `jarvis logs -n 200` all look healthy.
-- Harden: decide whether the dashboard is local-only or remotely exposed, then configure auth and proxying accordingly.
-- Extend: add sidecars, channels, voice, Google integrations, and workflows one at a time.
-- Document: record the exact install method, version, host, URL, and rollback plan.
+#### Docker behind reverse proxy
 
-### Runbook 7: macOS desktop install
+- Verify proxy headers, WebSocket upgrade handling, and the public origin before enrolling any sidecars.
 
-- Goal: establish one stable JARVIS brain for this environment before adding optional features.
-- Prepare: note the hostname, the intended data directory, the intended dashboard URL, and the first LLM provider.
-- Install: use exactly one install path and capture the resulting wrapper or repository location.
-- Onboard: complete identity, primary provider, and basic dashboard access before adding channels or voice.
-- Validate: confirm `jarvis status`, dashboard load, chat round trip, and `jarvis logs -n 200` all look healthy.
-- Harden: decide whether the dashboard is local-only or remotely exposed, then configure auth and proxying accordingly.
-- Extend: add sidecars, channels, voice, Google integrations, and workflows one at a time.
-- Document: record the exact install method, version, host, URL, and rollback plan.
+#### WSL2 install
 
-### Runbook 8: Linux workstation install
+- Confirm how Windows and WSL networking map to the dashboard URL before you assume `localhost` works from both sides.
 
-- Goal: establish one stable JARVIS brain for this environment before adding optional features.
-- Prepare: note the hostname, the intended data directory, the intended dashboard URL, and the first LLM provider.
-- Install: use exactly one install path and capture the resulting wrapper or repository location.
-- Onboard: complete identity, primary provider, and basic dashboard access before adding channels or voice.
-- Validate: confirm `jarvis status`, dashboard load, chat round trip, and `jarvis logs -n 200` all look healthy.
-- Harden: decide whether the dashboard is local-only or remotely exposed, then configure auth and proxying accordingly.
-- Extend: add sidecars, channels, voice, Google integrations, and workflows one at a time.
-- Document: record the exact install method, version, host, URL, and rollback plan.
+#### macOS desktop install
 
-### Runbook 9: Source checkout for contributors
+- Validate TCC permissions, desktop capture tooling, and browser automation access before enabling awareness-heavy workflows.
 
-- Goal: establish one stable JARVIS brain for this environment before adding optional features.
-- Prepare: note the hostname, the intended data directory, the intended dashboard URL, and the first LLM provider.
-- Install: use exactly one install path and capture the resulting wrapper or repository location.
-- Onboard: complete identity, primary provider, and basic dashboard access before adding channels or voice.
-- Validate: confirm `jarvis status`, dashboard load, chat round trip, and `jarvis logs -n 200` all look healthy.
-- Harden: decide whether the dashboard is local-only or remotely exposed, then configure auth and proxying accordingly.
-- Extend: add sidecars, channels, voice, Google integrations, and workflows one at a time.
-- Document: record the exact install method, version, host, URL, and rollback plan.
+#### Linux workstation install
 
-### Runbook 10: Script-managed repo install
+- Confirm X11 vs Wayland tooling, screenshot dependencies, and browser profile access before expecting desktop automation to work.
 
-- Goal: establish one stable JARVIS brain for this environment before adding optional features.
-- Prepare: note the hostname, the intended data directory, the intended dashboard URL, and the first LLM provider.
-- Install: use exactly one install path and capture the resulting wrapper or repository location.
-- Onboard: complete identity, primary provider, and basic dashboard access before adding channels or voice.
-- Validate: confirm `jarvis status`, dashboard load, chat round trip, and `jarvis logs -n 200` all look healthy.
-- Harden: decide whether the dashboard is local-only or remotely exposed, then configure auth and proxying accordingly.
-- Extend: add sidecars, channels, voice, Google integrations, and workflows one at a time.
-- Document: record the exact install method, version, host, URL, and rollback plan.
+#### Source checkout for contributors
+
+- Capture the repository path, branch, local modifications, and any dev-only overrides so update/uninstall behavior stays predictable.
+
+#### Script-managed repo install
+
+- Record the clone location under `~/.jarvis/daemon`, wrapper path, and exact update path (`git pull --ff-only` + `bun install`) while the system is healthy.
 
 ## Universal validation checklist library
 
@@ -873,4 +818,3 @@ Use it in order for first-time setup, or jump directly to the section that match
 - Read [Installation](/docs/installation) for the shorter canonical install page.
 - Read [Troubleshooting](/docs/troubleshooting) for the shorter incident-first guide.
 - Read [Error Atlas](/docs/error-atlas) when you want symptom-by-symptom recovery guidance.
-

@@ -134,7 +134,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the port binding path appears broken because service will not start.
 - **What it usually means**: A failure exists somewhere in the port binding layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `ss -ltnp | grep 3142` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: On Linux run `ss -ltnp | grep 3142`; on macOS run `lsof -i :3142`. Compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: free the occupied port or move the daemon intentionally.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -145,7 +145,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the port binding path appears broken because port is already in use.
 - **What it usually means**: A failure exists somewhere in the port binding layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `ss -ltnp | grep 3142` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: On Linux run `ss -ltnp | grep 3142`; on macOS run `lsof -i :3142`. Compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: free the occupied port or move the daemon intentionally.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -156,7 +156,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the port binding path appears broken because permission is denied.
 - **What it usually means**: A failure exists somewhere in the port binding layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `ss -ltnp | grep 3142` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: On Linux run `ss -ltnp | grep 3142`; on macOS run `lsof -i :3142`. Compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: free the occupied port or move the daemon intentionally.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -167,7 +167,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the port binding path appears broken because configured value is invalid.
 - **What it usually means**: A failure exists somewhere in the port binding layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `ss -ltnp | grep 3142` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: On Linux run `ss -ltnp | grep 3142`; on macOS run `lsof -i :3142`. Compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: free the occupied port or move the daemon intentionally.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -178,7 +178,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the port binding path appears broken because required secret is missing.
 - **What it usually means**: A failure exists somewhere in the port binding layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `ss -ltnp | grep 3142` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: On Linux run `ss -ltnp | grep 3142`; on macOS run `lsof -i :3142`. Compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: free the occupied port or move the daemon intentionally.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -189,7 +189,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the port binding path appears broken because host or URL points at the wrong machine.
 - **What it usually means**: A failure exists somewhere in the port binding layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `ss -ltnp | grep 3142` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: On Linux run `ss -ltnp | grep 3142`; on macOS run `lsof -i :3142`. Compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: free the occupied port or move the daemon intentionally.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -200,7 +200,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the port binding path appears broken because request times out.
 - **What it usually means**: A failure exists somewhere in the port binding layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `ss -ltnp | grep 3142` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: On Linux run `ss -ltnp | grep 3142`; on macOS run `lsof -i :3142`. Compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: free the occupied port or move the daemon intentionally.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -211,7 +211,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the port binding path appears broken because authentication fails.
 - **What it usually means**: A failure exists somewhere in the port binding layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `ss -ltnp | grep 3142` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: On Linux run `ss -ltnp | grep 3142`; on macOS run `lsof -i :3142`. Compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: free the occupied port or move the daemon intentionally.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -222,7 +222,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the port binding path appears broken because the surface looks healthy but actions still fail.
 - **What it usually means**: A failure exists somewhere in the port binding layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `ss -ltnp | grep 3142` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: On Linux run `ss -ltnp | grep 3142`; on macOS run `lsof -i :3142`. Compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: free the occupied port or move the daemon intentionally.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -233,7 +233,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the port binding path appears broken because behavior changed after an update.
 - **What it usually means**: A failure exists somewhere in the port binding layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `ss -ltnp | grep 3142` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: On Linux run `ss -ltnp | grep 3142`; on macOS run `lsof -i :3142`. Compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: free the occupied port or move the daemon intentionally.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -246,7 +246,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the configuration parsing path appears broken because service will not start.
 - **What it usually means**: A failure exists somewhere in the configuration parsing layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `review ~/.jarvis/config.yaml and the daemon log` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: Review `~/.jarvis/config.yaml` and the daemon log, then compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: correct invalid YAML, wrong field names, or malformed values.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -257,7 +257,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the configuration parsing path appears broken because port is already in use.
 - **What it usually means**: A failure exists somewhere in the configuration parsing layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `review ~/.jarvis/config.yaml and the daemon log` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: Review `~/.jarvis/config.yaml` and the daemon log, then compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: correct invalid YAML, wrong field names, or malformed values.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -268,7 +268,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the configuration parsing path appears broken because permission is denied.
 - **What it usually means**: A failure exists somewhere in the configuration parsing layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `review ~/.jarvis/config.yaml and the daemon log` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: Review `~/.jarvis/config.yaml` and the daemon log, then compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: correct invalid YAML, wrong field names, or malformed values.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -279,7 +279,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the configuration parsing path appears broken because configured value is invalid.
 - **What it usually means**: A failure exists somewhere in the configuration parsing layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `review ~/.jarvis/config.yaml and the daemon log` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: Review `~/.jarvis/config.yaml` and the daemon log, then compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: correct invalid YAML, wrong field names, or malformed values.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -290,7 +290,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the configuration parsing path appears broken because required secret is missing.
 - **What it usually means**: A failure exists somewhere in the configuration parsing layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `review ~/.jarvis/config.yaml and the daemon log` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: Review `~/.jarvis/config.yaml` and the daemon log, then compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: correct invalid YAML, wrong field names, or malformed values.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -301,7 +301,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the configuration parsing path appears broken because host or URL points at the wrong machine.
 - **What it usually means**: A failure exists somewhere in the configuration parsing layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `review ~/.jarvis/config.yaml and the daemon log` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: Review `~/.jarvis/config.yaml` and the daemon log, then compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: correct invalid YAML, wrong field names, or malformed values.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -312,7 +312,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the configuration parsing path appears broken because request times out.
 - **What it usually means**: A failure exists somewhere in the configuration parsing layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `review ~/.jarvis/config.yaml and the daemon log` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: Review `~/.jarvis/config.yaml` and the daemon log, then compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: correct invalid YAML, wrong field names, or malformed values.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -323,7 +323,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the configuration parsing path appears broken because authentication fails.
 - **What it usually means**: A failure exists somewhere in the configuration parsing layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `review ~/.jarvis/config.yaml and the daemon log` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: Review `~/.jarvis/config.yaml` and the daemon log, then compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: correct invalid YAML, wrong field names, or malformed values.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -334,7 +334,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the configuration parsing path appears broken because the surface looks healthy but actions still fail.
 - **What it usually means**: A failure exists somewhere in the configuration parsing layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `review ~/.jarvis/config.yaml and the daemon log` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: Review `~/.jarvis/config.yaml` and the daemon log, then compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: correct invalid YAML, wrong field names, or malformed values.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -345,7 +345,7 @@ jarvis logs -n 200
 - **Symptom**: The operator sees that the configuration parsing path appears broken because behavior changed after an update.
 - **What it usually means**: A failure exists somewhere in the configuration parsing layer, or a neighboring layer is presenting as the primary incident.
 - **Most common cause**: In real deployments this often comes from stale assumptions, mismatched hosts, missing secrets, wrong model names, or drift between config and runtime state.
-- **How to confirm**: Run `review ~/.jarvis/config.yaml and the daemon log` and compare the result to the intended topology and configuration for this deployment.
+- **How to confirm**: Review `~/.jarvis/config.yaml` and the daemon log, then compare the result to the intended topology and configuration for this deployment.
 - **Primary fix**: correct invalid YAML, wrong field names, or malformed values.
 - **Secondary fix**: Reduce the system to one host, one URL, one provider, and one reproduction path before making more changes.
 - **Operator note**: Capture the exact host, port, branch, version, and config source while the evidence is fresh.
@@ -2261,4 +2261,3 @@ jarvis logs -n 200
 - Confirm each layer from the daemon host perspective.
 - Prefer topology notes and reproducible commands over memory.
 - Update your runbook when you discover a new failure mode.
-
