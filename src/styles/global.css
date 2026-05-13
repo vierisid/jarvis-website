@@ -1,332 +1,340 @@
 @import "tailwindcss";
 
 /*
- * JARVIS Command Center Theme for Starlight
+ * JARVIS site — Riso editorial design tokens
  *
- * Palette: #0a0a0a bg, #111 raised, #161616 surface
- * Accent: #3ecf8e green (matching landing page)
- * Text: #e8e8e8 primary, #888 secondary, #555 muted
- * Mono: JetBrains Mono
+ * Source of truth: jarvis/ui/src/styles/tokens.css (the v2 dashboard redesign).
+ * One accent (vermilion). Bone paper. Hard hairlines. Inter Tight + Fraunces + JetBrains Mono.
  */
 
-/* ── Light mode (redirect to dark — JARVIS is always dark) ──── */
+:root {
+  /* ── Color ──────────────────────────────── */
+  --paper:        #F5F2EB;
+  --paper-2:      #EEE9DC;
+  --paper-3:      #E3DCC8;
+  --rule:         #CBC3B2;
+  --rule-soft:    #DFD9CC;
+  --rule-bold:    #1A1A1A;
+  --ink:          #1A1A1A;
+  --ink-2:        #4A4A46;
+  --ink-3:        #6A6760;
+  --accent:       #C23A2A;
+  --accent-ink:   #FFFFFF;
+  --ok:           #2E5E3A;
+  --warn:         #8A6A1F;
+
+  /* ── Type ───────────────────────────────── */
+  --font-sans:    "Inter Tight", "Helvetica Neue", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+  --font-display: "Fraunces", "Inter Tight", serif;
+
+  --text-xs:   11px;
+  --text-sm:   13px;
+  --text-md:   15px;
+  --text-lg:   18px;
+  --text-xl:   24px;
+  --text-2xl:  34px;
+  --text-3xl:  48px;
+  --text-4xl:  72px;
+
+  --lh-tight:  1.05;
+  --lh-body:   1.55;
+
+  /* ── Space (4px grid) ───────────────────── */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  20px;
+  --s-6:  24px;
+  --s-8:  32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --s-20: 80px;
+  --s-24: 96px;
+
+  /* ── Radii (riso = flat) ────────────────── */
+  --r-0: 0;
+  --r-1: 2px;
+  --r-2: 4px;
+  --r-pill: 999px;
+
+  /* ── Lines ──────────────────────────────── */
+  --hair:      1px solid var(--rule);
+  --hair-soft: 1px solid var(--rule-soft);
+  --hair-2:    2px solid var(--rule);
+  --hair-bold: 1px solid var(--rule-bold);
+
+  /* ── Motion ─────────────────────────────── */
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --dur-fast: 120ms;
+  --dur-med:  220ms;
+  --dur-slow: 360ms;
+
+  /* ── Layout ─────────────────────────────── */
+  --col-narrow: 760px;
+  --col:        960px;
+  --col-wide:   1200px;
+}
+
+/* ── Starlight (docs) palette also keeps the riso look ── */
 :root,
-:root[data-theme='light'] {
-  --sl-color-accent-low: #0f2a1d;
-  --sl-color-accent: #3ecf8e;
-  --sl-color-accent-high: #a3f0c9;
-
-  --sl-color-white: #e8e8e8;
-  --sl-color-gray-1: #c0c0c0;
-  --sl-color-gray-2: #888888;
-  --sl-color-gray-3: #666666;
-  --sl-color-gray-4: #444444;
-  --sl-color-gray-5: #1e1e1e;
-  --sl-color-gray-6: #161616;
-  --sl-color-gray-7: #111111;
-  --sl-color-black: #0a0a0a;
-
-  --sl-color-text: #c0c0c0;
-  --sl-color-text-accent: #3ecf8e;
-  --sl-color-text-invert: #0a0a0a;
-
-  --sl-color-bg: #0a0a0a;
-  --sl-color-bg-nav: rgba(10, 10, 10, 0.92);
-  --sl-color-bg-sidebar: #0e0e0e;
-  --sl-color-bg-inline-code: #1a1a1a;
-  --sl-color-bg-accent: #3ecf8e;
-
-  --sl-color-hairline-light: #1a1a1a;
-  --sl-color-hairline: #1e1e1e;
-  --sl-color-hairline-shade: #161616;
-
-  --sl-color-backdrop-overlay: rgba(0, 0, 0, 0.7);
-
-  /* Aside colors — force dark-mode palette (dark bg, bright text) */
-  --sl-hue-orange: 41;
-  --sl-color-orange-low: hsl(41, 39%, 22%);
-  --sl-color-orange: hsl(41, 82%, 63%);
-  --sl-color-orange-high: hsl(41, 82%, 87%);
-  --sl-hue-red: 339;
-  --sl-color-red-low: hsl(339, 39%, 22%);
-  --sl-color-red: hsl(339, 82%, 63%);
-  --sl-color-red-high: hsl(339, 82%, 87%);
-  --sl-hue-blue: 224;
-  --sl-color-blue-low: hsl(224, 54%, 20%);
-  --sl-color-blue: hsl(224, 100%, 60%);
-  --sl-color-blue-high: hsl(224, 100%, 87%);
-  --sl-hue-purple: 269;
-  --sl-color-purple-low: hsl(269, 39%, 22%);
-  --sl-color-purple: hsl(269, 82%, 63%);
-  --sl-color-purple-high: hsl(269, 82%, 89%);
-
-  --sl-font-system: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --sl-font-system-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
-}
-
-/* ── Dark mode ────────────────────────────────────────────── */
+:root[data-theme='light'],
 :root[data-theme='dark'] {
-  --sl-color-accent-low: #0f2a1d;
-  --sl-color-accent: #3ecf8e;
-  --sl-color-accent-high: #a3f0c9;
+  --sl-color-accent-low: #F4DBD7;
+  --sl-color-accent: var(--accent);
+  --sl-color-accent-high: #7A2218;
 
-  --sl-color-white: #e8e8e8;
-  --sl-color-gray-1: #c0c0c0;
-  --sl-color-gray-2: #888888;
-  --sl-color-gray-3: #666666;
-  --sl-color-gray-4: #444444;
-  --sl-color-gray-5: #1e1e1e;
-  --sl-color-gray-6: #161616;
-  --sl-color-gray-7: #111111;
-  --sl-color-black: #0a0a0a;
+  --sl-color-white: var(--ink);
+  --sl-color-gray-1: var(--ink);
+  --sl-color-gray-2: var(--ink-2);
+  --sl-color-gray-3: var(--ink-3);
+  --sl-color-gray-4: var(--rule);
+  --sl-color-gray-5: var(--rule-soft);
+  --sl-color-gray-6: var(--paper-2);
+  --sl-color-gray-7: var(--paper);
+  --sl-color-black: var(--ink);
 
-  --sl-color-text: #c0c0c0;
-  --sl-color-text-accent: #3ecf8e;
-  --sl-color-text-invert: #0a0a0a;
+  --sl-color-text: var(--ink);
+  --sl-color-text-accent: var(--accent);
+  --sl-color-text-invert: var(--paper);
 
-  --sl-color-bg: #0a0a0a;
-  --sl-color-bg-nav: rgba(10, 10, 10, 0.92);
-  --sl-color-bg-sidebar: #0e0e0e;
-  --sl-color-bg-inline-code: #1a1a1a;
-  --sl-color-bg-accent: #3ecf8e;
+  --sl-color-bg: var(--paper);
+  --sl-color-bg-nav: rgba(245, 242, 235, 0.92);
+  --sl-color-bg-sidebar: var(--paper-2);
+  --sl-color-bg-inline-code: var(--paper-2);
+  --sl-color-bg-accent: var(--accent);
 
-  --sl-color-hairline-light: #1a1a1a;
-  --sl-color-hairline: #1e1e1e;
-  --sl-color-hairline-shade: #161616;
+  --sl-color-hairline-light: var(--rule-soft);
+  --sl-color-hairline: var(--rule);
+  --sl-color-hairline-shade: var(--rule-soft);
 
-  --sl-color-backdrop-overlay: rgba(0, 0, 0, 0.7);
+  --sl-color-backdrop-overlay: rgba(26, 26, 26, 0.45);
+
+  --sl-font-system: var(--font-sans);
+  --sl-font-system-mono: var(--font-mono);
 }
 
-/* ── Global body ─────────────────────────────────────────── */
+/* ── Global body ─────────────────────────── */
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Nav: backdrop blur, thin border ─────────────────────── */
-header.header {
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-/* Site title in mono */
-.site-title {
-  font-family: var(--sl-font-system-mono) !important;
-  letter-spacing: 0.06em;
-  font-weight: 700 !important;
-}
-
-/* ── Sidebar ─────────────────────────────────────────────── */
-nav.sidebar {
-  border-right: 1px solid var(--sl-color-hairline);
-}
-
-/* Sidebar section labels — mono, uppercase, muted */
-.sidebar-content .top-level > li > details > summary,
-.sidebar-content .top-level > li > a,
-nav[aria-label="Main"] ul > li > details > summary > div > span {
-  font-family: var(--sl-font-system-mono);
-  font-size: 0.6875rem;
+/* ── Generic riso primitives used across pages ── */
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--sl-color-gray-3);
+  color: var(--ink-3);
 }
 
-/* Sidebar links */
-nav[aria-label="Main"] a {
-  font-size: 0.8125rem;
-  transition: color 0.15s ease;
+.display-h1 {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: clamp(40px, 6vw, var(--text-4xl));
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin: 0;
 }
 
-/* Active sidebar link */
-nav[aria-label="Main"] a[aria-current="page"] {
-  color: var(--sl-color-accent) !important;
+.display-h1 em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.display-h2 {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin: 0;
+}
+
+.display-h2 em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.lead {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 60ch;
+}
+
+/* Buttons */
+.btn-solid {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 15px;
   font-weight: 600;
+  color: var(--accent-ink);
+  background: var(--ink);
+  padding: 12px 22px;
+  border-radius: var(--r-1);
+  text-decoration: none;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.btn-solid:hover { background: var(--accent); }
+
+.btn-border {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  background: transparent;
+  padding: 11px 21px;
+  border: 1px solid var(--ink);
+  border-radius: var(--r-1);
+  text-decoration: none;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.btn-border:hover { background: var(--ink); color: var(--paper); }
+
+/* Code chip */
+.code-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--paper-2);
+  border: var(--hair);
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink);
 }
 
-/* ── Content area ────────────────────────────────────────── */
+.code-prompt { color: var(--ink-3); }
+.code-pkg { color: var(--accent); font-weight: 600; }
 
-/* Headings */
+/* Mockup chrome */
+.mockup {
+  background: var(--paper);
+  border: var(--hair);
+  border-radius: var(--r-2);
+  overflow: hidden;
+  box-shadow: 0 1px 0 rgba(26, 26, 26, 0.04), 0 18px 40px rgba(26, 26, 26, 0.08);
+}
+
+/* ── Starlight content tweaks (docs/blog) ── */
 .sl-markdown-content h1 {
+  font-family: var(--font-sans);
   font-weight: 900;
   letter-spacing: -0.03em;
-  color: var(--sl-color-white);
+  color: var(--ink);
 }
 
 .sl-markdown-content h2 {
+  font-family: var(--font-sans);
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--sl-color-white);
+  color: var(--ink);
   padding-top: 1.5rem;
   margin-top: 2rem;
-  border-top: 1px solid var(--sl-color-hairline);
+  border-top: var(--hair);
 }
 
 .sl-markdown-content h3 {
+  font-family: var(--font-sans);
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: var(--sl-color-white);
+  color: var(--ink);
 }
 
-/* Inline code */
 .sl-markdown-content :not(pre) > code {
-  font-family: var(--sl-font-system-mono);
-  font-size: 0.8125em;
-  background: var(--sl-color-bg-inline-code);
-  border: 1px solid var(--sl-color-hairline);
-  border-radius: 3px;
-  padding: 0.125em 0.375em;
-  color: var(--sl-color-gray-1);
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--paper-2);
+  border: var(--hair-soft);
+  border-radius: var(--r-1);
+  padding: 0.125em 0.4em;
+  color: var(--ink);
 }
 
-/* Links in content */
 .sl-markdown-content a {
-  color: var(--sl-color-accent);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.15s ease;
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
 }
 
-.sl-markdown-content a:hover {
-  border-bottom-color: var(--sl-color-accent);
+.sl-markdown-content blockquote {
+  border-left: 2px solid var(--accent);
+  background: var(--paper-2);
+  padding: 14px 18px;
+  margin: 24px 0;
+  border-radius: 0 var(--r-2) var(--r-2) 0;
+  color: var(--ink-2);
 }
 
-/* ── Code blocks (Expressive Code) ───────────────────────── */
-.expressive-code {
-  margin: 1.5rem 0;
+.sl-markdown-content hr {
+  border: none;
+  border-top: var(--hair);
+  margin: 40px 0;
 }
 
-.expressive-code .frame {
-  border: 1px solid var(--sl-color-hairline) !important;
-  border-radius: 6px !important;
-  overflow: hidden;
-}
-
-.expressive-code pre {
-  background: #111111 !important;
-  font-family: var(--sl-font-system-mono);
-  font-size: 0.8125rem !important;
-  line-height: 1.7 !important;
-  box-shadow: none !important;
-}
-
-.expressive-code .header {
-  background: #161616 !important;
-  border-bottom: 1px solid var(--sl-color-hairline) !important;
-  font-family: var(--sl-font-system-mono);
-  font-size: 0.6875rem;
-  color: var(--sl-color-gray-3);
-}
-
-/* ── Tables ──────────────────────────────────────────────── */
 .sl-markdown-content table {
-  font-size: 0.875rem;
+  font-size: 14px;
   border-collapse: collapse;
   width: 100%;
 }
-
 .sl-markdown-content table th {
-  font-family: var(--sl-font-system-mono);
-  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--sl-color-gray-3);
-  background: var(--sl-color-gray-6);
-  border-bottom: 1px solid var(--sl-color-hairline);
-  padding: 0.625rem 0.75rem;
+  color: var(--ink-3);
+  background: var(--paper-2);
+  border-bottom: var(--hair);
+  padding: 10px 12px;
   text-align: left;
 }
-
 .sl-markdown-content table td {
-  padding: 0.625rem 0.75rem;
-  border-bottom: 1px solid var(--sl-color-hairline-light);
-  color: var(--sl-color-gray-2);
+  padding: 10px 12px;
+  border-bottom: var(--hair-soft);
+  color: var(--ink-2);
 }
 
-.sl-markdown-content table tr:last-child td {
-  border-bottom: none;
+/* Code blocks (Expressive Code) */
+.expressive-code .frame {
+  border: var(--hair) !important;
+  border-radius: var(--r-2) !important;
+  overflow: hidden;
+}
+.expressive-code pre {
+  background: var(--paper-2) !important;
+  font-family: var(--font-mono);
+  font-size: 13px !important;
+  line-height: 1.7 !important;
+  box-shadow: none !important;
+}
+.expressive-code .header {
+  background: var(--paper-3) !important;
+  border-bottom: var(--hair) !important;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-3);
 }
 
-/* ── Blockquotes ─────────────────────────────────────────── */
-.sl-markdown-content blockquote {
-  border-left: 2px solid var(--sl-color-accent);
-  background: var(--sl-color-gray-7);
-  padding: 0.75rem 1rem;
-  margin: 1.5rem 0;
-  border-radius: 0 6px 6px 0;
-  color: var(--sl-color-gray-2);
-}
-
-/* ── Aside / Callout (Starlight) ─────────────────────────── */
-.starlight-aside {
-  border-radius: 6px;
-  border-width: 1px;
-  border-left-width: 3px;
-}
-
-/* ── Pagination (prev/next links) ────────────────────────── */
-.pagination-links a {
-  border: 1px solid var(--sl-color-hairline) !important;
-  border-radius: 6px !important;
-  transition: border-color 0.15s ease;
-}
-
-.pagination-links a:hover {
-  border-color: var(--sl-color-gray-4) !important;
-}
-
-/* ── Search ──────────────────────────────────────────────── */
-dialog[aria-label] {
-  background: var(--sl-color-gray-7) !important;
-  border: 1px solid var(--sl-color-hairline);
-  border-radius: 8px;
-}
-
-/* ── TOC (table of contents, right sidebar) ──────────────── */
-starlight-toc a {
-  font-size: 0.8125rem;
-  transition: color 0.15s ease;
-}
-
-starlight-toc a[aria-current="true"] {
-  color: var(--sl-color-accent);
-  font-weight: 600;
-}
-
-/* ── Horizontal rules ────────────────────────────────────── */
-.sl-markdown-content hr {
-  border: none;
-  border-top: 1px solid var(--sl-color-hairline);
-  margin: 2.5rem 0;
-}
-
-/* ── Lists ───────────────────────────────────────────────── */
-.sl-markdown-content ul,
-.sl-markdown-content ol {
-  color: var(--sl-color-gray-2);
-}
-
-.sl-markdown-content li::marker {
-  color: var(--sl-color-gray-4);
-}
-
-/* ── Scrollbar (subtle) ──────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--sl-color-gray-5);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--sl-color-gray-4);
-}
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--rule); border-radius: var(--r-pill); }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-3); }

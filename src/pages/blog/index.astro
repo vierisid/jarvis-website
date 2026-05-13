@@ -18,8 +18,8 @@ const posts = [
   },
   {
     slug: 'ai-agent-trends-2026',
-    title: 'AI Agent Trends in 2026: What's Actually Happening',
-    description: 'The gap between hype and reality in AI agents is widening. Here's what's actually working, and why J.A.R.V.I.S. took a different path.',
+    title: "AI Agent Trends in 2026: What's Actually Happening",
+    description: "The gap between hype and reality in AI agents is widening. Here's what's actually working, and why J.A.R.V.I.S. took a different path.",
     date: 'April 11, 2026',
     readTime: '7 min'
   },
@@ -45,197 +45,337 @@ const posts = [
     readTime: '7 min'
   }
 ];
+
+const [featured, ...rest] = posts;
 ---
 
 <Landing title="Blog — J.A.R.V.I.S." description="Insights, updates, and deep dives into the J.A.R.V.I.S. autonomous agent platform.">
-  
-  <!-- NAV -->
+  <!-- ── NAV ──────────────────────────────────────── -->
   <nav class="nav">
     <div class="nav-inner">
-      <div class="nav-left">
-        <a href="/" class="nav-logo">J.A.R.V.I.S.</a>
-        <span class="nav-version">v0.4.2</span>
-      </div>
+      <a href="/" class="nav-logo">
+        <span class="nav-dot"></span>
+        J.A.R.V.I.S.
+      </a>
       <div class="nav-right">
         <a href="/" class="nav-link">Home</a>
         <a href="/blog" class="nav-link">Blog</a>
         <a href="/roadmap" class="nav-link">Roadmap</a>
         <a href="/docs/introduction" class="nav-link">Docs</a>
         <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+        <a href="/docs/installation" class="btn-solid nav-cta">Install</a>
       </div>
     </div>
   </nav>
 
-  <div class="blog-index">
-    <div class="blog-index-header">
-      <h1>Blog</h1>
-      <p>Insights, updates, and deep dives into autonomous AI agents.</p>
+  <!-- ── HEADER ───────────────────────────────────── -->
+  <header class="blog-head">
+    <div class="blog-head-inner">
+      <p class="label-mono reveal reveal-up">Field notes</p>
+      <h1 class="display-h1 reveal reveal-up">
+        Notes from the <em>runtime.</em>
+      </h1>
+      <p class="lead reveal reveal-up">
+        Deep dives, design decisions, and pieces of context that didn't fit in the docs.
+      </p>
     </div>
+  </header>
 
-    <div class="posts-grid">
-      {posts.map(post => (
-        <a href={`/blog/${post.slug}`} class="post-card">
-          <div class="post-meta">
-            <span>{post.date}</span>
-            <span>•</span>
-            <span>{post.readTime} read</span>
-          </div>
-          <h2>{post.title}</h2>
-          <p>{post.description}</p>
-          <div class="post-arrow">→</div>
-        </a>
-      ))}
+  <!-- ── FEATURED POST ────────────────────────────── -->
+  <section class="blog-featured">
+    <div class="blog-featured-inner">
+      <a href={`/blog/${featured.slug}`} class="featured-card reveal reveal-up">
+        <div class="featured-meta">
+          <span class="label-mono">Latest</span>
+          <span class="featured-sep">·</span>
+          <span class="featured-meta-text">{featured.date} · {featured.readTime} read</span>
+        </div>
+        <h2 class="featured-title">{featured.title}</h2>
+        <p class="featured-desc">{featured.description}</p>
+        <span class="featured-arrow">Read post →</span>
+      </a>
     </div>
-  </div>
+  </section>
 
-  <style>
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(10,10,10, 0.8);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 16px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .nav-logo {
-      font-family: var(--mono);
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--accent);
-      text-decoration: none;
-      letter-spacing: 0.5px;
-    }
-    .nav-version {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--text-muted);
-      background: var(--bg-surface);
-      padding: 2px 8px;
-      border-radius: 4px;
-    }
-    .nav-right {
-      display: flex;
-      gap: 24px;
-      align-items: center;
-    }
-    .nav-link {
-      font-size: 14px;
-      color: var(--text-secondary);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .nav-link:hover {
-      color: var(--text-primary);
-    }
+  <!-- ── POST LIST ────────────────────────────────── -->
+  <section class="blog-list">
+    <div class="blog-list-inner">
+      <p class="label-mono reveal reveal-up blog-list-label">Archive</p>
+      <div class="post-grid">
+        {rest.map(post => (
+          <a href={`/blog/${post.slug}`} class="post-card reveal reveal-up">
+            <div class="post-card-meta">
+              <span>{post.date}</span>
+              <span class="post-card-sep">·</span>
+              <span>{post.readTime} read</span>
+            </div>
+            <h3 class="post-card-title">{post.title}</h3>
+            <p class="post-card-desc">{post.description}</p>
+            <span class="post-card-arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 
-    .blog-index {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 80px 24px 120px;
-    }
-
-    .blog-index-header {
-      margin-bottom: 64px;
-    }
-
-    .blog-index-header h1 {
-      font-size: 64px;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin: 0 0 16px 0;
-      line-height: 1.1;
-    }
-
-    .blog-index-header p {
-      font-size: 20px;
-      color: var(--text-secondary);
-      margin: 0;
-    }
-
-    .posts-grid {
-      display: grid;
-      gap: 24px;
-    }
-
-    .post-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 32px;
-      text-decoration: none;
-      display: block;
-      transition: all 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .post-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    .post-card:hover .post-arrow {
-      transform: translateX(4px);
-    }
-
-    .post-meta {
-      font-size: 13px;
-      color: var(--text-muted);
-      font-family: var(--mono);
-      margin-bottom: 16px;
-      display: flex;
-      gap: 8px;
-    }
-
-    .post-card h2 {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin: 0 0 12px 0;
-      line-height: 1.3;
-    }
-
-    .post-card p {
-      font-size: 16px;
-      color: var(--text-secondary);
-      margin: 0;
-      line-height: 1.6;
-    }
-
-    .post-arrow {
-      position: absolute;
-      top: 32px;
-      right: 32px;
-      font-size: 24px;
-      color: var(--accent);
-      transition: transform 0.2s;
-    }
-
-    @media (max-width: 768px) {
-      .blog-index-header h1 {
-        font-size: 48px;
-      }
-      .post-card {
-        padding: 24px;
-      }
-      .post-arrow {
-        top: 24px;
-        right: 24px;
-      }
-    }
-  </style>
-
+  <!-- ── FOOTER ───────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="nav-dot"></span>
+        <span class="footer-logo">J.A.R.V.I.S.</span>
+        <span class="footer-copy">© 2026</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener">GitHub</a>
+        <a href="/docs/introduction">Docs</a>
+        <a href="/blog">Blog</a>
+        <a href="/roadmap">Roadmap</a>
+        <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener">Discord</a>
+      </div>
+    </div>
+  </footer>
 </Landing>
+
+<style>
+  /* ── Nav ──────────────────────────────────── */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(245, 242, 235, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: var(--hair);
+  }
+  .nav-inner {
+    max-width: var(--col-wide);
+    margin: 0 auto;
+    padding: 0 28px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+  }
+  .nav-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(194, 58, 42, 0.18);
+    display: inline-block;
+  }
+  .nav-right { display: flex; align-items: center; gap: 28px; }
+  .nav-link {
+    color: var(--ink-2);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .nav-link:hover { color: var(--accent); }
+  .nav-cta { padding: 8px 16px; font-size: 13px; }
+  @media (max-width: 880px) {
+    .nav-right .nav-link:not(:nth-last-child(-n+2)) { display: none; }
+  }
+
+  /* ── Header ───────────────────────────────── */
+  .blog-head {
+    background: var(--paper);
+    border-bottom: var(--hair);
+  }
+  .blog-head-inner {
+    max-width: var(--col-wide);
+    margin: 0 auto;
+    padding: 88px 28px 64px;
+  }
+  .blog-head .display-h1 { margin: 14px 0 22px; max-width: 14ch; }
+  .blog-head .lead { margin: 0; }
+
+  /* ── Featured ────────────────────────────── */
+  .blog-featured {
+    background: var(--paper-2);
+    border-bottom: var(--hair);
+  }
+  .blog-featured-inner {
+    max-width: var(--col-wide);
+    margin: 0 auto;
+    padding: 56px 28px;
+  }
+  .featured-card {
+    display: block;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: var(--r-2);
+    padding: 36px 40px;
+    text-decoration: none;
+    color: var(--ink);
+    box-shadow: 6px 6px 0 0 var(--ink);
+    transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  }
+  .featured-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0 0 var(--accent);
+  }
+  .featured-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .featured-sep { color: var(--rule); }
+  .featured-meta-text {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+  .featured-title {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(28px, 3.4vw, 38px);
+    line-height: 1.14;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0 0 16px;
+    max-width: 26ch;
+  }
+  .featured-desc {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    margin: 0 0 22px;
+    max-width: 60ch;
+  }
+  .featured-arrow {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+  }
+  @media (max-width: 640px) {
+    .featured-card { padding: 28px 24px; }
+  }
+
+  /* ── List ─────────────────────────────────── */
+  .blog-list {
+    background: var(--paper);
+  }
+  .blog-list-inner {
+    max-width: var(--col-wide);
+    margin: 0 auto;
+    padding: 72px 28px 120px;
+  }
+  .blog-list-label {
+    margin-bottom: 24px;
+  }
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: var(--hair);
+    border-radius: var(--r-2);
+    overflow: hidden;
+  }
+  .post-card {
+    background: var(--paper);
+    padding: 32px 32px 28px;
+    text-decoration: none;
+    color: var(--ink);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+  .post-card:hover {
+    background: var(--paper-2);
+  }
+  .post-card:hover .post-card-arrow {
+    transform: translateX(4px);
+    color: var(--accent);
+  }
+  .post-card-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .post-card-sep { color: var(--rule); }
+  .post-card-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.22;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin: 0 0 12px;
+    max-width: 28ch;
+  }
+  .post-card-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    margin: 0 0 20px;
+    flex: 1;
+  }
+  .post-card-arrow {
+    align-self: flex-start;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--ink-3);
+    transition: transform var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  @media (max-width: 720px) {
+    .post-grid { grid-template-columns: 1fr; }
+    .post-card { padding: 24px; }
+  }
+
+  /* ── Footer ───────────────────────────────── */
+  .footer {
+    border-top: var(--hair-bold);
+    background: var(--paper);
+    padding: 40px 28px 32px;
+  }
+  .footer-inner {
+    max-width: var(--col-wide);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .footer-left {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+  }
+  .footer-logo { font-weight: 700; }
+  .footer-copy { color: var(--ink-3); }
+  .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
+  .footer-links a {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .footer-links a:hover { color: var(--accent); }
+</style>

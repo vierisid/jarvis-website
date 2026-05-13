@@ -1,5 +1,5 @@
 ---
-import '../styles/global.css';
+import Landing from './Landing.astro';
 
 export interface Props {
   title: string;
@@ -11,281 +11,342 @@ export interface Props {
 const { title, description, date, readTime } = Astro.props;
 ---
 
-<!doctype html>
-<html lang="en" data-theme="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
-    <meta name="theme-color" content="#0a0a0a" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="article" />
-    <title>{title} — J.A.R.V.I.S.</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      *, *::before, *::after { box-sizing: border-box; }
-      html { scroll-behavior: smooth; }
-
-      body {
-        background: #0a0a0a;
-        color: #a0a0a0;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      :root {
-        --bg: #0a0a0a;
-        --bg-raised: #111111;
-        --bg-surface: #161616;
-        --border: #1e1e1e;
-        --border-subtle: #161616;
-        --text-primary: #e8e8e8;
-        --text-secondary: #888888;
-        --text-muted: #555555;
-        --accent: #3ecf8e;
-        --accent-amber: #e5a522;
-        --accent-cyan: #22d3ee;
-        --accent-red: #ef4444;
-        --mono: 'JetBrains Mono', ui-monospace, monospace;
-      }
-
-      .nav {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background: rgba(10,10,10, 0.8);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid var(--border);
-      }
-      .nav-inner {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 16px 24px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .nav-left {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-      .nav-logo {
-        font-family: var(--mono);
-        font-size: 16px;
-        font-weight: 700;
-        color: var(--accent);
-        text-decoration: none;
-        letter-spacing: 0.5px;
-      }
-      .nav-version {
-        font-family: var(--mono);
-        font-size: 11px;
-        color: var(--text-muted);
-        background: var(--bg-surface);
-        padding: 2px 8px;
-        border-radius: 4px;
-      }
-      .nav-right {
-        display: flex;
-        gap: 24px;
-        align-items: center;
-      }
-      .nav-link {
-        font-size: 14px;
-        color: var(--text-secondary);
-        text-decoration: none;
-        transition: color 0.2s;
-      }
-      .nav-link:hover {
-        color: var(--text-primary);
-      }
-
-      .blog-container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 80px 24px;
-      }
-
-      .blog-header {
-        margin-bottom: 48px;
-        padding-bottom: 32px;
-        border-bottom: 1px solid var(--border);
-      }
-
-      .blog-meta {
-        display: flex;
-        gap: 16px;
-        align-items: center;
-        font-size: 14px;
-        color: var(--text-muted);
-        margin-bottom: 16px;
-        font-family: var(--mono);
-      }
-
-      .blog-title {
-        font-size: 48px;
-        font-weight: 800;
-        color: var(--text-primary);
-        line-height: 1.2;
-        margin: 0 0 16px 0;
-      }
-
-      .blog-description {
-        font-size: 20px;
-        color: var(--text-secondary);
-        line-height: 1.6;
-        margin: 0;
-      }
-
-      .blog-content {
-        font-size: 17px;
-        line-height: 1.8;
-        color: var(--text-secondary);
-      }
-
-      .blog-content h2 {
-        font-size: 32px;
-        font-weight: 700;
-        color: var(--text-primary);
-        margin: 48px 0 24px 0;
-        line-height: 1.3;
-      }
-
-      .blog-content h3 {
-        font-size: 24px;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin: 36px 0 16px 0;
-      }
-
-      .blog-content p {
-        margin: 0 0 24px 0;
-      }
-
-      .blog-content ul, .blog-content ol {
-        margin: 0 0 24px 0;
-        padding-left: 24px;
-      }
-
-      .blog-content li {
-        margin-bottom: 12px;
-      }
-
-      .blog-content code {
-        font-family: var(--mono);
-        font-size: 15px;
-        background: var(--bg-surface);
-        padding: 2px 8px;
-        border-radius: 4px;
-        color: var(--accent);
-      }
-
-      .blog-content pre {
-        background: var(--bg-surface);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 20px;
-        overflow-x: auto;
-        margin: 0 0 24px 0;
-      }
-
-      .blog-content pre code {
-        background: none;
-        padding: 0;
-        color: var(--text-secondary);
-      }
-
-      .blog-content a {
-        color: var(--accent);
-        text-decoration: none;
-        border-bottom: 1px solid transparent;
-        transition: border-color 0.2s;
-      }
-
-      .blog-content a:hover {
-        border-bottom-color: var(--accent);
-      }
-
-      .blog-content strong {
-        color: var(--text-primary);
-        font-weight: 600;
-      }
-
-      .blog-content blockquote {
-        margin: 32px 0;
-        padding: 16px 24px;
-        border-left: 3px solid var(--accent);
-        background: var(--bg-surface);
-        font-style: italic;
-        color: var(--text-secondary);
-      }
-
-      .highlight-box {
-        background: var(--bg-surface);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 24px;
-        margin: 32px 0;
-      }
-
-      .highlight-box h3 {
-        margin-top: 0;
-      }
-
-      @media (max-width: 768px) {
-        .blog-title {
-          font-size: 36px;
-        }
-        .blog-description {
-          font-size: 18px;
-        }
-        .nav-right {
-          gap: 12px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <!-- NAV -->
-    <nav class="nav">
-      <div class="nav-inner">
-        <div class="nav-left">
-          <a href="/" class="nav-logo">J.A.R.V.I.S.</a>
-          <span class="nav-version">v0.4.2</span>
-        </div>
-        <div class="nav-right">
-          <a href="/" class="nav-link">Home</a>
-          <a href="/blog" class="nav-link">Blog</a>
-          <a href="/docs/introduction" class="nav-link">Docs</a>
-          <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="nav-link">GitHub</a>
-        </div>
-      </div>
-    </nav>
-
-    <div class="blog-container">
-      <div class="blog-header">
-        <div class="blog-meta">
-          <span>{date}</span>
-          <span>•</span>
-          <span>{readTime} read</span>
-        </div>
-        <h1 class="blog-title">{title}</h1>
-        <p class="blog-description">{description}</p>
-      </div>
-
-      <div class="blog-content">
-        <slot />
+<Landing title={`${title} — J.A.R.V.I.S.`} description={description}>
+  <!-- ── NAV ──────────────────────────────────────── -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <span class="nav-dot"></span>
+        J.A.R.V.I.S.
+      </a>
+      <div class="nav-right">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/blog" class="nav-link">Blog</a>
+        <a href="/roadmap" class="nav-link">Roadmap</a>
+        <a href="/docs/introduction" class="nav-link">Docs</a>
+        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+        <a href="/docs/installation" class="btn-solid nav-cta">Install</a>
       </div>
     </div>
-  </body>
-</html>
+  </nav>
+
+  <!-- ── ARTICLE HEADER ───────────────────────────── -->
+  <header class="post-head">
+    <div class="post-head-inner">
+      <a href="/blog" class="post-back">
+        <span class="post-back-arrow">←</span>
+        <span>All posts</span>
+      </a>
+      <p class="label-mono reveal reveal-up post-meta">
+        <span>{date}</span>
+        <span class="post-meta-sep">·</span>
+        <span>{readTime} read</span>
+      </p>
+      <h1 class="display-h1 post-title reveal reveal-up">{title}</h1>
+      <p class="lead post-lead reveal reveal-up">{description}</p>
+    </div>
+  </header>
+
+  <!-- ── ARTICLE BODY ─────────────────────────────── -->
+  <article class="post-body">
+    <div class="post-body-inner">
+      <slot />
+    </div>
+  </article>
+
+  <!-- ── ARTICLE FOOTER ───────────────────────────── -->
+  <section class="post-cta">
+    <div class="post-cta-inner">
+      <p class="label-mono reveal reveal-up">Next up</p>
+      <h2 class="display-h2 reveal reveal-up">Read more from the <em>J.A.R.V.I.S.</em> team.</h2>
+      <div class="post-cta-actions reveal reveal-up">
+        <a href="/blog" class="btn-solid">All posts</a>
+        <a href="/docs/installation" class="btn-border">Install J.A.R.V.I.S.</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ───────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="nav-dot"></span>
+        <span class="footer-logo">J.A.R.V.I.S.</span>
+        <span class="footer-copy">© 2026</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener">GitHub</a>
+        <a href="/docs/introduction">Docs</a>
+        <a href="/blog">Blog</a>
+        <a href="/roadmap">Roadmap</a>
+        <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener">Discord</a>
+      </div>
+    </div>
+  </footer>
+</Landing>
+
+<style>
+  /* ── Nav (shared with homepage shape) ───── */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(245, 242, 235, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: var(--hair);
+  }
+  .nav-inner {
+    max-width: var(--col-wide);
+    margin: 0 auto;
+    padding: 0 28px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+  }
+  .nav-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(194, 58, 42, 0.18);
+    display: inline-block;
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .nav-link {
+    color: var(--ink-2);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .nav-link:hover { color: var(--accent); }
+  .nav-cta { padding: 8px 16px; font-size: 13px; }
+  @media (max-width: 880px) {
+    .nav-right .nav-link:not(:nth-last-child(-n+2)) { display: none; }
+  }
+
+  /* ── Post header ────────────────────────── */
+  .post-head {
+    border-bottom: var(--hair);
+    background: var(--paper);
+  }
+  .post-head-inner {
+    max-width: var(--col-narrow);
+    margin: 0 auto;
+    padding: 72px 28px 56px;
+  }
+  .post-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    text-decoration: none;
+    margin-bottom: 28px;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .post-back:hover { color: var(--accent); }
+  .post-back-arrow { display: inline-block; transition: transform var(--dur-fast) var(--ease-out); }
+  .post-back:hover .post-back-arrow { transform: translateX(-2px); }
+
+  .post-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 14px;
+  }
+  .post-meta-sep { color: var(--rule); }
+
+  .post-title { max-width: 22ch; margin: 0 0 18px; }
+  .post-lead { margin: 0; max-width: 60ch; }
+
+  /* ── Post body ──────────────────────────── */
+  .post-body {
+    background: var(--paper);
+  }
+  .post-body-inner {
+    max-width: var(--col-narrow);
+    margin: 0 auto;
+    padding: 56px 28px 96px;
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--ink-2);
+  }
+  .post-body-inner :global(h2) {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 56px 0 18px;
+    padding-top: 36px;
+    border-top: var(--hair);
+  }
+  .post-body-inner :global(h2:first-child) {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+  .post-body-inner :global(h3) {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 36px 0 14px;
+  }
+  .post-body-inner :global(p) {
+    margin: 0 0 22px;
+    max-width: 64ch;
+  }
+  .post-body-inner :global(strong) {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .post-body-inner :global(em) {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .post-body-inner :global(a) {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .post-body-inner :global(a:hover) { color: var(--ink); }
+  .post-body-inner :global(ul),
+  .post-body-inner :global(ol) {
+    margin: 0 0 24px;
+    padding-left: 24px;
+    max-width: 64ch;
+  }
+  .post-body-inner :global(li) { margin-bottom: 10px; }
+  .post-body-inner :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    background: var(--paper-2);
+    border: var(--hair-soft);
+    border-radius: var(--r-1);
+    padding: 0.12em 0.42em;
+    color: var(--ink);
+  }
+  .post-body-inner :global(pre) {
+    background: var(--paper-2);
+    border: var(--hair);
+    border-radius: var(--r-2);
+    padding: 18px 20px;
+    overflow-x: auto;
+    margin: 0 0 24px;
+    font-size: 13.5px;
+    line-height: 1.7;
+  }
+  .post-body-inner :global(pre code) {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--ink);
+  }
+  .post-body-inner :global(blockquote) {
+    margin: 32px 0;
+    padding: 14px 18px;
+    border-left: 2px solid var(--accent);
+    background: var(--paper-2);
+    color: var(--ink-2);
+    border-radius: 0 var(--r-2) var(--r-2) 0;
+  }
+  .post-body-inner :global(.highlight-box) {
+    background: var(--paper-2);
+    border: var(--hair);
+    border-radius: var(--r-2);
+    padding: 24px 28px;
+    margin: 32px 0;
+    box-shadow: 3px 3px 0 0 rgba(26, 26, 26, 0.05);
+  }
+  .post-body-inner :global(.highlight-box h3) {
+    margin-top: 0;
+    font-size: 18px;
+  }
+  .post-body-inner :global(.highlight-box p:last-child) {
+    margin-bottom: 0;
+  }
+  .post-body-inner :global(hr) {
+    border: none;
+    border-top: var(--hair);
+    margin: 48px 0;
+  }
+
+  /* ── Post CTA ───────────────────────────── */
+  .post-cta {
+    border-top: var(--hair);
+    background: var(--paper-2);
+  }
+  .post-cta-inner {
+    max-width: var(--col-narrow);
+    margin: 0 auto;
+    padding: 72px 28px;
+  }
+  .post-cta .display-h2 { margin: 12px 0 28px; }
+  .post-cta-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Footer ─────────────────────────────── */
+  .footer {
+    border-top: var(--hair-bold);
+    background: var(--paper);
+    padding: 40px 28px 32px;
+  }
+  .footer-inner {
+    max-width: var(--col-wide);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .footer-left {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+  }
+  .footer-logo { font-weight: 700; }
+  .footer-copy { color: var(--ink-3); }
+  .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
+  .footer-links a {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .footer-links a:hover { color: var(--accent); }
+</style>

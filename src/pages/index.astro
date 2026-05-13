@@ -1,1452 +1,1129 @@
 ---
 import Landing from '../layouts/Landing.astro';
+
+// Seven pebble feature sections. Each gets a short on-page demo loop.
+const features = [
+  {
+    id: 'pebble',
+    label: 'The Pebble',
+    title: 'A cursor companion.',
+    body: 'Trails your cursor with eased physics. Click-through everywhere except the bubble. Five states — idle, listening, thinking, speaking, working.',
+    poster: '/demos/posters/pebble.jpg',
+    video: '/demos/pebble.mp4',
+    flip: false,
+  },
+  {
+    id: 'voice',
+    label: 'Voice loop',
+    title: 'Wake word — or ⌃Space.',
+    body: 'Say "Jarvis" anywhere in a sentence. Streaming TTS replies in 1–2 seconds. Press the hotkey mid-speech and JARVIS shuts up in 10ms.',
+    poster: '/demos/posters/voice.jpg',
+    video: '/demos/voice.mp4',
+    flip: true,
+  },
+  {
+    id: 'rooms',
+    label: '12 rooms by voice',
+    title: 'Open. Navigate. Close.',
+    body: '"Open settings." "Switch to the editor tab." "Close it." Each of the 12 rooms — settings, memory, agents, workflows, tools, authority, logs, calendar, goals, tasks, content, workspaces — opens as a native panel.',
+    poster: '/demos/posters/rooms.jpg',
+    video: '/demos/rooms.mp4',
+    flip: false,
+  },
+  {
+    id: 'settings',
+    label: 'Settings by voice',
+    title: 'Skip the LLM.',
+    body: '"Turn off TTS." "Switch transcription to Groq." Recognized commands persist to disk and apply instantly — no LLM in the loop.',
+    poster: '/demos/posters/settings.jpg',
+    video: '/demos/settings.mp4',
+    flip: true,
+  },
+  {
+    id: 'autonomy',
+    label: 'Autonomous',
+    title: 'Acts before you ask.',
+    body: 'Watches your screen, calendar, and goals. Drafts the brief for the meeting you forgot, queues the reply that needs to go out, surfaces the next move. Always optional.',
+    poster: '/demos/posters/autonomy.jpg',
+    video: '/demos/autonomy.mp4',
+    flip: false,
+  },
+  {
+    id: 'pointing',
+    label: 'Pointing',
+    title: '"Where do I click?"',
+    body: 'Auto-screenshot, grid math, the pebble flies to the right button. Works in any app, foreground-aware — "show me my files" resolves differently in VSCode versus CapCut.',
+    poster: '/demos/posters/pointing.jpg',
+    video: '/demos/pointing.mp4',
+    flip: true,
+  },
+  {
+    id: 'region',
+    label: 'Region understanding',
+    title: '"What is this?"',
+    body: 'Drag a rectangle on screen. JARVIS sees the cropped region through any vision-capable model and answers from what it sees.',
+    poster: '/demos/posters/region.jpg',
+    video: '/demos/region.mp4',
+    flip: false,
+  },
+];
 ---
 
 <Landing>
-
-  <!-- NAV -->
+  <!-- ── NAV ──────────────────────────────────────── -->
   <nav class="nav">
     <div class="nav-inner">
-      <div class="nav-left">
-        <a href="/" class="nav-logo">J.A.R.V.I.S.</a>
-        <span class="nav-version">v0.4.2</span>
-      </div>
+      <a href="/" class="nav-logo">
+        <span class="nav-dot"></span>
+        J.A.R.V.I.S.
+      </a>
       <div class="nav-right">
-        <a href="#architecture" class="nav-link">Architecture</a>
-        <a href="#sidecar" class="nav-link">Sidecar</a>
-        <a href="#agents" class="nav-link">Agents</a>
+        <a href="#trailer" class="nav-link">Watch</a>
+        <a href="#pebble" class="nav-link">Pebble</a>
         <a href="#workflows" class="nav-link">Workflows</a>
+        <a href="#sidecar" class="nav-link">Sidecar</a>
         <a href="/blog" class="nav-link">Blog</a>
         <a href="/roadmap" class="nav-link">Roadmap</a>
-        <a href="/docs/introduction" class="nav-link">Docs</a>
-        <a href="/docs/contributing" class="nav-link">Contribute</a>
         <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="nav-link">GitHub</a>
-        <a href="/docs/installation" class="nav-install">INSTALL</a>
+        <a href="/docs/installation" class="btn-solid nav-cta">Install</a>
       </div>
     </div>
   </nav>
-  <div class="scroll-progress" id="scrollProgress"></div>
 
-  <!-- HERO -->
+  <!-- ── HERO ─────────────────────────────────────── -->
   <section class="hero">
-    <div class="hero-grid">
-
-      <!-- Left: copy -->
-      <div>
-        <p class="label">Open-source agent runtime</p>
-
-        <h1 class="hero-heading">
-          The operating layer<br/>for autonomous<br/>AI agents.
-        </h1>
-
-        <p class="hero-sub">
-          Memory. Awareness. Action. Orchestration. &mdash; Four primitives that turn any LLM
-          into a persistent, context-aware agent that sees your screen, controls your apps,
-          and pursues goals on your behalf. Provider-agnostic. Self-hosted. Runs 24/7.
-        </p>
-
-        <div class="hero-actions">
-          <a href="/docs/installation" class="btn-solid">Get Started</a>
-          <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="btn-border">View Source</a>
-        </div>
-
-        <!-- Install command -->
-        <div class="cmd-block">
-          <code><span class="cmd-prompt">$</span> bun install -g <span class="cmd-highlight">@usejarvis/brain</span></code>
-          <button class="cmd-copy" id="copy-btn">copy</button>
-        </div>
-
-        <div style="margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap;">
-          <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener" class="btn-border">Discord Community</a>
-          <a href="/docs/introduction" class="btn-border">Read the Docs</a>
-          <a href="/roadmap" class="btn-border">View Roadmap</a>
-        </div>
-      </div>
-
-      <!-- Right: system status panel — organized by four pillars -->
-      <div class="status-panel">
-        <div class="status-header">
-          <div class="status-header-left">
-            <span class="dot dot-green dot-pulse"></span>
-            <span class="status-title">Runtime Status</span>
-          </div>
-          <span class="status-time" id="clock">--:--:-- UTC</span>
-        </div>
-
-        <div class="status-body">
-          <!-- Memory pillar -->
-          <div class="status-group-header">
-            <span class="status-group-label">Memory</span>
-          </div>
-          <div class="status-row">
-            <span class="status-label">vault</span>
-            <span class="status-value"><span class="dot dot-green"></span><span class="status-green">847 facts</span></span>
-            <span class="status-meta">12 entities · semantic search</span>
-          </div>
-          <div class="status-row">
-            <span class="status-label">context</span>
-            <span class="status-value"><span class="dot dot-green"></span><span class="status-green">injected</span></span>
-            <span class="status-meta">per-message · knowledge graph</span>
-          </div>
-
-          <!-- Awareness pillar -->
-          <div class="status-group-header">
-            <span class="status-group-label">Awareness</span>
-          </div>
-          <div class="status-row">
-            <span class="status-label">capture</span>
-            <span class="status-value"><span class="dot dot-green"></span><span class="status-green">active</span></span>
-            <span class="status-meta">ocr + vision · 7s cycle</span>
-          </div>
-          <div class="status-row">
-            <span class="status-label">context</span>
-            <span class="status-value"><span class="dot dot-cyan"></span><span class="status-cyan">tracking</span></span>
-            <span class="status-meta">activity sessions · struggle detection</span>
-          </div>
-
-          <!-- Action pillar -->
-          <div class="status-group-header">
-            <span class="status-group-label">Action</span>
-          </div>
-          <div class="status-row">
-            <span class="status-label">browser</span>
-            <span class="status-value"><span class="dot dot-green"></span><span class="status-green">ready</span></span>
-            <span class="status-meta">chromium 121 · cdp:9222</span>
-          </div>
-          <div class="status-row">
-            <span class="status-label">sidecar</span>
-            <span class="status-value"><span class="dot dot-green"></span><span class="status-green">3 online</span></span>
-            <span class="status-meta">go · jwt-ws · multi-machine</span>
-          </div>
-          <div class="status-row">
-            <span class="status-label">voice</span>
-            <span class="status-value"><span class="dot dot-cyan"></span><span class="status-cyan">listening</span></span>
-            <span class="status-meta">wake-word · tts:edge</span>
-          </div>
-
-          <!-- Orchestration pillar -->
-          <div class="status-group-header">
-            <span class="status-group-label">Orchestration</span>
-          </div>
-          <div class="status-row">
-            <span class="status-label">agents</span>
-            <span class="status-value"><span class="dot dot-green"></span><span class="status-green">11 roles</span></span>
-            <span class="status-meta">2 active · parallel delegation</span>
-          </div>
-          <div class="status-row">
-            <span class="status-label">workflows</span>
-            <span class="status-value"><span class="dot dot-green"></span><span class="status-green">4 active</span></span>
-            <span class="status-meta">2 cron · 1 webhook · 1 screen</span>
-          </div>
-          <div class="status-row status-row-last">
-            <span class="status-label">goals</span>
-            <span class="status-value"><span class="dot dot-green"></span><span class="status-green">3 active</span></span>
-            <span class="status-meta">1 objective · 2 key results</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOUR PILLARS — The architecture strip -->
-  <section id="architecture" class="cap-strip">
-    <div class="cap-strip-inner">
-      <p class="cap-strip-label reveal reveal-up">The Four Primitives</p>
-      <div class="cap-grid reveal reveal-up">
-        <div class="cap-item">
-          <div class="cap-dot-wrap"><span class="dot dot-green"></span></div>
-          <div class="cap-name">Memory</div>
-          <div class="cap-one">Persistent semantic memory</div>
-          <div class="cap-detail">Entity graph, knowledge vault, fact extraction after every conversation. Context continuity across sessions. Semantic search injection per message.</div>
-        </div>
-        <div class="cap-item">
-          <div class="cap-dot-wrap"><span class="dot dot-cyan"></span></div>
-          <div class="cap-name">Awareness</div>
-          <div class="cap-one">User context understanding</div>
-          <div class="cap-detail">Screen capture + OCR every 7s. Application state tracking, activity sessions, struggle detection. Cloud vision escalation for complex contexts.</div>
-        </div>
-        <div class="cap-item">
-          <div class="cap-dot-wrap"><span class="dot dot-green"></span></div>
-          <div class="cap-name">Action</div>
-          <div class="cap-one">Execution across desktop, browser & tools</div>
-          <div class="cap-detail">CDP browser automation. Go sidecar for native desktop apps. Terminal, filesystem, voice (TTS/STT). 14+ builtin tools with 200 iterations per turn.</div>
-        </div>
-        <div class="cap-item">
-          <div class="cap-dot-wrap"><span class="dot dot-amber"></span></div>
-          <div class="cap-name">Orchestration</div>
-          <div class="cap-one">Multi-agent coordination & autonomy</div>
-          <div class="cap-detail">11 specialist agent roles with delegation. Visual workflow builder (50+ nodes). OKR goal pursuit. Authority gating, approval logic, proactive routines.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- THE ASSISTANT IS THE FIRST APPLICATION -->
-  <section class="arch-section">
-    <div class="arch-inner">
-      <div class="spot-header-center">
-        <div class="spot-badge reveal reveal-up">ARCHITECTURE</div>
-        <h2 class="spot-heading reveal reveal-up">The assistant is the first<br/>application. Not the last.</h2>
-        <p class="spot-sub reveal reveal-up" style="max-width: 620px; margin: 0 auto;">
-          Most AI tools ship an assistant and call it a product. JARVIS ships a runtime &mdash;
-          and the personal assistant is just the first application built on it. The same four
-          primitives power every workflow, every agent role, and every capability on the platform.
-        </p>
-      </div>
-
-      <!-- Runtime → Applications diagram -->
-      <div class="arch-diagram reveal reveal-up">
-        <div class="arch-layer arch-layer-apps">
-          <div class="arch-layer-label">Applications</div>
-          <div class="arch-apps-grid">
-            <div class="arch-app arch-app-primary">
-              <span class="arch-app-dot" style="background: var(--accent);"></span>
-              <span class="arch-app-name">Assistant</span>
-              <span class="arch-app-tag">built-in</span>
-            </div>
-            <div class="arch-app">
-              <span class="arch-app-dot" style="background: var(--accent-cyan);"></span>
-              <span class="arch-app-name">Workflows</span>
-              <span class="arch-app-tag">built-in</span>
-            </div>
-            <div class="arch-app">
-              <span class="arch-app-dot" style="background: var(--accent-amber);"></span>
-              <span class="arch-app-name">Agent Roles</span>
-              <span class="arch-app-tag">11 roles</span>
-            </div>
-            <div class="arch-app">
-              <span class="arch-app-dot" style="background: var(--text-muted);"></span>
-              <span class="arch-app-name">Plugins</span>
-              <span class="arch-app-tag">SDK</span>
-            </div>
-            <div class="arch-app arch-app-yours">
-              <span class="arch-app-dot" style="background: var(--border);"></span>
-              <span class="arch-app-name">Your App</span>
-              <span class="arch-app-tag arch-app-tag-dim">build it</span>
-            </div>
-          </div>
-        </div>
-        <div class="arch-connector">
-          <div class="arch-arrow"></div>
-          <div class="arch-arrow"></div>
-          <div class="arch-arrow"></div>
-          <div class="arch-arrow"></div>
-        </div>
-        <div class="arch-layer arch-layer-runtime">
-          <div class="arch-layer-label">Runtime</div>
-          <div class="arch-pillars-grid">
-            <div class="arch-pillar" style="border-color: rgba(62,207,142,0.3);">
-              <span class="arch-pillar-name" style="color: var(--accent);">Memory</span>
-            </div>
-            <div class="arch-pillar" style="border-color: rgba(34,211,238,0.3);">
-              <span class="arch-pillar-name" style="color: var(--accent-cyan);">Awareness</span>
-            </div>
-            <div class="arch-pillar" style="border-color: rgba(62,207,142,0.3);">
-              <span class="arch-pillar-name" style="color: var(--accent);">Action</span>
-            </div>
-            <div class="arch-pillar" style="border-color: rgba(229,165,34,0.3);">
-              <span class="arch-pillar-name" style="color: var(--accent-amber);">Orchestration</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <p class="arch-footnote reveal reveal-up">
-        The runtime provides the layer that agents need to be persistent, context-aware, and capable of acting in the real world.
-        Applications are built on top &mdash; the assistant is just the most visible one.
+    <div class="hero-inner">
+      <p class="label-mono reveal reveal-up">Always-on · Voice-first · Open source</p>
+      <h1 class="display-h1 hero-h1 reveal reveal-up">
+        The first 24/7 AI agent<br/>
+        <em>without</em> a dashboard.
+      </h1>
+      <p class="lead hero-lead reveal reveal-up">
+        A cursor companion. Say <em>"Jarvis"</em> or hit <kbd>⌃ Space</kbd>.
+        Everything the dashboard does — <em>without ever opening it.</em>
       </p>
-    </div>
-  </section>
-
-  <!-- SIDECAR — One brain, every machine -->
-  <section id="sidecar" class="spotlight spotlight-sc">
-    <div class="spotlight-inner">
-      <div class="spot-grid">
-        <div>
-          <div class="spot-badge reveal reveal-left">ACTION</div>
-          <h2 class="spot-heading reveal reveal-left">One brain.<br/>Every machine.</h2>
-          <p class="spot-sub reveal reveal-left">
-            Install the sidecar on any computer &mdash; work laptop, home desktop, cloud VM,
-            CI server. Each connects back to a single JARVIS daemon via JWT-authenticated
-            WebSocket. One agent runtime orchestrating across all your machines.
-          </p>
-
-          <!-- Hub-spoke diagram — CSS grid -->
-          <div class="hub-grid reveal reveal-scale">
-            <!-- Row 1: top node -->
-            <div class="hub-cell"></div>
-            <div class="hub-cell hub-cell-node">
-              <div class="hub-node">
-                <span class="hub-node-name">Work Laptop</span>
-                <span class="hub-node-caps">terminal, browser, desktop</span>
-              </div>
-              <div class="hub-wire hub-wire-v"></div>
-            </div>
-            <div class="hub-cell"></div>
-
-            <!-- Row 2: left node — center — right node -->
-            <div class="hub-cell hub-cell-node hub-cell-right">
-              <div class="hub-node">
-                <span class="hub-node-name">CI Server</span>
-                <span class="hub-node-caps">terminal, filesystem</span>
-              </div>
-              <div class="hub-wire hub-wire-h"></div>
-            </div>
-            <div class="hub-cell hub-cell-center">
-              <div class="hub-center-box">
-                <span class="dot dot-green dot-pulse"></span>
-                <span class="hub-center-label">JARVIS<br/>DAEMON</span>
-              </div>
-            </div>
-            <div class="hub-cell hub-cell-node hub-cell-left">
-              <div class="hub-wire hub-wire-h"></div>
-              <div class="hub-node">
-                <span class="hub-node-name">Home Desktop</span>
-                <span class="hub-node-caps">desktop, filesystem, screenshot</span>
-              </div>
-            </div>
-
-            <!-- Row 3: bottom node -->
-            <div class="hub-cell"></div>
-            <div class="hub-cell hub-cell-node">
-              <div class="hub-wire hub-wire-v"></div>
-              <div class="hub-node">
-                <span class="hub-node-name">Cloud VM</span>
-                <span class="hub-node-caps">terminal, browser, filesystem</span>
-              </div>
-            </div>
-            <div class="hub-cell"></div>
-          </div>
-        </div>
-
-        <div>
-          <div class="code-panel reveal reveal-right">
-            <div class="code-comment"># Connect any machine in 30 seconds</div>
-            <div><span class="code-comment">$</span> <span class="cmd-highlight">bun install -g @usejarvis/sidecar</span></div>
-            <div><span class="code-comment">$</span> <span class="cmd-highlight">jarvis-sidecar --token eyJhbG...</span></div>
-            <br/>
-            <div><span class="code-fn">&#10003; Connected</span> <span class="code-str">to jarvis daemon (ws://brain:3142)</span></div>
-            <div><span class="code-fn">&#10003; Capabilities:</span> <span class="code-str">terminal, browser, desktop, filesystem</span></div>
-            <div><span class="code-fn">&#10003; Machine</span> <span class="code-str">"work-laptop" online</span></div>
-          </div>
-          <div class="code-panel reveal reveal-right" style="margin-top: 1rem;">
-            <div class="code-comment"># Orchestrate across machines</div>
-            <div><span class="code-str">"Deploy the build on the CI server,</span></div>
-            <div><span class="code-str"> then open the staging URL on my laptop</span></div>
-            <div><span class="code-str"> and take a screenshot for the PR."</span></div>
-            <br/>
-            <div><span class="code-fn2">ci-server</span> <span class="code-fn">&#10003;</span> <span class="code-str">build deployed · 2m 14s</span></div>
-            <div><span class="code-fn2">work-laptop</span> <span class="code-fn">&#10003;</span> <span class="code-str">browser opened · screenshot saved</span></div>
-            <div><span class="code-fn2">daemon</span> <span class="code-fn">&#10003;</span> <span class="code-str">PR comment posted with image</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Stats -->
-      <div class="spot-stats reveal reveal-up">
-        <div class="spot-stat">
-          <span class="spot-stat-num spot-stat-inf">&infin;</span>
-          <span class="spot-stat-label">Machines</span>
-          <span class="spot-stat-detail">connect any number of computers, VMs, or servers</span>
-        </div>
-        <div class="spot-stat">
-          <span class="spot-stat-num" data-count="7">0</span>
-          <span class="spot-stat-label">Capabilities</span>
-          <span class="spot-stat-detail">terminal, browser, desktop, filesystem, clipboard, screenshot, awareness</span>
-        </div>
-        <div class="spot-stat">
-          <span class="spot-stat-num" data-count="1">0</span>
-          <span class="spot-stat-label">Brain</span>
-          <span class="spot-stat-detail">single daemon orchestrates all connected sidecars</span>
-        </div>
-        <div class="spot-stat">
-          <span class="spot-stat-num" data-count="0">0</span>
-          <span class="spot-stat-label">Config</span>
-          <span class="spot-stat-detail">JWT token is all you need &mdash; sidecar auto-discovers capabilities</span>
-        </div>
-      </div>
-
-      <div class="spot-cta reveal reveal-up">
-        <a href="/docs/desktop-control" class="btn-solid">Sidecar Docs</a>
+      <div class="hero-actions reveal reveal-up">
+        <a href="/docs/installation" class="btn-solid">Get Started</a>
         <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="btn-border">View Source</a>
       </div>
+      <div class="code-chip hero-cmd reveal reveal-up">
+        <span class="code-prompt">$</span>
+        <span><span class="code-pkg">bun install -g @usejarvis/brain</span></span>
+      </div>
+    </div>
+
+    <!-- Static pebble + cursor illustration -->
+    <div class="hero-illu reveal reveal-up">
+      <div class="hero-illu-frame">
+        <svg class="hero-cursor" viewBox="0 0 18 22" width="36" height="44" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 1l14 9-7 1 4 8-3 1-4-8-4 4z" fill="#fff" stroke="#1c1c1c" stroke-width="1" stroke-linejoin="round" />
+        </svg>
+        <span class="hero-pebble">
+          <span class="hero-pebble-wave">
+            <span></span><span></span><span></span><span></span>
+          </span>
+          <span class="hero-pebble-label">listening</span>
+        </span>
+      </div>
+      <p class="hero-illu-cap">A cursor companion. Riso flat. Always-on-top.<br/>Click-through everywhere except the bubble.</p>
     </div>
   </section>
 
-  <!-- AGENTS — Agents that delegate to agents -->
-  <section id="agents" class="spotlight spotlight-ag">
-    <div class="spotlight-inner">
-      <div class="spot-header-center">
-        <div class="spot-badge spot-badge-cyan reveal reveal-up">ORCHESTRATION</div>
-        <h2 class="spot-heading reveal reveal-up">Agents that delegate<br/>to agents.</h2>
-        <p class="spot-sub reveal reveal-up" style="max-width: 640px; margin: 0 auto;">
-          The primary agent doesn't do everything itself. It delegates to 11 specialist roles &mdash;
-          each with its own tools, context, and execution loop. Research runs in parallel with coding.
-          Analysis happens while writing. Authority stays with the primary agent.
+  <!-- ── TRAILER ──────────────────────────────────── -->
+  <section id="trailer" class="trailer">
+    <div class="section-inner">
+      <p class="label-mono reveal reveal-up">90 seconds</p>
+      <h2 class="display-h2 reveal reveal-up">See it. <em>In one Tuesday.</em></h2>
+      <div class="trailer-frame reveal reveal-up">
+        <video
+          class="trailer-video"
+          poster="/demos/posters/trailer.jpg"
+          src="/demos/JarvisTrailer.mp4"
+          controls
+          playsinline
+          preload="metadata"
+        >
+          Your browser doesn't support video. Watch on
+          <a href="https://github.com/vierisid/jarvis">GitHub</a>.
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PEBBLE FEATURES ──────────────────────────── -->
+  <section id="pebble" class="features">
+    <div class="features-inner">
+      <p class="label-mono reveal reveal-up" style="text-align: center; margin-bottom: 12px;">
+        Seven things the pebble does
+      </p>
+      <h2 class="display-h2 features-heading reveal reveal-up">
+        Everything the dashboard does.<br/>
+        <em>By voice. From your cursor.</em>
+      </h2>
+
+      {features.map((f, i) => (
+        <article class={`feature ${f.flip ? 'feature-flip' : ''}`} id={f.id}>
+          <div class="feature-copy">
+            <p class="label-mono reveal reveal-up">{`0${i + 1} · ${f.label}`}</p>
+            <h3 class="feature-title reveal reveal-up">{f.title}</h3>
+            <p class="feature-body reveal reveal-up">{f.body}</p>
+          </div>
+          <div class="feature-media reveal reveal-up">
+            <div class="mockup feature-mockup">
+              <video
+                class="feature-video"
+                poster={f.poster}
+                src={f.video}
+                muted
+                loop
+                playsinline
+                preload="none"
+                data-lazy
+              ></video>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- ── RUNTIME (compressed) ─────────────────────── -->
+  <section id="runtime" class="runtime">
+    <div class="section-inner">
+      <p class="label-mono reveal reveal-up">Underneath the pebble</p>
+      <h2 class="display-h2 reveal reveal-up">A real <em>runtime.</em> Not a chat wrapper.</h2>
+
+      <div class="runtime-strip reveal reveal-up">
+        <div class="runtime-cell">
+          <span class="runtime-num">Memory</span>
+          <span class="runtime-meta">Knowledge graph · entity vault · semantic recall</span>
+        </div>
+        <div class="runtime-cell">
+          <span class="runtime-num">Awareness</span>
+          <span class="runtime-meta">Continuous OCR · activity tracking · struggle detection</span>
+        </div>
+        <div class="runtime-cell">
+          <span class="runtime-num">Action</span>
+          <span class="runtime-meta">Browser via CDP · native desktop · terminal · voice TTS/STT</span>
+        </div>
+        <div class="runtime-cell">
+          <span class="runtime-num">Orchestration</span>
+          <span class="runtime-meta">11 agent roles · 50+ workflow nodes · OKR goal pursuit</span>
+        </div>
+        <div class="runtime-cell">
+          <span class="runtime-num">Sidecar</span>
+          <span class="runtime-meta">One brain · every machine · JWT-auth WebSocket</span>
+        </div>
+        <div class="runtime-cell">
+          <span class="runtime-num">Authority</span>
+          <span class="runtime-meta">Soft-gate approvals · audit trail · emergency stop</span>
+        </div>
+      </div>
+
+      <div class="runtime-cta reveal reveal-up">
+        <a href="/docs/introduction" class="btn-border">Read the architecture</a>
+        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="btn-border">Browse the source</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WORKFLOWS ────────────────────────────────── -->
+  <section id="workflows" class="callout">
+    <div class="section-inner callout-inner">
+      <div class="callout-copy">
+        <p class="label-mono reveal reveal-up">Workflows</p>
+        <h2 class="display-h2 reveal reveal-up">
+          Compose with a sentence.<br/>
+          <em>Or 50+ nodes.</em>
+        </h2>
+        <p class="lead reveal reveal-up">
+          Describe what you want — <em>"every weekday at 8am, summarise yesterday's
+          email and drop it in Telegram"</em> — and JARVIS generates the flow.
+          Tune it visually if you need to. Triggers from cron, webhooks, file
+          watchers, calendar, git, or screen events.
         </p>
+        <ul class="callout-bullets reveal reveal-up">
+          <li><span class="dot dot-accent"></span> NL composition · visual editor · YAML import</li>
+          <li><span class="dot dot-accent"></span> Triggers: cron · webhook · file · screen · email · git</li>
+          <li><span class="dot dot-accent"></span> Loops, routers, code nodes, sub-agents, ask-the-user</li>
+          <li><span class="dot dot-accent"></span> Self-healing retries · audit log · sandboxed JS engine</li>
+        </ul>
+        <div class="callout-actions reveal reveal-up">
+          <a href="/docs/workflows" class="btn-border">Read the workflows guide</a>
+        </div>
       </div>
 
-      <div class="spot-grid spot-grid-gl">
-        <!-- Left: Agent hierarchy -->
-        <div class="reveal reveal-left">
-          <div class="agent-tree">
-            <div class="agent-node agent-node-primary">
-              <span class="agent-node-dot" style="background: var(--accent);"></span>
-              <span class="agent-node-label">Primary Agent</span>
-              <span class="agent-node-tag agent-node-tag-auth">authority</span>
+      <div class="callout-media reveal reveal-up">
+        <div class="flow-card">
+          <div class="flow-card-bar">
+            <span class="flow-card-label">inbox-triage.flow</span>
+            <span class="flow-card-status"><span class="dot dot-ok dot-pulse"></span> live</span>
+          </div>
+          <div class="flow-card-body">
+            <div class="flow-node flow-node-trigger">
+              <span class="flow-node-tag">trigger</span>
+              <span class="flow-node-name">new email · gmail</span>
             </div>
-            <div class="agent-branch"></div>
-            <div class="agent-children">
-              <div class="agent-node">
-                <span class="agent-node-dot" style="background: var(--accent-cyan);"></span>
-                <span class="agent-node-label">Researcher</span>
-                <span class="agent-node-tools">web_search, browser, extract</span>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node">
+              <span class="flow-node-tag">action</span>
+              <span class="flow-node-name">classify with vision</span>
+            </div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-branch">
+              <div class="flow-node flow-node-half">
+                <span class="flow-node-tag">draft</span>
+                <span class="flow-node-name">reply · gpt-4o</span>
               </div>
-              <div class="agent-node">
-                <span class="agent-node-dot" style="background: var(--accent-cyan);"></span>
-                <span class="agent-node-label">Coder</span>
-                <span class="agent-node-tools">terminal, file_io, git</span>
+              <div class="flow-node flow-node-half">
+                <span class="flow-node-tag">notify</span>
+                <span class="flow-node-name">slack · #triage</span>
               </div>
-              <div class="agent-node">
-                <span class="agent-node-dot" style="background: var(--accent-cyan);"></span>
-                <span class="agent-node-label">Writer</span>
-                <span class="agent-node-tools">file_io, template, format</span>
-              </div>
-              <div class="agent-node">
-                <span class="agent-node-dot" style="background: var(--accent-cyan);"></span>
-                <span class="agent-node-label">Analyst</span>
-                <span class="agent-node-tools">data, calc, visualize</span>
-              </div>
-              <div class="agent-branch agent-branch-deep"></div>
-              <div class="agent-more">
-                <span class="agent-more-label">+ 7 more: sysadmin, designer, planner, reviewer, data-engineer, devops, security</span>
-              </div>
+            </div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node flow-node-end">
+              <span class="flow-node-tag">ask</span>
+              <span class="flow-node-name">approve? — y/n via pebble</span>
             </div>
           </div>
         </div>
-
-        <!-- Right: Code panels -->
-        <div>
-          <div class="code-panel reveal reveal-right">
-            <div class="code-comment"># Delegate complex work to specialists</div>
-            <div><span class="code-str">"Research competitor pricing, then write a report"</span></div>
-            <br/>
-            <div><span class="code-fn2">delegate</span> <span class="code-fn">researcher</span> <span class="code-str">· working</span></div>
-            <div><span class="code-str">  tools: web_search, browser, extract</span></div>
-            <div><span class="code-fn2">delegate</span> <span class="code-fn">writer</span> <span class="code-str">· waiting</span></div>
-            <div><span class="code-str">  depends_on: researcher</span></div>
-          </div>
-          <div class="code-panel reveal reveal-right" style="margin-top: 1rem;">
-            <div class="code-comment"># Parallel execution with dependency resolution</div>
-            <div><span class="code-fn2">researcher</span> <span class="code-fn">completed</span> <span class="code-str">3 sources · 12 data points</span></div>
-            <div><span class="code-fn2">writer</span> <span class="status-cyan">drafting</span> <span class="code-str">context injected from researcher</span></div>
-            <div><span class="code-fn2">writer</span> <span class="code-fn">completed</span> <span class="code-str">report &rarr; ~/reports/competitive.md</span></div>
-            <br/>
-            <div class="code-comment"># Authority enforcement</div>
-            <div><span class="code-fn2">writer</span> <span class="status-amber">denied</span> <span class="code-str">send_email (governed action)</span></div>
-            <div><span class="code-fn2">primary</span> <span class="code-fn">approved</span> <span class="code-str">send_email &rarr; team@company.com</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Stats -->
-      <div class="spot-stats reveal reveal-up">
-        <div class="spot-stat">
-          <span class="spot-stat-num" data-count="11">0</span>
-          <span class="spot-stat-label">Specialist Roles</span>
-          <span class="spot-stat-detail">researcher, coder, writer, analyst, sysadmin, designer, planner, reviewer, and more</span>
-        </div>
-        <div class="spot-stat">
-          <span class="spot-stat-num" data-count="200">0</span>
-          <span class="spot-stat-label">Iterations / Turn</span>
-          <span class="spot-stat-detail">agents run until done, not until the response looks done</span>
-        </div>
-        <div class="spot-stat">
-          <span class="spot-stat-num spot-stat-inf">&infin;</span>
-          <span class="spot-stat-label">Parallel</span>
-          <span class="spot-stat-detail">multiple specialists work simultaneously on different sub-tasks</span>
-        </div>
-        <div class="spot-stat">
-          <span class="spot-stat-num" data-count="1">0</span>
-          <span class="spot-stat-label">Authority</span>
-          <span class="spot-stat-detail">sub-agents inherit memory and awareness but cannot approve governed actions</span>
-        </div>
-      </div>
-
-      <div class="spot-cta reveal reveal-up">
-        <a href="/docs/multi-agent" class="btn-solid">Explore Agents</a>
-        <a href="/docs/authority" class="btn-border">Authority Docs</a>
       </div>
     </div>
   </section>
 
-  <!-- WORKFLOW SPOTLIGHT -->
-  <section id="workflows" class="spotlight spotlight-wf">
-    <div class="spotlight-inner">
-      <div class="spot-grid">
-        <div>
-          <div class="spot-badge reveal reveal-left">ORCHESTRATION</div>
-          <h2 class="spot-heading reveal reveal-left">Orchestration,<br/>not scripting.</h2>
-          <p class="spot-sub reveal reveal-left">
-            Describe a workflow in plain English &mdash; or build it visually.
-            50+ nodes. Every trigger type. Self-healing execution.
-            Workflows are first-class citizens of the runtime &mdash; they share memory,
-            awareness, and action with every other agent.
-          </p>
-
-          <div class="wf-canvas-mock reveal reveal-scale" id="wfCanvas">
-            <div class="wf-canvas-header">
-              <div class="wf-canvas-dots">
-                <div class="td td-red"></div>
-                <div class="td td-yellow"></div>
-                <div class="td td-green"></div>
-              </div>
-              <span class="wf-canvas-label">Workflow Canvas</span>
+  <!-- ── SIDECAR / ONE BRAIN, MANY MACHINES ──────── -->
+  <section id="sidecar" class="callout callout-alt">
+    <div class="section-inner callout-inner callout-inner-flip">
+      <div class="callout-media reveal reveal-up">
+        <div class="sidecar-card">
+          <div class="sidecar-brain">
+            <span class="sidecar-dot sidecar-dot-brain"></span>
+            <span class="sidecar-brain-label">brain</span>
+            <span class="sidecar-brain-meta">192.168.1.20:3142</span>
+          </div>
+          <div class="sidecar-lines" aria-hidden="true">
+            <svg viewBox="0 0 320 100" preserveAspectRatio="none">
+              <path d="M160 0 L 60 100" />
+              <path d="M160 0 L 160 100" />
+              <path d="M160 0 L 260 100" />
+            </svg>
+          </div>
+          <div class="sidecar-clients">
+            <div class="sidecar-client">
+              <span class="sidecar-dot"></span>
+              <span class="sidecar-client-name">laptop · macOS</span>
+              <span class="sidecar-client-meta">terminal · browser · screen</span>
             </div>
-            <div class="wf-canvas-body">
-              <div class="wf-node" style="top: 24px; left: 20px;" data-delay="0">
-                <div class="wf-node-dot" style="background: #3ecf8e;"></div>
-                <span>Cron &middot; 9am daily</span>
-              </div>
-              <div class="wf-edge wf-edge-1" data-delay="200"></div>
-              <div class="wf-node" style="top: 24px; left: 220px;" data-delay="150">
-                <div class="wf-node-dot" style="background: #22d3ee;"></div>
-                <span>Agent: Summarize PRs</span>
-              </div>
-              <div class="wf-edge wf-edge-2" data-delay="400"></div>
-              <div class="wf-node" style="top: 24px; left: 440px;" data-delay="300">
-                <div class="wf-node-dot" style="background: #e5a522;"></div>
-                <span>If urgent</span>
-              </div>
-              <div class="wf-edge wf-edge-3a" data-delay="500"></div>
-              <div class="wf-edge wf-edge-3b" data-delay="500"></div>
-              <div class="wf-node" style="top: -16px; left: 610px;" data-delay="450">
-                <div class="wf-node-dot" style="background: #ef4444;"></div>
-                <span>Telegram alert</span>
-              </div>
-              <div class="wf-node" style="top: 64px; left: 610px;" data-delay="500">
-                <div class="wf-node-dot" style="background: #22d3ee;"></div>
-                <span>Slack summary</span>
-              </div>
+            <div class="sidecar-client">
+              <span class="sidecar-dot"></span>
+              <span class="sidecar-client-name">studio · Windows</span>
+              <span class="sidecar-client-meta">desktop · clipboard</span>
+            </div>
+            <div class="sidecar-client">
+              <span class="sidecar-dot"></span>
+              <span class="sidecar-client-name">homelab · Linux</span>
+              <span class="sidecar-client-meta">fs · long-running jobs</span>
             </div>
           </div>
-        </div>
-
-        <div>
-          <div class="code-panel reveal reveal-right">
-            <div class="code-comment"># Create via chat &mdash; just describe it</div>
-            <div><span class="code-str">"Every morning at 9, check GitHub PRs.</span></div>
-            <div><span class="code-str"> If anything is urgent, Telegram me.</span></div>
-            <div><span class="code-str"> Otherwise, post a summary to Slack."</span></div>
-            <br/>
-            <div><span class="code-fn">Workflow created</span> <span class="code-str">&middot; 5 nodes &middot; 4 edges</span></div>
-            <div><span class="code-fn2">Triggers active</span> <span class="code-str">&middot; cron: 0 9 * * *</span></div>
-          </div>
-          <div class="code-panel reveal reveal-right" style="margin-top: 1rem;">
-            <div class="code-comment"># Self-healing execution</div>
-            <div><span class="code-fn2">step 1</span> <span class="code-fn">passed</span> <span class="code-str">trigger.cron</span></div>
-            <div><span class="code-fn2">step 2</span> <span class="code-fn">passed</span> <span class="code-str">action.agent_task</span></div>
-            <div><span class="code-fn2">step 3</span> <span class="status-amber">failed</span> <span class="code-str">action.http_request</span></div>
-            <div><span class="code-fn2">       </span> <span class="code-fn">self-heal</span> <span class="code-str">&rarr; fixed auth header</span></div>
-            <div><span class="code-fn2">step 3</span> <span class="code-fn">passed</span> <span class="code-str">action.http_request (retry)</span></div>
-            <div><span class="code-fn2">step 4</span> <span class="code-fn">passed</span> <span class="code-str">action.notification</span></div>
+          <div class="sidecar-protocol">
+            <span class="label-mono">JWT · WebSocket · TLS 1.3</span>
           </div>
         </div>
       </div>
 
-      <!-- Stats -->
-      <div class="spot-stats reveal reveal-up">
-        <div class="spot-stat">
-          <span class="spot-stat-num" data-count="11">0</span>
-          <span class="spot-stat-label">Triggers</span>
-          <span class="spot-stat-detail">cron, webhook, file, screen, git, email, calendar, clipboard, process, poll, manual</span>
-        </div>
-        <div class="spot-stat">
-          <span class="spot-stat-num" data-count="12">0</span>
-          <span class="spot-stat-label">Actions</span>
-          <span class="spot-stat-detail">HTTP, agent task, shell, code, Gmail, Telegram, Discord, notification, file write, run tool</span>
-        </div>
-        <div class="spot-stat">
-          <span class="spot-stat-num" data-count="9">0</span>
-          <span class="spot-stat-label">Logic</span>
-          <span class="spot-stat-detail">if/else, switch, loop, delay, merge, race, variable set/get, template render</span>
-        </div>
-        <div class="spot-stat">
-          <span class="spot-stat-num" data-count="8">0</span>
-          <span class="spot-stat-label">Transform + Error</span>
-          <span class="spot-stat-detail">JSON, CSV, regex, aggregate, map/filter, error handler, retry, fallback</span>
-        </div>
-      </div>
-
-      <div class="spot-cta reveal reveal-up">
-        <a href="/docs/workflows" class="btn-solid">Explore Workflows</a>
-        <a href="/docs/workflows#api-reference" class="btn-border">API Reference</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- GOALS SPOTLIGHT -->
-  <section id="goals" class="spotlight spotlight-gl">
-    <div class="spotlight-inner">
-      <div class="spot-header-center">
-        <div class="spot-badge spot-badge-amber reveal reveal-up">ORCHESTRATION</div>
-        <h2 class="spot-heading reveal reveal-up">Goal pursuit, not<br/>goal tracking.</h2>
-        <p class="spot-sub reveal reveal-up" style="max-width: 640px; margin: 0 auto;">
-          OKR hierarchy with morning planning and evening review. JARVIS decomposes objectives
-          into daily actions, tracks progress from your screen activity via the awareness pipeline,
-          and escalates when you fall behind.
+      <div class="callout-copy">
+        <p class="label-mono reveal reveal-up">Sidecar</p>
+        <h2 class="display-h2 reveal reveal-up">
+          One brain.<br/>
+          <em>Every machine.</em>
+        </h2>
+        <p class="lead reveal reveal-up">
+          Run the brain once — on a homelab, a desktop, anywhere. A 6&nbsp;MB Go
+          binary on each laptop, server, or Raspberry&nbsp;Pi connects back over
+          a JWT-authenticated WebSocket. The pebble follows you to whichever
+          machine you're using; JARVIS sees, types, and clicks on all of them.
         </p>
-      </div>
-
-      <div class="spot-grid spot-grid-gl">
-        <!-- Left: Goal tree -->
-        <div class="reveal reveal-left">
-          <div class="gl-tree">
-            <div class="gl-tree-node gl-tree-obj">
-              <span class="gl-tree-dot" style="background: var(--accent);"></span>
-              <span class="gl-tree-label">Get fit by summer</span>
-              <span class="gl-tree-score gl-score-good">0.45</span>
-            </div>
-            <div class="gl-tree-branch"></div>
-            <div class="gl-tree-children">
-              <div class="gl-tree-node">
-                <span class="gl-tree-dot" style="background: var(--accent-cyan);"></span>
-                <span class="gl-tree-label">Run 5K under 25min</span>
-                <span class="gl-tree-score gl-score-warn">0.30</span>
-              </div>
-              <div class="gl-tree-node">
-                <span class="gl-tree-dot" style="background: var(--accent-cyan);"></span>
-                <span class="gl-tree-label">Lose 10 lbs</span>
-                <span class="gl-tree-score gl-score-good">0.60</span>
-              </div>
-              <div class="gl-tree-branch gl-tree-branch-deep"></div>
-              <div class="gl-tree-grandchildren">
-                <div class="gl-tree-node gl-tree-daily">
-                  <span class="gl-tree-dot" style="background: var(--accent-amber);"></span>
-                  <span class="gl-tree-label">Morning run</span>
-                  <span class="gl-tree-tag">daily</span>
-                </div>
-                <div class="gl-tree-node gl-tree-daily">
-                  <span class="gl-tree-dot" style="background: var(--accent-amber);"></span>
-                  <span class="gl-tree-label">Track calories</span>
-                  <span class="gl-tree-tag">daily</span>
-                </div>
-              </div>
-            </div>
-          </div>
+        <ul class="callout-bullets reveal reveal-up">
+          <li><span class="dot dot-accent"></span> macOS · Linux · Windows · ARM — one binary each</li>
+          <li><span class="dot dot-accent"></span> Per-machine toggles: terminal · browser · desktop · fs · clipboard</li>
+          <li><span class="dot dot-accent"></span> Outbound-only — sidecars dial the brain, not the other way</li>
+          <li><span class="dot dot-accent"></span> Detach &amp; reconnect — long jobs survive WiFi drops</li>
+        </ul>
+        <div class="code-chip reveal reveal-up callout-cmd">
+          <span class="code-prompt">$</span>
+          <span><span class="code-pkg">jarvis-sidecar --token &lt;jwt&gt;</span></span>
         </div>
-
-        <!-- Right: Code panels -->
-        <div>
-          <div class="code-panel reveal reveal-right">
-            <div class="code-comment"># Just tell JARVIS your goal</div>
-            <div><span class="code-str">"I want to get fit by summer"</span></div>
-            <br/>
-            <div><span class="code-fn">Proposed OKR breakdown:</span></div>
-            <div><span class="code-fn2">  objective</span> <span class="code-str">Get fit by summer</span></div>
-            <div><span class="code-fn2">  key_result</span> <span class="code-str">Run 5K under 25min</span></div>
-            <div><span class="code-fn2">  key_result</span> <span class="code-str">Lose 10 lbs</span></div>
-            <div><span class="code-fn2">  daily_action</span> <span class="code-str">Morning run &middot; Track calories</span></div>
-          </div>
-          <div class="code-panel reveal reveal-right" style="margin-top: 1rem;">
-            <div class="code-comment"># Awareness feeds goal progress automatically</div>
-            <div><span class="status-amber">07:00</span> <span class="code-str">Morning plan generated</span></div>
-            <div><span class="code-fn2">  focus:</span> <span class="code-str">"Run 5K" is behind pace (0.30/1.0)</span></div>
-            <div><span class="code-fn2">  action:</span> <span class="code-str">30min run scheduled at 6:30am</span></div>
-            <br/>
-            <div><span class="status-amber">21:00</span> <span class="code-str">Evening review</span></div>
-            <div><span class="code-fn">  +0.05</span> <span class="code-str">Auto-detected: ran 3.2K via Strava</span></div>
-            <div class="code-warn">  MISSED: No calorie tracking today</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Stats -->
-      <div class="spot-stats reveal reveal-up">
-        <div class="spot-stat">
-          <span class="spot-stat-num" data-count="5">0</span>
-          <span class="spot-stat-label">Goal Levels</span>
-          <span class="spot-stat-detail">objective, key result, milestone, task, daily action</span>
-        </div>
-        <div class="spot-stat">
-          <span class="spot-stat-num" data-count="0.7" data-decimal="true">0</span>
-          <span class="spot-stat-label">= Good Score</span>
-          <span class="spot-stat-detail">Google OKR scoring: 0.7 is on track, 1.0 means you aimed too low</span>
-        </div>
-        <div class="spot-stat">
-          <span class="spot-stat-num" data-count="2">0</span>
-          <span class="spot-stat-label">Daily Rhythm</span>
-          <span class="spot-stat-detail">morning plan + evening review, automated and awareness-driven</span>
-        </div>
-        <div class="spot-stat">
-          <span class="spot-stat-num" data-count="4">0</span>
-          <span class="spot-stat-label">Escalation Stages</span>
-          <span class="spot-stat-detail">none &rarr; pressure &rarr; root cause &rarr; suggest kill</span>
-        </div>
-      </div>
-
-      <div class="spot-cta reveal reveal-up">
-        <a href="/docs/goals" class="btn-solid">Explore Goals</a>
-        <a href="/docs/goals#api-reference" class="btn-border">API Reference</a>
       </div>
     </div>
   </section>
 
-  <!-- SETUP + CTA -->
-  <section class="setup-section">
-    <div class="setup-inner">
+  <!-- ── SETUP / FOOTER CTA ───────────────────────── -->
+  <section class="setup">
+    <div class="section-inner setup-inner">
+      <h2 class="display-h2 reveal reveal-up">Three commands. <em>Then it lives with you.</em></h2>
+
       <div class="terminal reveal reveal-up">
-        <div class="terminal-header">
-          <div class="terminal-dots">
-            <div class="td td-red"></div>
-            <div class="td td-yellow"></div>
-            <div class="td td-green"></div>
-          </div>
+        <div class="terminal-bar">
+          <span class="tl tl-r"></span>
+          <span class="tl tl-y"></span>
+          <span class="tl tl-g"></span>
           <span class="terminal-label">bash</span>
         </div>
         <div class="terminal-body">
-          <div class="code-comment"># 1. Install</div>
-          <div><span class="code-comment">$</span> <span class="cmd-highlight">bun install -g @usejarvis/brain</span></div>
+          <div><span class="t-comment"># 1. Install</span></div>
+          <div><span class="t-prompt">$</span> <span class="t-cmd">bun install -g @usejarvis/brain</span></div>
           <br/>
-          <div class="code-comment"># 2. Configure</div>
-          <div><span class="code-comment">$</span> <span class="cmd-highlight">jarvis onboard</span></div>
-          <div class="code-fn"> &#10003; LLM configured &middot; &#10003; Browser found &middot; &#10003; Sidecar built</div>
+          <div><span class="t-comment"># 2. Configure</span></div>
+          <div><span class="t-prompt">$</span> <span class="t-cmd">jarvis onboard</span></div>
+          <div><span class="t-ok">✓ LLM configured · ✓ Browser found · ✓ Sidecar built</span></div>
           <br/>
-          <div class="code-comment"># 3. Launch</div>
-          <div><span class="code-comment">$</span> <span class="cmd-highlight">jarvis start</span></div>
-          <div class="code-fn"> &#10003; JARVIS runtime started (PID 4821)</div>
-          <div class="code-comment">   Dashboard: http://localhost:3142</div>
-        </div>
-      </div>
-
-      <div class="channel-row reveal reveal-up">
-        <p class="channel-label">Reachable on</p>
-        <div class="channel-pills">
-          <span class="channel-pill"><span class="dot dot-green"></span> Dashboard <span class="channel-meta">:3142</span></span>
-          <span class="channel-pill"><span class="dot dot-green"></span> Telegram</span>
-          <span class="channel-pill"><span class="dot dot-green"></span> Discord</span>
-          <span class="channel-pill"><span class="dot dot-green"></span> Gmail</span>
-          <span class="channel-pill"><span class="dot dot-green"></span> Calendar</span>
+          <div><span class="t-comment"># 3. Launch</span></div>
+          <div><span class="t-prompt">$</span> <span class="t-cmd">jarvis start</span></div>
+          <div><span class="t-ok">✓ JARVIS runtime started (PID 4821)</span></div>
+          <div><span class="t-comment">  Pebble visible at the bottom of your screen.</span></div>
         </div>
       </div>
 
       <div class="cta reveal reveal-up">
-        <h2 class="cta-heading">Your runtime. Your machine. Your agents.</h2>
-        <p class="cta-sub">Open source. Self-hosted. Provider-agnostic &mdash; bring Anthropic, OpenAI, Gemini, or Ollama.<br/>Full ownership of your data, your memory, and your automations.</p>
+        <h3 class="cta-line">Your runtime. Your machine. Your agents.</h3>
+        <p class="cta-sub">Open source. Self-hosted. Bring your own LLM.</p>
         <div class="cta-actions">
           <a href="/docs/installation" class="btn-solid">Read the Docs</a>
           <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="btn-border">Star on GitHub</a>
+          <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener" class="btn-border">Discord</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="cap-strip">
-    <div class="cap-strip-inner">
-      <p class="cap-strip-label reveal reveal-up">Contribute</p>
-      <div class="reveal reveal-up" style="display: grid; gap: 14px; max-width: 860px;">
-        <h2 style="font-size: 34px; line-height: 1.05; color: var(--text-primary); margin: 0;">JARVIS is open to contributors.</h2>
-        <p style="margin: 0; color: var(--text-secondary); font-size: 16px; line-height: 1.7;">
-          If you want to improve docs, fix bugs, expand workflows, refine sidecars, or propose new product directions, contributions are welcome.
-          The best starting points are documentation fixes, reproducible bug reports, and focused pull requests against one area of the product.
-        </p>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-          <a href="/docs/contributing" class="btn-solid">How to Contribute</a>
-          <a href="https://github.com/vierisid/jarvis/issues" target="_blank" rel="noopener" class="btn-border">Open Issues</a>
-          <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener" class="btn-border">Discuss in Discord</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-left">
+        <span class="nav-dot"></span>
         <span class="footer-logo">J.A.R.V.I.S.</span>
-        <span class="footer-copy">&copy; 2026</span>
+        <span class="footer-copy">© 2026</span>
       </div>
       <div class="footer-links">
         <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener">GitHub</a>
         <a href="/docs/introduction">Docs</a>
+        <a href="/blog">Blog</a>
+        <a href="/roadmap">Roadmap</a>
         <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener">Discord</a>
         <a href="/docs/disclaimer">Disclaimer</a>
       </div>
     </div>
-    <div class="footer-disclaimer">
+    <p class="footer-disclaimer">
       JARVIS is an open-source runtime for autonomous AI agents, provided "as is" with no warranty.
       Agents running on JARVIS can autonomously control your browser, desktop, and external accounts.
       You assume all risk. See the full <a href="/docs/disclaimer">disclaimer</a>.
-    </div>
+    </p>
   </footer>
-
 </Landing>
 
 <style>
   /* ── Nav ──────────────────────────────────── */
   .nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(10, 10, 10, 0.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(245, 242, 235, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: var(--hair);
   }
   .nav-inner {
-    max-width: 1120px; margin: 0 auto; padding: 0 1.5rem;
-    height: 56px; display: flex; align-items: center; justify-content: space-between;
+    max-width: var(--col-wide);
+    margin: 0 auto;
+    padding: 0 28px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-  .nav-left { display: flex; align-items: center; gap: 0.75rem; }
   .nav-logo {
-    font-family: var(--mono); font-size: 0.875rem; font-weight: 700;
-    color: var(--text-primary); text-decoration: none; letter-spacing: 0.08em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.08em;
   }
-  .nav-version {
-    font-family: var(--mono); font-size: 0.6875rem;
-    color: var(--text-muted); font-weight: 500;
+  .nav-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(194, 58, 42, 0.18);
+    display: inline-block;
   }
-  .nav-right { display: flex; align-items: center; gap: 1.75rem; }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
   .nav-link {
-    color: var(--text-secondary); text-decoration: none;
-    font-size: 0.8125rem; font-weight: 500; transition: color 0.15s;
+    color: var(--ink-2);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color var(--dur-fast) var(--ease-out);
   }
-  .nav-link:hover { color: var(--text-primary); }
-  .nav-install {
-    font-family: var(--mono); font-size: 0.75rem; font-weight: 600;
-    color: var(--bg); background: var(--text-primary);
-    padding: 0.375rem 0.875rem; border-radius: 4px;
-    text-decoration: none; transition: opacity 0.15s;
+  .nav-link:hover { color: var(--accent); }
+  .nav-cta {
+    padding: 8px 16px;
+    font-size: 13px;
   }
-  .nav-install:hover { opacity: 0.85; }
 
-  /* Scroll progress bar */
-  .scroll-progress {
-    position: fixed; top: 56px; left: 0; height: 2px;
-    background: var(--accent); z-index: 101; width: 0%;
-    transition: width 0.1s linear;
+  @media (max-width: 880px) {
+    .nav-right .nav-link:not(:nth-last-child(-n+2)) { display: none; }
   }
 
   /* ── Hero ─────────────────────────────────── */
   .hero {
-    min-height: 100vh; display: flex; align-items: center;
-    padding: 7rem 1.5rem 5rem; position: relative; overflow: hidden;
-  }
-  .hero::before {
-    content: ''; position: absolute; inset: 0; z-index: 0;
-    background:
-      radial-gradient(ellipse 700px 500px at 20% 40%, rgba(62,207,142,0.05), transparent),
-      radial-gradient(ellipse 500px 400px at 80% 60%, rgba(34,211,238,0.04), transparent);
-  }
-  .hero-grid {
-    max-width: 1120px; margin: 0 auto; width: 100%;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
-    position: relative; z-index: 1;
-  }
-  .label {
-    font-family: var(--mono); font-size: 0.75rem; font-weight: 600;
-    color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase;
-    margin: 0 0 1.25rem;
-  }
-  .hero-heading {
-    font-size: 3.25rem; font-weight: 900; line-height: 1.05;
-    color: var(--text-primary); margin: 0 0 1.5rem; letter-spacing: -0.03em;
-  }
-  .hero-sub {
-    font-size: 1rem; line-height: 1.7; color: var(--text-secondary);
-    margin: 0 0 2rem; max-width: 480px;
-  }
-  .hero-actions {
-    display: flex; gap: 0.75rem; align-items: center;
-    flex-wrap: wrap; margin-bottom: 2rem;
-  }
-
-  /* ── Buttons ──────────────────────────────── */
-  .btn-solid {
-    font-size: 0.875rem; font-weight: 600; color: var(--bg);
-    background: var(--text-primary); padding: 0.625rem 1.5rem;
-    border-radius: 6px; text-decoration: none; transition: opacity 0.15s;
-  }
-  .btn-solid:hover { opacity: 0.85; }
-  .btn-border {
-    font-size: 0.875rem; font-weight: 500; color: var(--text-secondary);
-    border: 1px solid var(--border); padding: 0.625rem 1.5rem;
-    border-radius: 6px; text-decoration: none; transition: all 0.15s;
-  }
-  .btn-border:hover { border-color: #333; color: var(--text-primary); }
-
-  /* ── Install cmd ──────────────────────────── */
-  .cmd-block {
-    font-family: var(--mono); font-size: 0.8125rem;
-    background: var(--bg-raised); border: 1px solid var(--border);
-    border-radius: 6px; padding: 0.75rem 1rem;
-    display: flex; align-items: center; justify-content: space-between;
-    max-width: 480px; gap: 0.75rem;
-  }
-  .cmd-block code { color: var(--text-secondary); overflow-x: auto; white-space: nowrap; }
-  .cmd-prompt { color: var(--text-muted); }
-  .cmd-highlight { color: var(--text-primary); }
-  .cmd-copy {
-    font-family: var(--mono); font-size: 0.6875rem; font-weight: 600;
-    color: var(--text-muted); background: none; border: 1px solid var(--border);
-    padding: 0.25rem 0.5rem; border-radius: 3px; cursor: pointer;
-    text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.15s;
-  }
-  .cmd-copy:hover { border-color: #333; color: #aaa; }
-
-  /* ── Status Panel ─────────────────────────── */
-  .status-panel {
-    font-family: var(--mono); font-size: 0.8125rem;
-    background: var(--bg-raised); border: 1px solid var(--border);
-    border-radius: 8px; overflow: hidden;
-  }
-  .status-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0.75rem 1rem; border-bottom: 1px solid var(--border);
-    background: var(--bg-surface);
-  }
-  .status-header-left { display: flex; align-items: center; gap: 0.5rem; }
-  .status-title {
-    font-weight: 600; color: var(--text-primary);
-    font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase;
-  }
-  .status-time { color: var(--text-muted); font-size: 0.6875rem; }
-  .status-group-header {
-    padding: 0.5rem 1rem 0.125rem;
-    border-bottom: 1px solid var(--border-subtle);
-  }
-  .status-group-label {
-    font-size: 0.5625rem; font-weight: 700; color: var(--accent);
-    letter-spacing: 0.14em; text-transform: uppercase;
-  }
-  .status-row {
-    display: grid; grid-template-columns: 100px 80px 1fr;
-    padding: 0.5rem 1rem; border-bottom: 1px solid var(--border-subtle);
-    align-items: center;
-  }
-  .status-row-last { border-bottom: none; }
-  .status-label { color: var(--text-muted); }
-  .status-value { display: flex; align-items: center; gap: 0.375rem; }
-  .status-meta { color: var(--text-muted); text-align: right; }
-  .status-green { color: var(--accent); font-weight: 500; }
-  .status-cyan { color: var(--accent-cyan); font-weight: 500; }
-  .status-amber { color: var(--accent-amber); font-weight: 500; }
-
-  /* ── Capability Strip (Four Pillars) ───────── */
-  .cap-strip {
-    border-top: 1px solid var(--border);
-    padding: 3rem 1.5rem;
-  }
-  .cap-strip-inner { max-width: 1120px; margin: 0 auto; }
-  .cap-strip-label {
-    font-family: var(--mono); font-size: 0.6875rem; font-weight: 600;
-    color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase;
-    margin: 0 0 1.5rem;
-  }
-  .cap-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
-    background: var(--border); border-radius: 8px; overflow: hidden;
-  }
-  .cap-item {
-    background: var(--bg-raised); padding: 1.5rem; text-align: center;
-    transition: background 0.3s ease, transform 0.3s ease;
-    cursor: default;
-  }
-  .cap-item:hover { background: var(--bg-surface); transform: translateY(-2px); }
-  .cap-dot-wrap { margin-bottom: 0.625rem; }
-  .cap-name {
-    font-family: var(--mono); font-size: 0.8125rem; font-weight: 700;
-    color: var(--text-primary); margin-bottom: 0.375rem;
-  }
-  .cap-one { font-size: 0.6875rem; color: var(--text-muted); line-height: 1.4; }
-  .cap-detail {
-    max-height: 0; overflow: hidden; transition: max-height 0.4s ease, margin-top 0.4s ease;
-    font-size: 0.6875rem; color: var(--text-secondary); line-height: 1.5;
-    margin-top: 0;
-  }
-  .cap-item:hover .cap-detail { max-height: 120px; margin-top: 0.625rem; }
-
-  /* ── Architecture Section ──────────────── */
-  .arch-section {
-    border-top: 1px solid var(--border);
-    padding: 6rem 1.5rem;
-    background: linear-gradient(180deg, var(--bg) 0%, rgba(62,207,142,0.015) 50%, var(--bg) 100%);
-  }
-  .arch-inner { max-width: 860px; margin: 0 auto; }
-
-  .arch-diagram {
-    font-family: var(--mono);
-    margin: 3rem 0 2rem;
-  }
-
-  .arch-layer {
-    border: 1px solid var(--border); border-radius: 8px;
-    padding: 1.25rem; background: var(--bg-raised);
-  }
-  .arch-layer-label {
-    font-size: 0.5625rem; font-weight: 700;
-    color: var(--text-muted); letter-spacing: 0.14em;
-    text-transform: uppercase; margin-bottom: 0.75rem;
-  }
-
-  .arch-apps-grid {
-    display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem;
-  }
-  .arch-app {
-    display: flex; flex-direction: column; align-items: center; gap: 0.25rem;
-    padding: 0.75rem 0.5rem; border: 1px solid var(--border);
-    border-radius: 6px; background: var(--bg-surface);
-    transition: border-color 0.2s;
-  }
-  .arch-app:hover { border-color: #333; }
-  .arch-app-primary { border-color: rgba(62,207,142,0.3); }
-  .arch-app-yours { border-style: dashed; opacity: 0.6; }
-  .arch-app-dot { width: 6px; height: 6px; border-radius: 50%; }
-  .arch-app-name {
-    font-size: 0.6875rem; font-weight: 600; color: var(--text-primary);
-  }
-  .arch-app-tag {
-    font-size: 0.5rem; color: var(--text-muted);
-    border: 1px solid var(--border); padding: 0.05rem 0.3rem;
-    border-radius: 2px; text-transform: uppercase; letter-spacing: 0.06em;
-  }
-  .arch-app-tag-dim { opacity: 0.5; }
-
-  .arch-connector {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    padding: 0 2rem; height: 24px;
-  }
-  .arch-arrow {
-    width: 1px; height: 100%; background: var(--border);
+    max-width: var(--col-wide);
     margin: 0 auto;
-    position: relative;
-  }
-  .arch-arrow::after {
-    content: ''; position: absolute; bottom: 0; left: -3px;
-    border-left: 4px solid transparent; border-right: 4px solid transparent;
-    border-top: 5px solid var(--border);
-  }
-
-  .arch-pillars-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem;
-  }
-  .arch-pillar {
-    text-align: center; padding: 0.75rem; border: 1px solid;
-    border-radius: 6px; background: var(--bg-surface);
-  }
-  .arch-pillar-name {
-    font-size: 0.75rem; font-weight: 700;
-    letter-spacing: 0.06em;
-  }
-
-  .arch-footnote {
-    font-size: 0.8125rem; color: var(--text-muted);
-    text-align: center; line-height: 1.7;
-    max-width: 560px; margin: 0 auto;
-  }
-
-  /* ── Hub-Spoke Sidecar Diagram (Grid) ────── */
-  .spotlight-sc {
-    background: linear-gradient(180deg, var(--bg) 0%, rgba(62,207,142,0.02) 50%, var(--bg) 100%);
-  }
-  .spotlight-ag {
-    background: linear-gradient(180deg, var(--bg) 0%, rgba(34,211,238,0.02) 50%, var(--bg) 100%);
-  }
-
-  .hub-grid {
+    padding: 96px 28px 72px;
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    grid-template-rows: auto auto auto;
-    justify-items: center;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 64px;
     align-items: center;
-    gap: 0;
-    margin: 2rem 0;
-    max-width: 460px;
   }
-  .hub-cell {
-    display: flex; flex-direction: column; align-items: center;
+  .hero-h1 {
+    margin-top: 16px;
+    margin-bottom: 24px;
   }
-  .hub-cell-node {
-    display: flex; flex-direction: column; align-items: center;
+  .hero-lead { margin: 0 0 32px; }
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
   }
-  .hub-cell-right {
-    flex-direction: row; justify-content: flex-end;
-  }
-  .hub-cell-left {
-    flex-direction: row; justify-content: flex-start;
-  }
-  .hub-cell-center {
-    display: flex; align-items: center; justify-content: center;
-  }
+  .hero-cmd { max-width: 380px; }
 
-  .hub-center-box {
-    display: flex; flex-direction: column; align-items: center; gap: 0.375rem;
-    background: var(--bg-surface); border: 2px solid var(--accent);
-    border-radius: 10px; padding: 1rem 1.5rem;
+  .hero-illu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    padding: 56px 40px;
+    border: var(--hair);
+    background: var(--paper);
+    border-radius: var(--r-2);
+    box-shadow: 4px 4px 0 0 rgba(26, 26, 26, 0.06);
+    background-image:
+      linear-gradient(var(--rule-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule-soft) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
-  .hub-center-label {
-    font-family: var(--mono); font-size: 0.625rem; font-weight: 700;
-    color: var(--text-primary); letter-spacing: 0.08em;
-    text-align: center; line-height: 1.3;
+  .hero-illu-frame {
+    position: relative;
+    width: 220px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-
-  .hub-wire { background: var(--border); }
-  .hub-wire-v { width: 1px; height: 20px; }
-  .hub-wire-h { width: 20px; height: 1px; }
-
-  .hub-node {
-    display: flex; flex-direction: column; align-items: center; gap: 0.125rem;
-    background: var(--bg-raised); border: 1px solid var(--border);
-    border-radius: 6px; padding: 0.5rem 0.875rem;
-    font-family: var(--mono);
+  .hero-cursor {
+    position: absolute;
+    left: 60px;
+    top: 12px;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.45));
   }
-  .hub-node-name {
-    font-size: 0.6875rem; font-weight: 600; color: var(--text-primary);
-    white-space: nowrap;
+  .hero-pebble {
+    position: absolute;
+    left: 100px;
+    top: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--paper-2);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    padding: 0 12px 0 10px;
+    height: 28px;
+    box-shadow: 2px 2px 0 0 var(--accent);
   }
-  .hub-node-caps {
-    font-size: 0.5rem; color: var(--text-muted); white-space: nowrap;
+  .hero-pebble-wave {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    height: 14px;
   }
-
-  /* ── Agent Tree ────────────────────────────── */
-  .agent-tree { font-family: var(--mono); font-size: 0.75rem; }
-  .agent-node {
-    display: flex; align-items: center; gap: 0.5rem;
-    padding: 0.5rem 0.75rem; border: 1px solid var(--border);
-    border-radius: 6px; background: var(--bg-surface); margin-bottom: 0.5rem;
+  .hero-pebble-wave span {
+    width: 2px;
+    background: var(--accent);
+    border-radius: 0;
+    animation: hero-wave 0.95s ease-in-out infinite;
+    transform-origin: center;
   }
-  .agent-node-primary { border-color: rgba(62,207,142,0.3); }
-  .agent-node-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .agent-node-label { color: var(--text-primary); font-weight: 600; }
-  .agent-node-tools {
-    font-size: 0.5625rem; color: var(--text-muted);
-    margin-left: auto; white-space: nowrap;
+  .hero-pebble-wave span:nth-child(1) { height: 4px; animation-delay: 0s; }
+  .hero-pebble-wave span:nth-child(2) { height: 10px; animation-delay: 0.09s; }
+  .hero-pebble-wave span:nth-child(3) { height: 5px; animation-delay: 0.18s; }
+  .hero-pebble-wave span:nth-child(4) { height: 12px; animation-delay: 0.27s; }
+  @keyframes hero-wave {
+    0%, 100% { transform: scaleY(0.6); }
+    50% { transform: scaleY(1.2); }
   }
-  .agent-node-tag {
-    font-size: 0.5rem; font-weight: 700;
-    padding: 0.1rem 0.375rem; border-radius: 3px;
-    text-transform: uppercase; letter-spacing: 0.06em;
-    margin-left: auto;
+  .hero-pebble-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
   }
-  .agent-node-tag-auth {
-    color: var(--accent); background: rgba(62, 207, 142, 0.1);
-    border: 1px solid rgba(62, 207, 142, 0.2);
-  }
-  .agent-branch {
-    width: 1px; height: 12px; background: var(--border); margin-left: 1.5rem;
-  }
-  .agent-branch-deep { margin-left: 2.5rem; }
-  .agent-children { padding-left: 1rem; }
-  .agent-more {
-    padding: 0.375rem 0.75rem;
-  }
-  .agent-more-label {
-    font-size: 0.5625rem; color: var(--text-muted); font-style: italic;
-  }
-
-  /* ── Spotlight Sections ──────────────────── */
-  .spotlight {
-    min-height: 85vh; padding: 6rem 1.5rem;
-    border-top: 1px solid var(--border);
-    display: flex; align-items: center;
-    position: relative; overflow: hidden;
-  }
-  .spotlight-wf {
-    background: linear-gradient(180deg, var(--bg) 0%, rgba(62,207,142,0.02) 50%, var(--bg) 100%);
-  }
-  .spotlight-gl {
-    background: linear-gradient(180deg, var(--bg) 0%, rgba(229,165,34,0.02) 50%, var(--bg) 100%);
-  }
-  .spotlight-inner { max-width: 1120px; margin: 0 auto; width: 100%; }
-
-  .spot-badge {
-    display: inline-block;
-    font-family: var(--mono); font-size: 0.625rem; font-weight: 700;
-    color: #0a0a0a; background: var(--accent);
-    padding: 0.2rem 0.625rem; border-radius: 3px;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-  .spot-badge-amber { background: var(--accent-amber); }
-  .spot-badge-cyan { background: var(--accent-cyan); }
-  .spot-heading {
-    font-size: 2.5rem; font-weight: 900; color: var(--text-primary);
-    margin: 0 0 1rem; letter-spacing: -0.03em; line-height: 1.1;
-  }
-  .spot-sub {
-    font-size: 1.0625rem; line-height: 1.7; color: var(--text-secondary);
-    margin: 0 0 2.5rem; max-width: 480px;
-  }
-  .spot-header-center {
-    text-align: center; margin-bottom: 3rem;
-  }
-
-  .spot-grid {
-    display: grid; grid-template-columns: 1.3fr 1fr; gap: 3rem;
-    align-items: start; margin-bottom: 3rem;
-  }
-  .spot-grid-gl { grid-template-columns: 1fr 1.3fr; }
-
-  /* Stats grid */
-  .spot-stats {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
-    background: var(--border); border-radius: 8px; overflow: hidden;
-    margin-bottom: 2.5rem;
-  }
-  .spot-stat {
-    background: var(--bg-raised); padding: 1.5rem; text-align: center;
-    display: flex; flex-direction: column; gap: 0.25rem;
-  }
-  .spot-stat-num {
-    font-family: var(--mono); font-size: 2rem; font-weight: 900;
-    color: var(--accent); line-height: 1;
-  }
-  .spot-stat-inf {
-    font-size: 2.5rem;
-  }
-  .spot-stat-label {
-    font-family: var(--mono); font-size: 0.75rem; font-weight: 600;
-    color: var(--text-primary); text-transform: uppercase;
+  .hero-illu-cap {
+    margin: 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--ink-3);
     letter-spacing: 0.08em;
   }
-  .spot-stat-detail {
-    font-size: 0.6875rem; color: var(--text-muted); line-height: 1.5;
+  .hero-lead em {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    color: var(--accent);
   }
-  .spot-cta { display: flex; gap: 0.75rem; justify-content: center; }
-
-  /* ── Code panels ──────────────────────────── */
-  .code-panel {
-    font-family: var(--mono); font-size: 0.75rem;
-    background: var(--bg-raised); border: 1px solid var(--border);
-    border-radius: 6px; padding: 1rem 1.25rem; line-height: 1.8;
-  }
-  .code-comment { color: var(--text-muted); }
-  .code-fn { color: var(--accent); }
-  .code-fn2 { color: var(--accent-cyan); }
-  .code-str { color: var(--text-secondary); }
-  .code-warn { color: var(--accent-red); }
-
-  /* ── Workflow Canvas Mockup ────────────── */
-  .wf-canvas-mock {
-    background: var(--bg-raised); border: 1px solid var(--border);
-    border-radius: 8px; overflow: hidden;
-  }
-  .wf-canvas-header {
-    display: flex; align-items: center; padding: 0.625rem 1rem;
-    border-bottom: 1px solid var(--border); background: var(--bg-surface);
-  }
-  .wf-canvas-dots { display: flex; gap: 0.375rem; }
-  .td { width: 10px; height: 10px; border-radius: 50%; }
-  .td-red { background: #ff5f56; }
-  .td-yellow { background: #ffbd2e; }
-  .td-green { background: #27c93f; }
-  .wf-canvas-label {
-    margin-left: auto; font-family: var(--mono); font-size: 0.6875rem;
-    color: var(--text-muted); font-weight: 500;
-  }
-  .wf-canvas-body {
-    position: relative; height: 200px; padding: 2rem;
-    background: radial-gradient(circle, var(--border) 1px, transparent 1px);
-    background-size: 20px 20px;
-  }
-  .wf-node {
-    position: absolute; display: flex; align-items: center; gap: 0.5rem;
-    background: var(--bg-surface); border: 1px solid var(--border);
-    border-radius: 6px; padding: 0.5rem 0.75rem;
-    font-family: var(--mono); font-size: 0.6875rem; color: var(--text-primary);
-    white-space: nowrap;
-    opacity: 0; transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-  .wf-node.anim-visible { opacity: 1; transform: none !important; }
-  .wf-node-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .wf-edge { position: absolute; border-top: 1px dashed var(--text-muted); opacity: 0; transition: opacity 0.6s ease; }
-  .wf-edge.anim-visible { opacity: 1; }
-  .wf-edge-1 { top: 74px; left: 170px; width: 70px; }
-  .wf-edge-2 { top: 74px; left: 420px; width: 40px; }
-  .wf-edge-3a {
-    top: 44px; left: 560px; width: 70px;
-    transform: rotate(-20deg); transform-origin: left;
-  }
-  .wf-edge-3b {
-    top: 104px; left: 560px; width: 70px;
-    transform: rotate(20deg); transform-origin: left;
+  .hero-lead kbd {
+    font-family: var(--font-mono);
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-bottom-width: 2px;
+    border-radius: 2px;
+    padding: 1px 6px;
+    font-size: 13px;
+    color: var(--ink);
+    margin: 0 1px;
   }
 
-  /* ── Goal Tree ────────────────────────────── */
-  .gl-tree { font-family: var(--mono); font-size: 0.75rem; }
-  .gl-tree-node {
-    display: flex; align-items: center; gap: 0.5rem;
-    padding: 0.5rem 0.75rem; border: 1px solid var(--border);
-    border-radius: 6px; background: var(--bg-surface); margin-bottom: 0.5rem;
+  @media (max-width: 880px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; padding: 64px 22px 48px; }
   }
-  .gl-tree-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .gl-tree-label { color: var(--text-primary); flex: 1; }
-  .gl-tree-score {
-    font-weight: 700; font-size: 0.6875rem;
-    padding: 0.125rem 0.375rem; border-radius: 3px;
-  }
-  .gl-score-good { color: var(--accent); background: rgba(62, 207, 142, 0.1); }
-  .gl-score-warn { color: var(--accent-amber); background: rgba(229, 165, 34, 0.1); }
-  .gl-tree-tag {
-    font-size: 0.5625rem; color: var(--text-muted);
-    border: 1px solid var(--border); padding: 0.1rem 0.375rem;
-    border-radius: 3px; text-transform: uppercase; letter-spacing: 0.06em;
-  }
-  .gl-tree-branch {
-    width: 1px; height: 12px; background: var(--border); margin-left: 1.5rem;
-  }
-  .gl-tree-branch-deep { margin-left: 2.5rem; }
-  .gl-tree-children { padding-left: 1rem; }
-  .gl-tree-grandchildren { padding-left: 1rem; }
 
-  /* ── Setup + CTA Section ──────────────── */
-  .setup-section {
-    border-top: 1px solid var(--border);
-    padding: 5rem 1.5rem;
+  /* ── Section common ───────────────────────── */
+  .section-inner {
+    max-width: var(--col-wide);
+    margin: 0 auto;
+    padding: 96px 28px;
   }
-  .setup-inner { max-width: 720px; margin: 0 auto; }
 
+  /* ── Trailer ──────────────────────────────── */
+  .trailer {
+    border-top: var(--hair);
+    background: var(--paper);
+  }
+  .trailer-frame {
+    margin-top: 40px;
+    background: var(--paper-2);
+    border: var(--hair);
+    border-radius: var(--r-2);
+    overflow: hidden;
+    box-shadow: 0 1px 0 rgba(26, 26, 26, 0.04), 0 24px 60px rgba(26, 26, 26, 0.1);
+  }
+  .trailer-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #14182a;
+  }
+
+  /* ── Features ─────────────────────────────── */
+  .features {
+    border-top: var(--hair);
+    background: var(--paper-2);
+  }
+  .features-inner {
+    max-width: var(--col-wide);
+    margin: 0 auto;
+    padding: 96px 28px;
+  }
+  .features-heading {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+  .feature {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 56px;
+    align-items: center;
+    padding: 56px 0;
+    border-top: var(--hair);
+  }
+  .feature:first-of-type { border-top: none; }
+  .feature-flip { grid-template-columns: 1.15fr 1fr; }
+  .feature-flip .feature-copy { order: 2; }
+  .feature-flip .feature-media { order: 1; }
+  .feature-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: clamp(24px, 2.6vw, 32px);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 12px 0 18px;
+    max-width: 22ch;
+  }
+  .feature-body {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    margin: 0;
+    max-width: 56ch;
+  }
+  .feature-media {
+    display: flex;
+    justify-content: center;
+  }
+  .feature-mockup {
+    width: 100%;
+    max-width: 640px;
+    aspect-ratio: 16 / 9;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .feature-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  @media (max-width: 880px) {
+    .feature, .feature-flip {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .feature-flip .feature-copy { order: 1; }
+    .feature-flip .feature-media { order: 2; }
+  }
+
+  /* ── Runtime strip ────────────────────────── */
+  .runtime {
+    border-top: var(--hair);
+    background: var(--paper);
+  }
+  .runtime-strip {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: var(--hair);
+    border-radius: var(--r-2);
+    overflow: hidden;
+  }
+  .runtime-cell {
+    background: var(--paper);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .runtime-num {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .runtime-meta {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  .runtime-cta {
+    margin-top: 40px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 880px) {
+    .runtime-strip { grid-template-columns: 1fr; }
+  }
+
+  /* ── Callout sections (Workflows · Sidecar) ─ */
+  .callout {
+    border-top: var(--hair);
+    background: var(--paper-2);
+  }
+  .callout-alt {
+    background: var(--paper);
+  }
+  .callout-inner {
+    max-width: var(--col-wide);
+    margin: 0 auto;
+    padding: 96px 28px;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .callout-inner-flip .callout-copy { order: 2; }
+  .callout-inner-flip .callout-media { order: 1; }
+  .callout-copy .display-h2 { margin: 14px 0 22px; }
+  .callout-copy .display-h2 em {
+    display: inline-block;
+  }
+  .callout-bullets {
+    list-style: none;
+    margin: 28px 0 28px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .callout-bullets li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--ink-2);
+  }
+  .callout-bullets .dot {
+    flex-shrink: 0;
+    box-shadow: 0 0 0 3px rgba(194, 58, 42, 0.12);
+  }
+  .callout-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .callout-cmd {
+    margin-top: 8px;
+  }
+
+  @media (max-width: 880px) {
+    .callout-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding: 72px 22px;
+    }
+    .callout-inner-flip .callout-copy { order: 1; }
+    .callout-inner-flip .callout-media { order: 2; }
+  }
+
+  /* ── Flow card (Workflows diagram) ────────── */
+  .flow-card {
+    background: var(--paper);
+    border: var(--hair);
+    border-radius: var(--r-2);
+    box-shadow: 6px 6px 0 0 rgba(26, 26, 26, 0.06);
+    overflow: hidden;
+  }
+  .flow-card-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: var(--paper-3);
+    border-bottom: var(--hair);
+  }
+  .flow-card-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-2);
+  }
+  .flow-card-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .flow-card-body {
+    padding: 26px 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+  .flow-node {
+    border: 1px solid var(--ink);
+    background: var(--paper);
+    padding: 12px 14px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    box-shadow: 3px 3px 0 0 var(--ink);
+    font-family: var(--font-sans);
+  }
+  .flow-node-trigger {
+    border-color: var(--accent);
+    box-shadow: 3px 3px 0 0 var(--accent);
+  }
+  .flow-node-end {
+    border-style: dashed;
+    box-shadow: 3px 3px 0 0 var(--rule);
+  }
+  .flow-node-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    flex-shrink: 0;
+  }
+  .flow-node-trigger .flow-node-tag { color: var(--accent); }
+  .flow-node-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    text-align: right;
+  }
+  .flow-arrow {
+    text-align: center;
+    color: var(--ink-3);
+    font-size: 14px;
+    line-height: 1;
+    margin: 6px 0;
+    user-select: none;
+  }
+  .flow-branch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .flow-node-half {
+    padding: 10px 12px;
+    box-shadow: 2px 2px 0 0 var(--ink);
+  }
+  .flow-node-half .flow-node-name { font-size: 13px; }
+
+  /* ── Sidecar card (Brain / clients diagram) ── */
+  .sidecar-card {
+    background: var(--paper);
+    border: var(--hair);
+    border-radius: var(--r-2);
+    box-shadow: 6px 6px 0 0 rgba(26, 26, 26, 0.06);
+    padding: 28px 28px 22px;
+    background-image:
+      linear-gradient(var(--rule-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule-soft) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .sidecar-brain {
+    margin: 0 auto;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 16px;
+    border-radius: var(--r-pill);
+    box-shadow: 0 0 0 4px rgba(26, 26, 26, 0.06);
+  }
+  .sidecar-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(194, 58, 42, 0.18);
+    flex-shrink: 0;
+  }
+  .sidecar-dot-brain {
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
+  }
+  .sidecar-brain-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .sidecar-brain-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(245, 242, 235, 0.65);
+  }
+  .sidecar-lines {
+    height: 60px;
+    margin: 0 auto;
+    max-width: 340px;
+  }
+  .sidecar-lines svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .sidecar-lines svg path {
+    fill: none;
+    stroke: var(--rule);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+  }
+  .sidecar-clients {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: var(--hair);
+    border-radius: var(--r-2);
+    overflow: hidden;
+  }
+  .sidecar-client {
+    background: var(--paper);
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+  }
+  .sidecar-client-name {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .sidecar-client-meta {
+    font-size: 11px;
+    color: var(--ink-3);
+    line-height: 1.45;
+  }
+  .sidecar-protocol {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: var(--hair-soft);
+    text-align: center;
+  }
+  @media (max-width: 540px) {
+    .sidecar-clients { grid-template-columns: 1fr; }
+    .sidecar-lines { display: none; }
+  }
+
+  /* ── Setup ────────────────────────────────── */
+  .setup {
+    border-top: var(--hair);
+    background: var(--paper-2);
+  }
+  .setup-inner { padding-bottom: 120px; }
   .terminal {
-    font-family: var(--mono); font-size: 0.8125rem;
-    background: var(--bg-raised); border: 1px solid var(--border);
-    border-radius: 8px; overflow: hidden; margin-bottom: 2.5rem;
+    margin: 40px 0 64px;
+    max-width: 720px;
+    background: #1a1a1a;
+    border-radius: var(--r-2);
+    overflow: hidden;
+    box-shadow: 0 1px 0 rgba(26, 26, 26, 0.04), 0 18px 40px rgba(26, 26, 26, 0.18);
   }
-  .terminal-header {
-    display: flex; align-items: center; padding: 0.625rem 1rem;
-    border-bottom: 1px solid var(--border); background: var(--bg-surface);
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #232323;
+    border-bottom: 1px solid #2c2c2c;
   }
-  .terminal-dots { display: flex; gap: 0.375rem; }
-  .terminal-label { margin-left: auto; font-size: 0.6875rem; color: var(--text-muted); }
-  .terminal-body { padding: 1.25rem 1.25rem; line-height: 2; }
+  .tl {
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    display: inline-block;
+  }
+  .tl-r { background: #ff5f57; }
+  .tl-y { background: #febc2e; }
+  .tl-g { background: #28c840; }
+  .terminal-label {
+    margin-left: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #888;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .terminal-body {
+    padding: 22px 24px;
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    line-height: 1.85;
+    color: #e8e8e8;
+  }
+  .t-prompt { color: #888; }
+  .t-cmd { color: #f1f3f8; font-weight: 500; }
+  .t-comment { color: #6a7080; font-style: italic; }
+  .t-ok { color: #6cd49a; }
 
-  /* Channel pills */
-  .channel-row { text-align: center; margin-bottom: 3rem; }
-  .channel-label {
-    font-family: var(--mono); font-size: 0.6875rem; font-weight: 600;
-    color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase;
-    margin: 0 0 1rem;
-  }
-  .channel-pills { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
-  .channel-pill {
-    font-family: var(--mono); font-size: 0.75rem;
-    display: inline-flex; align-items: center; gap: 0.375rem;
-    background: var(--bg-raised); border: 1px solid var(--border);
-    border-radius: 6px; padding: 0.5rem 0.875rem; color: var(--text-primary);
-    transition: background 0.2s;
-  }
-  .channel-pill:hover { background: var(--bg-surface); }
-  .channel-meta { font-size: 0.5625rem; color: var(--text-muted); margin-left: 0.25rem; }
-
-  /* ── CTA ──────────────────────────────────── */
-  .cta { text-align: center; }
-  .cta-heading {
-    font-size: 2.25rem; font-weight: 900; color: var(--text-primary);
-    margin: 0 0 1rem; letter-spacing: -0.03em;
+  .cta { max-width: 720px; }
+  .cta-line {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(26px, 3vw, 36px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0 0 14px;
   }
   .cta-sub {
-    font-size: 1rem; line-height: 1.7; color: var(--text-secondary);
-    margin: 0 0 2rem;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink-2);
+    margin: 0 0 24px;
+    max-width: 60ch;
   }
-  .cta-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  .cta-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
 
-  /* ── Footer ──────────────────────────────── */
-  .footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; }
+  /* ── Footer ───────────────────────────────── */
+  .footer {
+    border-top: var(--hair-bold);
+    background: var(--paper);
+    padding: 48px 28px 36px;
+  }
   .footer-inner {
-    max-width: 1120px; margin: 0 auto;
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 1rem;
+    max-width: var(--col-wide);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
   }
-  .footer-left { display: flex; align-items: center; gap: 1rem; }
-  .footer-logo {
-    font-family: var(--mono); font-size: 0.8125rem; font-weight: 700;
-    color: var(--text-muted); letter-spacing: 0.06em;
+  .footer-left {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--ink);
   }
-  .footer-copy { font-size: 0.75rem; color: var(--text-muted); }
-  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-logo { font-weight: 700; }
+  .footer-copy { color: var(--ink-3); }
+  .footer-links {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
   .footer-links a {
-    font-size: 0.8125rem; color: var(--text-muted);
-    text-decoration: none; transition: color 0.15s;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-out);
   }
-  .footer-links a:hover { color: #aaa; }
+  .footer-links a:hover { color: var(--accent); }
   .footer-disclaimer {
-    max-width: 1120px; margin: 0.75rem auto 0; padding-top: 0.75rem;
-    border-top: 1px solid var(--border-subtle);
-    font-size: 0.6875rem; color: var(--text-muted); line-height: 1.5;
+    max-width: var(--col-wide);
+    margin: 24px auto 0;
+    padding-top: 24px;
+    border-top: var(--hair-soft);
+    font-size: 12px;
+    line-height: 1.65;
+    color: var(--ink-3);
   }
-  .footer-disclaimer a { color: var(--text-muted); text-decoration: underline; }
-  .footer-disclaimer a:hover { color: #aaa; }
-
-  /* ── Responsive ──────────────────────────── */
-  @media (max-width: 768px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .hero-heading { font-size: 2.25rem; }
-    .cap-grid { grid-template-columns: repeat(2, 1fr); }
-    .spot-heading { font-size: 1.75rem; }
-    .spot-grid, .spot-grid-gl { grid-template-columns: 1fr; }
-    .wf-canvas-mock { display: none; }
-    .hub-grid { display: none; }
-    .spot-stats { grid-template-columns: 1fr 1fr; }
-    .nav-right { gap: 1rem; }
-    .arch-apps-grid { grid-template-columns: repeat(3, 1fr); }
-    .arch-pillars-grid { grid-template-columns: repeat(2, 1fr); }
-    .arch-connector { grid-template-columns: repeat(2, 1fr); }
-  }
+  .footer-disclaimer a { color: var(--accent); text-decoration: underline; }
 </style>
-
-<script>
-  // Copy install command
-  document.getElementById('copy-btn')?.addEventListener('click', function() {
-    navigator.clipboard.writeText('bun install -g @usejarvis/brain');
-    this.textContent = 'copied';
-    setTimeout(() => { this.textContent = 'copy'; }, 1500);
-  });
-
-  // Live clock in status panel
-  function updateClock() {
-    const el = document.getElementById('clock');
-    if (el) el.textContent = new Date().toUTCString().slice(17, 25) + ' UTC';
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-
-  // Scroll progress bar
-  window.addEventListener('scroll', () => {
-    const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-    const bar = document.getElementById('scrollProgress');
-    if (bar) bar.style.width = pct + '%';
-  });
-
-  // Workflow canvas nodes animate in when canvas becomes visible
-  const canvasObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.querySelectorAll('.wf-node, .wf-edge').forEach(el => {
-          const delay = parseInt(el.dataset.delay || '0');
-          setTimeout(() => el.classList.add('anim-visible'), delay);
-        });
-        canvasObs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-  const wfCanvas = document.getElementById('wfCanvas');
-  if (wfCanvas) canvasObs.observe(wfCanvas);
-
-  // Count-up animation for stat numbers
-  const countObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.querySelectorAll('.spot-stat-num').forEach(el => {
-          const target = parseFloat(el.dataset.count);
-          if (isNaN(target)) return;
-          const isDecimal = el.dataset.decimal === 'true';
-          let current = 0;
-          const step = target / 25;
-          const interval = setInterval(() => {
-            current += step;
-            if (current >= target) { current = target; clearInterval(interval); }
-            el.textContent = isDecimal ? current.toFixed(1) : Math.round(current).toString();
-          }, 40);
-        });
-        countObs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-  document.querySelectorAll('.spot-stats').forEach(el => countObs.observe(el));
-</script>
