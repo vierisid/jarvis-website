@@ -1,9 +1,9 @@
 ---
 title: Proactive Agent
-description: How JARVIS acts without being asked — monitoring, scheduling, and executing tasks autonomously.
+description: How Usejarvis acts without being asked — monitoring, scheduling, and executing tasks autonomously.
 ---
 
-JARVIS doesn't wait to be told. The proactive engine monitors your email, calendar, and commitments, then acts on your behalf — sending alerts, executing scheduled tasks, and queuing research in the background.
+Usejarvis doesn't wait to be told. The proactive engine monitors your email, calendar, and commitments, then acts on your behalf — sending alerts, executing scheduled tasks, and queuing research in the background.
 
 ## Observers
 
@@ -29,11 +29,11 @@ Watches Google Calendar for upcoming events and fires alerts:
 
 ### D-Bus Notifications (Linux)
 
-On Linux systems, JARVIS listens to the D-Bus notification bus for system-level alerts. Critical-urgency notifications are escalated immediately.
+On Linux systems, Usejarvis listens to the D-Bus notification bus for system-level alerts. Critical-urgency notifications are escalated immediately.
 
 ## Commitments
 
-JARVIS maintains a commitments database in the vault. When you say "remind me to..." or "I need to...", JARVIS extracts and stores the commitment with a due date.
+Usejarvis maintains a commitments database in the vault. When you say "remind me to..." or "I need to...", Usejarvis extracts and stores the commitment with a due date.
 
 The heartbeat loop checks commitments every cycle:
 
@@ -45,7 +45,7 @@ The heartbeat loop checks commitments every cycle:
 
 ## Background Agent
 
-For complex or time-consuming research tasks, JARVIS dispatches a background agent that works independently:
+For complex or time-consuming research tasks, Usejarvis dispatches a background agent that works independently:
 
 - Performs web searches and vault lookups
 - Runs multi-step research chains

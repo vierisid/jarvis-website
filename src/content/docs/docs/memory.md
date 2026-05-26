@@ -1,9 +1,9 @@
 ---
 title: Memory & Knowledge
-description: How JARVIS builds and uses a persistent knowledge vault from your conversations.
+description: How Usejarvis builds and uses a persistent knowledge vault from your conversations.
 ---
 
-JARVIS maintains a persistent knowledge vault stored in SQLite. After every response, it automatically extracts facts, preferences, events, and relationships from the conversation and stores them. Relevant knowledge is injected into the system prompt of future conversations so JARVIS always has context about you, your projects, and your preferences — without you repeating yourself.
+Usejarvis maintains a persistent knowledge vault stored in SQLite. After every response, it automatically extracts facts, preferences, events, and relationships from the conversation and stores them. Relevant knowledge is injected into the system prompt of future conversations so Usejarvis always has context about you, your projects, and your preferences — without you repeating yourself.
 
 ## How Memory Works
 
@@ -18,13 +18,13 @@ After every response the primary agent generates, an extraction process runs fir
 3. Each entity is stored as a knowledge record in the SQLite vault with a type, content, and timestamp
 4. The extraction does not delay or block your next message
 
-This means JARVIS learns from every conversation automatically — you never need to explicitly tell it to remember something (though you can, and it will prioritize it).
+This means Usejarvis learns from every conversation automatically — you never need to explicitly tell it to remember something (though you can, and it will prioritize it).
 
 ### Reading: Retrieval and Injection
 
 When you send a message, before generating a response:
 
-1. JARVIS calls `extractSearchTerms()` on your message to identify the key topics, entities, and concepts
+1. Usejarvis calls `extractSearchTerms()` on your message to identify the key topics, entities, and concepts
 2. These terms are used to query the SQLite vault (full-text search + tag matching)
 3. The most relevant knowledge records are assembled into a `knowledgeContext` block
 4. This block is injected into the system prompt for the current turn
@@ -42,7 +42,7 @@ The vault stores knowledge in typed categories:
 | `event` | Scheduled or past events | "Meeting with Sarah on March 3 at 2pm" |
 | `person` | Information about people the user mentions | "Sarah is the user's manager at Acme" |
 | `project` | Projects the user is working on | "Project Artemis: a TypeScript CLI tool for log analysis" |
-| `commitment` | Things JARVIS promised to do | "Send daily summary of HN posts at 8am" |
+| `commitment` | Things Usejarvis promised to do | "Send daily summary of HN posts at 8am" |
 | `credential` | Stored credentials or tokens (encrypted) | "Anthropic API key stored in vault" |
 | `note` | Freeform notes the user asked to save | "Book recommendation: 'The Pragmatic Programmer'" |
 
@@ -119,7 +119,7 @@ Input: id (integer) or query (string)
 
 ## Retrieval Tuning
 
-The relevance of injected knowledge depends on how well `extractSearchTerms()` identifies the important concepts in your message. For short messages, this may retrieve less context than for detailed ones. If JARVIS seems to have forgotten something relevant, try mentioning it explicitly in your message to trigger retrieval.
+The relevance of injected knowledge depends on how well `extractSearchTerms()` identifies the important concepts in your message. For short messages, this may retrieve less context than for detailed ones. If Usejarvis seems to have forgotten something relevant, try mentioning it explicitly in your message to trigger retrieval.
 
 The number of knowledge records injected per turn is capped to keep prompt sizes manageable (default: 20 records). Records are ranked by recency and semantic relevance to the current query.
 
@@ -137,6 +137,6 @@ Extraction quality depends on the LLM used. Claude models (especially Opus) tend
 
 ## Video Tutorial Placeholder
 
-> Video tutorial placeholder: how memory extraction and retrieval actually behave in JARVIS.
+> Video tutorial placeholder: how memory extraction and retrieval actually behave in Usejarvis.
 
 Add your future video link here.

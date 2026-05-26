@@ -1,14 +1,14 @@
 ---
 title: Desktop Control
-description: How JARVIS controls desktop applications via the Go sidecar with platform-native APIs.
+description: How Usejarvis controls desktop applications via the Go sidecar with platform-native APIs.
 ---
 
-JARVIS controls native desktop applications through a Go sidecar process that connects to the daemon over a JWT-authenticated WebSocket. The sidecar runs natively on each platform — Windows, macOS, and Linux — using platform-specific APIs for window management, UI automation, screenshots, and input simulation.
+Usejarvis controls native desktop applications through a Go sidecar process that connects to the daemon over a JWT-authenticated WebSocket. The sidecar runs natively on each platform — Windows, macOS, and Linux — using platform-specific APIs for window management, UI automation, screenshots, and input simulation.
 
 ## Architecture
 
 ```
-JARVIS Daemon (Bun, any machine)
+Usejarvis Daemon (Bun, any machine)
   ↕ WebSocket (JWT auth)
 Sidecar (Go, target machine)
   → Platform APIs (Win32 / AppleScript / X11)
@@ -16,11 +16,11 @@ Sidecar (Go, target machine)
   → Terminal, Filesystem, Clipboard
 ```
 
-The sidecar is a standalone Go binary that enrolls with the daemon using a JWT token. Once connected, it receives RPC commands over WebSocket and executes them using native platform APIs. Multiple sidecars can connect to the same daemon, giving JARVIS control over several machines simultaneously.
+The sidecar is a standalone Go binary that enrolls with the daemon using a JWT token. Once connected, it receives RPC commands over WebSocket and executes them using native platform APIs. Multiple sidecars can connect to the same daemon, giving Usejarvis control over several machines simultaneously.
 
 ## Installation
 
-Install the sidecar on each machine you want JARVIS to control:
+Install the sidecar on each machine you want Usejarvis to control:
 
 ```bash
 bun install -g @usejarvis/sidecar
@@ -36,7 +36,7 @@ See [Installation](#installation) above.
 
 ### 2. Enroll in the dashboard
 
-1. Open the JARVIS dashboard at `http://localhost:3142`
+1. Open the Usejarvis dashboard at `http://localhost:3142`
 2. Go to **Settings** → **Sidecar**
 3. Enter a friendly name for this machine (e.g. "work laptop") and click **Enroll**
 4. Click **Copy** to copy the token command
@@ -208,7 +208,7 @@ Desktop automation uses X11 tools:
 
 ## Multi-Machine Setup
 
-Connect multiple sidecars to a single JARVIS daemon for cross-machine orchestration:
+Connect multiple sidecars to a single Usejarvis daemon for cross-machine orchestration:
 
 ```bash
 # On machine A (e.g., your workstation)

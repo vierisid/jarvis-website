@@ -1,9 +1,9 @@
 ---
 title: Configuration
-description: How JARVIS is configured, where the config lives, and how to reason about the main sections.
+description: How Usejarvis is configured, where the config lives, and how to reason about the main sections.
 ---
 
-JARVIS stores its runtime configuration in a single YAML file:
+Usejarvis stores its runtime configuration in a single YAML file:
 
 ```text
 ~/.jarvis/config.yaml
@@ -93,7 +93,7 @@ Controls dashboard/API authentication.
 
 If `auth.token` is unset, the dashboard is open access.
 
-If you expose JARVIS outside a trusted local network, set this.
+If you expose Usejarvis outside a trusted local network, set this.
 
 ### `llm`
 
@@ -155,7 +155,7 @@ Controls the proactive cycle that drives periodic check-ins and background activ
 
 ### `active_role`
 
-Sets the active top-level role/persona file JARVIS runs with.
+Sets the active top-level role/persona file Usejarvis runs with.
 
 ## Editing by Hand vs Onboarding
 
@@ -185,7 +185,7 @@ After the first successful start, most users should review:
 
 ## Docker Note
 
-If you run JARVIS in Docker, remember that the daemon config still belongs to the daemon, not to your browser session.
+If you run Usejarvis in Docker, remember that the daemon config still belongs to the daemon, not to your browser session.
 
 This matters especially for addresses like:
 

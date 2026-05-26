@@ -1,9 +1,9 @@
 ---
 title: Dashboard
-description: A guided tour of the JARVIS dashboard, its main pages, and how to use it as your control center.
+description: A guided tour of the Usejarvis dashboard, its main pages, and how to use it as your control center.
 ---
 
-The dashboard is the primary user interface for JARVIS. It is served directly by the daemon and updates in real time over WebSocket.
+The dashboard is the primary user interface for Usejarvis. It is served directly by the daemon and updates in real time over WebSocket.
 
 By default, it lives at:
 
@@ -17,7 +17,7 @@ If the daemon is running somewhere else, use that machine's host and port instea
 
 The dashboard is where you:
 
-- Chat with JARVIS
+- Chat with Usejarvis
 - Watch tasks and delegated agent activity
 - Inspect memory and knowledge
 - Approve or deny governed actions
@@ -67,7 +67,7 @@ Settings currently includes these sections:
 
 ### Dashboard
 
-The high-level home view. Use it to get a quick sense of whether the system is healthy and what JARVIS has been doing recently.
+The high-level home view. Use it to get a quick sense of whether the system is healthy and what Usejarvis has been doing recently.
 
 ### Chat
 
@@ -82,7 +82,7 @@ Use Chat when you want:
 
 ### Goals
 
-The goals area is where JARVIS tracks longer-running objectives, milestones, and day-to-day accountability.
+The goals area is where Usejarvis tracks longer-running objectives, milestones, and day-to-day accountability.
 
 ### Workflows
 
@@ -90,7 +90,7 @@ This is the automation builder and execution monitor. It is where you create eve
 
 ### Sites
 
-Sites is the web-project workspace built into JARVIS. It lets you open projects, run dev servers, inspect files, and work on site code through the dashboard experience.
+Sites is the web-project workspace built into Usejarvis. It lets you open projects, run dev servers, inspect files, and work on site code through the dashboard experience.
 
 ### Agents
 
@@ -98,15 +98,15 @@ The Agents page shows delegated activity and gives visibility into specialist wo
 
 ### Tasks
 
-Tasks reflect commitments and active work items. If JARVIS auto-creates or updates work, this is one of the first places to look.
+Tasks reflect commitments and active work items. If Usejarvis auto-creates or updates work, this is one of the first places to look.
 
 ### Authority
 
-Authority is where you inspect approvals, rules, and audit-trail-adjacent behavior. If JARVIS is asking for permission or being blocked, start here.
+Authority is where you inspect approvals, rules, and audit-trail-adjacent behavior. If Usejarvis is asking for permission or being blocked, start here.
 
 ### Memory
 
-Memory lets you inspect the raw vault layer: what JARVIS has stored and what it may later retrieve.
+Memory lets you inspect the raw vault layer: what Usejarvis has stored and what it may later retrieve.
 
 ### Pipeline
 

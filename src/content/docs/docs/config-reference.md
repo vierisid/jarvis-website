@@ -1,6 +1,6 @@
 ---
 title: Config Reference
-description: Key-by-key reference for the main JARVIS configuration surface.
+description: Key-by-key reference for the main Usejarvis configuration surface.
 ---
 
 This page is the practical reference for the config keys users change most often. For a conceptual walkthrough, start with [Configuration](/docs/configuration).

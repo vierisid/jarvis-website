@@ -1,9 +1,9 @@
 ---
 title: Continuous Awareness
-description: How JARVIS monitors your screen, detects when you're struggling, and provides proactive, context-aware help.
+description: How Usejarvis monitors your screen, detects when you're struggling, and provides proactive, context-aware help.
 ---
 
-JARVIS doesn't just respond when you ask — it watches your screen, understands what you're doing, and steps in when you need help. The Continuous Awareness system captures your desktop every 7 seconds, runs OCR, tracks context, and detects behavioral patterns like struggle and stuckness. When it spots a problem, it escalates to cloud vision for app-specific analysis and delivers actionable suggestions.
+Usejarvis doesn't just respond when you ask — it watches your screen, understands what you're doing, and steps in when you need help. The Continuous Awareness system captures your desktop every 7 seconds, runs OCR, tracks context, and detects behavioral patterns like struggle and stuckness. When it spots a problem, it escalates to cloud vision for app-specific analysis and delivers actionable suggestions.
 
 ## How It Works
 
@@ -34,7 +34,7 @@ Delivery: Dashboard + Voice + Desktop Toast + Channels
 
 ### Screen Capture
 
-Every 7 seconds (configurable), JARVIS takes a screenshot of your primary display. Captures are stored with JPEG thumbnails for the timeline view and automatically cleaned up based on retention tiers:
+Every 7 seconds (configurable), Usejarvis takes a screenshot of your primary display. Captures are stored with JPEG thumbnails for the timeline view and automatically cleaned up based on retention tiers:
 
 | Retention Tier | Duration | When Applied |
 |---|---|---|
@@ -59,11 +59,11 @@ The context tracker maintains a model of what you're doing:
 - **Session management** — groups continuous activity in the same app into sessions
 - **URL and file path extraction** — parsed from OCR text when applicable
 
-When you switch applications, JARVIS fires a `context_changed` event. When a session ends (app switch or inactivity), JARVIS uses an LLM to summarize what you were doing and stores it for analytics.
+When you switch applications, Usejarvis fires a `context_changed` event. When a session ends (app switch or inactivity), Usejarvis uses an LLM to summarize what you were doing and stores it for analytics.
 
 ## Struggle Detection
 
-This is the core intelligence of the awareness system. Rather than just detecting visible errors, JARVIS recognizes when you're **actively working but making no progress** — a far more common scenario.
+This is the core intelligence of the awareness system. Rather than just detecting visible errors, Usejarvis recognizes when you're **actively working but making no progress** — a far more common scenario.
 
 ### Behavioral Signals
 
@@ -80,9 +80,9 @@ When the weighted composite score exceeds **0.5**, the detector starts a **2-min
 
 ### App-Aware Analysis
 
-JARVIS classifies your current application into categories and tailors its help accordingly:
+Usejarvis classifies your current application into categories and tailors its help accordingly:
 
-| Category | Apps | What JARVIS Does |
+| Category | Apps | What Usejarvis Does |
 |---|---|---|
 | Code Editor | VS Code, IntelliJ, Sublime, vim, Cursor, Zed | Analyzes visible code for syntax/logic errors, identifies the exact line and fix |
 | Terminal | Terminal, iTerm, Warp, PowerShell | Identifies the failing command, explains the error, provides the corrected command |
@@ -93,7 +93,7 @@ JARVIS classifies your current application into categories and tailors its help 
 
 ### Cloud Vision Escalation
 
-When a struggle is detected, JARVIS escalates the screenshot to an LLM with vision capabilities along with an app-category-specific prompt. The LLM analyzes the actual screenshot content and returns targeted advice:
+When a struggle is detected, Usejarvis escalates the screenshot to an LLM with vision capabilities along with an app-category-specific prompt. The LLM analyzes the actual screenshot content and returns targeted advice:
 
 - **Code editor**: "Line 42 is missing a closing parenthesis after the `filter` call. Change `filter(x => x > 0` to `filter(x => x > 0)`."
 - **Terminal**: "The error is `EACCES: permission denied`. Run `sudo npm install -g typescript` instead."
@@ -129,7 +129,7 @@ Error detection fires immediately (no grace period) since visible errors are una
 
 ### Stuck Detection
 
-If the OCR text hash remains identical for 2+ minutes (configurable via `stuck_threshold_ms`), JARVIS detects you as "stuck" — staring at the same screen without making changes. This is different from struggle detection, which catches *active but unproductive* behavior.
+If the OCR text hash remains identical for 2+ minutes (configurable via `stuck_threshold_ms`), Usejarvis detects you as "stuck" — staring at the same screen without making changes. This is different from struggle detection, which catches *active but unproductive* behavior.
 
 ## Suggestion Types
 
@@ -177,14 +177,14 @@ Weekly analytics and behavioral insights:
 
 ## Delivery Channels
 
-When a suggestion is generated, JARVIS delivers it through multiple channels based on availability:
+When a suggestion is generated, Usejarvis delivers it through multiple channels based on availability:
 
 1. **WebSocket** (dashboard) — if connected, delivered in real-time
 2. **Voice** (TTS) — spoken aloud if voice is active
 3. **Desktop toast** — system notification
 4. **Channels fallback** — if no dashboard clients are connected, broadcasts to Telegram/Discord/email
 
-For high-confidence code or terminal struggles (score >= 0.7), JARVIS also dispatches a background agent to perform deep research (web search + vault lookup) and delivers the detailed findings as a follow-up.
+For high-confidence code or terminal struggles (score >= 0.7), Usejarvis also dispatches a background agent to perform deep research (web search + vault lookup) and delivers the detailed findings as a follow-up.
 
 ## Configuration
 

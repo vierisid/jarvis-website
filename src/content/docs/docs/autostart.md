@@ -1,9 +1,9 @@
 ---
 title: Autostart
-description: Run JARVIS as a background service with systemd or launchd so it starts automatically.
+description: Run Usejarvis as a background service with systemd or launchd so it starts automatically.
 ---
 
-JARVIS supports autostart/background-service installation on:
+Usejarvis supports autostart/background-service installation on:
 
 - Linux via `systemd --user`
 - macOS via `launchd`
@@ -14,7 +14,7 @@ The onboarding wizard can help with startup-related setup, but this page is the 
 
 Autostart is useful when:
 
-- You run JARVIS on your daily machine and want it available after reboot
+- You run Usejarvis on your daily machine and want it available after reboot
 - You host it on a home server and want it to come back automatically
 - You do not want to manually open a shell and run `jarvis start` every time
 
@@ -30,7 +30,7 @@ Example unit:
 
 ```ini
 [Unit]
-Description=J.A.R.V.I.S. Daemon
+Description=Usejarvis Daemon
 After=network.target
 
 [Service]
@@ -69,7 +69,7 @@ loginctl enable-linger "$USER"
 
 ## macOS: `launchd`
 
-If you installed JARVIS with the recommended global package command, prefer launching the global `jarvis` executable directly.
+If you installed Usejarvis with the recommended global package command, prefer launching the global `jarvis` executable directly.
 
 Create:
 
@@ -108,7 +108,7 @@ launchctl start ai.jarvis.daemon
 
 ### Source Checkout Variant
 
-If you installed JARVIS from a source checkout instead of the global package, the launchd command should point at your checked-out CLI entrypoint instead:
+If you installed Usejarvis from a source checkout instead of the global package, the launchd command should point at your checked-out CLI entrypoint instead:
 
 ```xml
 <key>ProgramArguments</key>
@@ -131,6 +131,6 @@ If you use autostart:
 
 ## Video Tutorial Placeholder
 
-> Video tutorial placeholder: setting up JARVIS as a background service on Linux and macOS.
+> Video tutorial placeholder: setting up Usejarvis as a background service on Linux and macOS.
 
 Add your future video link here.

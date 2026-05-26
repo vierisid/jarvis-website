@@ -1,9 +1,9 @@
 ---
 title: WebSocket API
-description: The actual message format used by the JARVIS dashboard and daemon for real-time communication.
+description: The actual message format used by the Usejarvis dashboard and daemon for real-time communication.
 ---
 
-JARVIS uses a WebSocket connection for the live dashboard experience.
+Usejarvis uses a WebSocket connection for the live dashboard experience.
 
 Default endpoint:
 
@@ -177,4 +177,4 @@ This page is for:
 - people debugging WebSocket/proxy issues
 - people integrating around the live event stream
 
-If you just want to use JARVIS normally, start with [Dashboard](/docs/dashboard) and [Troubleshooting](/docs/troubleshooting).
+If you just want to use Usejarvis normally, start with [Dashboard](/docs/dashboard) and [Troubleshooting](/docs/troubleshooting).

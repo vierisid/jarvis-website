@@ -1,6 +1,6 @@
 ---
 title: CLI Commands
-description: Complete command-line reference for starting, stopping, debugging, and updating JARVIS.
+description: Complete command-line reference for starting, stopping, debugging, and updating Usejarvis.
 ---
 
 The `jarvis` CLI is the operational entry point for the daemon.
@@ -113,7 +113,7 @@ Use this when:
 
 ## `jarvis update`
 
-Updates JARVIS to the latest version.
+Updates Usejarvis to the latest version.
 
 ```bash
 jarvis update
@@ -161,6 +161,6 @@ jarvis logs -n 200
 
 ## Video Tutorial Placeholder
 
-> Video tutorial placeholder: installing JARVIS and using the CLI end to end.
+> Video tutorial placeholder: installing Usejarvis and using the CLI end to end.
 
 Add your future video link here.

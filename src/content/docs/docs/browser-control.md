@@ -1,13 +1,13 @@
 ---
 title: Browser Control
-description: How JARVIS automates Chrome and Chromium via the Chrome DevTools Protocol.
+description: How Usejarvis automates Chrome and Chromium via the Chrome DevTools Protocol.
 ---
 
-JARVIS controls a real browser instance using the Chrome DevTools Protocol (CDP). It auto-detects Chrome or Chromium on your system, launches it with a dedicated profile, attaches remotely, and exposes five browser tools to the agent.
+Usejarvis controls a real browser instance using the Chrome DevTools Protocol (CDP). It auto-detects Chrome or Chromium on your system, launches it with a dedicated profile, attaches remotely, and exposes five browser tools to the agent.
 
 ## How It Works
 
-On startup, JARVIS:
+On startup, Usejarvis:
 
 1. Scans your system for Chrome and Chromium binaries (see [Detection Order](#detection-order))
 2. Launches the browser with remote debugging enabled on port `9222`
@@ -18,7 +18,7 @@ From that point on, the agent can navigate pages, interact with elements, extrac
 
 ## Detection Order
 
-JARVIS tries browser binaries in this order:
+Usejarvis tries browser binaries in this order:
 
 1. `google-chrome` (Linux system PATH)
 2. `chromium-browser` (Debian/Ubuntu)
@@ -36,7 +36,7 @@ JARVIS_BROWSER_PATH=/usr/local/bin/my-chrome jarvis start
 
 ## Launch Flags
 
-JARVIS launches the browser with these flags:
+Usejarvis launches the browser with these flags:
 
 ```
 --remote-debugging-port=9222
@@ -48,11 +48,11 @@ JARVIS launches the browser with these flags:
 
 On WSL2 or any Linux environment detected as non-desktop, `--no-sandbox` is added automatically (required for Chromium in many headless-capable environments).
 
-The dedicated `~/.jarvis/browser-profile` directory keeps JARVIS's browsing history, cookies, and cached credentials separate from your personal browser profile.
+The dedicated `~/.jarvis/browser-profile` directory keeps Usejarvis's browsing history, cookies, and cached credentials separate from your personal browser profile.
 
 ## Stealth Mode
 
-JARVIS applies a stealth configuration to reduce bot detection:
+Usejarvis applies a stealth configuration to reduce bot detection:
 
 - Removes `navigator.webdriver` from the JavaScript context
 - Spoofs `navigator.plugins`, `navigator.languages`, and related properties
@@ -121,7 +121,7 @@ If `elementId` is given, the screenshot is cropped to that element. Otherwise th
 
 ## Snapshot Approach
 
-Rather than working with raw CSS selectors or XPaths, JARVIS uses a snapshot-based approach:
+Rather than working with raw CSS selectors or XPaths, Usejarvis uses a snapshot-based approach:
 
 1. The page is snapshotted using the CDP Accessibility tree
 2. Each interactive element receives a sequential numeric ID: `[1]`, `[2]`, `[3]`, ...
@@ -139,8 +139,8 @@ A second browser controller runs on CDP port `9223` for the [Proactive Agent](/d
 In WSL2, Linux browsers are strongly preferred over Windows Chrome:
 
 - Linux browsers share the WSL2 network namespace, so CDP connections to `localhost:9222` work without any configuration
-- Windows Chrome runs in the Windows network namespace; reaching it from WSL2 requires additional routing that JARVIS does not attempt by default
-- If no Linux browser is found, JARVIS falls back to Windows Chrome via the interop path and adjusts the CDP host accordingly
+- Windows Chrome runs in the Windows network namespace; reaching it from WSL2 requires additional routing that Usejarvis does not attempt by default
+- If no Linux browser is found, Usejarvis falls back to Windows Chrome via the interop path and adjusts the CDP host accordingly
 
 ## Configuration
 

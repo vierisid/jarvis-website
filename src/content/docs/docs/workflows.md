@@ -1,22 +1,22 @@
 ---
 title: Workflow Automation
-description: Build event-driven automations with JARVIS — visual node graph, natural language creation, 50+ nodes, cron/webhook/observer triggers, self-healing execution.
+description: Build event-driven automations with Usejarvis — visual node graph, natural language creation, 50+ nodes, cron/webhook/observer triggers, self-healing execution.
 ---
 
-JARVIS includes a full workflow automation engine — think n8n or Zapier, but built into your AI daemon with natural language creation, agent delegation, and self-healing execution.
+Usejarvis includes a full workflow automation engine — think n8n or Zapier, but built into your AI daemon with natural language creation, agent delegation, and self-healing execution.
 
 ## Overview
 
 Workflows are event-driven automations: **when X happens, do Y**. They're defined as directed graphs of nodes (triggers, actions, conditions) connected by edges. You can build them four ways:
 
-1. **Chat** — tell JARVIS in the main chat: *"Create a workflow that checks my email every hour and sends a Telegram summary"*
+1. **Chat** — tell Usejarvis in the main chat: *"Create a workflow that checks my email every hour and sends a Telegram summary"*
 2. **Visual builder** — drag-and-drop node graph in the dashboard
 3. **AI sidebar** — describe what you want in the canvas AI chat panel
 4. **API** — create programmatically via REST endpoints
 
 ## Chat-Driven Creation
 
-The simplest way to create workflows is to ask JARVIS directly in chat. The `manage_workflow` tool is available to the primary agent and supports these actions:
+The simplest way to create workflows is to ask Usejarvis directly in chat. The `manage_workflow` tool is available to the primary agent and supports these actions:
 
 | Action | Example |
 |--------|---------|
@@ -27,7 +27,7 @@ The simplest way to create workflows is to ask JARVIS directly in chat. The `man
 | **enable/disable** | *"Disable the email checker workflow"* |
 | **delete** | *"Delete the test workflow"* |
 
-JARVIS uses the NL builder to parse your description into a full workflow definition — picking the right triggers, actions, logic nodes, and wiring them together. The workflow appears immediately in the Workflows dashboard.
+Usejarvis uses the NL builder to parse your description into a full workflow definition — picking the right triggers, actions, logic nodes, and wiring them together. The workflow appears immediately in the Workflows dashboard.
 
 ## Dashboard
 
@@ -204,7 +204,7 @@ curl -X POST http://localhost:3142/api/workflows/import \
 
 ## Auto-Suggestions
 
-JARVIS analyzes your behavior patterns (from the Awareness system) and suggests workflows you haven't thought of:
+Usejarvis analyzes your behavior patterns (from the Awareness system) and suggests workflows you haven't thought of:
 
 - **Repeated app switches** — detected copy-paste patterns between apps (e.g., "You switch between Chrome and VS Code 15 times/day")
 - **Recurring errors** — same app failing repeatedly (e.g., "Docker has had 7 errors today — set up auto-restart?")

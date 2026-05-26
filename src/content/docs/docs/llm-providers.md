@@ -3,7 +3,7 @@ title: LLM Providers
 description: Choose a primary model, configure fallbacks, and understand the tradeoffs between Anthropic, OpenAI, Groq, Gemini, Ollama, and OpenRouter.
 ---
 
-JARVIS supports multiple LLM providers and can fall back between them automatically.
+Usejarvis supports multiple LLM providers and can fall back between them automatically.
 
 The provider system is configured under `llm` in `~/.jarvis/config.yaml`.
 
@@ -100,7 +100,7 @@ Useful if you want access to many models through one provider API key.
 
 ## Fallback Strategy
 
-JARVIS tries:
+Usejarvis tries:
 
 1. The `primary` provider
 2. Each provider in `fallback`, in order

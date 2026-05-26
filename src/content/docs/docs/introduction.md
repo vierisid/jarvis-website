@@ -1,13 +1,13 @@
 ---
 title: Introduction
-description: What JARVIS is, how it is structured, and why it feels different from a typical AI assistant.
+description: What Usejarvis is, how it is structured, and why it feels different from a typical AI assistant.
 ---
 
-JARVIS is an always-on AI daemon, not a tab-bound chatbot.
+Usejarvis is an always-on AI daemon, not a tab-bound chatbot.
 
-It is designed to keep running in the background, maintain memory over time, watch what is happening across your setup, and act through real tools and connected machines. You can run the daemon locally or on a VPS, keep it alive 24/7, and connect sidecars on other machines so one JARVIS instance can reach your laptop, desktop, and server at the same time.
+It is designed to keep running in the background, maintain memory over time, watch what is happening across your setup, and act through real tools and connected machines. You can run the daemon locally or on a VPS, keep it alive 24/7, and connect sidecars on other machines so one Usejarvis instance can reach your laptop, desktop, and server at the same time.
 
-> **Warning:** JARVIS can control your desktop, filesystem, applications, browsers, and online accounts. Treat it like giving a trusted human remote access to your machines.
+> **Warning:** Usejarvis can control your desktop, filesystem, applications, browsers, and online accounts. Treat it like giving a trusted human remote access to your machines.
 >
 > Read these first:
 >
@@ -16,7 +16,7 @@ It is designed to keep running in the background, maintain memory over time, wat
 
 ## Read This Before You Deploy It
 
-JARVIS is not a toy chatbot. It can be given access to files, terminals, browsers, messaging channels, and remote machines.
+Usejarvis is not a toy chatbot. It can be given access to files, terminals, browsers, messaging channels, and remote machines.
 
 Before you expose it over the network, connect real accounts, or raise its autonomy level, review:
 
@@ -27,18 +27,18 @@ Before you expose it over the network, connect real accounts, or raise its auton
 
 Most AI products are request/response systems. You open a UI, ask something, and the model disappears until the next prompt.
 
-JARVIS is built around a different operating model:
+Usejarvis is built around a different operating model:
 
 - A persistent daemon that keeps state and stays online
 - A web dashboard served directly by the daemon
 - A memory vault backed by SQLite
 - Tool use, browser control, workflow execution, and delegated sub-agents
 - Authority rules that gate risky actions at runtime
-- Optional sidecars that give JARVIS desktop, browser, terminal, filesystem, and screenshot access on additional machines
+- Optional sidecars that give Usejarvis desktop, browser, terminal, filesystem, and screenshot access on additional machines
 
 ## High-Level Architecture
 
-At a high level, JARVIS has three layers:
+At a high level, Usejarvis has three layers:
 
 1. The daemon
 2. The dashboard
@@ -78,7 +78,7 @@ The dashboard is the control surface. It exposes the main product areas:
 
 ### Sidecars
 
-Sidecars are how JARVIS reaches other machines. Each sidecar connects back to the daemon and exposes capabilities from that host, such as:
+Sidecars are how Usejarvis reaches other machines. Each sidecar connects back to the daemon and exposes capabilities from that host, such as:
 
 - Desktop automation
 - Browser automation
@@ -87,7 +87,7 @@ Sidecars are how JARVIS reaches other machines. Each sidecar connects back to th
 - Clipboard
 - Screenshots and awareness capture
 
-This lets you keep JARVIS running on an always-on server while still giving it hands and eyes on the machines you actually use.
+This lets you keep Usejarvis running on an always-on server while still giving it hands and eyes on the machines you actually use.
 
 ## Core Product Areas
 
@@ -104,7 +104,7 @@ The current product centers around these capability groups:
 
 ## Before You Start
 
-If you are new to JARVIS, read these next:
+If you are new to Usejarvis, read these next:
 
 1. [Installation](/docs/installation)
 2. [Quick Start](/docs/quickstart)

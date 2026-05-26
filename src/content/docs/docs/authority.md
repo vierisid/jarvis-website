@@ -1,9 +1,9 @@
 ---
 title: Authority & Safety
-description: Control what JARVIS can do autonomously and what requires your approval.
+description: Control what Usejarvis can do autonomously and what requires your approval.
 ---
 
-The authority system controls how much autonomy JARVIS has. It determines which actions the agent can take on its own, which require your approval, and which are blocked entirely. Authority is enforced at every level — the primary agent, sub-agents, and workflows all respect the same rules.
+The authority system controls how much autonomy Usejarvis has. It determines which actions the agent can take on its own, which require your approval, and which are blocked entirely. Authority is enforced at every level — the primary agent, sub-agents, and workflows all respect the same rules.
 
 ## Authority Levels
 
@@ -124,7 +124,7 @@ authority:
 
 ## Approval Workflow
 
-When an action requires approval, JARVIS sends a request through your configured channels:
+When an action requires approval, Usejarvis sends a request through your configured channels:
 
 - **Dashboard** — a modal dialog appears with the action details and approve/deny buttons
 - **Telegram** — an inline keyboard message with approve/deny buttons
@@ -143,7 +143,7 @@ authority:
     suggest_threshold: 5    # After 5 approvals, suggest auto-approve
 ```
 
-When you approve the same type of action repeatedly, JARVIS suggests adding an auto-approve rule. You can accept or dismiss the suggestion. This gradually reduces approval fatigue for routine actions.
+When you approve the same type of action repeatedly, Usejarvis suggests adding an auto-approve rule. You can accept or dismiss the suggestion. This gradually reduces approval fatigue for routine actions.
 
 ## Emergency Controls
 

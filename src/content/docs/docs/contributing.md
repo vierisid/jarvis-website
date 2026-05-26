@@ -1,11 +1,11 @@
 ---
 title: Contributing
-description: How to contribute to JARVIS, where to discuss ideas, and how to make a useful pull request.
+description: How to contribute to Usejarvis, where to discuss ideas, and how to make a useful pull request.
 ---
 
 Contributors are welcome.
 
-JARVIS is still moving fast, and high-quality contributions are useful across the whole project: docs, bug fixes, workflows, sidecars, integrations, product polish, tests, and design.
+Usejarvis is still moving fast, and high-quality contributions are useful across the whole project: docs, bug fixes, workflows, sidecars, integrations, product polish, tests, and design.
 
 ## Good Ways to Contribute
 
@@ -98,6 +98,6 @@ If you want to suggest future product direction, also check:
 
 ## Video Tutorial Placeholder
 
-> Video tutorial placeholder: how to contribute to JARVIS and open a clean PR.
+> Video tutorial placeholder: how to contribute to Usejarvis and open a clean PR.
 
 Add your future video link here.

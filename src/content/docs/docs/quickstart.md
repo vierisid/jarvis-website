@@ -1,13 +1,13 @@
 ---
 title: Quick Start
-description: Get JARVIS configured, running, and reachable in a few minutes.
+description: Get Usejarvis configured, running, and reachable in a few minutes.
 ---
 
 This guide assumes you have already completed [Installation](/docs/installation).
 
 ## Step 1: Run Onboarding
 
-JARVIS ships with an interactive setup wizard:
+Usejarvis ships with an interactive setup wizard:
 
 ```bash
 jarvis onboard
@@ -33,7 +33,7 @@ Your config is written to:
 
 ## Step 2: Start the Daemon
 
-Start JARVIS normally:
+Start Usejarvis normally:
 
 ```bash
 jarvis start
@@ -83,7 +83,7 @@ Good first prompts are tasks that exercise the system, not toy questions. For ex
 
 ## Step 5: Add More Reach With Sidecars
 
-If the daemon is not running on the same machine you want to control, install a sidecar on the target machine. Sidecars let JARVIS access:
+If the daemon is not running on the same machine you want to control, install a sidecar on the target machine. Sidecars let Usejarvis access:
 
 - Desktop automation
 - Browser automation

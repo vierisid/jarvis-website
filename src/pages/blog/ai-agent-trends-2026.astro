@@ -4,7 +4,7 @@ import BlogPost from '../../layouts/BlogPost.astro';
 
 <BlogPost
   title="AI Agent Trends in 2026: What's Actually Happening"
-  description="The gap between hype and reality in AI agents is widening. Here's what's actually working, and why J.A.R.V.I.S. took a different path."
+  description="The gap between hype and reality in AI agents is widening. Here's what's actually working, and why Usejarvis took a different path."
   date="April 11, 2026"
   readTime="7 min"
 >
@@ -46,8 +46,8 @@ import BlogPost from '../../layouts/BlogPost.astro';
 <p>This is a <strong>game-changer for agents</strong>. Why? Because the bottleneck in most agentic systems isn't reasoning — it's <strong>context management</strong>. When your agent can hold an entire codebase, all your documentation, and the full conversation history in memory, you eliminate the complexity of chunking, summarization, and retrieval.</p>
 
 <div class="highlight-box">
-<h3>Why J.A.R.V.I.S. Uses Knowledge Graphs Instead</h3>
-<p>While massive context windows solve the short-term memory problem, J.A.R.V.I.S. takes a different approach: <strong>structured long-term memory</strong>. Instead of stuffing everything into context, we extract entities, facts, and relationships into a SQLite knowledge graph.</p>
+<h3>Why Usejarvis Uses Knowledge Graphs Instead</h3>
+<p>While massive context windows solve the short-term memory problem, Usejarvis takes a different approach: <strong>structured long-term memory</strong>. Instead of stuffing everything into context, we extract entities, facts, and relationships into a SQLite knowledge graph.</p>
 <p>Result: You can reference something from a conversation <em>three months ago</em> without burning tokens on retrieval. "What was that restaurant Sarah recommended?" works even if Sarah mentioned it in Week 1 and you're asking in Week 12.</p>
 </div>
 
@@ -65,7 +65,7 @@ import BlogPost from '../../layouts/BlogPost.astro';
 
 <p>But here's what's <em>not</em> being talked about enough: <strong>these aren't just better autocomplete</strong>. They're <strong>autonomous agents with execution environments</strong>.</p>
 
-<p>J.A.R.V.I.S. approaches this differently: instead of specializing in code, it treats code as <em>one of many domains</em> where action is required. Need to refactor a codebase? Spawn a Software Engineer agent. Need to research API docs first? Spawn a Research Analyst. Need to test across multiple machines? Use sidecars.</p>
+<p>Usejarvis approaches this differently: instead of specializing in code, it treats code as <em>one of many domains</em> where action is required. Need to refactor a codebase? Spawn a Software Engineer agent. Need to research API docs first? Spawn a Research Analyst. Need to test across multiple machines? Use sidecars.</p>
 
 <h2>4. The "Model Zoo" Problem</h2>
 
@@ -75,7 +75,7 @@ import BlogPost from '../../layouts/BlogPost.astro';
 
 <p>Some queries go to cheap local models (Gemma 4 on your laptop). Others route to expensive cloud models (GPT-5.2 for hard reasoning). Some need vision (GPT-4V). Others need tool use (Claude with computer use).</p>
 
-<p><strong>The agent runtime matters more than the model</strong>. J.A.R.V.I.S. is model-agnostic by design — you can plug in any LLM that supports tool calling. OpenAI, Anthropic, local models via Ollama, fine-tuned domain models — swap them in and out without rewriting your agent logic.</p>
+<p><strong>The agent runtime matters more than the model</strong>. Usejarvis is model-agnostic by design — you can plug in any LLM that supports tool calling. OpenAI, Anthropic, local models via Ollama, fine-tuned domain models — swap them in and out without rewriting your agent logic.</p>
 
 <h2>5. The Hype Cycle Is Compressing</h2>
 
@@ -99,7 +99,7 @@ import BlogPost from '../../layouts/BlogPost.astro';
 
 <p>What doesn't work: "general purpose AI assistants" that are just wrappers around ChatGPT with no memory, no tools, and no execution capability.</p>
 
-<h2>What J.A.R.V.I.S. Gets Right (And Wrong)</h2>
+<h2>What Usejarvis Gets Right (And Wrong)</h2>
 
 <p><strong>Right:</strong></p>
 <ul>
@@ -113,7 +113,7 @@ import BlogPost from '../../layouts/BlogPost.astro';
 <p><strong>Wrong (or at least, work-in-progress):</strong></p>
 <ul>
   <li><strong>Complex setup</strong> — self-hosting isn't for everyone (though OpenCove is fixing this)</li>
-  <li><strong>Cognitive load</strong> — users need to learn what J.A.R.V.I.S. <em>can</em> do to use it well</li>
+  <li><strong>Cognitive load</strong> — users need to learn what Usejarvis <em>can</em> do to use it well</li>
   <li><strong>Execution limits</strong> — some tools still hit rate limits or reliability issues</li>
 </ul>
 
@@ -121,7 +121,7 @@ import BlogPost from '../../layouts/BlogPost.astro';
 
 <p>The most important shift in 2026 isn't about which model is smartest. It's that <strong>agents are becoming infrastructure</strong>.</p>
 
-<p>Just like you don't build your own database or web server anymore, you won't build your own agent runtime. You'll use platforms like J.A.R.V.I.S., AutoGPT, LangChain, or vendor-specific solutions (OpenAI Assistants, Anthropic Claude Workspaces).</p>
+<p>Just like you don't build your own database or web server anymore, you won't build your own agent runtime. You'll use platforms like Usejarvis, AutoGPT, LangChain, or vendor-specific solutions (OpenAI Assistants, Anthropic Claude Workspaces).</p>
 
 <p>The question isn't "should I use an agent?" — it's <strong>"which agent platform fits my needs?"</strong></p>
 
@@ -131,7 +131,7 @@ import BlogPost from '../../layouts/BlogPost.astro';
   <li><strong>A coding assistant:</strong> GitHub Copilot Workspace or Cursor</li>
   <li><strong>Customer support automation:</strong> Intercom AI or Ada</li>
   <li><strong>Research & data gathering:</strong> Perplexity Pro or Elicit</li>
-  <li><strong>A personal chief of staff that controls your devices:</strong> J.A.R.V.I.S.</li>
+  <li><strong>A personal chief of staff that controls your devices:</strong> Usejarvis</li>
 </ul>
 </div>
 
@@ -146,6 +146,6 @@ import BlogPost from '../../layouts/BlogPost.astro';
 
 <p>The agent era isn't coming — it's here. The question is whether you're building on infrastructure that will scale, or chasing the hype cycle.</p>
 
-<p>Want an agent runtime that's built for the long term? <a href="/docs/installation">Try J.A.R.V.I.S.</a></p>
+<p>Want an agent runtime that's built for the long term? <a href="/docs/installation">Try Usejarvis</a></p>
 
 </BlogPost>

@@ -1,9 +1,9 @@
 ---
 title: Installation
-description: Install the JARVIS daemon, understand the main deployment options, and choose where the brain should run.
+description: Install the Usejarvis daemon, understand the main deployment options, and choose where the brain should run.
 ---
 
-JARVIS can run:
+Usejarvis can run:
 
 - On your local machine
 - On a home server
@@ -12,14 +12,14 @@ JARVIS can run:
 
 ## Security First
 
-JARVIS can control files, terminals, browsers, remote channels, and connected machines. Treat installation as a security decision, not just a package install.
+Usejarvis can control files, terminals, browsers, remote channels, and connected machines. Treat installation as a security decision, not just a package install.
 
-Before exposing the dashboard outside localhost or giving JARVIS access to real accounts, read:
+Before exposing the dashboard outside localhost or giving Usejarvis access to real accounts, read:
 
 - [Disclaimer & Liability](/docs/disclaimer)
 - [Authority & Safety](/docs/authority)
 
-The daemon is the brain. It does not need to live on the same machine that you want to control. If you want JARVIS to stay online 24/7, a server or always-on machine is the best fit. If you want JARVIS to control another machine's desktop, browser, or filesystem, install a sidecar there after the daemon is up.
+The daemon is the brain. It does not need to live on the same machine that you want to control. If you want Usejarvis to stay online 24/7, a server or always-on machine is the best fit. If you want Usejarvis to control another machine's desktop, browser, or filesystem, install a sidecar there after the daemon is up.
 
 ## Recommended Install
 
@@ -139,14 +139,14 @@ docker run -d --name jarvis \
 
 ### Docker: Networking Advice
 
-When JARVIS runs in Docker, `localhost` inside the container is the container itself.
+When Usejarvis runs in Docker, `localhost` inside the container is the container itself.
 
 That means:
 
 - `ollama.base_url: http://localhost:11434` only works if Ollama is inside the same network context the daemon can actually reach
 - the same warning applies to local Whisper endpoints and similar local services
 
-If those services live somewhere else, point JARVIS at:
+If those services live somewhere else, point Usejarvis at:
 
 - a reachable host IP
 - a service/container hostname
@@ -166,14 +166,14 @@ Best when:
 
 Tradeoffs:
 
-- JARVIS only stays online while that machine is on
+- Usejarvis only stays online while that machine is on
 - If you want it to start automatically after reboot, configure [Autostart](/docs/autostart)
 
 ### VPS or Home Server
 
 Best when:
 
-- You want JARVIS available 24/7
+- You want Usejarvis available 24/7
 - You want one daemon to coordinate multiple machines
 - You care about uptime more than local-only simplicity
 
@@ -188,7 +188,7 @@ The next steps are:
 
 1. Run [Quick Start](/docs/quickstart)
 2. Configure [Autostart](/docs/autostart) if you want it managed as a background service
-3. Install sidecars on any machines you want JARVIS to control directly
+3. Install sidecars on any machines you want Usejarvis to control directly
 
 ## Sidecar Reminder
 
@@ -197,4 +197,4 @@ The daemon and the sidecar are different things:
 - The daemon is the brain
 - The sidecar is the machine-level actuator
 
-If you run JARVIS on a VPS and want it to see and control your laptop, install a sidecar on the laptop. See [Desktop Control](/docs/desktop-control).
+If you run Usejarvis on a VPS and want it to see and control your laptop, install a sidecar on the laptop. See [Desktop Control](/docs/desktop-control).

@@ -61,7 +61,7 @@ If you use Nginx or another proxy, make sure `/ws` is upgraded correctly.
 
 Symptoms:
 
-- JARVIS says it cannot use the browser
+- Usejarvis says it cannot use the browser
 - navigation tasks fail
 
 Check:
@@ -90,7 +90,7 @@ This is one of the most common remote-hosting mistakes and it affects Ollama, lo
 
 ### Why It Happens
 
-People often host JARVIS on one machine but leave provider endpoints set to `localhost`, for example:
+People often host Usejarvis on one machine but leave provider endpoints set to `localhost`, for example:
 
 ```yaml
 llm:
@@ -105,9 +105,9 @@ stt:
 
 That only works if:
 
-- JARVIS is running on the same machine as Ollama or Whisper
+- Usejarvis is running on the same machine as Ollama or Whisper
 
-If JARVIS runs on a VPS and Ollama runs on your desktop, then `localhost` means:
+If Usejarvis runs on a VPS and Ollama runs on your desktop, then `localhost` means:
 
 - the VPS itself
 
@@ -148,13 +148,13 @@ stt:
 
 ### Reverse Proxy Option
 
-If the service should stay on another machine, put a reverse proxy in front of it and point JARVIS at that stable hostname instead of `localhost`.
+If the service should stay on another machine, put a reverse proxy in front of it and point Usejarvis at that stable hostname instead of `localhost`.
 
 Example pattern:
 
 - Ollama host runs locally on `127.0.0.1:11434`
 - Nginx or Caddy exposes it at `https://ollama.example.com`
-- JARVIS config uses `https://ollama.example.com`
+- Usejarvis config uses `https://ollama.example.com`
 
 This works because the daemon can resolve and reach that hostname over the network.
 
@@ -188,7 +188,7 @@ The containerized daemon does not magically gain full control of your host deskt
 
 ## Ollama-Specific Problems
 
-### JARVIS Cannot Reach Ollama
+### Usejarvis Cannot Reach Ollama
 
 Check:
 
@@ -203,7 +203,7 @@ curl http://localhost:11434/api/tags
 ollama list
 ```
 
-Replace `localhost` with the actual address JARVIS should use.
+Replace `localhost` with the actual address Usejarvis should use.
 
 ## Local Whisper / STT Problems
 

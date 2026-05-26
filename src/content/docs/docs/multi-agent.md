@@ -1,9 +1,9 @@
 ---
 title: Multi-Agent System
-description: How JARVIS delegates tasks to specialist sub-agents for parallel and complex workflows.
+description: How Usejarvis delegates tasks to specialist sub-agents for parallel and complex workflows.
 ---
 
-JARVIS runs a hierarchy of AI agents. The primary agent handles your direct requests and, when a task benefits from specialization or parallelism, delegates work to one or more of eleven specialist sub-agents. Sub-agents have their own tool access, context, and iteration limits.
+Usejarvis runs a hierarchy of AI agents. The primary agent handles your direct requests and, when a task benefits from specialization or parallelism, delegates work to one or more of eleven specialist sub-agents. Sub-agents have their own tool access, context, and iteration limits.
 
 ## Architecture
 
@@ -158,6 +158,6 @@ The multi-agent system is always enabled. There are no configuration keys to tur
 
 ## Video Tutorial Placeholder
 
-> Video tutorial placeholder: how delegation works and when JARVIS uses specialist agents.
+> Video tutorial placeholder: how delegation works and when Usejarvis uses specialist agents.
 
 Add your future video link here.

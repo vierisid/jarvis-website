@@ -1,9 +1,9 @@
 ---
 title: Voice Interface
-description: Speak to JARVIS with wake word detection, mic button, and streaming TTS responses.
+description: Speak to Usejarvis with wake word detection, mic button, and streaming TTS responses.
 ---
 
-JARVIS includes a full voice interface: speak your requests using a wake word, microphone button, or push-to-talk, and hear responses streamed back as speech in real time. Text-to-speech requires no API key. Speech-to-text supports cloud and local providers.
+Usejarvis includes a full voice interface: speak your requests using a wake word, microphone button, or push-to-talk, and hear responses streamed back as speech in real time. Text-to-speech requires no API key. Speech-to-text supports cloud and local providers.
 
 ## Overview
 
@@ -18,7 +18,7 @@ Audio travels over the existing WebSocket connection using a binary protocol alo
 
 ### Default Provider: edge-tts-universal
 
-JARVIS uses `edge-tts-universal` by default. This library proxies Microsoft Edge's TTS service and is completely free — no API key, no account, no rate limits for personal use.
+Usejarvis uses `edge-tts-universal` by default. This library proxies Microsoft Edge's TTS service and is completely free — no API key, no account, no rate limits for personal use.
 
 Available voices include hundreds of neural voices across dozens of languages. The default voice is `en-US-AriaNeural`.
 
@@ -61,7 +61,7 @@ Get an API key at [elevenlabs.io](https://elevenlabs.io). The onboarding wizard 
 
 ### Streaming Playback
 
-JARVIS does not wait for the full response to be synthesized before playing audio. Responses are split into sentences, and each sentence is synthesized and streamed to the browser as it is produced. This minimizes the perceived latency between the end of your speech and the start of JARVIS's reply.
+Usejarvis does not wait for the full response to be synthesized before playing audio. Responses are split into sentences, and each sentence is synthesized and streamed to the browser as it is produced. This minimizes the perceived latency between the end of your speech and the start of Usejarvis's reply.
 
 ## Speech-to-Text
 
@@ -111,7 +111,7 @@ pip install openai-whisper
 
 ## Wake Word Detection
 
-JARVIS listens for "Hey JARVIS" using [openwakeword](https://github.com/dscripka/openWakeWord) compiled to WebAssembly. Detection runs entirely in the browser — no audio is sent to any server until the wake word triggers.
+Usejarvis listens for "Hey Usejarvis" using [openwakeword](https://github.com/dscripka/openWakeWord) compiled to WebAssembly. Detection runs entirely in the browser — no audio is sent to any server until the wake word triggers.
 
 ### How It Works
 
@@ -148,7 +148,7 @@ Three ways to trigger voice input:
 
 | Method | How |
 |---|---|
-| Wake word | Say "Hey JARVIS" — microphone is always listening (locally) |
+| Wake word | Say "Hey Usejarvis" — microphone is always listening (locally) |
 | Mic button | Click the microphone icon in the dashboard header |
 | Push-to-talk | Hold the Space bar while the dashboard is focused |
 

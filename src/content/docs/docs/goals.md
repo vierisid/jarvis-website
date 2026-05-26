@@ -3,11 +3,11 @@ title: Autonomous Goal Pursuit
 description: OKR-style goal hierarchy with drill-sergeant accountability, morning/evening rhythm, auto-detection from screen activity, and three dashboard views.
 ---
 
-JARVIS includes an autonomous goal pursuit engine — an OKR-style hierarchical goal system with drill-sergeant accountability, daily rhythm, and deep integration with awareness, workflows, and memory.
+Usejarvis includes an autonomous goal pursuit engine — an OKR-style hierarchical goal system with drill-sergeant accountability, daily rhythm, and deep integration with awareness, workflows, and memory.
 
 ## Overview
 
-Goals in JARVIS follow the **OKR (Objectives and Key Results)** framework used by Google, with five levels of hierarchy:
+Goals in Usejarvis follow the **OKR (Objectives and Key Results)** framework used by Google, with five levels of hierarchy:
 
 | Level | Purpose | Example |
 |-------|---------|---------|
@@ -32,13 +32,13 @@ Scores propagate up the hierarchy — child scores roll up to parents automatica
 
 ### Chat (Natural Language)
 
-The simplest way — just tell JARVIS what you want to achieve:
+The simplest way — just tell Usejarvis what you want to achieve:
 
 ```
 "I want to get fit by summer"
 ```
 
-JARVIS uses the NL Goal Builder to decompose your statement into a full OKR hierarchy:
+Usejarvis uses the NL Goal Builder to decompose your statement into a full OKR hierarchy:
 
 ```
 Proposed breakdown:
@@ -51,13 +51,13 @@ Proposed breakdown:
       DAILY ACTION: Track all meals
 ```
 
-You review and confirm. JARVIS creates the full hierarchy instantly.
+You review and confirm. Usejarvis creates the full hierarchy instantly.
 
 ### Dashboard
 
 Click **"+ New Goal"** in the Goals dashboard. Two modes:
 
-1. **Natural Language** — paste a goal description, JARVIS proposes the OKR breakdown
+1. **Natural Language** — paste a goal description, Usejarvis proposes the OKR breakdown
 2. **Quick Create** — fill in title, level, parent, description, and deadline manually
 
 ### API
@@ -76,7 +76,7 @@ curl -X POST http://localhost:3142/api/goals \
 
 ## Daily Rhythm
 
-JARVIS runs two daily check-ins driven by configurable time windows:
+Usejarvis runs two daily check-ins driven by configurable time windows:
 
 ### Morning Plan (default: 7–9 AM)
 
@@ -107,12 +107,12 @@ goals:
     end: 22
   accountability_style: drill_sergeant  # or: supportive
   auto_decompose: true
-  calendar_ownership: false  # set true to let JARVIS manage calendar blocks
+  calendar_ownership: false  # set true to let Usejarvis manage calendar blocks
 ```
 
 ## Accountability & Escalation
 
-The drill sergeant doesn't let you off easy. When a goal falls behind, JARVIS escalates through four stages:
+The drill sergeant doesn't let you off easy. When a goal falls behind, Usejarvis escalates through four stages:
 
 | Stage | Trigger | Behavior |
 |-------|---------|----------|
@@ -142,14 +142,14 @@ Each goal has a health status calculated from score progress vs. time elapsed:
 
 ## Auto-Detection from Screen Awareness
 
-JARVIS connects the awareness engine (continuous screen capture + OCR) to your goals. When you're working on something related to an active goal, JARVIS automatically detects it:
+Usejarvis connects the awareness engine (continuous screen capture + OCR) to your goals. When you're working on something related to an active goal, Usejarvis automatically detects it:
 
 1. **Fuzzy matching** — your screen activity (app name, window title, OCR text) is matched against goal descriptions and keywords
 2. **Auto-progress logging** — matched activities are logged as `auto_detected` progress entries
 3. **Deduplication** — same goal won't be re-logged within a 30-minute window
 4. **Evening review** — auto-detected progress feeds into the evening review for accurate scoring
 
-Example: If your goal is "Learn TypeScript" and JARVIS detects you in VS Code editing a `.ts` file with TypeScript documentation open, it auto-logs progress.
+Example: If your goal is "Learn TypeScript" and Usejarvis detects you in VS Code editing a `.ts` file with TypeScript documentation open, it auto-logs progress.
 
 ## Dashboard
 
@@ -186,7 +186,7 @@ Charts powered by Recharts:
 
 ## Agent Tool
 
-The `manage_goals` tool is available to JARVIS in chat for all goal operations:
+The `manage_goals` tool is available to Usejarvis in chat for all goal operations:
 
 | Action | Description |
 |--------|-------------|
@@ -203,7 +203,7 @@ The `manage_goals` tool is available to JARVIS in chat for all goal operations:
 
 ## Estimation Engine
 
-JARVIS uses a **hybrid estimation approach**:
+Usejarvis uses a **hybrid estimation approach**:
 
 1. **Historical data** — queries the vault for similar completed goals (matched by tags, level, description)
 2. **LLM estimation** — asks the LLM for an estimate based on the goal description and context
@@ -217,7 +217,7 @@ Each estimate includes:
 
 ## Goal Memory
 
-When a goal is completed, failed, or killed, JARVIS extracts it into the vault as a knowledge entity with performance facts:
+When a goal is completed, failed, or killed, Usejarvis extracts it into the vault as a knowledge entity with performance facts:
 
 - Final score
 - Estimated vs. actual hours
@@ -225,7 +225,7 @@ When a goal is completed, failed, or killed, JARVIS extracts it into the vault a
 - Estimation accuracy ratio
 - Tags and level
 
-This builds a growing dataset that improves future estimations and gives JARVIS historical awareness of your track record.
+This builds a growing dataset that improves future estimations and gives Usejarvis historical awareness of your track record.
 
 ## API Reference
 
@@ -252,7 +252,7 @@ This builds a growing dataset that improves future estimations and gives JARVIS 
 
 ### WebSocket Events
 
-Goal events are broadcast via WebSocket (same connection as other JARVIS events):
+Goal events are broadcast via WebSocket (same connection as other Usejarvis events):
 
 ```json
 {
@@ -315,7 +315,7 @@ goals:
   # Auto-decompose goals into daily actions
   auto_decompose: true
 
-  # Let JARVIS create/move calendar events for goals
+  # Let Usejarvis create/move calendar events for goals
   calendar_ownership: false
 ```
 

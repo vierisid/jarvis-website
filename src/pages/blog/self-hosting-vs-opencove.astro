@@ -3,13 +3,13 @@ import BlogPost from '../../layouts/BlogPost.astro';
 ---
 
 <BlogPost
-  title="Self-Hosting vs. OpenCove: Choosing Your J.A.R.V.I.S. Deployment"
-  description="Understanding the tradeoffs between running J.A.R.V.I.S. on your own infrastructure versus using our managed cloud."
+  title="Self-Hosting vs. OpenCove: Choosing Your Usejarvis Deployment"
+  description="Understanding the tradeoffs between running Usejarvis on your own infrastructure versus using our managed cloud."
   date="April 11, 2026"
   readTime="6 min"
 >
 
-<p>J.A.R.V.I.S. is built on a core principle: <strong>you should own your data</strong>. But ownership comes with responsibility. Should you self-host your agent runtime, or use our managed OpenCove offering?</p>
+<p>Usejarvis is built on a core principle: <strong>you should own your data</strong>. But ownership comes with responsibility. Should you self-host your agent runtime, or use our managed OpenCove offering?</p>
 
 <p>Here's how to decide.</p>
 
@@ -20,15 +20,15 @@ import BlogPost from '../../layouts/BlogPost.astro';
 <ul>
   <li><strong>Full data ownership:</strong> Your knowledge graph, conversation logs, screen captures, and activity data stay on <em>your</em> hardware. No third-party ever sees them.</li>
   <li><strong>Complete transparency:</strong> The entire codebase is open source. You can audit every line, modify behavior, and contribute improvements.</li>
-  <li><strong>No cloud dependency:</strong> J.A.R.V.I.S. runs locally. No internet? No problem (as long as your LLM provider is reachable, or you're running a local model).</li>
+  <li><strong>No cloud dependency:</strong> Usejarvis runs locally. No internet? No problem (as long as your LLM provider is reachable, or you're running a local model).</li>
   <li><strong>Unlimited customization:</strong> Want to integrate with proprietary tools? Add custom workflows? Modify the agent's personality? You have full access to the source.</li>
-  <li><strong>Zero recurring fees:</strong> You pay for compute (your hardware or your cloud VMs), but there's no subscription to J.A.R.V.I.S. itself.</li>
+  <li><strong>Zero recurring fees:</strong> You pay for compute (your hardware or your cloud VMs), but there's no subscription to Usejarvis itself.</li>
 </ul>
 
 <h3>What You Manage</h3>
 
 <ul>
-  <li><strong>Installation & updates:</strong> You're responsible for keeping J.A.R.V.I.S. and its dependencies up to date.</li>
+  <li><strong>Installation & updates:</strong> You're responsible for keeping Usejarvis and its dependencies up to date.</li>
   <li><strong>Infrastructure:</strong> Provisioning servers, managing uptime, securing access — all on you.</li>
   <li><strong>Backups:</strong> Your knowledge graph is valuable. You need to back it up (we provide tools, but you run them).</li>
   <li><strong>Debugging:</strong> When something breaks, you're the first line of support (though our community is active on Discord).</li>
@@ -84,13 +84,13 @@ jarvis start</code></pre>
 
 <h2>The Hybrid Option: Self-Host Brain, OpenCove Sidecars</h2>
 
-<p>You can run the J.A.R.V.I.S. <strong>brain</strong> (the core agent runtime) on your own hardware while using OpenCove for <strong>sidecar management</strong>. This gives you data ownership while offloading device coordination and uptime concerns.</p>
+<p>You can run the Usejarvis <strong>brain</strong> (the core agent runtime) on your own hardware while using OpenCove for <strong>sidecar management</strong>. This gives you data ownership while offloading device coordination and uptime concerns.</p>
 
 <p>Perfect for users who want control but don't want to manage a 24/7 server.</p>
 
 <h2>Our Recommendation</h2>
 
-<p><strong>Start with OpenCove</strong> if you're new to J.A.R.V.I.S. or prioritize convenience. Get familiar with how the system works, what workflows matter to you, and whether it fits your needs.</p>
+<p><strong>Start with OpenCove</strong> if you're new to Usejarvis or prioritize convenience. Get familiar with how the system works, what workflows matter to you, and whether it fits your needs.</p>
 
 <p><strong>Move to self-hosting</strong> when:</p>
 <ul>
@@ -100,12 +100,12 @@ jarvis start</code></pre>
   <li>You're comfortable managing infrastructure</li>
 </ul>
 
-<p>The beauty of J.A.R.V.I.S. is that <strong>you're not locked in</strong>. Your knowledge graph is portable. Export from OpenCove, import to your self-hosted instance, and you're running — no data loss, no downtime.</p>
+<p>The beauty of Usejarvis is that <strong>you're not locked in</strong>. Your knowledge graph is portable. Export from OpenCove, import to your self-hosted instance, and you're running — no data loss, no downtime.</p>
 
 <div class="highlight-box">
 <p><strong>Bottom line:</strong> OpenCove for convenience, self-hosting for control. Either way, you own your data story.</p>
 </div>
 
-<p>Ready to get started? <a href="/docs/installation">Install J.A.R.V.I.S.</a> or <a href="https://cloud.usejarvis.ai">try OpenCove</a>.</p>
+<p>Ready to get started? <a href="/docs/installation">Install Usejarvis</a> or <a href="https://cloud.usejarvis.ai">try OpenCove</a>.</p>
 
 </BlogPost>

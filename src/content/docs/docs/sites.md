@@ -1,11 +1,11 @@
 ---
 title: Sites Workspace
-description: Build, edit, preview, and manage web projects inside the JARVIS dashboard.
+description: Build, edit, preview, and manage web projects inside the Usejarvis dashboard.
 ---
 
-The Sites workspace is JARVIS's built-in environment for working on web projects.
+The Sites workspace is Usejarvis's built-in environment for working on web projects.
 
-It is not a replacement for your editor or git tooling in every case. It is a product surface that lets JARVIS operate on projects directly through the dashboard with an opinionated workflow around previews, files, git state, and project chat.
+It is not a replacement for your editor or git tooling in every case. It is a product surface that lets Usejarvis operate on projects directly through the dashboard with an opinionated workflow around previews, files, git state, and project chat.
 
 ## What the Sites Workspace Includes
 
@@ -35,7 +35,7 @@ Each project currently tracks data such as:
 
 1. Open the Sites page
 2. Create or open a project
-3. Let JARVIS start the dev server
+3. Let Usejarvis start the dev server
 4. Use the file tree and project chat together
 5. Preview the running project
 6. Inspect git status and project changes
@@ -58,7 +58,7 @@ sites:
 
 Sites is especially useful when you want:
 
-- JARVIS to work on a contained web project
+- Usejarvis to work on a contained web project
 - a built-in preview workflow
 - project chat tied to a specific project context
 - a quick way to inspect dev server and git state in one place
