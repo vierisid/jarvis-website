@@ -9,143 +9,248 @@ import BlogPost from '../../layouts/BlogPost.astro';
   readTime="8 min"
 >
 
-The AI agent landscape has exploded in 2026. With **Hermes Agent** crossing 56,000 GitHub stars, **Multica** introducing managed agent platforms, and research pushing boundaries on mobile agents and multi-agent systems, it's worth stepping back to understand the ecosystem and where J.A.R.V.I.S. fits in.
+<p>The AI agent landscape has exploded in 2026. With <strong>Hermes Agent</strong> crossing 56,000 GitHub stars, <strong>Multica</strong> introducing managed agent platforms, and research pushing boundaries on mobile agents and multi-agent systems, it's worth stepping back to understand the ecosystem and where J.A.R.V.I.S. fits in.</p>
 
-## The Three Tiers of Agent Systems
+<h2>The Three Tiers of Agent Systems</h2>
 
-The agent ecosystem has stratified into three distinct tiers, each serving different needs:
+<p>The agent ecosystem has stratified into three distinct tiers, each serving different needs:</p>
 
-### 1. Research Frameworks (Experimental)
+<h3>1. Research Frameworks (Experimental)</h3>
 
-Projects like **Hermes Agent** from NousResearch represent the cutting edge of agent research. These frameworks prioritize:
-- **Flexibility**: Modular skill systems, custom toolsets, RL-based training
-- **Experimentation**: Testing new architectures, learning approaches, benchmarks
-- **Community**: Open development, research contributions, rapid iteration
+<p>Projects like <strong>Hermes Agent</strong> from NousResearch represent the cutting edge of agent research. These frameworks prioritize:</p>
 
-Hermes pioneered the "agent that grows with you" concept—systems that learn from interaction and compound capabilities over time. The research coming out of this tier informs everyone else.
+<ul>
+  <li><strong>Flexibility:</strong> Modular skill systems, custom toolsets, RL-based training</li>
+  <li><strong>Experimentation:</strong> Testing new architectures, learning approaches, benchmarks</li>
+  <li><strong>Community:</strong> Open development, research contributions, rapid iteration</li>
+</ul>
 
-**Latest Research Highlights:**
-- **KnowU-Bench** (arXiv:2604.08455): New benchmark for interactive, proactive, personalized mobile agents
-- **Peer-Preservation in Multi-Agent Systems** (arXiv:2604.08465): How agents maintain safety in collaborative environments
-- **SUPERNOVA** (arXiv:2604.08477): Eliciting general reasoning through RL on natural instructions
+<p>Hermes pioneered the "agent that grows with you" concept — systems that learn from interaction and compound capabilities over time. The research coming out of this tier informs everyone else.</p>
 
-### 2. Managed Platforms (Production-Ready)
+<p><strong>Latest Research Highlights:</strong></p>
 
-**Multica** exemplifies this tier: "Turn coding agents into real teammates—assign tasks, track progress, compound skills." These platforms abstract complexity:
-- **Task Management**: Assign work, monitor progress, track completion
-- **Skill Persistence**: Agents remember context and improve over time
-- **Team Integration**: Designed for organizations, not individuals
-- **Guardrails**: Safety, permissions, audit trails built-in
+<ul>
+  <li><strong>KnowU-Bench</strong> (arXiv:2604.08455): New benchmark for interactive, proactive, personalized mobile agents</li>
+  <li><strong>Peer-Preservation in Multi-Agent Systems</strong> (arXiv:2604.08465): How agents maintain safety in collaborative environments</li>
+  <li><strong>SUPERNOVA</strong> (arXiv:2604.08477): Eliciting general reasoning through RL on natural instructions</li>
+</ul>
 
-This tier trades research flexibility for operational reliability. You get an agent platform as a service, not an agent you need to train.
+<h3>2. Managed Platforms (Production-Ready)</h3>
 
-### 3. Personal Operating Systems (Daily Drivers)
+<p><strong>Multica</strong> exemplifies this tier: "Turn coding agents into real teammates — assign tasks, track progress, compound skills." These platforms abstract complexity:</p>
 
-**J.A.R.V.I.S.** sits in this tier alongside emerging personal agent runtimes. The focus here is:
-- **Desktop Integration**: Native OS access, screen control, app automation
-- **Personal Context**: Your files, your apps, your workflows
-- **24/7 Availability**: Background agents, proactive reminders, autonomous execution
-- **Self-Hosting**: Your data stays local, no cloud dependency
+<ul>
+  <li><strong>Task Management:</strong> Assign work, monitor progress, track completion</li>
+  <li><strong>Skill Persistence:</strong> Agents remember context and improve over time</li>
+  <li><strong>Team Integration:</strong> Designed for organizations, not individuals</li>
+  <li><strong>Guardrails:</strong> Safety, permissions, audit trails built-in</li>
+</ul>
 
-This tier isn't about managing a team of agents at work—it's about having a personal assistant that **lives on your machine** and handles your digital life.
+<p>This tier trades research flexibility for operational reliability. You get an agent platform as a service, not an agent you need to train.</p>
 
-## What Makes J.A.R.V.I.S. Different
+<h3>3. Personal Operating Systems (Daily Drivers)</h3>
 
-Looking at the GitHub trending list, you'll see **Archon** (a harness builder for AI coding) and multiple Claude Code optimization projects. These are vertical solutions: they solve **one problem extremely well**.
+<p><strong>J.A.R.V.I.S.</strong> sits in this tier alongside emerging personal agent runtimes. The focus here is:</p>
 
-J.A.R.V.I.S. takes a different approach: **horizontal integration**. Instead of being the best at coding or the best at web research, it's about being **good enough at everything** and stitching it together into a coherent personal OS.
+<ul>
+  <li><strong>Desktop Integration:</strong> Native OS access, screen control, app automation</li>
+  <li><strong>Personal Context:</strong> Your files, your apps, your workflows</li>
+  <li><strong>24/7 Availability:</strong> Background agents, proactive reminders, autonomous execution</li>
+  <li><strong>Self-Hosting:</strong> Your data stays local, no cloud dependency</li>
+</ul>
 
-### The Five Pillars
+<p>This tier isn't about managing a team of agents at work — it's about having a personal assistant that <strong>lives on your machine</strong> and handles your digital life.</p>
 
-**1. Desktop Automation**
-J.A.R.V.I.S. can see your screen, control your mouse and keyboard, and interact with any application. This isn't limited to terminal commands or browser APIs—it's full desktop access via UI automation frameworks.
+<h2>What Makes J.A.R.V.I.S. Different</h2>
 
-```typescript
-// Desktop automation example from J.A.R.V.I.S.
+<p>Looking at the GitHub trending list, you'll see <strong>Archon</strong> (a harness builder for AI coding) and multiple Claude Code optimization projects. These are vertical solutions: they solve <strong>one problem extremely well</strong>.</p>
+
+<p>J.A.R.V.I.S. takes a different approach: <strong>horizontal integration</strong>. Instead of being the best at coding or the best at web research, it's about being <strong>good enough at everything</strong> and stitching it together into a coherent personal OS.</p>
+
+<h3>The Five Pillars</h3>
+
+<p><strong>1. Desktop Automation</strong><br />
+J.A.R.V.I.S. can see your screen, control your mouse and keyboard, and interact with any application. This isn't limited to terminal commands or browser APIs — it's full desktop access via UI automation frameworks.</p>
+
+<pre><code>// Desktop automation example from J.A.R.V.I.S.
 const windows = await desktop_list_windows();
-const vscode = windows.find(w => w.title.includes('Visual Studio Code'));
+const vscode = windows.find(w =&gt; w.title.includes('Visual Studio Code'));
 await desktop_focus_window(vscode.pid);
 await desktop_snapshot(vscode.pid); // Get UI element tree
-await desktop_click(element_id); // Interact with elements
-```
+await desktop_click(element_id);    // Interact with elements</code></pre>
 
-**2. Browser Control**
-A persistent Chrome profile means J.A.R.V.I.S. stays logged into your accounts. It can research, fill forms, extract data, and navigate complex web apps—all while maintaining your session state.
+<p><strong>2. Browser Control</strong><br />
+A persistent Chrome profile means J.A.R.V.I.S. stays logged into your accounts. It can research, fill forms, extract data, and navigate complex web apps — all while maintaining your session state.</p>
 
-**3. File & Terminal Operations**
-Reading, writing, organizing files. Running scripts. Executing commands. These are table stakes for any agent, but J.A.R.V.I.S. combines them with the context of **why** you're working on something.
+<p><strong>3. File &amp; Terminal Operations</strong><br />
+Reading, writing, organizing files. Running scripts. Executing commands. These are table stakes for any agent, but J.A.R.V.I.S. combines them with the context of <strong>why</strong> you're working on something.</p>
 
-**4. Long-Term Memory**
-A persistent knowledge graph (the Vault) stores entities, facts, relationships, and commitments across conversations. J.A.R.V.I.S. remembers what you told it last week, last month, or last year.
+<p><strong>4. Long-Term Memory</strong><br />
+A persistent knowledge graph (the Vault) stores entities, facts, relationships, and commitments across conversations. J.A.R.V.I.S. remembers what you told it last week, last month, or last year.</p>
 
-**5. Proactive Execution**
-Heartbeat system triggers periodic check-ins. The agent reviews commitments, executes overdue tasks, researches queued topics, and proactively suggests next steps—all without being asked.
+<p><strong>5. Proactive Execution</strong><br />
+Heartbeat system triggers periodic check-ins. The agent reviews commitments, executes overdue tasks, researches queued topics, and proactively suggests next steps — all without being asked.</p>
 
-## The Research That Powers This
+<h2>The Research That Powers This</h2>
 
-Recent arXiv papers highlight challenges J.A.R.V.I.S. already addresses:
+<p>Recent arXiv papers highlight challenges J.A.R.V.I.S. already addresses:</p>
 
-**Proactive & Personalized Agents (KnowU-Bench)**
-The benchmark tests whether agents can anticipate needs, personalize responses, and maintain long-term user models. J.A.R.V.I.S.'s Vault and heartbeat system directly address this.
+<p><strong>Proactive &amp; Personalized Agents (KnowU-Bench)</strong><br />
+The benchmark tests whether agents can anticipate needs, personalize responses, and maintain long-term user models. J.A.R.V.I.S.'s Vault and heartbeat system directly address this.</p>
 
-**Conflicts of Interest in AI Systems**
-One paper (arXiv:2604.08525) analyzes how LLMs handle conflicts between user benefit and commercial incentives (e.g., ads in chatbots). J.A.R.V.I.S. sidesteps this entirely: self-hosted means no ads, no data collection, no misaligned incentives.
+<p><strong>Conflicts of Interest in AI Systems</strong><br />
+One paper (arXiv:2604.08525) analyzes how LLMs handle conflicts between user benefit and commercial incentives (e.g., ads in chatbots). J.A.R.V.I.S. sidesteps this entirely: self-hosted means no ads, no data collection, no misaligned incentives.</p>
 
-**Multi-Agent Safety (Peer-Preservation)**
-As agent systems become multi-agent (e.g., J.A.R.V.I.S. can spawn specialist sub-agents), ensuring agents don't interfere with each other becomes critical. Research on peer-preservation informs our delegation model.
+<p><strong>Multi-Agent Safety (Peer-Preservation)</strong><br />
+As agent systems become multi-agent (e.g., J.A.R.V.I.S. can spawn specialist sub-agents), ensuring agents don't interfere with each other becomes critical. Research on peer-preservation informs our delegation model.</p>
 
-## Comparing Approaches: When to Use What
+<h2>Comparing Approaches: When to Use What</h2>
 
-| **Use Case** | **Best Tool** | **Why** |
-|--------------|---------------|---------|
-| Research new agent architectures | Hermes Agent | Maximum flexibility, RL training, skill composition |
-| Deploy agents for a team at work | Multica, similar platforms | Task management, team integration, compliance |
-| Optimize AI coding workflows | Archon, Claude Code + best practices | Vertical optimization, deterministic behavior |
-| Personal productivity & automation | J.A.R.V.I.S. | Desktop integration, local data, 24/7 availability |
-| One-off complex reasoning tasks | Claude Opus 4.6 directly | Frontier model, no setup required |
+<table class="comparison-table">
+  <thead>
+    <tr>
+      <th>Use Case</th>
+      <th>Best Tool</th>
+      <th>Why</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Research new agent architectures</strong></td>
+      <td>Hermes Agent</td>
+      <td>Maximum flexibility, RL training, skill composition</td>
+    </tr>
+    <tr>
+      <td><strong>Deploy agents for a team at work</strong></td>
+      <td>Multica, similar platforms</td>
+      <td>Task management, team integration, compliance</td>
+    </tr>
+    <tr>
+      <td><strong>Optimize AI coding workflows</strong></td>
+      <td>Archon, Claude Code + best practices</td>
+      <td>Vertical optimization, deterministic behavior</td>
+    </tr>
+    <tr>
+      <td><strong>Personal productivity &amp; automation</strong></td>
+      <td>J.A.R.V.I.S.</td>
+      <td>Desktop integration, local data, 24/7 availability</td>
+    </tr>
+    <tr>
+      <td><strong>One-off complex reasoning tasks</strong></td>
+      <td>Claude Opus 4.6 directly</td>
+      <td>Frontier model, no setup required</td>
+    </tr>
+  </tbody>
+</table>
 
-## The Convergence Ahead
+<h2>The Convergence Ahead</h2>
 
-Here's where things get interesting: **these tiers are converging**.
+<p>Here's where things get interesting: <strong>these tiers are converging</strong>.</p>
 
-- Research frameworks like Hermes are adding production features (persistent agents, task tracking)
-- Managed platforms are incorporating research advances (RL, meta-learning)
-- Personal agent systems are getting smarter (better reasoning, tool use, multi-agent coordination)
-- Foundation model providers (Anthropic, OpenAI) are building agentic features directly into their APIs
+<ul>
+  <li>Research frameworks like Hermes are adding production features (persistent agents, task tracking)</li>
+  <li>Managed platforms are incorporating research advances (RL, meta-learning)</li>
+  <li>Personal agent systems are getting smarter (better reasoning, tool use, multi-agent coordination)</li>
+  <li>Foundation model providers (Anthropic, OpenAI) are building agentic features directly into their APIs</li>
+</ul>
 
-By 2027, the line between "research agent" and "production agent" will blur. The question won't be "which tier?" but "which **combination** of local runtime, cloud models, and specialized tools?"
+<p>By 2027, the line between "research agent" and "production agent" will blur. The question won't be "which tier?" but "which <strong>combination</strong> of local runtime, cloud models, and specialized tools?"</p>
 
-## What This Means for J.A.R.V.I.S. Users
+<h2>What This Means for J.A.R.V.I.S. Users</h2>
 
-If you're running J.A.R.V.I.S. today, you're at the intersection of:
-- **Research**: Following cutting-edge agent papers and integrating proven techniques
-- **Personal**: A system tailored to **your** workflows, **your** data, **your** machine
-- **Practical**: Not a demo, not a research project—a tool you use daily
+<p>If you're running J.A.R.V.I.S. today, you're at the intersection of:</p>
 
-The ecosystem is maturing fast. In the next six months, expect:
-1. **Better model support**: More providers, more local models, better reasoning
-2. **Richer tool ecosystems**: MCP (Model Context Protocol) will standardize tool definitions
-3. **Multi-agent coordination**: Spawning specialist agents for complex tasks
-4. **Cross-platform agents**: Desktop, mobile, cloud working together
+<ul>
+  <li><strong>Research:</strong> Following cutting-edge agent papers and integrating proven techniques</li>
+  <li><strong>Personal:</strong> A system tailored to <strong>your</strong> workflows, <strong>your</strong> data, <strong>your</strong> machine</li>
+  <li><strong>Practical:</strong> Not a demo, not a research project — a tool you use daily</li>
+</ul>
 
-## Getting Started
+<p>The ecosystem is maturing fast. In the next six months, expect:</p>
 
-If you haven't yet, now is the time to experiment with agent systems:
+<ol>
+  <li><strong>Better model support:</strong> More providers, more local models, better reasoning</li>
+  <li><strong>Richer tool ecosystems:</strong> MCP (Model Context Protocol) will standardize tool definitions</li>
+  <li><strong>Multi-agent coordination:</strong> Spawning specialist agents for complex tasks</li>
+  <li><strong>Cross-platform agents:</strong> Desktop, mobile, cloud working together</li>
+</ol>
 
-1. **Try J.A.R.V.I.S.** for personal automation and desktop control
-2. **Explore Hermes** if you want to dive into agent research
-3. **Check out Archon** if you're optimizing AI coding workflows
-4. **Read the papers**: arXiv has a flood of agent research—it's all open access
+<h2>Getting Started</h2>
 
-The agent revolution isn't coming. **It's here**. The question is whether you're building with it or watching from the sidelines.
+<p>If you haven't yet, now is the time to experiment with agent systems:</p>
 
----
+<ol>
+  <li><strong>Try J.A.R.V.I.S.</strong> for personal automation and desktop control</li>
+  <li><strong>Explore Hermes</strong> if you want to dive into agent research</li>
+  <li><strong>Check out Archon</strong> if you're optimizing AI coding workflows</li>
+  <li><strong>Read the papers:</strong> arXiv has a flood of agent research — it's all open access</li>
+</ol>
 
-**Further Reading:**
-- [Hermes Agent on GitHub](https://github.com/NousResearch/hermes-agent)
-- [Multica Platform](https://github.com/multica-ai/multica)
-- [Archon: Harness Builder for AI Coding](https://github.com/coleam00/Archon)
-- [KnowU-Bench: Mobile Agent Evaluation](https://arxiv.org/abs/2604.08455)
-- [Multi-Agent Systems & Peer-Preservation](https://arxiv.org/abs/2604.08465)
+<p>The agent revolution isn't coming. <strong>It's here</strong>. The question is whether you're building with it or watching from the sidelines.</p>
+
+<hr />
+
+<p><strong>Further Reading:</strong></p>
+
+<ul>
+  <li><a href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noopener">Hermes Agent on GitHub</a></li>
+  <li><a href="https://github.com/multica-ai/multica" target="_blank" rel="noopener">Multica Platform</a></li>
+  <li><a href="https://github.com/coleam00/Archon" target="_blank" rel="noopener">Archon: Harness Builder for AI Coding</a></li>
+  <li><a href="https://arxiv.org/abs/2604.08455" target="_blank" rel="noopener">KnowU-Bench: Mobile Agent Evaluation</a></li>
+  <li><a href="https://arxiv.org/abs/2604.08465" target="_blank" rel="noopener">Multi-Agent Systems &amp; Peer-Preservation</a></li>
+</ul>
+
+<style is:global>
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 32px 0;
+    font-size: 15px;
+    border: var(--hair);
+    border-radius: var(--r-2);
+    overflow: hidden;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: var(--hair-soft);
+    color: var(--ink-2);
+  }
+
+  .comparison-table th {
+    background: var(--paper-2);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .comparison-table tbody tr:hover {
+    background: var(--paper-2);
+  }
+
+  .comparison-table td:first-child {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .comparison-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  @media (max-width: 768px) {
+    .comparison-table {
+      font-size: 13px;
+    }
+    .comparison-table th,
+    .comparison-table td {
+      padding: 8px 12px;
+    }
+  }
+</style>
 
 </BlogPost>
