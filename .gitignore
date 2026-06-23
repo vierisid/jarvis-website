@@ -22,3 +22,6 @@ pnpm-debug.log*
 .vercel/
 screenshot-*.png
 .vercel
+
+# local tooling scratch
+.impeccable/

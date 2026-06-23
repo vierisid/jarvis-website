@@ -1,0 +1,198 @@
+/* ============================================================
+   usejarvis · docs theme — Brand Book III ("Monochrome Lab")
+   Re-skins Starlight to the brand: Familjen Grotesk + Spline Sans
+   Mono, cool-tinted neutrals, the red state hue as the one accent,
+   and the signature asymmetric corner. Light + dark both mapped.
+   Content is untouched — this only restyles the chrome.
+   ============================================================ */
+
+:root {
+  --sl-font: 'Familjen Grotesk', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --sl-font-mono: 'Spline Sans Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* legacy aliases (older Starlight builds) */
+  --sl-font-system: var(--sl-font);
+  --sl-font-system-mono: var(--sl-font-mono);
+
+  --jv-ease: cubic-bezier(.2, .7, .2, 1);
+  --jv-corner: 14px 3px 14px 14px;
+  --jv-corner-sm: 9px 2px 9px 9px;
+}
+
+/* ── DARK (default) · Brand Book III dark-scene tokens ── */
+:root,
+:root[data-theme='dark'] {
+  --sl-color-white: #F5F7F9;
+  --sl-color-gray-1: #E7EAEE;
+  --sl-color-gray-2: #AEB4BD;
+  --sl-color-gray-3: #79808A;
+  --sl-color-gray-4: #3A424C;
+  --sl-color-gray-5: #232730;
+  --sl-color-gray-6: #14171C;
+  --sl-color-gray-7: #10131A;
+  --sl-color-black: #0B0D10;
+
+  --sl-color-accent-low: #2E120E;
+  --sl-color-accent: #E63B2E;
+  --sl-color-accent-high: #FF9F95;
+
+  --sl-color-text: #C8CDD3;
+  --sl-color-text-accent: #FF6A5C;
+  --sl-color-text-invert: #0B0D10;
+
+  --sl-color-bg: #0B0D10;
+  --sl-color-bg-nav: rgba(11, 13, 16, .78);
+  --sl-color-bg-sidebar: #0E1116;
+  --sl-color-bg-inline-code: #1A2029;
+  --sl-color-bg-accent: #E63B2E;
+
+  --sl-color-hairline: #232730;
+  --sl-color-hairline-light: #1A1F27;
+  --sl-color-hairline-shade: #14171C;
+
+  --sl-color-backdrop-overlay: rgba(5, 7, 10, .6);
+}
+
+/* ── LIGHT · Brand Book III light tokens (the home-page palette) ── */
+:root[data-theme='light'] {
+  --sl-color-white: #13161A;       /* highest-contrast text (headings) */
+  --sl-color-gray-1: #1B1F24;
+  --sl-color-gray-2: #535B63;       /* body text */
+  --sl-color-gray-3: #677077;
+  --sl-color-gray-4: #9AA2AB;
+  --sl-color-gray-5: #E2E7EC;
+  --sl-color-gray-6: #EDF0F3;
+  --sl-color-gray-7: #F6F8FA;
+  --sl-color-black: #FAFBFC;        /* page bg */
+
+  --sl-color-accent-low: #F7DAD6;
+  --sl-color-accent: #C2301F;       /* AA red on white */
+  --sl-color-accent-high: #8A2218;
+
+  --sl-color-text: #2A3138;
+  --sl-color-text-accent: #C2301F;
+  --sl-color-text-invert: #FAFBFC;
+
+  --sl-color-bg: #FAFBFC;
+  --sl-color-bg-nav: rgba(250, 251, 252, .82);
+  --sl-color-bg-sidebar: #F6F8FA;
+  --sl-color-bg-inline-code: #EFF2F5;
+  --sl-color-bg-accent: #C2301F;
+
+  --sl-color-hairline: #E2E7EC;
+  --sl-color-hairline-light: #EDF0F3;
+  --sl-color-hairline-shade: #E2E7EC;
+
+  --sl-color-backdrop-overlay: rgba(19, 22, 26, .4);
+}
+
+body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+/* the top nav gets the blurred translucent bar like the home page */
+.header {
+  background: var(--sl-color-bg-nav);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  backdrop-filter: blur(12px) saturate(1.2);
+  border-bottom: 1px solid var(--sl-color-hairline);
+}
+
+/* ── headline grammar — tight tracking, balanced ── */
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3,
+.sl-markdown-content h4 {
+  font-family: var(--sl-font);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  color: var(--sl-color-white);
+  text-wrap: balance;
+}
+.content-panel h1,
+.sl-markdown-content h1 { letter-spacing: -.04em; font-weight: 700; }
+.sl-markdown-content h2 {
+  padding-top: 1.5rem;
+  margin-top: 2.2rem;
+  border-top: 1px solid var(--sl-color-hairline);
+}
+
+/* ── links ── */
+.sl-markdown-content a {
+  color: var(--sl-color-text-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.sl-markdown-content a:hover { text-decoration-thickness: 2px; }
+
+/* ── inline code ── */
+.sl-markdown-content :not(pre) > code {
+  font-family: var(--sl-font-mono);
+  font-size: .84em;
+  background: var(--sl-color-bg-inline-code);
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: var(--jv-corner-sm);
+  padding: .1em .42em;
+  color: var(--sl-color-white);
+}
+
+/* ── blockquote ── */
+.sl-markdown-content blockquote {
+  border-left: 2px solid var(--sl-color-accent);
+  background: var(--sl-color-bg-inline-code);
+  padding: 12px 18px;
+  margin: 24px 0;
+  border-radius: 0 var(--jv-corner-sm) var(--jv-corner-sm) 0;
+  color: var(--sl-color-gray-2);
+}
+
+/* ── hr ── */
+.sl-markdown-content hr { border: none; border-top: 1px solid var(--sl-color-hairline); margin: 40px 0; }
+
+/* ── tables — mono uppercase header like the brand ── */
+.sl-markdown-content table { font-size: 14px; border-collapse: collapse; width: 100%; }
+.sl-markdown-content table th {
+  font-family: var(--sl-font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--sl-color-gray-3);
+  background: var(--sl-color-bg-inline-code);
+  border-bottom: 1px solid var(--sl-color-hairline);
+  text-align: left;
+}
+.sl-markdown-content table td { border-bottom: 1px solid var(--sl-color-hairline-light); color: var(--sl-color-gray-2); }
+
+/* ── code blocks (Expressive Code) — brand frame + corner ── */
+.expressive-code .frame {
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: var(--jv-corner) !important;
+  overflow: hidden;
+}
+.expressive-code .frame pre { border: none !important; }
+.expressive-code .frame .header { font-family: var(--sl-font-mono); }
+
+/* ── sidebar + TOC — brand corners on the active/hover chips ── */
+.sidebar-content a { border-radius: var(--jv-corner-sm); }
+ul.top-level > li > a { font-weight: 500; }
+.sidebar-content a[aria-current='page'] {
+  background: var(--sl-color-accent-low);
+  color: var(--sl-color-text-accent);
+  font-weight: 600;
+}
+
+/* ── prev/next pagination cards ── */
+.pagination-links a {
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: var(--jv-corner);
+}
+
+/* ── the CTA/search button + asides pick up the corner ── */
+site-search button,
+.sl-markdown-content .starlight-aside { border-radius: var(--jv-corner-sm); }
+.starlight-aside { border-left-width: 2px; }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--sl-color-gray-5); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--sl-color-gray-4); }

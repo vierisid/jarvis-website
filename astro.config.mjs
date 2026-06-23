@@ -9,23 +9,24 @@ export default defineConfig({
   adapter: vercel(),
   integrations: [
     starlight({
-      title: 'J.A.R.V.I.S.',
-      description: 'Just A Rather Very Intelligent System — An always-on autonomous AI daemon.',
-      logo: {
-        light: './src/assets/logo-light.svg',
-        dark: './src/assets/logo-dark.svg',
-        replacesTitle: false,
+      title: 'usejarvis',
+      description: 'Docs for usejarvis — an operating system for AI agents: an always-on runtime that works your apps on screen while you watch.',
+      favicon: '/favicon.svg',
+      components: {
+        // brand lockup (pebble ring + two-tone wordmark) in the docs header
+        SiteTitle: './src/components/SiteTitle.astro',
       },
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/vierisid/jarvis' },
-        { icon: 'discord', label: 'Discord', href: 'https://discord.gg/C8fUM33mc' },
+        { icon: 'discord', label: 'Discord', href: 'https://discord.gg/2HgF5krXrj' },
       ],
-      customCss: ['./src/styles/global.css'],
+      customCss: ['./src/styles/starlight-brand.css'],
       head: [
-        { tag: 'meta', attrs: { name: 'theme-color', content: '#F5F2EB' } },
+        { tag: 'meta', attrs: { name: 'theme-color', content: '#FAFBFC', media: '(prefers-color-scheme: light)' } },
+        { tag: 'meta', attrs: { name: 'theme-color', content: '#0B0D10', media: '(prefers-color-scheme: dark)' } },
         { tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' } },
         { tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: true } },
-        { tag: 'link', attrs: { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap' } },
+        { tag: 'link', attrs: { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..700;1,400&family=Spline+Sans+Mono:wght@400;500;600&display=swap' } },
       ],
       sidebar: [
         {

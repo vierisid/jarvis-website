@@ -1,0 +1,40 @@
+---
+// usejarvis brand lockup for the docs header — the pebble ring + the
+// two-tone wordmark, matching the home-page nav. Overrides Starlight's
+// default SiteTitle (configured via `components` in astro.config.mjs).
+// Colours reference --sl-color-* tokens so the lockup adapts to light/dark.
+---
+<a href="/" class="jv-site-title" aria-label="usejarvis — home">
+  <span class="jv-mark"><span class="jv-ring"></span></span>
+  <span class="jv-word"><span class="jv-u">use</span>jarvis</span>
+</a>
+
+<style>
+  .jv-site-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    text-decoration: none;
+    line-height: 1;
+  }
+  .jv-mark {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+  }
+  .jv-ring {
+    position: absolute;
+    inset: 0;
+    border: 2px solid var(--sl-color-white);
+    border-radius: 50% 5px 50% 50%;
+  }
+  .jv-word {
+    font-family: var(--sl-font);
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.045em;
+    color: var(--sl-color-white);
+  }
+  .jv-u { color: var(--sl-color-gray-3); }
+</style>
