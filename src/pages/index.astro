@@ -1,1129 +1,564 @@
 ---
-import Landing from '../layouts/Landing.astro';
-
-// Seven pebble feature sections. Each gets a short on-page demo loop.
-const features = [
-  {
-    id: 'pebble',
-    label: 'The Pebble',
-    title: 'A cursor companion.',
-    body: 'Trails your cursor with eased physics. Click-through everywhere except the bubble. Five states — idle, listening, thinking, speaking, working.',
-    poster: '/demos/posters/pebble.jpg',
-    video: '/demos/pebble.mp4',
-    flip: false,
-  },
-  {
-    id: 'voice',
-    label: 'Voice loop',
-    title: 'Wake word — or ⌃Space.',
-    body: 'Say "Jarvis" anywhere in a sentence. Streaming TTS replies in 1–2 seconds. Press the hotkey mid-speech and Usejarvis shuts up in 10ms.',
-    poster: '/demos/posters/voice.jpg',
-    video: '/demos/voice.mp4',
-    flip: true,
-  },
-  {
-    id: 'rooms',
-    label: '12 rooms by voice',
-    title: 'Open. Navigate. Close.',
-    body: '"Open settings." "Switch to the editor tab." "Close it." Each of the 12 rooms — settings, memory, agents, workflows, tools, authority, logs, calendar, goals, tasks, content, workspaces — opens as a native panel.',
-    poster: '/demos/posters/rooms.jpg',
-    video: '/demos/rooms.mp4',
-    flip: false,
-  },
-  {
-    id: 'settings',
-    label: 'Settings by voice',
-    title: 'Skip the LLM.',
-    body: '"Turn off TTS." "Switch transcription to Groq." Recognized commands persist to disk and apply instantly — no LLM in the loop.',
-    poster: '/demos/posters/settings.jpg',
-    video: '/demos/settings.mp4',
-    flip: true,
-  },
-  {
-    id: 'autonomy',
-    label: 'Autonomous',
-    title: 'Acts before you ask.',
-    body: 'Watches your screen, calendar, and goals. Drafts the brief for the meeting you forgot, queues the reply that needs to go out, surfaces the next move. Always optional.',
-    poster: '/demos/posters/autonomy.jpg',
-    video: '/demos/autonomy.mp4',
-    flip: false,
-  },
-  {
-    id: 'pointing',
-    label: 'Pointing',
-    title: '"Where do I click?"',
-    body: 'Auto-screenshot, grid math, the pebble flies to the right button. Works in any app, foreground-aware — "show me my files" resolves differently in VSCode versus CapCut.',
-    poster: '/demos/posters/pointing.jpg',
-    video: '/demos/pointing.mp4',
-    flip: true,
-  },
-  {
-    id: 'region',
-    label: 'Region understanding',
-    title: '"What is this?"',
-    body: 'Drag a rectangle on screen. Usejarvis sees the cropped region through any vision-capable model and answers from what it sees.',
-    poster: '/demos/posters/region.jpg',
-    video: '/demos/region.mp4',
-    flip: false,
-  },
-];
+// Home — Brand Book III ("Monochrome Lab") · ported verbatim from the
+// design source: Design/usejarvis-home-FABLE5.html. Styles and script use
+// is:inline so Astro emits them exactly as authored (no scoping, no CSS
+// rewriting, no bundling) — a 1:1 reproduction of the canonical design.
 ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Usejarvis · The agentic layer humans can work with</title>
+<meta name="description" content="An operating system for AI agents: an always-on runtime on your machine that works your apps on screen while you watch. Runs local models or your own keys, and it asks before anything irreversible." />
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><style>path{fill:%2313161A}@media(prefers-color-scheme:dark){path{fill:%23EEF1F4}}</style><path d="M29 3 L29 16 A13 13 0 1 1 16 3 Z"/></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..700;1,400&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style is:inline>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --sans:'Familjen Grotesk',system-ui,sans-serif;--mono:'Spline Sans Mono',ui-monospace,monospace;
+    /* Brand Book III · cool-tinted neutrals, light */
+    --bg:#FAFBFC;--raise:#FFFFFF;--panel:#EFF2F5;--panel2:#F6F8FA;--rule:#E2E7EC;--rule2:#EDF0F3;
+    --ink:#13161A;--ink2:#535B63;--ink3:#677077;--faint:#9AA2AB;
+    /* state hues + AA text */
+    --listen:#E63B2E;--listen-tx:#C2301F;--speak:#2D78FF;--speak-tx:#1E5FD8;
+    --hold:#EAA40E;--hold-tx:#8A6206;--ok:#2FA45E;--ok-tx:#1F7A43;
+    --corner:14px 3px 14px 14px;--corner-sm:9px 2px 9px 9px;--ease:cubic-bezier(.2,.7,.2,1);
+    --sh-sm:0 1px 2px rgba(20,30,45,.06),0 1px 1px rgba(20,30,45,.04);
+    --sh-md:0 2px 6px rgba(20,30,45,.06),0 10px 24px -10px rgba(20,30,45,.18);
+    --sh-lg:0 3px 8px rgba(20,30,45,.05),0 22px 48px -18px rgba(20,30,45,.24);
+  }
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  ::selection{background:rgba(230,59,46,.22);}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 32px;}
+  @media (max-width:700px){.wrap{padding:0 20px}}
+  h1,h2,h3{text-wrap:balance;}
+  .btn{font-weight:600;border-radius:var(--corner-sm);display:inline-flex;align-items:center;gap:8px;font-size:14px;padding:12px 20px;text-decoration:none;cursor:pointer;color:var(--ink);}
+  .btn.solid{background:var(--ink);color:var(--bg);box-shadow:var(--sh-sm);}
+  .btn.out{border:1px solid var(--rule);background:rgba(255,255,255,.6);box-shadow:var(--sh-sm);}
+  .ld{position:relative;flex-shrink:0;}.ld .r{position:absolute;inset:0;border:2px solid var(--ink);border-radius:50% 5px 50% 50%;}
+  .lw{font-weight:700;letter-spacing:-.045em;color:var(--ink);}.lw .u{color:var(--ink3);}
 
-<Landing>
-  <!-- ── NAV ──────────────────────────────────────── -->
-  <nav class="nav">
-    <div class="nav-inner">
-      <a href="/" class="nav-logo">
-        <span class="nav-dot"></span>
-        Usejarvis
-      </a>
-      <div class="nav-right">
-        <a href="#trailer" class="nav-link">Watch</a>
-        <a href="#pebble" class="nav-link">Pebble</a>
-        <a href="#workflows" class="nav-link">Workflows</a>
-        <a href="#sidecar" class="nav-link">Sidecar</a>
-        <a href="/blog" class="nav-link">Blog</a>
-        <a href="/roadmap" class="nav-link">Roadmap</a>
-        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="nav-link">GitHub</a>
-        <a href="/docs/installation" class="btn-solid nav-cta">Install</a>
-      </div>
-    </div>
-  </nav>
+  /* ── the drop ── */
+  .gd{position:relative;overflow:hidden;border-radius:50% 50% 50% 8px;transform:rotate(45deg);background:rgba(255,255,255,.07);border:.5px solid rgba(255,255,255,.55);
+    -webkit-backdrop-filter:blur(2px) brightness(1.04) saturate(1.15) url(#refract);backdrop-filter:blur(2px) brightness(1.04) saturate(1.15) url(#refract);
+    box-shadow:inset 1.5px 1.5px 1.5px rgba(255,255,255,.92),inset -1px -1px 2px rgba(255,255,255,.4),0 4px 14px -3px rgba(20,30,45,.3);}
+  .gd .in{position:absolute;inset:0;border-radius:inherit;opacity:0;}
+  .gd .ring{position:absolute;inset:-2px;border-radius:inherit;opacity:0;background:conic-gradient(from 0deg,transparent 0 200deg,rgba(255,255,255,.98) 300deg,transparent 360deg);
+    -webkit-mask:radial-gradient(circle,transparent 38%,#000 45%,#000 56%,transparent 63%);mask:radial-gradient(circle,transparent 38%,#000 45%,#000 56%,transparent 63%);}
+  @keyframes br{0%,100%{opacity:.55}50%{opacity:1}}
+  @keyframes brS{0%,100%{opacity:.7;transform:scale(.94)}50%{opacity:1;transform:scale(1.04)}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes askGlow{0%,100%{box-shadow:inset 1.5px 1.5px 1.5px rgba(255,255,255,.92),0 0 0 0 rgba(234,164,14,.45),0 4px 14px -3px rgba(20,30,45,.3)}50%{box-shadow:inset 1.5px 1.5px 1.5px rgba(255,255,255,.92),0 0 0 7px rgba(234,164,14,0),0 4px 14px -3px rgba(20,30,45,.3)}}
+  @keyframes dfl{0%{opacity:0;transform:scale(.55)}30%{opacity:1}100%{opacity:0;transform:scale(1.18)}}
+  .gd.s-listen .in{opacity:1;animation:br 1.4s infinite;background:radial-gradient(circle,rgba(230,59,46,.92),rgba(230,59,46,.28) 55%,transparent 72%);}
+  .gd.s-listen{box-shadow:inset 1.5px 1.5px 1.5px rgba(255,255,255,.92),inset -1px -1px 2px rgba(255,255,255,.4),0 6px 18px -4px rgba(230,59,46,.42),0 2px 6px rgba(20,30,45,.2);}
+  .gd.s-speak .in{opacity:1;animation:brS 1.6s infinite;background:radial-gradient(circle,rgba(45,120,255,1),rgba(45,120,255,.5) 48%,transparent 72%);}
+  .gd.s-think .ring{opacity:1;animation:spin 1.4s linear infinite;}
+  .gd.s-ask .in{opacity:1;animation:br 2s infinite;background:radial-gradient(circle,rgba(234,164,14,.85),rgba(234,164,14,.25) 55%,transparent 72%);}
+  .gd.s-ask{animation:askGlow 2s var(--ease) infinite;}
+  .gd.s-done .in{opacity:0;animation:dfl .9s var(--ease) both;background:radial-gradient(circle,rgba(47,164,94,.95),rgba(47,164,94,.3) 55%,transparent 72%);}
 
-  <!-- ── HERO ─────────────────────────────────────── -->
-  <section class="hero">
-    <div class="hero-inner">
-      <p class="label-mono reveal reveal-up">Always-on · Voice-first · Open source</p>
-      <h1 class="display-h1 hero-h1 reveal reveal-up">
-        The agentic layer<br/>
-        <em>humans</em> can work with
-      </h1>
-      <p class="lead hero-lead reveal reveal-up">
-        A cursor companion. Say <em>"Jarvis"</em> or hit <kbd>⌃ Space</kbd>.
-        Everything the dashboard does — <em>without ever opening it.</em>
-      </p>
-      <div class="hero-actions reveal reveal-up">
-        <a href="/docs/installation" class="btn-solid">Get Started</a>
-        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="btn-border">View Source</a>
-      </div>
-      <div class="code-chip hero-cmd reveal reveal-up">
-        <span class="code-prompt">$</span>
-        <span><span class="code-pkg">bun install -g @usejarvis/brain</span></span>
-      </div>
-    </div>
+  /* cursor pebble · carried liquid */
+  #cpeb{position:fixed;top:0;left:0;width:28px;height:28px;pointer-events:none;z-index:9999;will-change:transform;transform:translate(72vw,200px) rotate(45deg);}
+  #cpeb .gd{width:28px;height:28px;border-radius:50% 50% 50% 5px;background:rgba(255,255,255,.14);border:.5px solid rgba(20,30,45,.35);box-shadow:inset 1px 1px 1.5px rgba(255,255,255,.95),inset -1px -1px 2px rgba(255,255,255,.4),0 3px 10px -2px rgba(20,30,45,.4);}
+  #cpeb .gd .in{opacity:.65;background:radial-gradient(circle,rgba(230,59,46,.7),transparent 70%);transition:opacity .35s;}
+  #cpeb.moving .gd .in{opacity:.9;}
 
-    <!-- Static pebble + cursor illustration -->
-    <div class="hero-illu reveal reveal-up">
-      <div class="hero-illu-frame">
-        <svg class="hero-cursor" viewBox="0 0 18 22" width="36" height="44" xmlns="http://www.w3.org/2000/svg">
-          <path d="M2 1l14 9-7 1 4 8-3 1-4-8-4 4z" fill="#fff" stroke="#1c1c1c" stroke-width="1" stroke-linejoin="round" />
-        </svg>
-        <span class="hero-pebble">
-          <span class="hero-pebble-wave">
-            <span></span><span></span><span></span><span></span>
-          </span>
-          <span class="hero-pebble-label">listening</span>
-        </span>
-      </div>
-      <p class="hero-illu-cap">A cursor companion. Riso flat. Always-on-top.<br/>Click-through everywhere except the bubble.</p>
-    </div>
-  </section>
+  /* ── nav ── */
+  nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);}
+  .nav-in{max-width:1100px;margin:0 auto;padding:0 32px;height:62px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-l{display:flex;align-items:center;gap:10px;}.nav-l .ld{width:23px;height:23px;}.nav-l .lw{font-size:16px;}
+  .nav-links{display:flex;gap:22px;font-size:13.5px;color:var(--ink2);font-weight:500;margin-left:10px;}
+  .nav-links a{color:var(--ink2);text-decoration:none;}.nav-links a:hover{color:var(--ink);}
+  @media (max-width:860px){.nav-links{display:none}}
+  .nav-r{display:flex;align-items:center;gap:12px;}
+  .nav-status{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);border:1px solid var(--rule);border-radius:999px;padding:5px 11px;}
+  .nav-status .d{width:6px;height:6px;border-radius:50%;background:var(--listen);box-shadow:0 0 0 3px rgba(230,59,46,.14);animation:br 1.3s infinite;}
+  @media (max-width:560px){.nav-status{display:none}}
+  #menuBtn{display:none;font-family:var(--sans);font-size:13px;font-weight:600;color:var(--ink);background:transparent;border:1px solid var(--rule);border-radius:var(--corner-sm);padding:8px 13px;cursor:pointer;}
+  @media (max-width:860px){#menuBtn{display:inline-flex}}
+  #mobnav{display:none;position:absolute;top:62px;right:20px;width:220px;flex-direction:column;border-radius:var(--corner);overflow:hidden;background:color-mix(in srgb,var(--raise) 75%,transparent);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);border:.5px solid var(--rule);box-shadow:var(--sh-lg);z-index:60;}
+  #mobnav.open{display:flex;}
+  #mobnav a{padding:13px 18px;font-size:14.5px;font-weight:500;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule2);}
+  #mobnav a:last-child{border-bottom:none;}
 
-  <!-- ── TRAILER ──────────────────────────────────── -->
-  <section id="trailer" class="trailer">
-    <div class="section-inner">
-      <p class="label-mono reveal reveal-up">90 seconds</p>
-      <h2 class="display-h2 reveal reveal-up">See it. <em>In one Tuesday.</em></h2>
-      <div class="trailer-frame reveal reveal-up">
-        <video
-          class="trailer-video"
-          poster="/demos/posters/trailer.jpg"
-          src="/demos/JarvisTrailer.mp4"
-          controls
-          playsinline
-          preload="metadata"
-        >
-          Your browser doesn't support video. Watch on
-          <a href="https://github.com/vierisid/jarvis">GitHub</a>.
-        </video>
-      </div>
-    </div>
-  </section>
+  /* ── hero · Book III grammar: the pebble at full scale, lit ── */
+  .hero{position:relative;overflow:hidden;text-align:center;padding:86px 0 92px;background:radial-gradient(620px 430px at 50% 26%,rgba(230,59,46,.13),rgba(230,59,46,.03) 48%,transparent 70%),linear-gradient(180deg,var(--panel2),var(--bg));border-bottom:1px solid var(--rule);}
+  .hero .gridbg{position:absolute;inset:0;background:linear-gradient(rgba(19,22,26,.035) 1px,transparent 1px) 0 0/32px 32px,linear-gradient(90deg,rgba(19,22,26,.035) 1px,transparent 1px) 0 0/32px 32px;-webkit-mask:radial-gradient(660px 450px at 50% 30%,#000,transparent 70%);mask:radial-gradient(660px 450px at 50% 30%,#000,transparent 70%);}
+  .hero .in2{position:relative;z-index:2;}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  @keyframes pebin{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:none}}
+  .hero .k{font-size:16px;font-weight:600;color:var(--ink2);animation:rise .7s var(--ease) both;}
+  .hero .bigpeb{width:124px;height:124px;margin:26px auto 26px;position:relative;display:flex;align-items:center;justify-content:center;animation:pebin .9s var(--ease) both .15s;}
+  .hero .bigpeb::before{content:"";position:absolute;width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,rgba(230,59,46,.26),transparent 66%);filter:blur(10px);}
+  .hero .bigpeb .gd{width:124px;height:124px;border-radius:50% 50% 50% 23px;}
+  .hero .bigpeb .gd .ring{inset:-3px;}
+  .hero h1{font-size:clamp(42px,5.6vw,74px);font-weight:700;letter-spacing:-.045em;line-height:.96;max-width:16ch;margin:0 auto;animation:rise .7s var(--ease) both .3s;}
+  .hero h1 em{font-style:normal;color:var(--ink3);}
+  .hero .lede{font-size:18px;line-height:1.55;color:var(--ink2);max-width:46ch;margin:20px auto 0;animation:rise .7s var(--ease) both .42s;}
+  .hero .cta{display:flex;gap:11px;justify-content:center;margin-top:28px;flex-wrap:wrap;animation:rise .7s var(--ease) both .52s;}
+  .hero .hint{margin-top:28px;font-family:var(--mono);font-size:11px;color:var(--ink3);animation:rise .7s var(--ease) both .62s;}
+  .hero .watch{margin-top:16px;font-size:13.5px;}
+  .hero .watch a{color:var(--ink2);text-decoration:underline;text-underline-offset:3px;}
 
-  <!-- ── PEBBLE FEATURES ──────────────────────────── -->
-  <section id="pebble" class="features">
-    <div class="features-inner">
-      <p class="label-mono reveal reveal-up" style="text-align: center; margin-bottom: 12px;">
-        Seven things the pebble does
-      </p>
-      <h2 class="display-h2 features-heading reveal reveal-up">
-        Everything the dashboard does.<br/>
-        <em>By voice. From your cursor.</em>
-      </h2>
+  /* ── sections ── */
+  .section{padding:clamp(72px,9vw,104px) 0;border-top:1px solid var(--rule);}
+  .section.alt{background:var(--panel2);}
+  .sec-h{font-size:clamp(28px,3.6vw,44px);font-weight:700;letter-spacing:-.04em;line-height:1.02;max-width:22ch;}
+  .sec-h em{font-style:normal;color:var(--ink3);}
+  .sec-sub{font-size:16px;color:var(--ink2);line-height:1.55;margin-top:14px;max-width:56ch;}
+  .sec-sub b{color:var(--ink);font-weight:600;}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;}
+  @media (max-width:880px){.split{grid-template-columns:1fr;gap:30px}}
+  .rv{opacity:1;transform:none;transition:opacity .6s var(--ease),transform .6s var(--ease);}
+  .js .rv{opacity:0;transform:translateY(18px);}
+  .js .rv.vis{opacity:1;transform:none;}
 
-      {features.map((f, i) => (
-        <article class={`feature ${f.flip ? 'feature-flip' : ''}`} id={f.id}>
-          <div class="feature-copy">
-            <p class="label-mono reveal reveal-up">{`0${i + 1} · ${f.label}`}</p>
-            <h3 class="feature-title reveal reveal-up">{f.title}</h3>
-            <p class="feature-body reveal reveal-up">{f.body}</p>
-          </div>
-          <div class="feature-media reveal reveal-up">
-            <div class="mockup feature-mockup">
-              <video
-                class="feature-video"
-                poster={f.poster}
-                src={f.video}
-                muted
-                loop
-                playsinline
-                preload="none"
-                data-lazy
-              ></video>
-            </div>
-          </div>
-        </article>
-      ))}
-    </div>
-  </section>
+  /* ── the demo · jarvis books, you approve ── */
+  .demo{position:relative;height:380px;border-radius:var(--corner);overflow:hidden;box-shadow:var(--sh-lg);
+    background:repeating-linear-gradient(118deg,rgba(60,80,110,.05) 0 15px,transparent 15px 30px),linear-gradient(155deg,#cdd4dd,#b5bec9);}
+  .demo .dwin{position:absolute;left:5%;right:5%;top:26px;bottom:26px;border-radius:12px;background:rgba(255,255,255,.6);box-shadow:inset 0 0 0 1px rgba(255,255,255,.55),0 14px 32px -18px rgba(20,30,45,.32);}
+  .demo .tb{position:absolute;left:5%;right:5%;top:26px;height:36px;background:rgba(255,255,255,.65);border-radius:12px 12px 0 0;border-bottom:1px solid rgba(20,30,45,.07);display:flex;align-items:center;gap:8px;padding:0 14px;}
+  .demo .tb i{width:9px;height:9px;border-radius:50%;background:rgba(20,30,45,.13);}
+  .demo .tb span{font-family:var(--mono);font-size:9.5px;color:#5A6470;letter-spacing:.06em;margin-left:6px;}
+  .fld{position:absolute;left:12%;width:44%;height:42px;border-radius:8px;background:rgba(255,255,255,.78);box-shadow:inset 0 0 0 1px rgba(20,30,45,.08);padding:6px 12px;transition:box-shadow .3s var(--ease);}
+  .fld.hot{box-shadow:inset 0 0 0 1.5px var(--listen),0 0 0 4px rgba(230,59,46,.13);}
+  .fld .flab{display:block;font-family:var(--mono);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:#7A828D;}
+  .fld .ftxt{display:block;font-size:13px;color:#1A2027;font-weight:500;min-height:17px;}
+  .fld .ftxt::after{content:"";display:inline-block;width:1px;height:11px;background:transparent;vertical-align:-1px;}
+  .fld.typing .ftxt::after{background:#1A2027;animation:br .8s steps(1) infinite;}
+  #f1{top:92px;}#f2{top:148px;}
+  .paybtn{position:absolute;left:12%;top:212px;font-family:var(--sans);font-size:13px;font-weight:600;padding:11px 22px;border:none;border-radius:9px 2px 9px 9px;background:#1A2027;color:#fff;box-shadow:0 3px 10px -3px rgba(20,30,45,.4);transition:box-shadow .3s var(--ease);}
+  .paybtn.hot{box-shadow:0 0 0 1.5px var(--hold),0 0 0 5px rgba(234,164,14,.18),0 3px 10px -3px rgba(20,30,45,.4);}
+  .paybtn.paid{background:#1F7A43;}
+  .cur{position:absolute;left:0;top:0;display:flex;align-items:flex-start;filter:drop-shadow(0 2px 3px rgba(20,30,45,.4));z-index:6;will-change:transform;transition:transform 1s var(--ease);}
+  .cur .tag{position:absolute;top:30px;left:14px;font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;font-weight:600;white-space:nowrap;}
+  .cur.j .tag{background:var(--listen);color:#fff;}
+  .cur.y .tag{background:#13161A;color:#fff;}
+  .cur.j .gd{width:26px;height:26px;border-radius:50% 50% 50% 5px;margin:13px 0 0 5px;}
+  .appr{position:absolute;right:7%;top:84px;width:250px;border-radius:13px 4px 13px 13px;overflow:hidden;z-index:5;
+    background:rgba(255,255,255,.6);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);
+    box-shadow:inset 0 1px 1px rgba(255,255,255,.6),inset 0 0 0 .5px rgba(20,30,45,.09),0 18px 40px -16px rgba(20,30,45,.45);border:.5px solid rgba(255,255,255,.5);
+    opacity:0;transform:scale(.7);transform-origin:30% 110%;transition:opacity .42s var(--ease),transform .42s var(--ease);pointer-events:none;}
+  .appr.show{opacity:1;transform:none;}
+  .appr .ah{padding:12px 14px 8px;}
+  .appr .ah .t{font-size:13px;font-weight:700;color:#15191E;}
+  .appr .ah .s{font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--hold-tx);margin-top:3px;}
+  .appr .ab{padding:0 14px 10px;font-size:11.5px;color:#3D454E;line-height:1.45;}
+  .appr .ac{display:flex;gap:7px;padding:0 12px 12px;}
+  .appr .ac span{flex:1;text-align:center;font-size:11.5px;font-weight:600;padding:8px 0;border-radius:7px 2px 7px 7px;}
+  .appr .ac .a1{background:#15191E;color:#fff;transition:transform .18s var(--ease),box-shadow .18s var(--ease);}
+  .appr .ac .a1.press{transform:scale(.93);box-shadow:0 0 0 4px rgba(47,164,94,.25);}
+  .appr .ac .a2{border:1px solid rgba(20,30,45,.14);color:#15191E;}
+  .toast{position:absolute;right:7%;bottom:38px;display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;color:#fff;background:#15191E;border-radius:9px 2px 9px 9px;padding:9px 14px;box-shadow:0 10px 26px -10px rgba(20,30,45,.5);
+    opacity:0;transform:translateY(8px);transition:opacity .4s var(--ease),transform .4s var(--ease);}
+  .toast.show{opacity:1;transform:none;}
+  .toast .d{width:7px;height:7px;border-radius:50%;background:var(--ok);}
+  @media (max-width:700px){.demo{height:460px}.appr{top:258px;width:222px;right:6%;transform-origin:30% -20%;}}
+  .demo .cap{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:#46505C;white-space:nowrap;}
 
-  <!-- ── RUNTIME (compressed) ─────────────────────── -->
-  <section id="runtime" class="runtime">
-    <div class="section-inner">
-      <p class="label-mono reveal reveal-up">Underneath the pebble</p>
-      <h2 class="display-h2 reveal reveal-up">A real <em>runtime.</em> Not a chat wrapper.</h2>
+  /* ── say this ── */
+  .says{margin-top:34px;border-top:1px solid var(--ink);}
+  .sayrow{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;padding:18px 0;border-bottom:1px solid var(--rule);}
+  @media (max-width:700px){.sayrow{grid-template-columns:1fr;gap:6px;}}
+  .sayrow .cmd{font-family:var(--mono);font-size:15px;color:var(--ink);font-weight:500;}
+  .sayrow .cmd::before{content:"\201C";color:var(--ink3);}.sayrow .cmd::after{content:"\201D";color:var(--ink3);}
+  .sayrow .out{font-size:14.5px;color:var(--ink2);line-height:1.45;display:flex;align-items:baseline;gap:9px;}
+  .sayrow .out b{color:var(--ink);font-weight:600;}
+  .sayrow .out .d{width:7px;height:7px;border-radius:50%;flex-shrink:0;align-self:center;}
 
-      <div class="runtime-strip reveal reveal-up">
-        <div class="runtime-cell">
-          <span class="runtime-num">Memory</span>
-          <span class="runtime-meta">Knowledge graph · entity vault · semantic recall</span>
-        </div>
-        <div class="runtime-cell">
-          <span class="runtime-num">Awareness</span>
-          <span class="runtime-meta">Continuous OCR · activity tracking · struggle detection</span>
-        </div>
-        <div class="runtime-cell">
-          <span class="runtime-num">Action</span>
-          <span class="runtime-meta">Browser via CDP · native desktop · terminal · voice TTS/STT</span>
-        </div>
-        <div class="runtime-cell">
-          <span class="runtime-num">Orchestration</span>
-          <span class="runtime-meta">11 agent roles · 50+ workflow nodes · OKR goal pursuit</span>
-        </div>
-        <div class="runtime-cell">
-          <span class="runtime-num">Sidecar</span>
-          <span class="runtime-meta">One brain · every machine · JWT-auth WebSocket</span>
-        </div>
-        <div class="runtime-cell">
-          <span class="runtime-num">Authority</span>
-          <span class="runtime-meta">Soft-gate approvals · audit trail · emergency stop</span>
-        </div>
-      </div>
+  /* ── states ribbon ── */
+  .states{display:flex;gap:clamp(10px,2vw,24px);flex-wrap:wrap;align-items:flex-start;justify-content:center;border-radius:var(--corner);padding:34px 24px 30px;margin-top:0;
+    background:radial-gradient(360px 220px at 50% 50%,rgba(230,59,46,.09),transparent 65%),repeating-linear-gradient(118deg,rgba(60,80,110,.05) 0 14px,transparent 14px 28px),linear-gradient(135deg,#c8d0da,#aeb9c6);box-shadow:var(--sh-lg);}
+  .pc{display:flex;flex-direction:column;align-items:center;gap:11px;width:68px;}
+  .pc .gd{width:40px;height:40px;border-radius:50% 50% 50% 8px;}
+  .pc .pl{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;text-align:center;}
 
-      <div class="runtime-cta reveal reveal-up">
-        <a href="/docs/introduction" class="btn-border">Read the architecture</a>
-        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="btn-border">Browse the source</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── WORKFLOWS ────────────────────────────────── -->
-  <section id="workflows" class="callout">
-    <div class="section-inner callout-inner">
-      <div class="callout-copy">
-        <p class="label-mono reveal reveal-up">Workflows</p>
-        <h2 class="display-h2 reveal reveal-up">
-          Compose with a sentence.<br/>
-          <em>Or 50+ nodes.</em>
-        </h2>
-        <p class="lead reveal reveal-up">
-          Describe what you want — <em>"every weekday at 8am, summarise yesterday's
-          email and drop it in Telegram"</em> — and Usejarvis generates the flow.
-          Tune it visually if you need to. Triggers from cron, webhooks, file
-          watchers, calendar, git, or screen events.
-        </p>
-        <ul class="callout-bullets reveal reveal-up">
-          <li><span class="dot dot-accent"></span> NL composition · visual editor · YAML import</li>
-          <li><span class="dot dot-accent"></span> Triggers: cron · webhook · file · screen · email · git</li>
-          <li><span class="dot dot-accent"></span> Loops, routers, code nodes, sub-agents, ask-the-user</li>
-          <li><span class="dot dot-accent"></span> Self-healing retries · audit log · sandboxed JS engine</li>
-        </ul>
-        <div class="callout-actions reveal reveal-up">
-          <a href="/docs/workflows" class="btn-border">Read the workflows guide</a>
-        </div>
-      </div>
-
-      <div class="callout-media reveal reveal-up">
-        <div class="flow-card">
-          <div class="flow-card-bar">
-            <span class="flow-card-label">inbox-triage.flow</span>
-            <span class="flow-card-status"><span class="dot dot-ok dot-pulse"></span> live</span>
-          </div>
-          <div class="flow-card-body">
-            <div class="flow-node flow-node-trigger">
-              <span class="flow-node-tag">trigger</span>
-              <span class="flow-node-name">new email · gmail</span>
-            </div>
-            <div class="flow-arrow">↓</div>
-            <div class="flow-node">
-              <span class="flow-node-tag">action</span>
-              <span class="flow-node-name">classify with vision</span>
-            </div>
-            <div class="flow-arrow">↓</div>
-            <div class="flow-branch">
-              <div class="flow-node flow-node-half">
-                <span class="flow-node-tag">draft</span>
-                <span class="flow-node-name">reply · gpt-4o</span>
-              </div>
-              <div class="flow-node flow-node-half">
-                <span class="flow-node-tag">notify</span>
-                <span class="flow-node-name">slack · #triage</span>
-              </div>
-            </div>
-            <div class="flow-arrow">↓</div>
-            <div class="flow-node flow-node-end">
-              <span class="flow-node-tag">ask</span>
-              <span class="flow-node-name">approve? — y/n via pebble</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── SIDECAR / ONE BRAIN, MANY MACHINES ──────── -->
-  <section id="sidecar" class="callout callout-alt">
-    <div class="section-inner callout-inner callout-inner-flip">
-      <div class="callout-media reveal reveal-up">
-        <div class="sidecar-card">
-          <div class="sidecar-brain">
-            <span class="sidecar-dot sidecar-dot-brain"></span>
-            <span class="sidecar-brain-label">brain</span>
-            <span class="sidecar-brain-meta">192.168.1.20:3142</span>
-          </div>
-          <div class="sidecar-lines" aria-hidden="true">
-            <svg viewBox="0 0 320 100" preserveAspectRatio="none">
-              <path d="M160 0 L 60 100" />
-              <path d="M160 0 L 160 100" />
-              <path d="M160 0 L 260 100" />
-            </svg>
-          </div>
-          <div class="sidecar-clients">
-            <div class="sidecar-client">
-              <span class="sidecar-dot"></span>
-              <span class="sidecar-client-name">laptop · macOS</span>
-              <span class="sidecar-client-meta">terminal · browser · screen</span>
-            </div>
-            <div class="sidecar-client">
-              <span class="sidecar-dot"></span>
-              <span class="sidecar-client-name">studio · Windows</span>
-              <span class="sidecar-client-meta">desktop · clipboard</span>
-            </div>
-            <div class="sidecar-client">
-              <span class="sidecar-dot"></span>
-              <span class="sidecar-client-name">homelab · Linux</span>
-              <span class="sidecar-client-meta">fs · long-running jobs</span>
-            </div>
-          </div>
-          <div class="sidecar-protocol">
-            <span class="label-mono">JWT · WebSocket · TLS 1.3</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="callout-copy">
-        <p class="label-mono reveal reveal-up">Sidecar</p>
-        <h2 class="display-h2 reveal reveal-up">
-          One brain.<br/>
-          <em>Every machine.</em>
-        </h2>
-        <p class="lead reveal reveal-up">
-          Run the brain once — on a homelab, a desktop, anywhere. A 6&nbsp;MB Go
-          binary on each laptop, server, or Raspberry&nbsp;Pi connects back over
-          a JWT-authenticated WebSocket. The pebble follows you to whichever
-          machine you're using; Usejarvis sees, types, and clicks on all of them.
-        </p>
-        <ul class="callout-bullets reveal reveal-up">
-          <li><span class="dot dot-accent"></span> macOS · Linux · Windows · ARM — one binary each</li>
-          <li><span class="dot dot-accent"></span> Per-machine toggles: terminal · browser · desktop · fs · clipboard</li>
-          <li><span class="dot dot-accent"></span> Outbound-only — sidecars dial the brain, not the other way</li>
-          <li><span class="dot dot-accent"></span> Detach &amp; reconnect — long jobs survive WiFi drops</li>
-        </ul>
-        <div class="code-chip reveal reveal-up callout-cmd">
-          <span class="code-prompt">$</span>
-          <span><span class="code-pkg">jarvis-sidecar --token &lt;jwt&gt;</span></span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── SETUP / FOOTER CTA ───────────────────────── -->
-  <section class="setup">
-    <div class="section-inner setup-inner">
-      <h2 class="display-h2 reveal reveal-up">Three commands. <em>Then it lives with you.</em></h2>
-
-      <div class="terminal reveal reveal-up">
-        <div class="terminal-bar">
-          <span class="tl tl-r"></span>
-          <span class="tl tl-y"></span>
-          <span class="tl tl-g"></span>
-          <span class="terminal-label">bash</span>
-        </div>
-        <div class="terminal-body">
-          <div><span class="t-comment"># 1. Install</span></div>
-          <div><span class="t-prompt">$</span> <span class="t-cmd">bun install -g @usejarvis/brain</span></div>
-          <br/>
-          <div><span class="t-comment"># 2. Configure</span></div>
-          <div><span class="t-prompt">$</span> <span class="t-cmd">jarvis onboard</span></div>
-          <div><span class="t-ok">✓ LLM configured · ✓ Browser found · ✓ Sidecar built</span></div>
-          <br/>
-          <div><span class="t-comment"># 3. Launch</span></div>
-          <div><span class="t-prompt">$</span> <span class="t-cmd">jarvis start</span></div>
-          <div><span class="t-ok">✓ Usejarvis runtime started (PID 4821)</span></div>
-          <div><span class="t-comment">  Pebble visible at the bottom of your screen.</span></div>
-        </div>
-      </div>
-
-      <div class="cta reveal reveal-up">
-        <h3 class="cta-line">Your runtime. Your machine. Your agents.</h3>
-        <p class="cta-sub">Open source. Self-hosted. Bring your own LLM.</p>
-        <div class="cta-actions">
-          <a href="/docs/installation" class="btn-solid">Read the Docs</a>
-          <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="btn-border">Star on GitHub</a>
-          <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener" class="btn-border">Discord</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <span class="nav-dot"></span>
-        <span class="footer-logo">Usejarvis</span>
-        <span class="footer-copy">© 2026</span>
-      </div>
-      <div class="footer-links">
-        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener">GitHub</a>
-        <a href="/docs/introduction">Docs</a>
-        <a href="/blog">Blog</a>
-        <a href="/roadmap">Roadmap</a>
-        <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener">Discord</a>
-        <a href="/docs/disclaimer">Disclaimer</a>
-      </div>
-    </div>
-    <p class="footer-disclaimer">
-      Usejarvis is an open-source runtime for autonomous AI agents, provided "as is" with no warranty.
-      Agents running on Usejarvis can autonomously control your browser, desktop, and external accounts.
-      You assume all risk. See the full <a href="/docs/disclaimer">disclaimer</a>.
-    </p>
-  </footer>
-</Landing>
-
-<style>
-  /* ── Nav ──────────────────────────────────── */
-  .nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(245, 242, 235, 0.92);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: var(--hair);
-  }
-  .nav-inner {
-    max-width: var(--col-wide);
-    margin: 0 auto;
-    padding: 0 28px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .nav-logo {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-family: var(--font-mono);
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--ink);
-    text-decoration: none;
-    letter-spacing: 0.08em;
-  }
-  .nav-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 999px;
-    background: var(--accent);
-    box-shadow: 0 0 0 4px rgba(194, 58, 42, 0.18);
-    display: inline-block;
-  }
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-  }
-  .nav-link {
-    color: var(--ink-2);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-  .nav-link:hover { color: var(--accent); }
-  .nav-cta {
-    padding: 8px 16px;
-    font-size: 13px;
-  }
-
-  @media (max-width: 880px) {
-    .nav-right .nav-link:not(:nth-last-child(-n+2)) { display: none; }
-  }
-
-  /* ── Hero ─────────────────────────────────── */
-  .hero {
-    max-width: var(--col-wide);
-    margin: 0 auto;
-    padding: 96px 28px 72px;
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 64px;
-    align-items: center;
-  }
-  .hero-h1 {
-    margin-top: 16px;
-    margin-bottom: 24px;
-  }
-  .hero-lead { margin: 0 0 32px; }
-  .hero-actions {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 24px;
-  }
-  .hero-cmd { max-width: 380px; }
-
-  .hero-illu {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 22px;
-    padding: 56px 40px;
-    border: var(--hair);
-    background: var(--paper);
-    border-radius: var(--r-2);
-    box-shadow: 4px 4px 0 0 rgba(26, 26, 26, 0.06);
-    background-image:
-      linear-gradient(var(--rule-soft) 1px, transparent 1px),
-      linear-gradient(90deg, var(--rule-soft) 1px, transparent 1px);
-    background-size: 24px 24px;
-  }
-  .hero-illu-frame {
-    position: relative;
-    width: 220px;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .hero-cursor {
-    position: absolute;
-    left: 60px;
-    top: 12px;
-    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.45));
-  }
-  .hero-pebble {
-    position: absolute;
-    left: 100px;
-    top: 50px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--paper-2);
-    border: 1px solid var(--accent);
-    border-radius: 999px;
-    padding: 0 12px 0 10px;
-    height: 28px;
-    box-shadow: 2px 2px 0 0 var(--accent);
-  }
-  .hero-pebble-wave {
-    display: inline-flex;
-    align-items: center;
-    gap: 2px;
-    height: 14px;
-  }
-  .hero-pebble-wave span {
-    width: 2px;
-    background: var(--accent);
-    border-radius: 0;
-    animation: hero-wave 0.95s ease-in-out infinite;
-    transform-origin: center;
-  }
-  .hero-pebble-wave span:nth-child(1) { height: 4px; animation-delay: 0s; }
-  .hero-pebble-wave span:nth-child(2) { height: 10px; animation-delay: 0.09s; }
-  .hero-pebble-wave span:nth-child(3) { height: 5px; animation-delay: 0.18s; }
-  .hero-pebble-wave span:nth-child(4) { height: 12px; animation-delay: 0.27s; }
-  @keyframes hero-wave {
-    0%, 100% { transform: scaleY(0.6); }
-    50% { transform: scaleY(1.2); }
-  }
-  .hero-pebble-label {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
-  .hero-illu-cap {
-    margin: 0;
-    text-align: center;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    line-height: 1.7;
-    color: var(--ink-3);
-    letter-spacing: 0.08em;
-  }
-  .hero-lead em {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-weight: 500;
-    color: var(--accent);
-  }
-  .hero-lead kbd {
-    font-family: var(--font-mono);
-    background: var(--paper-2);
-    border: 1px solid var(--rule);
-    border-bottom-width: 2px;
-    border-radius: 2px;
-    padding: 1px 6px;
-    font-size: 13px;
-    color: var(--ink);
-    margin: 0 1px;
-  }
-
-  @media (max-width: 880px) {
-    .hero { grid-template-columns: 1fr; gap: 40px; padding: 64px 22px 48px; }
-  }
-
-  /* ── Section common ───────────────────────── */
-  .section-inner {
-    max-width: var(--col-wide);
-    margin: 0 auto;
-    padding: 96px 28px;
-  }
-
-  /* ── Trailer ──────────────────────────────── */
-  .trailer {
-    border-top: var(--hair);
-    background: var(--paper);
-  }
-  .trailer-frame {
-    margin-top: 40px;
-    background: var(--paper-2);
-    border: var(--hair);
-    border-radius: var(--r-2);
-    overflow: hidden;
-    box-shadow: 0 1px 0 rgba(26, 26, 26, 0.04), 0 24px 60px rgba(26, 26, 26, 0.1);
-  }
-  .trailer-video {
-    width: 100%;
-    height: auto;
-    display: block;
-    background: #14182a;
-  }
-
-  /* ── Features ─────────────────────────────── */
-  .features {
-    border-top: var(--hair);
-    background: var(--paper-2);
-  }
-  .features-inner {
-    max-width: var(--col-wide);
-    margin: 0 auto;
-    padding: 96px 28px;
-  }
-  .features-heading {
-    text-align: center;
-    margin-bottom: 64px;
-  }
-  .feature {
-    display: grid;
-    grid-template-columns: 1fr 1.15fr;
-    gap: 56px;
-    align-items: center;
-    padding: 56px 0;
-    border-top: var(--hair);
-  }
-  .feature:first-of-type { border-top: none; }
-  .feature-flip { grid-template-columns: 1.15fr 1fr; }
-  .feature-flip .feature-copy { order: 2; }
-  .feature-flip .feature-media { order: 1; }
-  .feature-title {
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: clamp(24px, 2.6vw, 32px);
-    line-height: 1.18;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin: 12px 0 18px;
-    max-width: 22ch;
-  }
-  .feature-body {
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--ink-2);
-    margin: 0;
-    max-width: 56ch;
-  }
-  .feature-media {
-    display: flex;
-    justify-content: center;
-  }
-  .feature-mockup {
-    width: 100%;
-    max-width: 640px;
-    aspect-ratio: 16 / 9;
-    background: var(--paper);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .feature-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  @media (max-width: 880px) {
-    .feature, .feature-flip {
-      grid-template-columns: 1fr;
-      gap: 28px;
-    }
-    .feature-flip .feature-copy { order: 1; }
-    .feature-flip .feature-media { order: 2; }
-  }
-
-  /* ── Runtime strip ────────────────────────── */
-  .runtime {
-    border-top: var(--hair);
-    background: var(--paper);
-  }
-  .runtime-strip {
-    margin-top: 48px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--rule);
-    border: var(--hair);
-    border-radius: var(--r-2);
-    overflow: hidden;
-  }
-  .runtime-cell {
-    background: var(--paper);
-    padding: 28px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .runtime-num {
-    font-family: var(--font-sans);
-    font-weight: 800;
-    font-size: 22px;
-    letter-spacing: -0.015em;
-    color: var(--ink);
-  }
-  .runtime-meta {
-    font-size: 14px;
-    color: var(--ink-2);
-    line-height: 1.5;
-  }
-  .runtime-cta {
-    margin-top: 40px;
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  @media (max-width: 880px) {
-    .runtime-strip { grid-template-columns: 1fr; }
-  }
-
-  /* ── Callout sections (Workflows · Sidecar) ─ */
-  .callout {
-    border-top: var(--hair);
-    background: var(--paper-2);
-  }
-  .callout-alt {
-    background: var(--paper);
-  }
-  .callout-inner {
-    max-width: var(--col-wide);
-    margin: 0 auto;
-    padding: 96px 28px;
-    display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: 64px;
-    align-items: center;
-  }
-  .callout-inner-flip .callout-copy { order: 2; }
-  .callout-inner-flip .callout-media { order: 1; }
-  .callout-copy .display-h2 { margin: 14px 0 22px; }
-  .callout-copy .display-h2 em {
-    display: inline-block;
-  }
-  .callout-bullets {
-    list-style: none;
-    margin: 28px 0 28px;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .callout-bullets li {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 15px;
-    color: var(--ink-2);
-  }
-  .callout-bullets .dot {
-    flex-shrink: 0;
-    box-shadow: 0 0 0 3px rgba(194, 58, 42, 0.12);
-  }
-  .callout-actions {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .callout-cmd {
-    margin-top: 8px;
-  }
-
-  @media (max-width: 880px) {
-    .callout-inner {
-      grid-template-columns: 1fr;
-      gap: 40px;
-      padding: 72px 22px;
-    }
-    .callout-inner-flip .callout-copy { order: 1; }
-    .callout-inner-flip .callout-media { order: 2; }
-  }
-
-  /* ── Flow card (Workflows diagram) ────────── */
-  .flow-card {
-    background: var(--paper);
-    border: var(--hair);
-    border-radius: var(--r-2);
-    box-shadow: 6px 6px 0 0 rgba(26, 26, 26, 0.06);
-    overflow: hidden;
-  }
-  .flow-card-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 16px;
-    background: var(--paper-3);
-    border-bottom: var(--hair);
-  }
-  .flow-card-label {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--ink-2);
-  }
-  .flow-card-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-  }
-  .flow-card-body {
-    padding: 26px 22px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-  }
-  .flow-node {
-    border: 1px solid var(--ink);
-    background: var(--paper);
-    padding: 12px 14px;
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 14px;
-    box-shadow: 3px 3px 0 0 var(--ink);
-    font-family: var(--font-sans);
-  }
-  .flow-node-trigger {
-    border-color: var(--accent);
-    box-shadow: 3px 3px 0 0 var(--accent);
-  }
-  .flow-node-end {
-    border-style: dashed;
-    box-shadow: 3px 3px 0 0 var(--rule);
-  }
-  .flow-node-tag {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-    flex-shrink: 0;
-  }
-  .flow-node-trigger .flow-node-tag { color: var(--accent); }
-  .flow-node-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ink);
-    text-align: right;
-  }
-  .flow-arrow {
-    text-align: center;
-    color: var(--ink-3);
-    font-size: 14px;
-    line-height: 1;
-    margin: 6px 0;
-    user-select: none;
-  }
-  .flow-branch {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .flow-node-half {
-    padding: 10px 12px;
-    box-shadow: 2px 2px 0 0 var(--ink);
-  }
-  .flow-node-half .flow-node-name { font-size: 13px; }
-
-  /* ── Sidecar card (Brain / clients diagram) ── */
-  .sidecar-card {
-    background: var(--paper);
-    border: var(--hair);
-    border-radius: var(--r-2);
-    box-shadow: 6px 6px 0 0 rgba(26, 26, 26, 0.06);
-    padding: 28px 28px 22px;
-    background-image:
-      linear-gradient(var(--rule-soft) 1px, transparent 1px),
-      linear-gradient(90deg, var(--rule-soft) 1px, transparent 1px);
-    background-size: 24px 24px;
-  }
-  .sidecar-brain {
-    margin: 0 auto;
-    width: max-content;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--ink);
-    color: var(--paper);
-    padding: 10px 16px;
-    border-radius: var(--r-pill);
-    box-shadow: 0 0 0 4px rgba(26, 26, 26, 0.06);
-  }
-  .sidecar-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: var(--accent);
-    box-shadow: 0 0 0 3px rgba(194, 58, 42, 0.18);
-    flex-shrink: 0;
-  }
-  .sidecar-dot-brain {
-    background: var(--accent);
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
-  }
-  .sidecar-brain-label {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-weight: 700;
-  }
-  .sidecar-brain-meta {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: rgba(245, 242, 235, 0.65);
-  }
-  .sidecar-lines {
-    height: 60px;
-    margin: 0 auto;
-    max-width: 340px;
-  }
-  .sidecar-lines svg {
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-  }
-  .sidecar-lines svg path {
-    fill: none;
-    stroke: var(--rule);
-    stroke-width: 1;
-    stroke-dasharray: 4 4;
-  }
-  .sidecar-clients {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--rule);
-    border: var(--hair);
-    border-radius: var(--r-2);
-    overflow: hidden;
-  }
-  .sidecar-client {
-    background: var(--paper);
-    padding: 14px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    align-items: flex-start;
-  }
-  .sidecar-client-name {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--ink);
-    font-weight: 600;
-  }
-  .sidecar-client-meta {
-    font-size: 11px;
-    color: var(--ink-3);
-    line-height: 1.45;
-  }
-  .sidecar-protocol {
-    margin-top: 14px;
-    padding-top: 14px;
-    border-top: var(--hair-soft);
-    text-align: center;
-  }
-  @media (max-width: 540px) {
-    .sidecar-clients { grid-template-columns: 1fr; }
-    .sidecar-lines { display: none; }
-  }
-
-  /* ── Setup ────────────────────────────────── */
-  .setup {
-    border-top: var(--hair);
-    background: var(--paper-2);
-  }
-  .setup-inner { padding-bottom: 120px; }
-  .terminal {
-    margin: 40px 0 64px;
-    max-width: 720px;
-    background: #1a1a1a;
-    border-radius: var(--r-2);
-    overflow: hidden;
-    box-shadow: 0 1px 0 rgba(26, 26, 26, 0.04), 0 18px 40px rgba(26, 26, 26, 0.18);
-  }
-  .terminal-bar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 16px;
-    background: #232323;
-    border-bottom: 1px solid #2c2c2c;
-  }
-  .tl {
-    width: 12px;
-    height: 12px;
-    border-radius: 999px;
-    display: inline-block;
-  }
-  .tl-r { background: #ff5f57; }
-  .tl-y { background: #febc2e; }
-  .tl-g { background: #28c840; }
-  .terminal-label {
-    margin-left: 12px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: #888;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .terminal-body {
-    padding: 22px 24px;
-    font-family: var(--font-mono);
-    font-size: 13.5px;
-    line-height: 1.85;
-    color: #e8e8e8;
-  }
-  .t-prompt { color: #888; }
-  .t-cmd { color: #f1f3f8; font-weight: 500; }
-  .t-comment { color: #6a7080; font-style: italic; }
-  .t-ok { color: #6cd49a; }
-
-  .cta { max-width: 720px; }
-  .cta-line {
-    font-family: var(--font-sans);
-    font-weight: 800;
-    font-size: clamp(26px, 3vw, 36px);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin: 0 0 14px;
-  }
-  .cta-sub {
-    font-size: 16px;
-    line-height: 1.65;
-    color: var(--ink-2);
-    margin: 0 0 24px;
-    max-width: 60ch;
-  }
-  .cta-actions {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  /* ── Footer ───────────────────────────────── */
-  .footer {
-    border-top: var(--hair-bold);
-    background: var(--paper);
-    padding: 48px 28px 36px;
-  }
-  .footer-inner {
-    max-width: var(--col-wide);
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 32px;
-    flex-wrap: wrap;
-  }
-  .footer-left {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    color: var(--ink);
-  }
-  .footer-logo { font-weight: 700; }
-  .footer-copy { color: var(--ink-3); }
-  .footer-links {
-    display: flex;
-    gap: 22px;
-    flex-wrap: wrap;
-  }
-  .footer-links a {
-    font-family: var(--font-sans);
-    font-size: 14px;
-    color: var(--ink-2);
-    text-decoration: none;
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-  .footer-links a:hover { color: var(--accent); }
-  .footer-disclaimer {
-    max-width: var(--col-wide);
-    margin: 24px auto 0;
-    padding-top: 24px;
-    border-top: var(--hair-soft);
-    font-size: 12px;
-    line-height: 1.65;
-    color: var(--ink-3);
-  }
-  .footer-disclaimer a { color: var(--accent); text-decoration: underline; }
+  /* ── pillars ── */
+  .pillars{margin-top:30px;border-top:1px solid var(--ink);}
+  .pillar{display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--rule);}
+  @media (max-width:700px){.pillar{grid-template-columns:1fr;gap:6px;}}
+  .pillar .nm{font-size:19px;font-weight:700;letter-spacing:-.02em;}
+  .pillar .d{font-size:14.5px;color:var(--ink2);line-height:1.5;}.pillar .d b{color:var(--ink);font-weight:600;}
 </style>
+<style is:inline>
+  /* ── summoned room ── */
+  .desk{position:relative;height:300px;border-radius:var(--corner);overflow:hidden;background:repeating-linear-gradient(118deg,rgba(60,80,110,.05) 0 15px,transparent 15px 30px),linear-gradient(155deg,#cdd4dd,#b5bec9);box-shadow:var(--sh-lg);}
+  .desk .win{position:absolute;left:22px;top:22px;width:48%;height:120px;border-radius:11px;background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5),0 12px 28px -16px rgba(20,30,45,.3);}
+  .desk .win .l{height:7px;border-radius:4px;background:rgba(20,30,45,.1);margin:14px 18px}.desk .win .l.a{width:48%;margin-top:18px}.desk .win .l.b{width:64%}
+  .desk .room{position:absolute;right:24px;top:40px;width:240px;border-radius:13px 4px 13px 13px;overflow:hidden;background:rgba(255,255,255,.55);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);box-shadow:inset 0 1px 1px rgba(255,255,255,.6),0 18px 40px -16px rgba(20,30,45,.4);border:.5px solid rgba(255,255,255,.5);}
+  .desk .room .rh{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#4a5560;padding:11px 13px;border-bottom:.5px solid rgba(20,30,45,.08);}
+  .desk .room .ri{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;font-size:12px;color:#2a323b;}
+  .desk .room .ri .sw{width:26px;height:15px;border-radius:999px;background:#13161A;position:relative}.desk .room .ri .sw i{position:absolute;top:2px;right:2px;width:11px;height:11px;border-radius:50%;background:#fff}
+  .desk .room .ri .sw.off{background:rgba(20,30,45,.18)}.desk .room .ri .sw.off i{right:auto;left:2px}
+  .desk .peb{position:absolute;right:280px;top:64px;display:flex;align-items:flex-start;}
+  .desk .peb .gd{width:26px;height:26px;border-radius:50% 50% 50% 5px;margin:13px 0 0 6px;}
+  .desk .arr{filter:drop-shadow(0 2px 3px rgba(20,30,45,.4));}
+  @media (max-width:880px){.desk .room{width:200px}.desk .peb{right:236px}}
+
+  /* ── fork ── */
+  .forkgrid{margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media (max-width:760px){.forkgrid{grid-template-columns:1fr}}
+  .fcol{border-radius:var(--corner);overflow:hidden;border:1px solid var(--rule);background:var(--raise);box-shadow:var(--sh-md);}
+  .fcol.native{box-shadow:var(--sh-lg),0 0 0 1px rgba(230,59,46,.12);position:relative;}
+  .fcol.native::before{content:"";position:absolute;left:0;right:0;top:0;height:110px;background:radial-gradient(220px 110px at 80% 0%,rgba(230,59,46,.1),transparent 70%);pointer-events:none;}
+  .fhead{padding:16px 22px;border-bottom:1px solid var(--rule);}
+  .fhead .lab{font-size:11.5px;font-weight:600;color:var(--ink3);}
+  .fhead .nm{font-size:18px;font-weight:700;letter-spacing:-.02em;margin-top:5px;}
+  .frow{display:flex;gap:14px;padding:12px 22px;border-bottom:1px solid var(--rule2);font-size:13.5px;}.frow:last-child{border:none;}
+  .frow .k{font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);width:80px;flex-shrink:0;align-self:center;}
+  .frow .v{color:var(--ink2);}.native .frow .v{color:var(--ink);font-weight:500;}
+
+  /* ── workflow ── */
+  .flow{border:1px solid var(--rule);border-radius:var(--corner);overflow:hidden;background:var(--raise);box-shadow:var(--sh-lg);}
+  .flow .fh{display:flex;align-items:center;justify-content:space-between;padding:11px 15px;border-bottom:1px solid var(--rule);background:var(--panel2);font-family:var(--mono);font-size:11px;color:var(--ink2);}
+  .flow .fh .live{display:inline-flex;align-items:center;gap:6px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ok-tx);}.flow .fh .live .d{width:6px;height:6px;border-radius:50%;background:var(--ok);}
+  .flow .fb{padding:18px;display:flex;flex-direction:column;}
+  .node{border:1px solid var(--rule);border-radius:var(--corner-sm);background:var(--raise);padding:11px 13px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;box-shadow:var(--sh-sm);}
+  .node.trig{border-color:rgba(230,59,46,.5);box-shadow:0 0 0 3px rgba(230,59,46,.08),var(--sh-sm);}
+  .node .tg{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);}.node.trig .tg{color:var(--listen-tx);}.node .nm{font-size:13px;font-weight:600;text-align:right;}
+  .arrowd{text-align:center;color:var(--ink3);margin:6px 0;font-size:13px;}
+
+  /* ── sidecars ── */
+  .sidecar{border:1px solid var(--rule);border-radius:var(--corner);background:var(--raise);box-shadow:var(--sh-lg);padding:26px;background-image:linear-gradient(rgba(19,22,26,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(19,22,26,.04) 1px,transparent 1px);background-size:24px 24px;}
+  .brain{margin:0 auto;width:max-content;display:flex;align-items:center;gap:9px;background:var(--ink);color:var(--bg);padding:9px 15px;border-radius:999px;box-shadow:var(--sh-md);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;}.brain .d{width:7px;height:7px;border-radius:50%;background:var(--listen);box-shadow:0 0 0 3px rgba(230,59,46,.2);animation:br 1.4s infinite;}
+  .lines{height:46px;}.lines svg{width:100%;height:100%;overflow:visible}.lines path{fill:none;stroke:var(--rule);stroke-width:1;stroke-dasharray:4 4}
+  .clients{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--corner-sm);overflow:hidden;}
+  .client{background:var(--raise);padding:13px 12px;}.client .cn{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink);}.client .cm{font-size:10.5px;color:var(--ink3);margin-top:4px;}
+
+  /* ── safety ── */
+  .safety{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--corner);overflow:hidden;margin-top:32px;}
+  @media (max-width:760px){.safety{grid-template-columns:1fr}}
+  .scell{background:var(--raise);padding:26px 24px;}
+  .scell .si{display:flex;align-items:center;gap:9px;margin-bottom:13px;}
+  .scell .si .d{width:8px;height:8px;border-radius:50%;}
+  .scell .si .w{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);}
+  .scell .t{font-size:17px;font-weight:700;letter-spacing:-.02em;}
+  .scell .d2{font-size:13.5px;color:var(--ink2);line-height:1.55;margin-top:7px;}
+
+  /* ── doors ── */
+  .doorsgrid{margin-top:32px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:860px){.doorsgrid{grid-template-columns:1fr}}
+  .door{border:1px solid var(--rule);border-radius:var(--corner);background:var(--raise);padding:26px 24px;box-shadow:var(--sh-md);display:flex;flex-direction:column;gap:10px;}
+  .door.lead{box-shadow:var(--sh-lg),0 0 0 1px rgba(230,59,46,.12);}
+  .door .n{font-size:11.5px;font-weight:600;color:var(--ink3);}
+  .door .t{font-size:21px;font-weight:700;letter-spacing:-.02em;}
+  .door .p{font-size:14px;color:var(--ink2);line-height:1.5;flex:1;}
+  .door .price{font-family:var(--mono);font-size:13px;color:var(--ink);font-weight:600;padding-top:10px;border-top:1px solid var(--rule);}
+
+  /* ── install ── */
+  .terminal{max-width:640px;margin:30px auto 0;background:#0C0E11;border-radius:var(--corner);overflow:hidden;box-shadow:var(--sh-lg);text-align:left;}
+  .terminal .bar{display:flex;gap:6px;padding:11px 14px;background:#181C22;align-items:center;}
+  #tcopy{margin-left:auto;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:#9AA1AA;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:6px 1px 6px 6px;padding:3px 10px;cursor:pointer;}
+  #tcopy:hover{color:#fff;}.terminal .bar i{width:10px;height:10px;border-radius:50%;}.terminal .bar .r{background:#FF5F57}.terminal .bar .y{background:#FEBC2E}.terminal .bar .g{background:#28C840}
+  .terminal .b{padding:18px;font-family:var(--mono);font-size:13px;line-height:1.9;color:#CDD3DA;}.terminal .p{color:#6E757D}.terminal .ok{color:#6CC08A}.terminal .cm{color:#6E757D}
+  .install{text-align:center;}
+  .install .sec-h{margin:0 auto;}
+  .install .cta{display:flex;gap:11px;justify-content:center;margin-top:28px;flex-wrap:wrap;}
+
+  footer{border-top:1px solid var(--rule);padding:42px 0 36px;}
+  .foot-in{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+  .foot-l{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink2);}
+  .foot-links{display:flex;gap:20px;font-size:13px;flex-wrap:wrap;}.foot-links a{color:var(--ink2);text-decoration:none;}.foot-links a:hover{color:var(--ink);}
+  .disc{max-width:1100px;margin:24px auto 0;padding:18px 32px 0;border-top:1px solid var(--rule);font-size:12px;color:var(--ink3);line-height:1.6;}
+  .disc span{display:block;max-width:78ch;}
+  .coda{max-width:1100px;margin:16px auto 0;padding:0 32px 4px;font-size:13.5px;color:var(--ink2);}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.001s!important;animation-iteration-count:1!important;transition:none!important;scroll-behavior:auto!important;}
+    .gd.s-listen .in,.gd.s-speak .in,.gd.s-ask .in{animation:none!important;opacity:1;}
+    .gd.s-think .ring{animation:none!important;opacity:1;}
+    .js .rv{opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+<svg style="position:absolute;width:0;height:0" aria-hidden="true"><filter id="refract" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.011" numOctaves="2" seed="4" result="n"/><feGaussianBlur in="n" stdDeviation="1.2" result="nb"/><feDisplacementMap in="SourceGraphic" in2="nb" scale="11" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+
+<div id="cpeb" aria-hidden="true"><div class="gd"><span class="in"></span></div></div>
+
+<nav><div class="nav-in">
+  <div class="nav-l"><div class="ld"><div class="r"></div></div><div class="lw"><span class="u">use</span>jarvis</div>
+    <div class="nav-links"><a href="#work">How it works</a><a href="#safety">Safety</a><a href="#pricing">Pricing</a><a href="https://usejarvis.dev/docs">Docs</a></div></div>
+  <div class="nav-r"><span class="nav-status"><span class="d"></span>daemon · :3142</span><a class="btn solid" href="#install" style="padding:9px 16px;font-size:13px">Install</a><button id="menuBtn" aria-expanded="false" aria-controls="mobnav">Menu</button></div>
+<div id="mobnav"><a href="#work">How it works</a><a href="#safety">Safety</a><a href="#pricing">Pricing</a><a href="https://usejarvis.dev/docs">Docs</a></div>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="gridbg"></div>
+  <div class="wrap in2">
+    <p class="k">The operating system for AI agents</p>
+    <div class="bigpeb"><div class="gd s-listen"><span class="in"></span><span class="ring"></span></div></div>
+    <h1>The agentic layer <em>humans can work with.</em></h1>
+    <p class="lede">Not a chatbot: an always-on runtime on your machine that works your apps for you, on screen, while you watch and step in.</p>
+    <div class="cta"><a class="btn solid" href="#install">Install locally</a><a class="btn out" href="#pricing">Get it hosted</a></div>
+    <p class="watch" style="animation:rise .7s var(--ease) both .57s"><a href="#work">or watch it work ↓</a></p>
+    <p class="hint">The pebble follows your cursor. Move it.</p>
+  </div>
+</header>
+
+<!-- DEMO · two cursors -->
+<section class="section" id="work"><div class="wrap"><div class="split">
+  <div class="rv">
+    <h2 class="sec-h">Two cursors. <em>One screen. At the same time.</em></h2>
+    <p class="sec-sub">A second cursor works right next to your mouse. Watch it fill the form below, then watch it stop at the payment and turn amber: <b>it asks, you approve.</b> Take over or hand it back anytime.</p>
+  </div>
+  <div class="demo rv" id="demo">
+    <div class="dwin"></div>
+    <div class="tb"><i></i><i></i><i></i><span>lufthansa.com · checkout</span></div>
+    <div class="fld" id="f1"><span class="flab">Passenger</span><span class="ftxt" id="t1"></span></div>
+    <div class="fld" id="f2"><span class="flab">Flight</span><span class="ftxt" id="t2"></span></div>
+    <button class="paybtn" id="pay" tabindex="-1">Pay €128.40</button>
+    <div class="appr" id="appr">
+      <div class="ah"><div class="t">Jarvis wants to pay €128.40</div><div class="s">level 9 · make_payment · asks first</div></div>
+      <div class="ab">The 9am flight from this morning's email. Card ending 4421.</div>
+      <div class="ac"><span class="a1" id="apok">Approve once</span><span class="a2">Deny</span></div>
+    </div>
+    <div class="toast" id="toast"><span class="d"></span>booked · LH1812 · 09:00</div>
+    <div class="cur j" id="jcur"><svg width="20" height="24" viewBox="0 0 26 30" aria-hidden="true"><path d="M2 2 L2 24 L8 18 L12 27 L16 25 L12 16 L21 16 Z" fill="#fff" stroke="#13161A" stroke-width="1.2" stroke-linejoin="round"/></svg><div class="gd" id="jpeb"><span class="in"></span><span class="ring"></span></div><span class="tag">jarvis</span></div>
+    <div class="cur y" id="ycur"><svg width="20" height="24" viewBox="0 0 26 30" aria-hidden="true"><path d="M2 2 L2 24 L8 18 L12 27 L16 25 L12 16 L21 16 Z" fill="#13161A" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg><span class="tag">you</span></div>
+    <span class="cap">live demo · it loops</span>
+  </div>
+</div></div></section>
+
+<!-- SAY THIS -->
+<section class="section alt"><div class="wrap">
+  <h2 class="sec-h rv">Real tasks, in the software you already use.</h2>
+  <div class="says rv">
+    <div class="sayrow"><div class="cmd">Edit this clip in CapCut</div><div class="out"><span class="d" style="background:var(--speak)"></span><span>It trims, captions, and exports. <b>You watch the timeline move.</b></span></div></div>
+    <div class="sayrow"><div class="cmd">Sort my desktop into folders</div><div class="out"><span class="d" style="background:var(--ok)"></span><span>Files swept into projects. <b>Done in seconds, undoable.</b></span></div></div>
+    <div class="sayrow"><div class="cmd">Pull the numbers from this PDF into a sheet</div><div class="out"><span class="d" style="background:var(--speak)"></span><span>It reads, types, and fills your spreadsheet. <b>No copy-paste.</b></span></div></div>
+    <div class="sayrow"><div class="cmd">Book the 9am flight from the email</div><div class="out"><span class="d" style="background:var(--hold)"></span><span>It opens the site and fills the form, <b>and it asks before it pays.</b></span></div></div>
+  </div>
+</div></section>
+
+<!-- STATES -->
+<section class="section"><div class="wrap"><div class="split">
+  <div class="rv">
+    <h2 class="sec-h">You always know <em>what it's doing.</em></h2>
+    <p class="sec-sub">The pebble wears its state. Red hears you, white thinks, blue speaks, <b>amber waits for your yes</b>, and green is the job landing. Clear glass means nothing is happening, and that's a promise.</p>
+  </div>
+  <div class="states rv">
+    <div class="pc"><div class="gd"><span class="in"></span></div><span class="pl" style="color:#2A323B">Idle</span></div>
+    <div class="pc"><div class="gd s-listen"><span class="in"></span></div><span class="pl" style="color:var(--listen-tx)">Listening</span></div>
+    <div class="pc"><div class="gd s-think"><span class="in"></span><span class="ring"></span></div><span class="pl" style="color:#2A323B">Thinking</span></div>
+    <div class="pc"><div class="gd s-speak"><span class="in"></span></div><span class="pl" style="color:var(--speak-tx)">Speaking</span></div>
+    <div class="pc"><div class="gd s-ask"><span class="in"></span></div><span class="pl" style="color:var(--hold-tx)">Asking</span></div>
+  </div>
+</div></div></section>
+
+<!-- PILLARS -->
+<section class="section alt"><div class="wrap">
+  <h2 class="sec-h rv">Hand off the big stuff <em>and come back to it done.</em></h2>
+  <p class="sec-sub rv">It splits big jobs across specialist subagents and runs them around the clock. <b>You close the laptop; it keeps going.</b></p>
+  <div class="pillars rv">
+    <div class="pillar"><div class="nm">Stop repeating yourself</div><div class="d"><b>The Vault</b>: it remembers your people, projects, and decisions, across restarts and machines.</div></div>
+    <div class="pillar"><div class="nm">Skip the setup</div><div class="d"><b>Awareness</b>: it already sees your screen, so it has context before you finish the sentence.</div></div>
+    <div class="pillar"><div class="nm">Delegate the whole job</div><div class="d"><b>Orchestration</b>: it spawns subagents and runs them 24/7, on an authority model you control.</div></div>
+  </div>
+</div></section>
+
+<!-- SUMMONED ROOM -->
+<section class="section"><div class="wrap"><div class="split">
+  <div class="rv">
+    <h2 class="sec-h">Never stop <em>what you're doing.</em></h2>
+    <p class="sec-sub">No dashboard to open. Change settings, start a workflow, check on a job, all by talking, <b>right where your cursor is.</b></p>
+  </div>
+  <div class="desk rv">
+    <div class="win"><div class="l a"></div><div class="l b"></div></div>
+    <div class="peb"><svg class="arr" width="22" height="26" viewBox="0 0 26 30" aria-hidden="true"><path d="M2 2 L2 24 L8 18 L12 27 L16 25 L12 16 L21 16 Z" fill="#fff" stroke="#13161A" stroke-width="1.2" stroke-linejoin="round"/></svg><div class="gd s-listen"><span class="in"></span></div></div>
+    <div class="room"><div class="rh">settings · summoned</div><div class="ri">Voice<span class="sw"><i></i></span></div><div class="ri">Autonomy<span class="sw"><i></i></span></div><div class="ri">Wake word<span class="sw off"><i></i></span></div></div>
+  </div>
+</div></div></section>
+
+<!-- FORK -->
+<section class="section alt"><div class="wrap">
+  <h2 class="sec-h rv">Everyone else built a black box. <em>We didn't.</em></h2>
+  <p class="sec-sub rv">Most agents reach software through MCPs and APIs, and only where someone wrote one. Jarvis works the screen the way you do: <b>no MCPs, no API connectors, no waiting for an integration.</b> Any app a human can use.</p>
+  <div class="forkgrid rv">
+    <div class="fcol">
+      <div class="fhead"><div class="lab">Most agents</div><div class="nm">The API path</div></div>
+      <div class="frow"><span class="k">Acts</span><span class="v">Invisibly, in the background</span></div>
+      <div class="frow"><span class="k">You</span><span class="v">Submit, wait, hope</span></div>
+      <div class="frow"><span class="k">Reaches</span><span class="v">Only apps with an API</span></div>
+      <div class="frow"><span class="k">Needs</span><span class="v">An MCP or connector per app</span></div>
+    </div>
+    <div class="fcol native">
+      <div class="fhead"><div class="lab" style="color:var(--listen-tx)">usejarvis</div><div class="nm">Works the screen</div></div>
+      <div class="frow"><span class="k">Acts</span><span class="v">On screen, where you watch</span></div>
+      <div class="frow"><span class="k">You</span><span class="v">Join in, interrupt, take over</span></div>
+      <div class="frow"><span class="k">Reaches</span><span class="v">Any app a human can use</span></div>
+      <div class="frow"><span class="k">Needs</span><span class="v">Nothing. The screen is the integration</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- WORKFLOWS -->
+<section class="section"><div class="wrap"><div class="split">
+  <div class="rv">
+    <h2 class="sec-h">Describe a routine once, <em>then forget it.</em></h2>
+    <p class="sec-sub">Say <b>"every weekday at 8, summarise my email"</b> and it becomes a standing flow that runs itself from then on.</p>
+  </div>
+  <div class="flow rv">
+    <div class="fh"><span>morning-brief.flow</span><span class="live"><span class="d"></span>live</span></div>
+    <div class="fb"><div class="node trig"><span class="tg">every day · 08:00</span><span class="nm">read overnight email</span></div><div class="arrowd">↓</div><div class="node"><span class="tg">action</span><span class="nm">summarise · drop in telegram</span></div></div>
+  </div>
+</div></div></section>
+
+<!-- SIDECARS -->
+<section class="section alt"><div class="wrap"><div class="split">
+  <div class="sidecar rv">
+    <div class="brain"><span class="d"></span>brain · always on</div>
+    <div class="lines"><svg viewBox="0 0 320 60" preserveAspectRatio="none" aria-hidden="true"><path d="M160 0 L60 60"/><path d="M160 0 L160 60"/><path d="M160 0 L260 60"/></svg></div>
+    <div class="clients"><div class="client"><div class="cn">laptop</div><div class="cm">macOS</div></div><div class="client"><div class="cn">studio</div><div class="cm">Windows</div></div><div class="client"><div class="cn">homelab</div><div class="cm">Linux</div></div></div>
+  </div>
+  <div class="rv">
+    <h2 class="sec-h">It's wherever <em>you are.</em></h2>
+    <p class="sec-sub">One brain, a lightweight sidecar on each machine, and the pebble <b>follows you to whatever desk you sit down at</b>, mid-task. Host the brain yourself or let us run it; the sidecar stays yours either way.</p>
+  </div>
+</div></div></section>
+
+<!-- SAFETY -->
+<section class="section" id="safety"><div class="wrap">
+  <h2 class="sec-h rv">It can't run off <em>without you.</em></h2>
+  <div class="safety rv">
+    <div class="scell"><div class="si"><span class="d" style="background:var(--ink)"></span><span class="w">yours</span></div><div class="t">Your machine, your models</div><div class="d2">Open source. Run <b>local models</b>, or bring your own keys. Your data lives on your hardware, not in a big AI company's cloud.</div></div>
+    <div class="scell"><div class="si"><span class="d" style="background:var(--hold)"></span><span class="w">asks first</span></div><div class="t">Amber before anything irreversible</div><div class="d2">Ten authority levels. Anything that spends, sends, or deletes waits for your yes, and every action lands in the audit trail.</div></div>
+    <div class="scell"><div class="si"><span class="d" style="background:var(--listen)"></span><span class="w">stop</span></div><div class="t">You can stop it cold</div><div class="d2">One click pauses or kills any agent on any machine. The emergency stop is on every surface.</div></div>
+  </div>
+</div></section>
+
+<!-- DOORS -->
+<section class="section alt" id="pricing"><div class="wrap">
+  <h2 class="sec-h rv">Run everything yourself, or let us host the brain.</h2>
+  <div class="doorsgrid rv">
+    <div class="door"><span class="n">Power users</span><span class="t">Self-host</span><span class="p">Open source. Run the daemon on your machine, build templates, ship them to the marketplace.</span><span class="price">Free</span></div>
+    <div class="door lead"><span class="n">Everyone else</span><span class="t">Hosted brain</span><span class="p">We run the always-on brain on our servers. The pebble, your apps, and your screen stay on your machine. Log in and it's live.</span><span class="price">€9.99 / month · via <a href="https://opencove.host/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px">OpenCove</a></span></div>
+    <div class="door"><span class="n">Community</span><span class="t">Discord-first</span><span class="p">Not technical yet? Start in the community and grow into self-host or hosted.</span><span class="price">Free · <a href="https://discord.gg/2HgF5krXrj" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px">join Discord</a></span></div>
+  </div>
+</div></section>
+
+<!-- INSTALL -->
+<section class="section install" id="install"><div class="wrap">
+  <h2 class="sec-h rv">Three commands and it's working with you.</h2>
+  <div class="terminal rv">
+    <div class="bar"><i class="r"></i><i class="y"></i><i class="g"></i><button id="tcopy" type="button">copy</button></div>
+    <div class="b"><span class="cm"># install · configure · launch</span><br><span class="p">$</span> bun install -g @usejarvis/brain<br><span class="p">$</span> jarvis onboard<br><span class="p">$</span> jarvis start<br><span class="ok">✓ pebble live at your cursor · :3142</span></div>
+  </div>
+  <div class="cta rv"><a class="btn solid" href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener">Install locally</a><a class="btn out" href="#pricing">Get it hosted · €9.99/mo</a></div>
+</div></section>
+
+<footer>
+  <div class="foot-in">
+    <div class="foot-l"><div class="ld" style="width:18px;height:18px"><div class="r"></div></div><span class="lw" style="font-size:14px"><span class="u">use</span>jarvis</span><span style="color:var(--ink3)">© 2026</span></div>
+    <div class="foot-links"><a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener">GitHub</a><a href="https://usejarvis.dev/docs">Docs</a><a href="#work">How it works</a><a href="#pricing">Pricing</a><a href="https://discord.gg/2HgF5krXrj" target="_blank" rel="noopener">Discord</a><a href="#disclaimer">Disclaimer</a></div>
+  </div>
+  <p class="disc" id="disclaimer"><span>Usejarvis is an open-source runtime for autonomous AI agents, provided "as is." Agents can control your browser, desktop, and accounts; you assume all risk. Run local models or bring your own LLM keys.</span></p>
+  <p class="coda">Built in the open. It asks before it acts.</p>
+</footer>
+
+<script is:inline>
+(function(){
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.documentElement.classList.add('js');
+
+  /* reveals · base visible without JS, hidden only once JS owns them */
+  var io='IntersectionObserver' in window;
+  if(io && !reduce){
+    var ob=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('vis');ob.unobserve(en.target);}});},{rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.rv').forEach(function(el){ob.observe(el);});
+  } else {
+    document.querySelectorAll('.rv').forEach(function(el){el.classList.add('vis');});
+  }
+
+  /* cursor pebble · carried liquid */
+  var cp=document.getElementById('cpeb');
+  (function(){
+    var lerp=reduce?1:.16,mx=innerWidth*.5,my=innerHeight*.32,px=mx,py=my,vx=0,vy=0,ang=45,idle=0,still=0;
+    cp.style.transition='opacity .6s var(--ease)';
+    addEventListener('pointermove',function(e){mx=e.clientX+18;my=e.clientY+20;idle=16;still=0;},{passive:true});
+    (function tick(){
+      var nx=px+(mx-px)*lerp, ny=py+(my-py)*lerp;
+      vx=nx-px;vy=ny-py;px=nx;py=ny;
+      var sp=reduce?0:Math.min(Math.hypot(vx,vy)/26,1);
+      if(sp>.02)ang=Math.atan2(vy,vx)*180/Math.PI+45;
+      var s=sp*.32;
+      cp.style.transform='translate('+(px-14)+'px,'+(py-14)+'px) rotate('+ang+'deg) scale('+(1+s)+','+(1-s*.55)+')';
+      if(idle>0){idle--;cp.classList.add('moving');}else{cp.classList.remove('moving');}
+      still++;cp.style.opacity=still>240?.6:1;
+      requestAnimationFrame(tick);
+    })();
+  })();
+
+  /* the demo · jarvis books, you approve */
+  var demo=document.getElementById('demo'),jcur=document.getElementById('jcur'),ycur=document.getElementById('ycur'),
+      jpeb=document.getElementById('jpeb'),f1=document.getElementById('f1'),f2=document.getElementById('f2'),
+      t1=document.getElementById('t1'),t2=document.getElementById('t2'),pay=document.getElementById('pay'),
+      appr=document.getElementById('appr'),apok=document.getElementById('apok'),toast=document.getElementById('toast');
+  function peb(s){jpeb.className='gd'+(s?' '+s:'');}
+  function at(el,dx,dy){var d=demo.getBoundingClientRect(),r=el.getBoundingClientRect();return{x:r.left-d.left+(dx||0),y:r.top-d.top+(dy||0)};}
+  function move(cur,p,ms){cur.style.transition='transform '+(ms||1000)+'ms var(--ease)';cur.style.transform='translate('+p.x+'px,'+p.y+'px)';}
+  var timers=[],running=false;
+  function later(fn,ms){timers.push(setTimeout(fn,ms));}
+  function type(el,fld,str,done){
+    fld.classList.add('typing');var i=0;
+    var iv=setInterval(function(){el.textContent=str.slice(0,++i);if(i>=str.length){clearInterval(iv);fld.classList.remove('typing');done&&done();}},38);
+    timers.push(iv);
+  }
+  function reset(){
+    timers.forEach(function(t){clearTimeout(t);clearInterval(t);});timers=[];
+    t1.textContent='';t2.textContent='';
+    f1.classList.remove('hot','typing');f2.classList.remove('hot','typing');
+    pay.classList.remove('hot','paid');pay.textContent='Pay €128.40';
+    appr.classList.remove('show');apok.classList.remove('press');toast.classList.remove('show');
+    peb('');
+    move(jcur,{x:demo.clientWidth*.06,y:demo.clientHeight*.18},0);
+    move(ycur,{x:demo.clientWidth*.74,y:demo.clientHeight*.66},0);
+  }
+  function pose(){ /* reduced-motion still frame: the asking moment */
+    reset();t1.textContent='Vieri Balboni';t2.textContent='LH1812 · 09:00';
+    pay.classList.add('hot');appr.classList.add('show');peb('s-ask');
+    move(jcur,at(pay,70,-6),0);move(ycur,at(apok,40,18),0);
+  }
+  function run(){
+    if(!running)return;
+    reset();
+    later(function(){peb('s-think');move(jcur,at(f1,150,12),900);},500);
+    later(function(){peb('');f1.classList.add('hot');type(t1,f1,'Vieri Balboni');},1500);
+    later(function(){f1.classList.remove('hot');f2.classList.add('hot');move(jcur,at(f2,150,12),650);},2400);
+    later(function(){type(t2,f2,'LH1812 · 09:00');},2950);
+    later(function(){f2.classList.remove('hot');move(jcur,at(pay,70,-6),750);},3900);
+    later(function(){pay.classList.add('hot');peb('s-ask');appr.classList.add('show');},4700);
+    later(function(){move(ycur,at(apok,40,18),900);},5600);
+    later(function(){apok.classList.add('press');},6700);
+    later(function(){apok.classList.remove('press');appr.classList.remove('show');pay.classList.remove('hot');pay.classList.add('paid');pay.textContent='Paid ✓';peb('s-done');toast.classList.add('show');},7050);
+    later(function(){move(ycur,{x:demo.clientWidth*.74,y:demo.clientHeight*.66},900);peb('');},8100);
+    later(function(){toast.classList.remove('show');},10300);
+    later(run,11200);
+  }
+  var mb=document.getElementById('menuBtn'),mn=document.getElementById('mobnav');
+  if(mb&&mn){
+    mb.addEventListener('click',function(){var open=!mn.classList.contains('open');mn.classList.toggle('open',open);mb.setAttribute('aria-expanded',open);});
+    mn.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mn.classList.remove('open');mb.setAttribute('aria-expanded',false);});});
+  }
+  var tc=document.getElementById('tcopy');
+  if(tc)tc.addEventListener('click',function(){
+    navigator.clipboard.writeText('bun install -g @usejarvis/brain\njarvis onboard\njarvis start').then(function(){tc.textContent='copied ✓';setTimeout(function(){tc.textContent='copy';},1600);});
+  });
+
+  if(reduce){pose();}
+  else if(io){
+    new IntersectionObserver(function(es){es.forEach(function(en){
+      if(en.isIntersecting&&!running){running=true;run();}
+      else if(!en.isIntersecting&&running){running=false;reset();}
+    });},{threshold:.35}).observe(demo);
+  } else {running=true;run();}
+})();
+</script>
+</body>
+</html>
