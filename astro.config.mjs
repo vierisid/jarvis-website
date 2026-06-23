@@ -5,8 +5,12 @@ import tailwindcss from '@tailwindcss/vite';
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
-  site: 'https://getjarvis.dev',
+  site: 'https://usejarvis.dev',
   adapter: vercel(),
+  // /docs has no index page (Starlight serves /docs/<page>); send it to the intro
+  redirects: {
+    '/docs': '/docs/introduction',
+  },
   integrations: [
     starlight({
       title: 'usejarvis',
