@@ -1,0 +1,44 @@
+---
+import Brand from '../layouts/Brand.astro';
+---
+<Brand title="Trust & Safety · usejarvis" description="Governed autonomy, by design. Jarvis works where you can see it, asks before anything irreversible, logs every tool execution, and stops on command. Source-available, local-first." active="">
+  <header class="page-hero">
+    <div class="page-hero-in">
+      <p class="label-mono reveal reveal-up">Trust &amp; safety</p>
+      <h1 class="display-h1 reveal reveal-up">Governed autonomy, <em>by design.</em></h1>
+      <p class="lead reveal reveal-up">The native path isn't just more capable — it's safer by construction. Jarvis works on screen, where you can see it, so mistakes are visible and you can step in mid-task. The promise isn't blind autonomy; it's visible, governed autonomy.</p>
+    </div>
+  </header>
+
+  <section class="section"><div class="section-inner">
+    <p class="label-mono reveal reveal-up">Controls</p>
+    <h2 class="display-h2 reveal reveal-up" style="margin:12px 0 16px">It can't run off <em>without you.</em></h2>
+    <div class="feat-grid reveal reveal-up">
+      <div class="feat"><span class="fk">Visible</span><span class="ft">On screen, not in the dark</span><span class="fp">Every action happens where you can watch it. No hidden background calls — you see the work, not just the result.</span></div>
+      <div class="feat"><span class="fk">Asks first</span><span class="ft">Amber before anything irreversible</span><span class="fp">Ten authority levels. Anything that spends, sends, or deletes <b>waits for your approval</b> — via the dashboard, Telegram, or Discord.</span></div>
+      <div class="feat"><span class="fk">Stops cold</span><span class="ft">Pause or kill, any surface</span><span class="fp">One click pauses or kills any agent on any machine. The emergency stop is everywhere, and every tool execution lands in the audit trail.</span></div>
+    </div>
+  </div></section>
+
+  <section class="section section-alt"><div class="section-inner">
+    <p class="label-mono reveal reveal-up">Your data</p>
+    <h2 class="display-h2 reveal reveal-up" style="margin:12px 0 16px">Your machine, your models.</h2>
+    <ul class="prose-list reveal reveal-up">
+      <li><b>Source-available.</b> Jarvis runs under the Jarvis Source Available License — you can read exactly what the runtime does. <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener">See the repository.</a></li>
+      <li><b>Local-first.</b> Run local models, or bring your own LLM keys. Compute goes straight to your provider — we're infrastructure, not a token reseller.</li>
+      <li><b>On your hardware.</b> The pebble, your apps, and your screen stay on your machine, whether you self-host the brain or use managed hosting.</li>
+      <li><b>Audited.</b> Every tool execution is logged, so there's always a record of what ran and when.</li>
+    </ul>
+  </div></section>
+
+  <section class="section"><div class="section-inner">
+    <p class="label-mono reveal reveal-up">Telemetry</p>
+    <h2 class="display-h2 reveal reveal-up" style="margin:12px 0 16px">What leaves your machine.</h2>
+    <!-- FOUNDER: confirm the exact telemetry behaviour (what is sent, how often, opt-in vs opt-out) and tighten this paragraph. The audit flagged a possible contradiction between repo telemetry defaults and "your data lives on your hardware." Kept deliberately non-specific until confirmed. -->
+    <p class="lead reveal reveal-up">Because Jarvis is source-available, you can read precisely what the runtime sends. We keep operational telemetry to the minimum needed to improve reliability, it never includes your content, and it can be turned off. For the current, authoritative details — and how to disable it — see the configuration docs and the repository.</p>
+    <div style="display:flex;gap:11px;flex-wrap:wrap;margin-top:24px" class="reveal reveal-up">
+      <a class="btn-solid" href="/docs/configuration">Configuration docs</a>
+      <a class="btn-border" href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener">Read the source</a>
+    </div>
+  </div></section>
+</Brand>

@@ -20,9 +20,11 @@ const {
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL('/og.png', Astro.site).href;
 const links = [
-  { href: '/', label: 'Home', key: 'home' },
-  { href: '/blog', label: 'Blog', key: 'blog' },
-  { href: '/roadmap', label: 'Roadmap', key: 'roadmap' },
+  { href: '/#work', label: 'How it works', key: 'work' },
+  { href: '/templates', label: 'Templates', key: 'templates' },
+  { href: '/builders', label: 'Builders', key: 'builders' },
+  { href: '/hosted', label: 'Hosted', key: 'hosted' },
+  { href: '/#safety', label: 'Safety', key: 'safety' },
   { href: '/docs/introduction', label: 'Docs', key: 'docs' },
 ];
 ---

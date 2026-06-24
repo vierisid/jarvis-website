@@ -123,3 +123,26 @@ a { color: inherit; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 999px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--faint); }
+
+/* ── content-page utilities (templates / builders / hosted / trust) ── */
+.page-hero { background: radial-gradient(620px 380px at 72% 0%, rgba(230,59,46,.07), transparent 70%), linear-gradient(180deg, var(--panel2), var(--bg)); border-bottom: 1px solid var(--rule); }
+.page-hero-in { max-width: 1100px; margin: 0 auto; padding: 82px 32px 62px; }
+.page-hero .display-h1 { margin: 14px 0 18px; max-width: 18ch; }
+.page-hero .lead { max-width: 60ch; }
+@media (max-width: 700px) { .page-hero-in { padding: 60px 20px 48px; } }
+.waitchip { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--hold-tx); border: 1px solid var(--rule); border-radius: 999px; padding: 6px 12px; background: var(--raise); margin-bottom: 18px; }
+.waitchip .d { width: 7px; height: 7px; border-radius: 50%; background: var(--hold); }
+.feat-grid { margin-top: 8px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+@media (max-width: 820px) { .feat-grid { grid-template-columns: 1fr; } }
+.feat { border: 1px solid var(--rule); border-radius: var(--corner); background: var(--raise); box-shadow: var(--sh-md); padding: 24px; display: flex; flex-direction: column; gap: 9px; }
+.feat .fk { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--listen-tx); }
+.feat .ft { font-size: 18px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); }
+.feat .fp { font-size: 14px; line-height: 1.55; color: var(--ink2); }
+.feat .fp b { color: var(--ink); font-weight: 600; }
+.cta-band { border: 1px solid var(--rule); border-radius: var(--corner); background: var(--panel2); padding: 34px 32px; text-align: center; }
+.cta-band .ctitle { font-size: clamp(22px, 2.6vw, 28px); font-weight: 700; letter-spacing: -.03em; color: var(--ink); }
+.cta-band .csub { font-size: 15px; color: var(--ink2); margin-top: 8px; max-width: 52ch; margin-left: auto; margin-right: auto; }
+.cta-band .cact { display: flex; gap: 11px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+.prose-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+.prose-list li { font-size: 15px; line-height: 1.55; color: var(--ink2); padding-left: 16px; border-left: 2px solid var(--rule); }
+.prose-list li b { color: var(--ink); font-weight: 600; }
