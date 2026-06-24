@@ -1,116 +1,35 @@
 ---
-import Landing from '../layouts/Landing.astro';
+import Brand from '../layouts/Brand.astro';
 
 const roadmapItems = [
-  {
-    number: '01',
-    title: 'Web App Templates',
-    summary: 'Pre-installed patterns for common web apps like WhatsApp and Gmail to make automation faster and more reliable.',
-    theme: 'Experience',
-  },
-  {
-    number: '02',
-    title: 'Log Spam',
-    summary: 'Reduce repetitive runtime log noise such as repeated WebSocket broadcast lines when clients are connected.',
-    theme: 'Stability',
-  },
-  {
-    number: '03',
-    title: 'Enhance Windows Sidecar',
-    summary: 'Add a better enrollment flow, token UI, tray icon, status indicators, version info, and update visibility.',
-    theme: 'Platform',
-  },
-  {
-    number: '04',
-    title: 'Jarvis Swarm',
-    summary: 'Let separate Usejarvis instances communicate with each other directly.',
-    theme: 'Architecture',
-  },
-  {
-    number: '05',
-    title: 'Move OCR into the Sidecar',
-    summary: 'Shift OCR away from the brain to reduce central load and support more concurrent sidecars, while managing the heavier sidecar tradeoff.',
-    theme: 'Performance',
-  },
-  {
-    number: '06',
-    title: 'Mobile Sidecar',
-    summary: 'Bring the sidecar model to mobile platforms.',
-    theme: 'Platform',
-  },
-  {
-    number: '07',
-    title: 'DB Backup Handling',
-    summary: 'Coordinate SQLite backups so user-defined backup jobs can run without corrupting the database during writes.',
-    theme: 'Reliability',
-  },
-  {
-    number: '08',
-    title: 'New Workflow System',
-    summary: 'Replace the current in-house workflow layer with Activepieces.',
-    theme: 'Automation',
-    href: 'https://github.com/activepieces/activepieces',
-  },
-  {
-    number: '09',
-    title: 'SQLite DB Import',
-    summary: 'Add a settings flow for importing an existing SQLite database, especially for users moving from older self-hosted setups.',
-    theme: 'Migration',
-  },
+  { number: '01', title: 'Web App Templates', summary: 'Pre-installed patterns for common web apps like WhatsApp and Gmail to make automation faster and more reliable.', theme: 'Experience' },
+  { number: '02', title: 'Log Spam', summary: 'Reduce repetitive runtime log noise such as repeated WebSocket broadcast lines when clients are connected.', theme: 'Stability' },
+  { number: '03', title: 'Enhance Windows Sidecar', summary: 'Add a better enrollment flow, token UI, tray icon, status indicators, version info, and update visibility.', theme: 'Platform' },
+  { number: '04', title: 'Jarvis Swarm', summary: 'Let separate Usejarvis instances communicate with each other directly.', theme: 'Architecture' },
+  { number: '05', title: 'Move OCR into the Sidecar', summary: 'Shift OCR away from the brain to reduce central load and support more concurrent sidecars, while managing the heavier sidecar tradeoff.', theme: 'Performance' },
+  { number: '06', title: 'Mobile Sidecar', summary: 'Bring the sidecar model to mobile platforms.', theme: 'Platform' },
+  { number: '07', title: 'DB Backup Handling', summary: 'Coordinate SQLite backups so user-defined backup jobs can run without corrupting the database during writes.', theme: 'Reliability' },
+  { number: '08', title: 'New Workflow System', summary: 'Replace the current in-house workflow layer with Activepieces.', theme: 'Automation', href: 'https://github.com/activepieces/activepieces' },
+  { number: '09', title: 'SQLite DB Import', summary: 'Add a settings flow for importing an existing SQLite database, especially for users moving from older self-hosted setups.', theme: 'Migration' },
 ];
 
 const overview = [
-  {
-    kicker: 'Roadmap',
-    title: 'Focus areas, not promises.',
-    body: 'The list below is meant to show the rough shape of upcoming work. Priorities can move based on bugs, user feedback, and implementation complexity.',
-  },
-  {
-    kicker: 'Contribution',
-    title: 'Community input is expected.',
-    body: 'If a roadmap item matters to you, the best way to influence it is to open a clear issue, propose an implementation direction, or contribute directly.',
-  },
-  {
-    kicker: 'Execution',
-    title: 'Some items unblock others.',
-    body: 'Platform work, reliability fixes, workflow changes, and sidecar improvements may land before feature requests if they unblock more of the system.',
-  },
+  { kicker: 'Roadmap', title: 'Focus areas, not promises.', body: 'The list below is meant to show the rough shape of upcoming work. Priorities can move based on bugs, user feedback, and implementation complexity.' },
+  { kicker: 'Contribution', title: 'Community input is expected.', body: 'If a roadmap item matters to you, the best way to influence it is to open a clear issue, propose an implementation direction, or contribute directly.' },
+  { kicker: 'Execution', title: 'Some items unblock others.', body: 'Platform work, reliability fixes, workflow changes, and sidecar improvements may land before feature requests if they unblock more of the system.' },
 ];
 ---
 
-<Landing title="Usejarvis Roadmap" description="Current Usejarvis roadmap items and the rough direction of upcoming work.">
-  <!-- ── NAV ──────────────────────────────────────── -->
-  <nav class="nav">
-    <div class="nav-inner">
-      <a href="/" class="nav-logo">
-        <span class="nav-dot"></span>
-        Usejarvis
-      </a>
-      <div class="nav-right">
-        <a href="/" class="nav-link">Home</a>
-        <a href="/blog" class="nav-link">Blog</a>
-        <a href="/roadmap" class="nav-link">Roadmap</a>
-        <a href="/docs/introduction" class="nav-link">Docs</a>
-        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="nav-link">GitHub</a>
-        <a href="/docs/installation" class="btn-solid nav-cta">Install</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- ── HERO ─────────────────────────────────────── -->
-  <section class="hero">
+<Brand title="Roadmap · usejarvis" description="The current usejarvis roadmap — the rough shape of upcoming work across platform, reliability, sidecars, and automation. Directional, not a promise of order." active="roadmap">
+  <!-- ── HERO ── -->
+  <header class="hero">
     <div class="hero-inner">
       <div class="hero-copy">
         <p class="label-mono reveal reveal-up">Current roadmap</p>
-        <h1 class="display-h1 reveal reveal-up">
-          What Usejarvis is likely to <em>build next.</em>
-        </h1>
-        <p class="lead reveal reveal-up">
-          A directional view of upcoming work, not a promise of exact order. It is here to show where the
-          project is headed, what problem areas are being prioritized, and where contributors can help.
-        </p>
+        <h1 class="display-h1 reveal reveal-up">What usejarvis is likely to <em>build next.</em></h1>
+        <p class="lead reveal reveal-up">A directional view of upcoming work, not a promise of exact order. It is here to show where the project is headed, what problem areas are being prioritized, and where contributors can help.</p>
         <div class="hero-actions reveal reveal-up">
-          <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener" class="btn-solid">Join Discord</a>
+          <a href="https://discord.gg/2HgF5krXrj" target="_blank" rel="noopener" class="btn-solid">Join Discord</a>
           <a href="https://github.com/vierisid/jarvis/issues" target="_blank" rel="noopener" class="btn-border">Suggest a Feature</a>
           <a href="/docs/contributing" class="btn-border">How to Contribute</a>
         </div>
@@ -118,49 +37,26 @@ const overview = [
 
       <aside class="status-panel reveal reveal-up">
         <div class="status-header">
-          <div class="status-header-left">
-            <span class="dot dot-accent dot-pulse"></span>
-            <span class="status-title">Roadmap Status</span>
-          </div>
+          <div class="status-header-left"><span class="sdot"></span><span class="status-title">Roadmap Status</span></div>
           <span class="status-time">directional</span>
         </div>
         <div class="status-body">
-          <div class="status-group-header">
-            <span class="status-group-label">Scope</span>
-          </div>
-          <div class="status-row">
-            <span class="status-label">items</span>
-            <span class="status-value">9 tracked</span>
-            <span class="status-meta">current public list</span>
-          </div>
-          <div class="status-row">
-            <span class="status-label">order</span>
-            <span class="status-value">flexible</span>
-            <span class="status-meta">not guaranteed</span>
-          </div>
-          <div class="status-group-header">
-            <span class="status-group-label">How To Use It</span>
-          </div>
-          <div class="status-row">
-            <span class="status-label">feedback</span>
-            <span class="status-value">open</span>
-            <span class="status-meta">discord + issues</span>
-          </div>
-          <div class="status-row status-row-last">
-            <span class="status-label">intent</span>
-            <span class="status-value">rough plan</span>
-            <span class="status-meta">not release notes</span>
-          </div>
+          <div class="status-group-header"><span class="status-group-label">Scope</span></div>
+          <div class="status-row"><span class="status-label">items</span><span class="status-value">9 tracked</span><span class="status-meta">current public list</span></div>
+          <div class="status-row"><span class="status-label">order</span><span class="status-value">flexible</span><span class="status-meta">not guaranteed</span></div>
+          <div class="status-group-header"><span class="status-group-label">How To Use It</span></div>
+          <div class="status-row"><span class="status-label">feedback</span><span class="status-value">open</span><span class="status-meta">discord + issues</span></div>
+          <div class="status-row status-row-last"><span class="status-label">intent</span><span class="status-value">rough plan</span><span class="status-meta">not release notes</span></div>
         </div>
       </aside>
     </div>
-  </section>
+  </header>
 
-  <!-- ── HOW TO READ THIS ─────────────────────────── -->
+  <!-- ── HOW TO READ THIS ── -->
   <section class="section section-alt">
     <div class="section-inner">
       <p class="label-mono reveal reveal-up">How to read this</p>
-      <h2 class="display-h2 reveal reveal-up">Three things <em>to keep in mind.</em></h2>
+      <h2 class="display-h2 reveal reveal-up" style="margin-top:12px">Three things <em>to keep in mind.</em></h2>
       <div class="overview-grid">
         {overview.map((card) => (
           <article class="overview-card reveal reveal-up">
@@ -173,15 +69,14 @@ const overview = [
     </div>
   </section>
 
-  <!-- ── PLANNED WORK ─────────────────────────────── -->
+  <!-- ── PLANNED WORK ── -->
   <section class="section">
     <div class="section-inner">
       <div class="section-head reveal reveal-up">
         <p class="label-mono">Planned work</p>
-        <h2 class="display-h2">Current public <em>roadmap items.</em></h2>
+        <h2 class="display-h2" style="margin:12px 0 14px">Current public <em>roadmap items.</em></h2>
         <p class="lead">Each card is one of the active directions currently under consideration or development.</p>
       </div>
-
       <div class="roadmap-grid">
         {roadmapItems.map((item) => (
           <article class="roadmap-card reveal reveal-up">
@@ -192,11 +87,9 @@ const overview = [
             <h3 class="roadmap-title">{item.title}</h3>
             <p class="roadmap-body">{item.summary}</p>
             {item.href ? (
-              <a href={item.href} target="_blank" rel="noopener" class="roadmap-link">
-                View referenced project →
-              </a>
+              <a href={item.href} target="_blank" rel="noopener" class="roadmap-link">View referenced project →</a>
             ) : (
-              <span class="roadmap-link roadmap-link-muted">Internal Usejarvis roadmap item</span>
+              <span class="roadmap-link roadmap-link-muted">Internal usejarvis roadmap item</span>
             )}
           </article>
         ))}
@@ -204,421 +97,88 @@ const overview = [
     </div>
   </section>
 
-  <!-- ── CONTRIBUTE / DISCUSSION ──────────────────── -->
+  <!-- ── CONTRIBUTE / DISCUSSION ── -->
   <section class="section section-alt">
     <div class="section-inner">
       <div class="signal-grid">
         <article class="signal-card reveal reveal-up">
           <p class="label-mono">Contribute</p>
           <h2 class="signal-title">Want to help move one of these <em>forward?</em></h2>
-          <p class="signal-body">
-            Contributors are welcome. Documentation, bug fixes, sidecar work, workflow improvements, and focused
-            implementation proposals are all useful.
-          </p>
+          <p class="signal-body">Contributors are welcome. Documentation, bug fixes, sidecar work, workflow improvements, and focused implementation proposals are all useful.</p>
           <div class="signal-actions">
             <a href="/docs/contributing" class="btn-solid">Contribution Guide</a>
             <a href="https://github.com/vierisid/jarvis/issues" target="_blank" rel="noopener" class="btn-border">Open Issues</a>
           </div>
         </article>
-
         <article class="signal-card reveal reveal-up">
           <p class="label-mono">Discussion</p>
           <h2 class="signal-title">Have a feature suggestion or <em>priority opinion?</em></h2>
-          <p class="signal-body">
-            The roadmap is intentionally open-ended. If you think something should move up, split into smaller
-            milestones, or be reconsidered, bring it to the community.
-          </p>
+          <p class="signal-body">The roadmap is intentionally open-ended. If you think something should move up, split into smaller milestones, or be reconsidered, bring it to the community.</p>
           <div class="signal-actions">
-            <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener" class="btn-solid">Discuss on Discord</a>
+            <a href="https://discord.gg/2HgF5krXrj" target="_blank" rel="noopener" class="btn-solid">Discuss on Discord</a>
             <a href="/docs/introduction" class="btn-border">Back to Docs</a>
           </div>
         </article>
       </div>
     </div>
   </section>
-
-  <!-- ── FOOTER ───────────────────────────────────── -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <span class="nav-dot"></span>
-        <span class="footer-logo">Usejarvis</span>
-        <span class="footer-copy">© 2026</span>
-      </div>
-      <div class="footer-links">
-        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener">GitHub</a>
-        <a href="/docs/introduction">Docs</a>
-        <a href="/blog">Blog</a>
-        <a href="/roadmap">Roadmap</a>
-        <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener">Discord</a>
-      </div>
-    </div>
-  </footer>
-</Landing>
+</Brand>
 
 <style>
-  /* ── Nav ──────────────────────────────────── */
-  .nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(245, 242, 235, 0.92);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: var(--hair);
-  }
-  .nav-inner {
-    max-width: var(--col-wide);
-    margin: 0 auto;
-    padding: 0 28px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .nav-logo {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-family: var(--font-mono);
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--ink);
-    text-decoration: none;
-    letter-spacing: 0.08em;
-  }
-  .nav-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 999px;
-    background: var(--accent);
-    box-shadow: 0 0 0 4px rgba(194, 58, 42, 0.18);
-    display: inline-block;
-  }
-  .nav-right { display: flex; align-items: center; gap: 28px; }
-  .nav-link {
-    color: var(--ink-2);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-  .nav-link:hover { color: var(--accent); }
-  .nav-cta { padding: 8px 16px; font-size: 13px; }
-  @media (max-width: 880px) {
-    .nav-right .nav-link:not(:nth-last-child(-n+2)) { display: none; }
-  }
-
-  /* ── Hero ─────────────────────────────────── */
   .hero {
-    background: var(--paper);
-    border-bottom: var(--hair);
+    background: radial-gradient(620px 380px at 70% 0%, rgba(230,59,46,.08), transparent 70%), linear-gradient(180deg, var(--panel2), var(--bg));
+    border-bottom: 1px solid var(--rule);
   }
-  .hero-inner {
-    max-width: var(--col-wide);
-    margin: 0 auto;
-    padding: 88px 28px 80px;
-    display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(320px, 1fr);
-    gap: 64px;
-    align-items: center;
-  }
-  .hero-copy .display-h1 { margin: 16px 0 24px; max-width: 18ch; }
+  .hero-inner { max-width: 1100px; margin: 0 auto; padding: 84px 32px 76px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(320px, 1fr); gap: 56px; align-items: center; }
+  .hero-copy .display-h1 { margin: 16px 0 22px; max-width: 17ch; }
   .hero-copy .lead { margin: 0 0 28px; }
-  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 11px; }
+  @media (max-width: 980px) { .hero-inner { grid-template-columns: 1fr; gap: 40px; padding: 60px 20px 52px; } }
 
-  @media (max-width: 980px) {
-    .hero-inner { grid-template-columns: 1fr; gap: 40px; padding: 64px 22px 56px; }
-  }
-
-  /* ── Status panel (riso recast) ───────────── */
-  .status-panel {
-    background: var(--paper-2);
-    border: 1px solid var(--ink);
-    border-radius: var(--r-2);
-    overflow: hidden;
-    box-shadow: 6px 6px 0 0 var(--ink);
-    font-family: var(--font-mono);
-    font-size: 12px;
-  }
-  .status-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
-    background: var(--paper-3);
-    border-bottom: var(--hair);
-  }
+  /* status panel */
+  .status-panel { background: var(--raise); border: 1px solid var(--rule); border-radius: var(--corner); overflow: hidden; box-shadow: var(--sh-lg); font-family: var(--mono); font-size: 12px; }
+  .status-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--panel2); border-bottom: 1px solid var(--rule); }
   .status-header-left { display: flex; align-items: center; gap: 10px; }
-  .status-title {
-    font-weight: 700;
-    color: var(--ink);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-  .status-time {
-    color: var(--ink-3);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-  .status-body { background: var(--paper); }
-  .status-group-header {
-    padding: 12px 16px 6px;
-    border-bottom: var(--hair-soft);
-    background: var(--paper-2);
-  }
-  .status-group-label {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-  .status-row {
-    display: grid;
-    grid-template-columns: 80px 1fr auto;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    border-bottom: var(--hair-soft);
-  }
+  .sdot { width: 7px; height: 7px; border-radius: 50%; background: var(--listen); box-shadow: 0 0 0 3px rgba(230,59,46,.16); }
+  .status-title { font-weight: 600; color: var(--ink); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+  .status-time { color: var(--ink3); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+  .status-group-header { padding: 12px 16px 6px; border-bottom: 1px solid var(--rule2); background: var(--panel2); }
+  .status-group-label { font-size: 10px; font-weight: 600; color: var(--listen-tx); letter-spacing: .16em; text-transform: uppercase; }
+  .status-row { display: grid; grid-template-columns: 80px 1fr auto; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--rule2); }
   .status-row-last { border-bottom: none; }
-  .status-label {
-    color: var(--ink-3);
-    letter-spacing: 0.06em;
-  }
-  .status-value {
-    color: var(--accent);
-    font-weight: 600;
-  }
-  .status-meta {
-    color: var(--ink-3);
-    text-align: right;
-    font-size: 11px;
-  }
+  .status-label { color: var(--ink3); letter-spacing: .06em; }
+  .status-value { color: var(--listen-tx); font-weight: 600; }
+  .status-meta { color: var(--ink3); text-align: right; font-size: 11px; }
 
-  /* ── Section common ───────────────────────── */
-  .section {
-    background: var(--paper);
-    border-top: var(--hair);
-  }
-  .section-alt { background: var(--paper-2); }
-  .section-inner {
-    max-width: var(--col-wide);
-    margin: 0 auto;
-    padding: 80px 28px;
-  }
-  .section-head {
-    max-width: 720px;
-    margin-bottom: 40px;
-  }
-  .section-head .display-h2 { margin: 14px 0 18px; }
-  .section-head .lead { margin: 0; }
+  /* overview cards */
+  .overview-grid { margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: var(--corner); overflow: hidden; }
+  .overview-card { background: var(--raise); padding: 28px 26px; display: flex; flex-direction: column; gap: 10px; }
+  .overview-kicker { margin: 0 0 6px; }
+  .overview-title { font-family: var(--sans); font-weight: 700; font-size: 21px; line-height: 1.18; letter-spacing: -.02em; color: var(--ink); margin: 0; max-width: 22ch; }
+  .overview-body { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--ink2); }
+  @media (max-width: 880px) { .overview-grid { grid-template-columns: 1fr; } }
 
-  /* ── Overview cards ───────────────────────── */
-  .overview-grid {
-    margin-top: 40px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--rule);
-    border: var(--hair);
-    border-radius: var(--r-2);
-    overflow: hidden;
-  }
-  .overview-card {
-    background: var(--paper);
-    padding: 28px 26px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .overview-kicker { margin: 0 0 8px; }
-  .overview-title {
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: 22px;
-    line-height: 1.18;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin: 0;
-    max-width: 22ch;
-  }
-  .overview-body {
-    margin: 0;
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--ink-2);
-  }
-  @media (max-width: 880px) {
-    .overview-grid { grid-template-columns: 1fr; }
-  }
-
-  /* ── Roadmap grid ─────────────────────────── */
-  .roadmap-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--rule);
-    border: var(--hair);
-    border-radius: var(--r-2);
-    overflow: hidden;
-  }
-  .roadmap-card {
-    background: var(--paper);
-    padding: 26px 24px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    min-height: 230px;
-    transition: background var(--dur-fast) var(--ease-out);
-  }
-  .roadmap-card:hover { background: var(--paper-2); }
-  .roadmap-card-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-  }
-  .roadmap-number {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: 0.08em;
-  }
-  .roadmap-theme {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--ink-3);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    border: 1px solid var(--rule);
-    border-radius: var(--r-pill);
-    padding: 4px 10px;
-    background: var(--paper-2);
-  }
-  .roadmap-title {
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: 19px;
-    line-height: 1.22;
-    letter-spacing: -0.015em;
-    color: var(--ink);
-    margin: 0;
-    max-width: 24ch;
-  }
-  .roadmap-body {
-    font-size: 14.5px;
-    line-height: 1.6;
-    color: var(--ink-2);
-    margin: 0;
-    flex: 1;
-  }
-  .roadmap-link {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--accent);
-    text-decoration: none;
-  }
+  /* roadmap grid */
+  .roadmap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: var(--corner); overflow: hidden; }
+  .roadmap-card { background: var(--raise); padding: 26px 24px 24px; display: flex; flex-direction: column; gap: 13px; min-height: 230px; transition: background .2s var(--ease); }
+  .roadmap-card:hover { background: var(--panel2); }
+  .roadmap-card-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+  .roadmap-number { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--listen-tx); letter-spacing: .08em; }
+  .roadmap-theme { font-family: var(--mono); font-size: 10px; font-weight: 500; color: var(--ink3); letter-spacing: .14em; text-transform: uppercase; border: 1px solid var(--rule); border-radius: 999px; padding: 4px 10px; background: var(--panel2); }
+  .roadmap-title { font-family: var(--sans); font-weight: 700; font-size: 19px; line-height: 1.22; letter-spacing: -.015em; color: var(--ink); margin: 0; max-width: 24ch; }
+  .roadmap-body { font-size: 14.5px; line-height: 1.6; color: var(--ink2); margin: 0; flex: 1; }
+  .roadmap-link { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .04em; color: var(--listen-tx); text-decoration: none; }
   .roadmap-link:hover { text-decoration: underline; }
-  .roadmap-link-muted {
-    color: var(--ink-3);
-    font-weight: 500;
-    letter-spacing: 0.02em;
-  }
-  @media (max-width: 980px) {
-    .roadmap-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 640px) {
-    .roadmap-grid { grid-template-columns: 1fr; }
-  }
+  .roadmap-link-muted { color: var(--ink3); letter-spacing: .02em; }
+  @media (max-width: 980px) { .roadmap-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .roadmap-grid { grid-template-columns: 1fr; } }
 
-  /* ── Signal (Contribute / Discuss) cards ──── */
-  .signal-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-  }
-  .signal-card {
-    background: var(--paper);
-    border: 1px solid var(--ink);
-    border-radius: var(--r-2);
-    padding: 32px 32px 28px;
-    box-shadow: 6px 6px 0 0 var(--ink);
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .signal-title {
-    font-family: var(--font-sans);
-    font-weight: 800;
-    font-size: clamp(20px, 2.2vw, 26px);
-    line-height: 1.18;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin: 6px 0 4px;
-    max-width: 26ch;
-  }
-  .signal-title em {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-weight: 500;
-    color: var(--accent);
-  }
-  .signal-body {
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--ink-2);
-    margin: 0;
-    max-width: 60ch;
-  }
-  .signal-actions {
-    margin-top: 8px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  @media (max-width: 880px) {
-    .signal-grid { grid-template-columns: 1fr; }
-  }
-
-  /* ── Footer ───────────────────────────────── */
-  .footer {
-    border-top: var(--hair-bold);
-    background: var(--paper);
-    padding: 40px 28px 32px;
-  }
-  .footer-inner {
-    max-width: var(--col-wide);
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 32px;
-    flex-wrap: wrap;
-  }
-  .footer-left {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    color: var(--ink);
-  }
-  .footer-logo { font-weight: 700; }
-  .footer-copy { color: var(--ink-3); }
-  .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
-  .footer-links a {
-    font-family: var(--font-sans);
-    font-size: 14px;
-    color: var(--ink-2);
-    text-decoration: none;
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-  .footer-links a:hover { color: var(--accent); }
+  /* signal cards */
+  .signal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .signal-card { background: var(--raise); border: 1px solid var(--rule); border-radius: var(--corner); padding: 30px 30px 26px; box-shadow: var(--sh-md); display: flex; flex-direction: column; gap: 13px; }
+  .signal-title { font-family: var(--sans); font-weight: 700; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.18; letter-spacing: -.025em; color: var(--ink); margin: 4px 0 2px; max-width: 26ch; }
+  .signal-title em { font-style: normal; color: var(--ink3); }
+  .signal-body { font-size: 15px; line-height: 1.6; color: var(--ink2); margin: 0; max-width: 60ch; }
+  .signal-actions { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 11px; }
+  @media (max-width: 880px) { .signal-grid { grid-template-columns: 1fr; } }
 </style>

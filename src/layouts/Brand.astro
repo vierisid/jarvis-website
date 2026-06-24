@@ -1,0 +1,121 @@
+---
+import '../styles/brand.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  /** og:type — "website" (default) or "article" */
+  ogType?: string;
+  /** which top-nav item to mark active: home | blog | roadmap | docs */
+  active?: string;
+}
+
+const {
+  title,
+  description,
+  ogType = 'website',
+  active = '',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/og.png', Astro.site).href;
+const links = [
+  { href: '/', label: 'Home', key: 'home' },
+  { href: '/blog', label: 'Blog', key: 'blog' },
+  { href: '/roadmap', label: 'Roadmap', key: 'roadmap' },
+  { href: '/docs/introduction', label: 'Docs', key: 'docs' },
+];
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><style>path{fill:%2313161A}@media(prefers-color-scheme:dark){path{fill:%23EEF1F4}}</style><path d="M29 3 L29 16 A13 13 0 1 1 16 3 Z"/></svg>' />
+  <meta name="theme-color" content="#FAFBFC" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0B0D10" media="(prefers-color-scheme: dark)" />
+  <!-- Open Graph -->
+  <meta property="og:type" content={ogType} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:site_name" content="usejarvis" />
+  <meta property="og:image" content={ogImage} />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..700;1,400&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <nav class="nav"><div class="nav-in">
+    <div class="nav-l">
+      <a href="/" class="nav-l" style="text-decoration:none;gap:9px">
+        <span class="ld"><span class="r"></span></span>
+        <span class="lw"><span class="u">use</span>jarvis</span>
+      </a>
+      <div class="nav-links">
+        {links.map((l) => (
+          <a href={l.href} class={active === l.key ? 'active' : ''}>{l.label}</a>
+        ))}
+      </div>
+    </div>
+    <div class="nav-r">
+      <span class="nav-status"><span class="d"></span>daemon · :3142</span>
+      <a class="btn-solid" href="/docs/installation">Install</a>
+      <button id="menuBtn" aria-expanded="false" aria-controls="mobnav">Menu</button>
+    </div>
+    <div id="mobnav">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+      <a href="/docs/installation">Install</a>
+    </div>
+  </div></nav>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="ld"><span class="r"></span></span>
+        <span class="lw"><span class="u">use</span>jarvis</span>
+        <span class="footer-copy">© 2026</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener">GitHub</a>
+        <a href="/docs/introduction">Docs</a>
+        <a href="/blog">Blog</a>
+        <a href="/roadmap">Roadmap</a>
+        <a href="https://discord.gg/2HgF5krXrj" target="_blank" rel="noopener">Discord</a>
+      </div>
+    </div>
+  </footer>
+
+  <script is:inline>
+    (function () {
+      var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.documentElement.classList.add('js');
+      if ('IntersectionObserver' in window && !reduce) {
+        var ob = new IntersectionObserver(function (es) {
+          es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('visible'); ob.unobserve(en.target); } });
+        }, { rootMargin: '0px 0px -8% 0px' });
+        document.querySelectorAll('.reveal').forEach(function (el) { ob.observe(el); });
+      } else {
+        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('visible'); });
+      }
+      var mb = document.getElementById('menuBtn'), mn = document.getElementById('mobnav');
+      if (mb && mn) {
+        mb.addEventListener('click', function () { var open = !mn.classList.contains('open'); mn.classList.toggle('open', open); mb.setAttribute('aria-expanded', open); });
+        mn.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { mn.classList.remove('open'); mb.setAttribute('aria-expanded', false); }); });
+      }
+    })();
+  </script>
+</body>
+</html>

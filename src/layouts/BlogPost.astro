@@ -1,5 +1,5 @@
 ---
-import Landing from './Landing.astro';
+import Brand from './Brand.astro';
 
 export interface Props {
   title: string;
@@ -11,342 +11,71 @@ export interface Props {
 const { title, description, date, readTime } = Astro.props;
 ---
 
-<Landing title={`${title} — Usejarvis`} description={description}>
-  <!-- ── NAV ──────────────────────────────────────── -->
-  <nav class="nav">
-    <div class="nav-inner">
-      <a href="/" class="nav-logo">
-        <span class="nav-dot"></span>
-        Usejarvis
-      </a>
-      <div class="nav-right">
-        <a href="/" class="nav-link">Home</a>
-        <a href="/blog" class="nav-link">Blog</a>
-        <a href="/roadmap" class="nav-link">Roadmap</a>
-        <a href="/docs/introduction" class="nav-link">Docs</a>
-        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener" class="nav-link">GitHub</a>
-        <a href="/docs/installation" class="btn-solid nav-cta">Install</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- ── ARTICLE HEADER ───────────────────────────── -->
+<Brand title={`${title} · usejarvis`} description={description} ogType="article" active="blog">
+  <!-- ── ARTICLE HEADER ── -->
   <header class="post-head">
     <div class="post-head-inner">
-      <a href="/blog" class="post-back">
-        <span class="post-back-arrow">←</span>
-        <span>All posts</span>
-      </a>
+      <a href="/blog" class="post-back"><span class="post-back-arrow">←</span><span>All posts</span></a>
       <p class="label-mono reveal reveal-up post-meta">
-        <span>{date}</span>
-        <span class="post-meta-sep">·</span>
-        <span>{readTime} read</span>
+        <span>{date}</span><span class="post-meta-sep">·</span><span>{readTime} read</span>
       </p>
       <h1 class="display-h1 post-title reveal reveal-up">{title}</h1>
       <p class="lead post-lead reveal reveal-up">{description}</p>
     </div>
   </header>
 
-  <!-- ── ARTICLE BODY ─────────────────────────────── -->
+  <!-- ── ARTICLE BODY ── -->
   <article class="post-body">
-    <div class="post-body-inner">
-      <slot />
-    </div>
+    <div class="post-body-inner"><slot /></div>
   </article>
 
-  <!-- ── ARTICLE FOOTER ───────────────────────────── -->
+  <!-- ── ARTICLE FOOTER ── -->
   <section class="post-cta">
     <div class="post-cta-inner">
       <p class="label-mono reveal reveal-up">Next up</p>
-      <h2 class="display-h2 reveal reveal-up">Read more from the <em>Usejarvis</em> team.</h2>
+      <h2 class="display-h2 reveal reveal-up" style="margin:12px 0 26px">Read more from the <em>usejarvis</em> team.</h2>
       <div class="post-cta-actions reveal reveal-up">
         <a href="/blog" class="btn-solid">All posts</a>
-        <a href="/docs/installation" class="btn-border">Install Usejarvis</a>
+        <a href="/docs/installation" class="btn-border">Install usejarvis</a>
       </div>
     </div>
   </section>
-
-  <!-- ── FOOTER ───────────────────────────────────── -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <span class="nav-dot"></span>
-        <span class="footer-logo">Usejarvis</span>
-        <span class="footer-copy">© 2026</span>
-      </div>
-      <div class="footer-links">
-        <a href="https://github.com/vierisid/jarvis" target="_blank" rel="noopener">GitHub</a>
-        <a href="/docs/introduction">Docs</a>
-        <a href="/blog">Blog</a>
-        <a href="/roadmap">Roadmap</a>
-        <a href="https://discord.gg/C8fUM33mc" target="_blank" rel="noopener">Discord</a>
-      </div>
-    </div>
-  </footer>
-</Landing>
+</Brand>
 
 <style>
-  /* ── Nav (shared with homepage shape) ───── */
-  .nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(245, 242, 235, 0.92);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: var(--hair);
-  }
-  .nav-inner {
-    max-width: var(--col-wide);
-    margin: 0 auto;
-    padding: 0 28px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .nav-logo {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-family: var(--font-mono);
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--ink);
-    text-decoration: none;
-    letter-spacing: 0.08em;
-  }
-  .nav-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 999px;
-    background: var(--accent);
-    box-shadow: 0 0 0 4px rgba(194, 58, 42, 0.18);
-    display: inline-block;
-  }
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-  }
-  .nav-link {
-    color: var(--ink-2);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-  .nav-link:hover { color: var(--accent); }
-  .nav-cta { padding: 8px 16px; font-size: 13px; }
-  @media (max-width: 880px) {
-    .nav-right .nav-link:not(:nth-last-child(-n+2)) { display: none; }
-  }
-
-  /* ── Post header ────────────────────────── */
-  .post-head {
-    border-bottom: var(--hair);
-    background: var(--paper);
-  }
-  .post-head-inner {
-    max-width: var(--col-narrow);
-    margin: 0 auto;
-    padding: 72px 28px 56px;
-  }
-  .post-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-    text-decoration: none;
-    margin-bottom: 28px;
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-  .post-back:hover { color: var(--accent); }
-  .post-back-arrow { display: inline-block; transition: transform var(--dur-fast) var(--ease-out); }
+  .post-head { border-bottom: 1px solid var(--rule); background: linear-gradient(180deg, var(--panel2), var(--bg)); }
+  .post-head-inner { max-width: 760px; margin: 0 auto; padding: 72px 28px 52px; }
+  .post-back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); text-decoration: none; margin-bottom: 28px; transition: color .2s var(--ease); }
+  .post-back:hover { color: var(--listen-tx); }
+  .post-back-arrow { display: inline-block; transition: transform .2s var(--ease); }
   .post-back:hover .post-back-arrow { transform: translateX(-2px); }
-
-  .post-meta {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0 0 14px;
-  }
+  .post-meta { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 14px; }
   .post-meta-sep { color: var(--rule); }
-
-  .post-title { max-width: 22ch; margin: 0 0 18px; }
+  .post-title { max-width: 24ch; margin: 0 0 18px; font-size: clamp(32px, 4.4vw, 52px); }
   .post-lead { margin: 0; max-width: 60ch; }
 
-  /* ── Post body ──────────────────────────── */
-  .post-body {
-    background: var(--paper);
-  }
-  .post-body-inner {
-    max-width: var(--col-narrow);
-    margin: 0 auto;
-    padding: 56px 28px 96px;
-    font-size: 17px;
-    line-height: 1.75;
-    color: var(--ink-2);
-  }
-  .post-body-inner :global(h2) {
-    font-family: var(--font-sans);
-    font-weight: 800;
-    font-size: clamp(24px, 3vw, 32px);
-    line-height: 1.18;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin: 56px 0 18px;
-    padding-top: 36px;
-    border-top: var(--hair);
-  }
-  .post-body-inner :global(h2:first-child) {
-    margin-top: 0;
-    padding-top: 0;
-    border-top: none;
-  }
-  .post-body-inner :global(h3) {
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: 20px;
-    letter-spacing: -0.01em;
-    color: var(--ink);
-    margin: 36px 0 14px;
-  }
-  .post-body-inner :global(p) {
-    margin: 0 0 22px;
-    max-width: 64ch;
-  }
-  .post-body-inner :global(strong) {
-    color: var(--ink);
-    font-weight: 700;
-  }
-  .post-body-inner :global(em) {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-weight: 500;
-    color: var(--accent);
-  }
-  .post-body-inner :global(a) {
-    color: var(--accent);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-  .post-body-inner :global(a:hover) { color: var(--ink); }
-  .post-body-inner :global(ul),
-  .post-body-inner :global(ol) {
-    margin: 0 0 24px;
-    padding-left: 24px;
-    max-width: 64ch;
-  }
+  .post-body { background: var(--bg); }
+  .post-body-inner { max-width: 760px; margin: 0 auto; padding: 52px 28px 90px; font-size: 17px; line-height: 1.75; color: var(--ink2); }
+  .post-body-inner :global(h2) { font-family: var(--sans); font-weight: 700; font-size: clamp(24px, 3vw, 32px); line-height: 1.18; letter-spacing: -.03em; color: var(--ink); margin: 52px 0 16px; padding-top: 34px; border-top: 1px solid var(--rule); }
+  .post-body-inner :global(h2:first-child) { margin-top: 0; padding-top: 0; border-top: none; }
+  .post-body-inner :global(h3) { font-family: var(--sans); font-weight: 700; font-size: 20px; letter-spacing: -.02em; color: var(--ink); margin: 34px 0 12px; }
+  .post-body-inner :global(p) { margin: 0 0 22px; max-width: 64ch; }
+  .post-body-inner :global(strong) { color: var(--ink); font-weight: 600; }
+  .post-body-inner :global(em) { font-style: italic; color: var(--ink); }
+  .post-body-inner :global(a) { color: var(--listen-tx); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; transition: text-decoration-thickness .2s var(--ease); }
+  .post-body-inner :global(a:hover) { text-decoration-thickness: 2px; }
+  .post-body-inner :global(ul), .post-body-inner :global(ol) { margin: 0 0 24px; padding-left: 24px; max-width: 64ch; }
   .post-body-inner :global(li) { margin-bottom: 10px; }
-  .post-body-inner :global(code) {
-    font-family: var(--font-mono);
-    font-size: 0.88em;
-    background: var(--paper-2);
-    border: var(--hair-soft);
-    border-radius: var(--r-1);
-    padding: 0.12em 0.42em;
-    color: var(--ink);
-  }
-  .post-body-inner :global(pre) {
-    background: var(--paper-2);
-    border: var(--hair);
-    border-radius: var(--r-2);
-    padding: 18px 20px;
-    overflow-x: auto;
-    margin: 0 0 24px;
-    font-size: 13.5px;
-    line-height: 1.7;
-  }
-  .post-body-inner :global(pre code) {
-    background: none;
-    border: none;
-    padding: 0;
-    color: var(--ink);
-  }
-  .post-body-inner :global(blockquote) {
-    margin: 32px 0;
-    padding: 14px 18px;
-    border-left: 2px solid var(--accent);
-    background: var(--paper-2);
-    color: var(--ink-2);
-    border-radius: 0 var(--r-2) var(--r-2) 0;
-  }
-  .post-body-inner :global(.highlight-box) {
-    background: var(--paper-2);
-    border: var(--hair);
-    border-radius: var(--r-2);
-    padding: 24px 28px;
-    margin: 32px 0;
-    box-shadow: 3px 3px 0 0 rgba(26, 26, 26, 0.05);
-  }
-  .post-body-inner :global(.highlight-box h3) {
-    margin-top: 0;
-    font-size: 18px;
-  }
-  .post-body-inner :global(.highlight-box p:last-child) {
-    margin-bottom: 0;
-  }
-  .post-body-inner :global(hr) {
-    border: none;
-    border-top: var(--hair);
-    margin: 48px 0;
-  }
+  .post-body-inner :global(code) { font-family: var(--mono); font-size: .85em; background: var(--panel); border: 1px solid var(--rule); border-radius: var(--corner-sm); padding: .1em .42em; color: var(--ink); }
+  .post-body-inner :global(pre) { background: var(--panel); border: 1px solid var(--rule); border-radius: var(--corner); padding: 18px 20px; overflow-x: auto; margin: 0 0 24px; font-size: 13.5px; line-height: 1.7; }
+  .post-body-inner :global(pre code) { background: none; border: none; padding: 0; color: var(--ink); }
+  .post-body-inner :global(blockquote) { margin: 32px 0; padding: 14px 18px; border-left: 2px solid var(--listen); background: var(--panel2); color: var(--ink2); border-radius: 0 var(--corner-sm) var(--corner-sm) 0; }
+  .post-body-inner :global(.highlight-box) { background: var(--raise); border: 1px solid var(--rule); border-radius: var(--corner); padding: 24px 28px; margin: 32px 0; box-shadow: var(--sh-sm); }
+  .post-body-inner :global(.highlight-box h3) { margin-top: 0; font-size: 18px; }
+  .post-body-inner :global(.highlight-box p:last-child) { margin-bottom: 0; }
+  .post-body-inner :global(hr) { border: none; border-top: 1px solid var(--rule); margin: 48px 0; }
 
-  /* ── Post CTA ───────────────────────────── */
-  .post-cta {
-    border-top: var(--hair);
-    background: var(--paper-2);
-  }
-  .post-cta-inner {
-    max-width: var(--col-narrow);
-    margin: 0 auto;
-    padding: 72px 28px;
-  }
-  .post-cta .display-h2 { margin: 12px 0 28px; }
-  .post-cta-actions {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  /* ── Footer ─────────────────────────────── */
-  .footer {
-    border-top: var(--hair-bold);
-    background: var(--paper);
-    padding: 40px 28px 32px;
-  }
-  .footer-inner {
-    max-width: var(--col-wide);
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 32px;
-    flex-wrap: wrap;
-  }
-  .footer-left {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    color: var(--ink);
-  }
-  .footer-logo { font-weight: 700; }
-  .footer-copy { color: var(--ink-3); }
-  .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
-  .footer-links a {
-    font-family: var(--font-sans);
-    font-size: 14px;
-    color: var(--ink-2);
-    text-decoration: none;
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-  .footer-links a:hover { color: var(--accent); }
+  .post-cta { border-top: 1px solid var(--rule); background: var(--panel2); }
+  .post-cta-inner { max-width: 760px; margin: 0 auto; padding: 68px 28px; }
+  .post-cta-actions { display: flex; gap: 11px; flex-wrap: wrap; }
 </style>
