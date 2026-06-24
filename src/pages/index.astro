@@ -3,6 +3,10 @@
 // design source: Design/usejarvis-home-FABLE5.html. Styles and script use
 // is:inline so Astro emits them exactly as authored (no scoping, no CSS
 // rewriting, no bundling) — a 1:1 reproduction of the canonical design.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/og.png', Astro.site).href;
+const ogTitle = 'usejarvis · The agentic layer humans can work with';
+const ogDesc = 'An operating system for AI agents: an always-on runtime on your machine that works your apps on screen while you watch. Runs local models or your own keys, and it asks before anything irreversible.';
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +15,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Usejarvis · The agentic layer humans can work with</title>
 <meta name="description" content="An operating system for AI agents: an always-on runtime on your machine that works your apps on screen while you watch. Runs local models or your own keys, and it asks before anything irreversible." />
+<link rel="canonical" href={canonical} />
+<meta property="og:type" content="website" />
+<meta property="og:title" content={ogTitle} />
+<meta property="og:description" content={ogDesc} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content="usejarvis" />
+<meta property="og:image" content={ogImage} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={ogTitle} />
+<meta name="twitter:description" content={ogDesc} />
+<meta name="twitter:image" content={ogImage} />
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><style>path{fill:%2313161A}@media(prefers-color-scheme:dark){path{fill:%23EEF1F4}}</style><path d="M29 3 L29 16 A13 13 0 1 1 16 3 Z"/></svg>'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
