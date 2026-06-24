@@ -78,6 +78,10 @@ a { color: inherit; }
 #mobnav.open { display: flex; }
 #mobnav a { padding: 13px 18px; font-size: 14.5px; font-weight: 500; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule2); }
 #mobnav a:last-child { border-bottom: none; }
+.nav-discord { display: inline-flex; align-items: center; justify-content: center; color: var(--ink2); transition: color .2s var(--ease); }
+.nav-discord:hover { color: var(--ink); }
+.nav-discord svg { width: 20px; height: 20px; display: block; }
+@media (max-width: 560px) { .nav-discord { display: none; } }
 @keyframes jvbr { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
 
 /* ── content primitives ── */
